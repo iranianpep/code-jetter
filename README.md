@@ -1,9 +1,17 @@
 # Code Jetter
 
 Projects that power Code Jetter
-toastr
-https://github.com/CodeSeven/toastr
+
+Mandrill
 
 Monolog
 https://github.com/Seldaek/monolog
 
+PHPMailer
+https://github.com/PHPMailer/PHPMailer/
+
+toastr
+https://github.com/CodeSeven/toastr
+
+PHP Table Generator
+https://github.com/iranianpep/php-table-generator
