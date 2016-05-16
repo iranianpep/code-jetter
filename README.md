@@ -1,6 +1,6 @@
 # Code Jetter
 
-Projects that power Code Jetter
+Some of the tools and projects that power Code Jetter
 
 Mandrill
 
