@@ -1,0 +1,12 @@
+{
+    "name": "root/codejetter",
+    "require": {
+        "phpunit/phpunit": "~5.1"
+    },
+    "authors": [
+        {
+            "name": "Ehsan Abbasi",
+            "email": "iranianpep@gmail.com"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+.header {background: #323A45;}
+
+#banner { background: #e9e6e1;  }
+
+.nav > .active > a, .nav> .active > a:hover {
+    background: #2980B9;
+    color: #fff!important;
+}
+
+#first-footer { background-color: #2980B9; }
+#second-footer {  background: #323A45; color: #999;}
+.btn-primary { background-color: #2BA6CB;}
+.btn-primary:hover { background-color: #34495E;}
+
+/**** LINKS ****/
+a { color: #2BA6CB; }
+a:hover { color: #555; }
+
+/* Pagination */
+.pagination > li > a, .pagination > li > span {border: 2px solid #2BA6CB;}
+.pagination > li > a:hover,
+.pagination > li > a:focus,
+.pagination > .active > a,
+.pagination > .active > span {
+    background-color: #2BA6CB;
+    color: #fff;
+}
+.pagination > .active > a,
+.pagination > .active > span {
+    background-color: #2BA6CB;
+    color: #fff;
+    cursor: default;
+}

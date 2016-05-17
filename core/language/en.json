@@ -1,0 +1,8 @@
+{
+  "language": "en",
+  "testLanguage": "en, {placeholder1}, {placeholder2}, {placeholder1}",
+  "requiredFields": "All * fields are required",
+  "passwordRequirements": "Password must be 6 to 20 characters, at least 1 lowercase, 1 uppercase",
+  "usernameRequirements": "Username must be 3 to 20 characters, and cannot start with _",
+  "uniqueField": "{field} must be unique"
+}
