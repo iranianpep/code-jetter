@@ -1,9 +1,6 @@
 # Code Jetter
 
-Some of the tools and projects that power Code Jetter
-
-Mandrill
-
+## Some of the tools and projects that power Code Jetter
 Monolog
 https://github.com/Seldaek/monolog
 
