@@ -3,6 +3,7 @@
 namespace CodeJetter\core;
 
 use CodeJetter\libs\PHPMailer\PHPMailer;
+use CodeJetter\libs\PHPMailer\phpmailerException;
 
 /**
  * Class Mailer
@@ -17,7 +18,7 @@ class Mailer
      */
     public function __construct()
     {
-        $mailer = new PHPMailer();
+        $mailer = new PHPMailer(true);
 
         // set default configs
         $config = Registry::getConfigClass();
@@ -66,25 +67,31 @@ class Mailer
 
         // TODO $to validate email?
 
-        $mailer = $this->getPhpMailer();
-        $mailer->Subject = $subject;
+        try {
+            $mailer = $this->getPhpMailer();
+            $mailer->Subject = $subject;
 
-        if (is_array($to)) {
-            foreach ($to as $recipient) {
-                $mailer->AddAddress($recipient);
+            if (is_array($to)) {
+                foreach ($to as $recipient) {
+                    $mailer->AddAddress($recipient);
+                }
+            } else {
+                $mailer->AddAddress($to);
             }
-        } else {
-            $mailer->AddAddress($to);
+
+            $mailer->Body = $message;
+
+            // TODO what is alt body?
+            $mailer->AltBody = 'just a dummy ALT body';
+            $mailer->Send();
+            $mailer->SmtpClose();
+
+            return empty($mailer->IsError()) ? true : false;
+        } catch (phpmailerException $e) {
+            // TODO
+        } catch (\Exception $e) {
+            // TODO
         }
-
-        $mailer->Body = $message;
-
-        // TODO what is alt body?
-        $mailer->AltBody = 'just a dummy ALT body';
-        $mailer->Send();
-        $mailer->SmtpClose();
-
-        return $mailer->IsError();
     }
 
     /**

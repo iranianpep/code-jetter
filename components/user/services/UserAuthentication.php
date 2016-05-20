@@ -387,9 +387,10 @@ class UserAuthentication
 
         $email = $user->getEmail();
         $mailer = new Mailer();
+
         $result = $mailer->send($email, 'Password Reset', $resetPasswordLink);
 
-        if ($result) {
+        if ($result !== true) {
             $output->setMessage("There was an issue in sending an email to {$email}");
             $output->setSuccess(false);
         } else {
