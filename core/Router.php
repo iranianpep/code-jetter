@@ -514,7 +514,7 @@ class Router
          * For the time being, leave 404 handling here
          */
         if (empty($routeInfo)) {
-            header('This page not found', true, 404);
+            header("HTTP/1.0 404 Not Found");
             $page = new Page();
             $page->setTitle('404');
 
