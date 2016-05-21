@@ -3,8 +3,8 @@
 namespace CodeJetter\components\user\mappers;
 
 use CodeJetter\components\user\models\AdminUser;
-use CodeJetter\core\IO\Input;
-use CodeJetter\core\IO\Output;
+use CodeJetter\core\io\Input;
+use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Security;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;

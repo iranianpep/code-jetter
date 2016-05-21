@@ -6,13 +6,13 @@
  * Time: 8:46 AM
  */
 
-namespace CodeJetter\core\IO;
+namespace CodeJetter\core\io;
 
 use CodeJetter\core\Registry;
 
 /**
  * Class Response
- * @package CodeJetter\core\IO
+ * @package CodeJetter\core\io
  *
  * A single output point for the app - here we can handle if the request is ajax, or not
  */

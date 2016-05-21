@@ -8,7 +8,7 @@
 
 namespace CodeJetter\core\layout\blocks;
 
-use CodeJetter\core\IO\Request;
+use CodeJetter\core\io\Request;
 use CodeJetter\core\Registry;
 
 /**

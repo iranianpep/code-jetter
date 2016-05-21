@@ -5,7 +5,7 @@
 
 namespace CodeJetter\libs\TableGenerator;
 
-use CodeJetter\core\IO\Request;
+use CodeJetter\core\io\Request;
 use CodeJetter\core\Registry;
 
 /**

@@ -3,7 +3,7 @@
     namespace CodeJetter\tests;
 
 use CodeJetter\core\App;
-use CodeJetter\core\IO\Input;
+use CodeJetter\core\io\Input;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
 

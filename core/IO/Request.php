@@ -6,14 +6,14 @@
  * Time: 9:50 PM
  */
 
-namespace CodeJetter\core\IO;
+namespace CodeJetter\core\io;
 
 use CodeJetter\core\Registry;
 use CodeJetter\core\security\Security;
 
 /**
  * Class Request
- * @package CodeJetter\core\IO
+ * @package CodeJetter\core\io
  */
 class Request
 {

@@ -9,8 +9,8 @@
 namespace CodeJetter\components\user\services;
 
 use CodeJetter\components\user\models\User;
-use CodeJetter\core\IO\Input;
-use CodeJetter\core\IO\Output;
+use CodeJetter\core\io\Input;
+use CodeJetter\core\io\Output;
 use CodeJetter\core\Mailer;
 use CodeJetter\core\Registry;
 use CodeJetter\core\RouteInfo;

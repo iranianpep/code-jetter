@@ -3,8 +3,8 @@
 namespace CodeJetter\core\security;
 
 use CodeJetter\core\FormHandler;
-use CodeJetter\core\IO\Input;
-use CodeJetter\core\IO\Output;
+use CodeJetter\core\io\Input;
+use CodeJetter\core\io\Output;
 use CodeJetter\core\Registry;
 
 /**

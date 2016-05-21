@@ -6,9 +6,9 @@ use CodeJetter\components\page\models\MetaTag;
 use CodeJetter\components\page\models\Page;
 use CodeJetter\components\user\models\User;
 use CodeJetter\components\user\services\UserAuthentication;
-use CodeJetter\core\IO\Output;
-use CodeJetter\core\IO\Request;
-use CodeJetter\core\IO\Response;
+use CodeJetter\core\io\Output;
+use CodeJetter\core\io\Request;
+use CodeJetter\core\io\Response;
 use CodeJetter\core\layout\blocks\ComponentTemplate;
 
 /**

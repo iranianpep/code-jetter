@@ -10,10 +10,10 @@ use CodeJetter\components\user\models\MemberGroup;
 use CodeJetter\components\user\models\AdminUser;
 use CodeJetter\core\BaseController;
 use CodeJetter\core\FormHandler;
-use CodeJetter\core\IO\Input;
-use CodeJetter\core\IO\Output;
-use CodeJetter\core\IO\Request;
-use CodeJetter\core\IO\Response;
+use CodeJetter\core\io\Input;
+use CodeJetter\core\io\Output;
+use CodeJetter\core\io\Request;
+use CodeJetter\core\io\Response;
 use CodeJetter\core\layout\blocks\ComponentTemplate;
 use CodeJetter\core\layout\blocks\Pager;
 use CodeJetter\core\Registry;
@@ -183,7 +183,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * @return \CodeJetter\core\IO\Output
+     * @return \CodeJetter\core\io\Output
      */
     public function logout()
     {

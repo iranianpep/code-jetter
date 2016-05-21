@@ -6,13 +6,13 @@
  * Time: 11:38 PM
  */
 
-namespace CodeJetter\core\IO;
+namespace CodeJetter\core\io;
 
 use CodeJetter\core\security\ValidatorRule;
 
 /**
  * Class Input
- * @package CodeJetter\core\IO
+ * @package CodeJetter\core\io
  */
 class Input
 {

@@ -10,8 +10,8 @@ namespace CodeJetter\components\user\models;
 
 use CodeJetter\components\user\services\UserAuthentication;
 use CodeJetter\core\BaseModel;
-use CodeJetter\core\IO\Input;
-use CodeJetter\core\IO\Output;
+use CodeJetter\core\io\Input;
+use CodeJetter\core\io\Output;
 use CodeJetter\core\Registry;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;

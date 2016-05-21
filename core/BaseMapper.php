@@ -3,8 +3,8 @@
 namespace CodeJetter\core;
 
 use CodeJetter\core\database\QueryMaker;
-use CodeJetter\core\IO\Input;
-use CodeJetter\core\IO\Output;
+use CodeJetter\core\io\Input;
+use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
 use CodeJetter\core\utility\MysqlUtility;

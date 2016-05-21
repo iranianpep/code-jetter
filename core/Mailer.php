@@ -18,6 +18,7 @@ class Mailer
      */
     public function __construct()
     {
+        // True means throwing error if there is any
         $mailer = new PHPMailer(true);
 
         // set default configs

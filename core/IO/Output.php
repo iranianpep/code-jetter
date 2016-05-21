@@ -1,12 +1,12 @@
 <?php
 
-namespace CodeJetter\core\IO;
+namespace CodeJetter\core\io;
 
 use CodeJetter\core\utility\StringUtility;
 
 /**
  * Class Output
- * @package CodeJetter\core\IO
+ * @package CodeJetter\core\io
  */
 class Output
 {

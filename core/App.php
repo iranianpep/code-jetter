@@ -2,7 +2,7 @@
 
 namespace CodeJetter\core;
 
-use CodeJetter\core\IO\Request;
+use CodeJetter\core\io\Request;
 use CodeJetter\core\security\Security;
 use CodeJetter\core\utility\DateTimeUtility;
 

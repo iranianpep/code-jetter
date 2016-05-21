@@ -29,24 +29,24 @@ if (\CodeJetter\core\Registry::getConfigClass()->get('debug') === true) {
 //    $rule4 = new \CodeJetter\core\security\ValidatorRule('URL');
 //    $rule5 = new \CodeJetter\core\security\ValidatorRule('id');
 //
-////    $input = new \CodeJetter\core\IO\Input('name');
+////    $input = new \CodeJetter\core\io\Input('name');
 ////    $input->addRule($rule);
 ////    $input->addRule($rule3);
 ////
-////    $emailInput = new \CodeJetter\core\IO\Input('email');
+////    $emailInput = new \CodeJetter\core\io\Input('email');
 ////    $emailInput->addRule($rule);
 ////    $emailInput->addRule($rule2);
 ////    $emailInput->addRule($rule3);
 ////
-////    $urlInput = new \CodeJetter\core\IO\Input('URL');
+////    $urlInput = new \CodeJetter\core\io\Input('URL');
 ////    $urlInput->addRule($rule4);
 //
-//    $childId = new \CodeJetter\core\IO\Input('childId');
+//    $childId = new \CodeJetter\core\io\Input('childId');
 //    $childId->setRules([
 //        $rule,
 //        $rule5
 //    ]);
-//    $parentId = new \CodeJetter\core\IO\Input('parentId');
+//    $parentId = new \CodeJetter\core\io\Input('parentId');
 //    $parentId->setRules([
 //        $rule,
 //        $rule5

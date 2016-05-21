@@ -2,7 +2,7 @@
 
 namespace CodeJetter\core;
 
-use CodeJetter\core\IO\Output;
+use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Security;
 
 if (session_status() == PHP_SESSION_NONE) {
