@@ -222,7 +222,12 @@ class Request
                 $info = filter_input(INPUT_SERVER, 'HTTP_X_REQUESTED_WITH', FILTER_SANITIZE_STRING);
                 break;
             default:
-                $info = false;
+                throw new \Exception("Key '{$key}' is invalid server key info");
+        }
+
+        // Some servers returns null for a valid server key, in that case get value directly
+        if (empty($info) && isset($_SERVER[$key])) {
+            $info = $_SERVER[$key];
         }
 
         return $info;
