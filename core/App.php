@@ -45,6 +45,8 @@ class App extends Singleton
     public function init($environment = null)
     {
         if ($this->isInitialized !== true) {
+            $this->checkRequirements();
+
             $this->setEnvironment($environment);
 
             $this->registry = Registry::getInstance();
@@ -167,6 +169,18 @@ class App extends Singleton
             Registry::getMySQLDBClass()->setTimeZone($timeZone);
         } else {
             (new \CodeJetter\core\ErrorHandler())->logError("Time zone: '{$timeZone}' is not valid.");
+        }
+    }
+
+    /**
+     * Check the framework requirements to run
+     *
+     * @throws \Exception
+     */
+    public function checkRequirements()
+    {
+        if (version_compare(phpversion(), '5.6', '<')) {
+            throw new \Exception('Code Jetter needs at least PHP 5.6');
         }
     }
 }
