@@ -262,7 +262,6 @@ class ConfigTemplate
             /**
              * general
              */
-            // put slash at the end of the url
             'URL' => 'http://localhost:8888',
             // put slash at the end of the url
             'URI' => '/Applications/MAMP/htdocs/CodeJetter/',
@@ -281,7 +280,7 @@ class ConfigTemplate
                     'pass' => 'root',
                     'database' => 'DATABASE_NAME',
                     //'tableSuffix' => '_SUFFIX',
-                    //'tablePrefix' => 'PREFIX_'
+                    'tablePrefix' => 'cj_'
                 ]
             ]
         ],
@@ -289,11 +288,27 @@ class ConfigTemplate
             /**
              * general
              */
+            'URL' => 'http://your-site.com',
+            // put slash at the end of the url
+            'URI' => '/path/to/public/',
             'debug' => false,
             'debugTemplates' => false,
+
             /**
              * database
              */
+            'defaultDB' => 'MySQL',
+            'databases' => [
+                'MySQL' => [
+                    'host' => 'localhost',
+                    'port' => '8889',
+                    'user' => 'root',
+                    'pass' => 'root',
+                    'database' => 'DATABASE_NAME',
+                    //'tableSuffix' => '_SUFFIX',
+                    'tablePrefix' => 'cj_'
+                ]
+            ]
         ]
     ];
 
