@@ -12,7 +12,6 @@
     /** @var CodeJetter\core\FormHandler $formHandler */
     /** @var CodeJetter\core\View $this */
     $currentPage = $this->getCurrentComponentTemplate()->getPager()->getCurrentPage();
-    $start = $this->getCurrentComponentTemplate()->getPager()->getStart();
 
     $data = $this->getCurrentComponentTemplate()->getData();
     $groups = $data['groups'];
@@ -51,8 +50,8 @@
     $body = new Body();
 
     if (!empty($groups)) {
+        $counter = $this->getCurrentComponentTemplate()->getPager()->getCounterStartNumber();
         foreach ($groups as $group) {
-            $start++;
             /**
              * @var CodeJetter\components\user\models\MemberUser $group
              */
@@ -62,7 +61,7 @@
 
             $checkbox = $htmlUtility->generateCheckbox('selectedGroups[]', $groupId);
 
-            $tmpCellNo = new Cell($checkbox . ' ' . $start);
+            $tmpCellNo = new Cell($checkbox . ' ' . $counter);
             $tmpCell2 = new Cell($groupName);
             $tmpCell5 = new Cell($groupStatus);
 
@@ -87,6 +86,8 @@
             $tmpRow = new Row([$tmpCellNo, $tmpCell2, $tmpCell5, $tmpCell6]);
             $tmpRow->addData('id', $groupId);
             $body->addRow($tmpRow);
+
+            $counter++;
         }
     } else {
         $tmpCell = new Cell('No record.');

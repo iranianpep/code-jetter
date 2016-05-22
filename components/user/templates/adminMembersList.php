@@ -12,8 +12,6 @@
     /** @var CodeJetter\core\FormHandler $formHandler */
     /** @var CodeJetter\core\View $this */
     $currentPage = $this->getCurrentComponentTemplate()->getPager()->getCurrentPage();
-    $start = $this->getCurrentComponentTemplate()->getPager()->getStart();
-
     $data = $this->getCurrentComponentTemplate()->getData();
     $members = $data['members'];
     $searchQuery = $data['searchQuery'];
@@ -52,8 +50,8 @@
     $body = new Body();
 
     if (!empty($members)) {
+        $counter = $this->getCurrentComponentTemplate()->getPager()->getCounterStartNumber();
         foreach ($members as $member) {
-            $start++;
             /**
              * @var CodeJetter\components\user\models\MemberUser $member
              */
@@ -88,9 +86,11 @@
 
             $checkbox = $htmlUtility->generateCheckbox('selectedMembers[]', $memberId);
 
-            $tmpRow = new Row([new Cell($checkbox . ' ' . $start), new Cell($memberUsername), new Cell($memberName), new Cell($memberEmail), new Cell($memberPhone), new Cell($memberStatus), new Cell($cell6Content, false)]);
+            $tmpRow = new Row([new Cell($checkbox . ' ' . $counter), new Cell($memberUsername), new Cell($memberName), new Cell($memberEmail), new Cell($memberPhone), new Cell($memberStatus), new Cell($cell6Content, false)]);
             $tmpRow->addData('id', $memberId);
             $body->addRow($tmpRow);
+
+            $counter++;
         }
     } else {
         $tmpCell = new Cell('No record.');

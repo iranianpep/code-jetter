@@ -244,4 +244,18 @@ class Pager extends BaseBlock
 
         return "{$path}/page/{$pageNumber}/limit/{$limit}{$queryString}";
     }
+
+    /**
+     * Calculate and return the start of the counter in a page. This is useful for lists
+     *
+     * @return int
+     */
+    public function getCounterStartNumber()
+    {
+        if ($this->getCurrentPage() > 1) {
+            return (($this->getCurrentPage() - 1) * $this->getLimit()) + 1;
+        } else {
+            return 1;
+        }
+    }
 }

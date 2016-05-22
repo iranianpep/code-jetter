@@ -11,7 +11,6 @@
 
 /** @var CodeJetter\core\FormHandler $formHandler */
 /** @var CodeJetter\core\View $this */
-$start = $this->getCurrentComponentTemplate()->getPager()->getStart();
 $data = $this->getCurrentComponentTemplate()->getData();
 $children = $data['children']['result'];
 $total = $data['children']['total'];
@@ -47,8 +46,8 @@ $head = new Head($headRow);
 $body = new Body();
 
 if (!empty($children)) {
+    $counter = $this->getCurrentComponentTemplate()->getPager()->getCounterStartNumber();
     foreach ($children as $child) {
-        $start++;
         /**
          * @var CodeJetter\components\user\models\MemberUser $child
          */
@@ -75,9 +74,11 @@ if (!empty($children)) {
 
         $checkbox = $htmlUtility->generateCheckbox('selectedChildren[]', $childId);
 
-        $tmpRow = new Row([new Cell($checkbox . ' ' . $start), new Cell($childUsername), new Cell($childName), new Cell($childEmail), new Cell($childPhone), new Cell($childStatus), new Cell($cell6Content, false)]);
+        $tmpRow = new Row([new Cell($checkbox . ' ' . $counter), new Cell($childUsername), new Cell($childName), new Cell($childEmail), new Cell($childPhone), new Cell($childStatus), new Cell($cell6Content, false)]);
         $tmpRow->addData('id', $childId);
         $body->addRow($tmpRow);
+
+        $counter++;
     }
 } else {
     $tmpCell = new Cell('No record.');
