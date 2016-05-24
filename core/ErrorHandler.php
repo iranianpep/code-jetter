@@ -278,6 +278,8 @@ class ErrorHandler
 
     /**
      * @param $errorMessage
+     * @param $errorFile
+     *
      * @return bool
      */
     private function isInBlacklist($errorMessage, $errorFile)

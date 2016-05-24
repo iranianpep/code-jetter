@@ -133,9 +133,7 @@ class View
 
             if (file_exists($currentTemplatePath)) {
                 /**
-                 * used include instead of require, in case there is a missing template
-                 * TODO: but the file existence is checked above
-                 * rest of the site is still functional
+                 * Even though file existence is checked, still use include instead of require
                  */
                 $currentTemplateHtml = include $currentTemplatePath;
 

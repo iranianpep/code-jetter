@@ -154,12 +154,6 @@ class AdminUserMapper extends UserMapper
 
         // email cannot be empty
         if (!empty($inputs['email'])) {
-            // TODO already added?
-            // add to validator
-//            $emailInput = new Input('email', [$emailRule]);
-//            $validator->addDefinedInput($emailInput);
-//            $validator->addToCheckInputs(['email' => $inputs['email']]);
-
             // add to fields values
             array_push($fieldsValues, [
                 'column' => 'email',

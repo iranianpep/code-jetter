@@ -56,9 +56,11 @@ class MysqlUtility
 
             if (!empty($columnInfo)) {
                 $values = $columnInfo['Type'];
-                // TODO think about this regex
-                $regex = "/'(.*?)'/";
-                preg_match_all($regex, $values, $enumValuesArray);
+                /**
+                 * extract enums e.g. array ( 0 => 'active', 1 => 'inactive', 2 => 'suspended', )
+                 * from 'enum('active','inactive','suspended')'
+                 */
+                preg_match_all("/'(.*?)'/", $values, $enumValuesArray);
 
                 return $enumValuesArray[1];
             } else {
