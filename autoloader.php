@@ -1,6 +1,6 @@
 <?php
 
-    // If the later function cannot handle autoloading, comment out the default one as well
+    // If the later function cannot handle autoloading, uncomment the default one as well
 //    set_include_path(get_include_path().PATH_SEPARATOR.dirname(__DIR__));
 
 //    spl_autoload_extensions('.php');
@@ -18,6 +18,6 @@
         if (file_exists($file)) {
             require_once $file;
         } else {
-            // TODO capture error
+            (new \CodeJetter\core\ErrorHandler())->logError("Class file '{$file}' does not exist");
         }
     });
