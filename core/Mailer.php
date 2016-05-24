@@ -82,7 +82,7 @@ class Mailer
 
             $mailer->Body = $message;
 
-            // TODO what is alt body?
+            // This is the body in plain text for non-HTML mail clients
             $mailer->AltBody = 'just a dummy ALT body';
             $mailer->Send();
             $mailer->SmtpClose();
