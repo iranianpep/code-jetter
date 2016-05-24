@@ -89,9 +89,9 @@ class Mailer
 
             return empty($mailer->IsError()) ? true : false;
         } catch (phpmailerException $e) {
-            // TODO
+            (new \CodeJetter\core\ErrorHandler())->logError($e);
         } catch (\Exception $e) {
-            // TODO
+            (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
     }
 
