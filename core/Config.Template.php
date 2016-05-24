@@ -204,7 +204,8 @@ class ConfigTemplate
                 'handlers' => [
                     'file' => [
                         'active' => true,
-                        'path' => 'temp/custom_error_log.log'
+                        // should be full path
+                        'path' => '/Applications/MAMP/htdocs/CodeJetter/temp/custom_error_log.log'
                     ],
                     'hipchat' => [
                         'active' => false,
@@ -220,7 +221,7 @@ class ConfigTemplate
                     ],
                     // For this one Chrome Logger extension needs to be installed to view errors in Chrome console
                     'chrome' => [
-                        'active' => true,
+                        'active' => false,
                     ]
                 ]
             ]
