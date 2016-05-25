@@ -241,6 +241,14 @@ class ConfigTemplate
                 'SMTPSecure' => 'tls',
                 'Port' => 587,
                 'Username' => 'GMAIL_EMAIL',
+                /**
+                 * For Gmail If you get the error: SMTP Error: Could not authenticate, check here:
+                 * http://stackoverflow.com/questions/3949824/smtp-error-could-not-authenticate-in-phpmailer/37425237#37425237
+                 *
+                 * Turn off 2-step verification
+                 * Enable less secure apps access
+                 * Also try to change the password, even it does not have any special characters
+                 */
                 'Password' => 'GMAIL_EMAIL_PASSWORD',
                 // Highest priority - Email priority (1 = High, 3 = Normal, 5 = low)
                 'Priority' => 1,
