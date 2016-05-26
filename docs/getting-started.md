@@ -62,7 +62,7 @@ At this stage you need to change `CodeJetter/core/Config.Template.php` as you ne
 
 <a name="copy-files"></a>
 ## Move Code Jetter Files To Your Host
-Finally copy the `CodeJetter/public` folder content to your host public directory (`WWW` or `public_html`), and `CodeJetter` folder (excluding `public` folder) to a non-public directory which should match the `URI` value in the config file.
+Finally copy the `CodeJetter/public` folder *content* to your host public directory (`WWW` or `public_html`), and `CodeJetter` folder (excluding `public` folder) to a non-public directory which should match the `URI` value in the config file. Please note that the downloaded folder from GitHub is named `code-jetter`, so you need to rename it to `CodeJetter`.
 
 <a name="autoloader"></a>
 ## Include autoloader in the index
