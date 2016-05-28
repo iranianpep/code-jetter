@@ -2,6 +2,9 @@
 
 namespace CodeJetter\core;
 
+use CodeJetter\core\io\Input;
+use CodeJetter\core\security\Validator;
+use CodeJetter\core\security\ValidatorRule;
 use CodeJetter\libs\PHPMailer\PHPMailer;
 use CodeJetter\libs\PHPMailer\phpmailerException;
 
@@ -66,17 +69,23 @@ class Mailer
             throw new \Exception('Recipient for sending email cannot be empty');
         }
 
-        // TODO $to validate email?
-
         try {
             $mailer = $this->getPhpMailer();
             $mailer->Subject = $subject;
 
             if (is_array($to)) {
                 foreach ($to as $recipient) {
+                    if ($this->validateEmail($recipient) !== true) {
+                        throw new \Exception("Email: '{$recipient}' is not valid");
+                    }
+
                     $mailer->AddAddress($recipient);
                 }
             } else {
+                if ($this->validateEmail($to) !== true) {
+                    throw new \Exception("Email: '{$to}' is not valid");
+                }
+
                 $mailer->AddAddress($to);
             }
 
@@ -109,5 +118,22 @@ class Mailer
     public function setPhpMailer(PHPMailer $phpMailer)
     {
         $this->phpMailer = $phpMailer;
+    }
+
+    /**
+     * @param $email
+     *
+     * @return bool
+     */
+    public function validateEmail($email)
+    {
+        $emailInput = new Input('email', [
+            new ValidatorRule('required'),
+            new ValidatorRule('email')
+        ]);
+
+        $validator = new Validator([$emailInput], ['email' => $email]);
+        $validatorOutput = $validator->validate();
+        return $validatorOutput->getSuccess();
     }
 }
