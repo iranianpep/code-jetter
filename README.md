@@ -4,6 +4,7 @@ Code Jetter is a PHP MVC Framework which is handcrafted with love! Some of the f
 - Built-in user authentication
 - IO management
 - Built-in validator to validate inputs efficiently and all in one place
+- Built-in query maker to create PDO queries and bind the values automatically
 - Utility classes to add more juice to default PHP functions
 - Multilingual system
 - Pure PHP template engine which removes the need to learn and use another syntax e.g. Smarty 
