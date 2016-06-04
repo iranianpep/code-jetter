@@ -160,6 +160,7 @@ class ConfigTemplate
         /**
          *  Page
          */
+        // TODO can be moved to roles
         'accessRolesRobot' => [
             'public' => 'index, follow',
             'admin' => 'noindex, nofollow',
