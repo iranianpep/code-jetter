@@ -23,5 +23,3 @@ Models represent a data entity and also contain the business logic. A model is n
 <a name="template"></a>
 ## Template
 Templates are used by the view for the presentation and are located in `templates` folder.
-
-
