@@ -64,3 +64,10 @@ public function registerForm()
     );
 }
 ```
+
+Let's break the above function down to the following segments:
+
+- Page: Each view must have a page object that for example contains title, meta tags, etc. By passing access role to page constructor, meta tag is automatically set based on `accessRolesRobot` in the config.
+- Language: Using a language object you can get the translations for different keys. Default language is set in the config and the language `JSON` files are located in `core/language`.
+- Component template: Each view can have one to many component templates. A component template must have a template path and can contain data. This is used to pass data to the view.
+- View: Finally, View puts the mentioned segments all together and generates the html content.
