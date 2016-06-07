@@ -3,7 +3,7 @@
 - [Apply Database Changes](#database)
 - [Create The Config File](#config)
 - [Move Code Jetter Files To Your Host](#copy-files)
-- [Include autoloader in the index](#autoloader)
+- [Include Autoloader In The Index](#autoloader)
 - [Troubleshooting](#toubleshooting)
 
 <a name="requirements"></a>
@@ -65,7 +65,7 @@ At this stage you need to change `CodeJetter/core/Config.Template.php` as you ne
 Finally copy the `CodeJetter/public` folder **content** to your host public directory (`WWW` or `public_html`), and `CodeJetter` folder (excluding `public` folder) to a non-public directory which should match the `URI` value in the config file. Please note that the downloaded folder from GitHub is named `code-jetter`, so you need to rename it to `CodeJetter`.
 
 <a name="autoloader"></a>
-## Include autoloader in the index
+## Include Autoloader In The Index
 Open `public/index.php` and change the path to `autoloader.php` based on the place that `CodeJetter/autoloader.php` is located. Now if you check `URL` in the browser you will see the welcome page.
 
 <a name="toubleshooting"></a>
