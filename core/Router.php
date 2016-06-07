@@ -424,7 +424,8 @@ class Router
             $URLPath = '/';
         }
 
-        if (isset($this->routes['simple'][$requestMethod][$URLPath])) {
+        if (isset($this->routes['simple'][$requestMethod]) &&
+            isset($this->routes['simple'][$requestMethod][$URLPath])) {
             // get route info straightway
             $url = $URLPath;
             $result = ['info' => $this->routes['simple'][$requestMethod][$URLPath]];
@@ -432,14 +433,16 @@ class Router
             // look for regex
             $regexRoutes = $this->routes['regex'][$requestMethod];
 
-            foreach ($regexRoutes as $routePattern => $routeInfo) {
-                // find the match and return parameters if there is any
-                $found = $this->regexMatch($routePattern, $URLPath);
+            if (!empty($regexRoutes)) {
+                foreach ($regexRoutes as $routePattern => $routeInfo) {
+                    // find the match and return parameters if there is any
+                    $found = $this->regexMatch($routePattern, $URLPath);
 
-                if (!empty($found)) {
-                    $url = $routePattern;
-                    $result = ['info' => $routeInfo, 'parameters' => $found];
-                    break;
+                    if (!empty($found)) {
+                        $url = $routePattern;
+                        $result = ['info' => $routeInfo, 'parameters' => $found];
+                        break;
+                    }
                 }
             }
         }
