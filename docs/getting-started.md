@@ -5,6 +5,7 @@
 - [Move Code Jetter Files To Your Host](#copy-files)
 - [Include Autoloader In The Index](#autoloader)
 - [Troubleshooting](#toubleshooting)
+- [Where To Go From Here](#where)
 
 <a name="requirements"></a>
 ## Check The Requirements
@@ -74,3 +75,13 @@ Open `public/index.php` and change the path to `autoloader.php` based on the pla
 - If the loaded page in the browser is blank you should enable PHP error reporting by changing `debug` to `true` for `prod` environment in the config file. Once the issue is resolved make sure to change `debug` back to `false` for security reasons.
 - You can also check `CodeJetter/temp/custom_error_log.log` to see if any error has been recorded
 
+<a name="where"></a>
+## Where To Go From Here
+If you are ready to create your application using Code Jetter these are more detailed documentations that can help you:
+
+- <a href='https://github.com/iranianpep/code-jetter/blob/master/docs/components.md'>Components</a>
+- <a href='https://github.com/iranianpep/code-jetter/blob/master/docs/routing.md'>Routing</a>
+- <a href='https://github.com/iranianpep/code-jetter/blob/master/docs/controllers.md'>Controllers</a>
+- <a href='https://github.com/iranianpep/code-jetter/blob/master/docs/mappers.md'>Mappers</a>
+- <a href='https://github.com/iranianpep/code-jetter/blob/master/docs/models.md'>Models</a>
+- <a href='https://github.com/iranianpep/code-jetter/blob/master/docs/templates.md'>Templates</a>
