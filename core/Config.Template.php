@@ -32,6 +32,7 @@ class ConfigTemplate
         'defaultTimeZone' => 'Australia/Melbourne',
         // must have a file in language folder e.g. en.json
         'defaultLanguage' => 'en',
+        'defaultComponentConfigFile' => 'config.json',
 
         /**
          * security
@@ -329,8 +330,17 @@ class ConfigTemplate
      *
      * @throws \Exception
      */
-    public function get($key)
+    public function get($key, $component = null)
     {
+        if ($component !== null) {
+            // check to see component / dir exist
+            $configPath = $this->get('URI') . 'components' . DIRECTORY_SEPARATOR . $component . DIRECTORY_SEPARATOR . $this->get('defaultComponentConfigFile');
+
+            if (file_exists($configPath)) {
+
+            }
+        }
+
         // get app to get environment first
         $app = App::getInstance();
 
