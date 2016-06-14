@@ -32,6 +32,10 @@ class Router
                     'component' => 'page',
                     'controller' => 'Page'
                 ],
+                '/contact' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact'
+                ],
                 '/register' => [
                     'component' => 'user',
                     'controller' => 'MemberUser',
@@ -110,6 +114,11 @@ class Router
                     'controller' => 'MemberUser',
                     'action' => 'register',
                     'accessRole' => 'guest'
+                ],
+                '/contact/new' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact',
+                    'action' => 'newMessage'
                 ],
                 '/login' => [
                     'component' => 'user',

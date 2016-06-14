@@ -4,5 +4,6 @@
   "requiredFields": "All * fields are required",
   "passwordRequirements": "Password must be 6 to 20 characters, at least 1 lowercase, 1 uppercase, 1 number",
   "usernameRequirements": "Username must be 3 to 20 characters, and cannot start with _",
-  "uniqueField": "{field} must be unique"
+  "uniqueField": "{field} must be unique",
+  "successfulContactMessageSubmission": "Your message submitted successfully"
 }
