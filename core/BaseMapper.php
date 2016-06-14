@@ -32,7 +32,16 @@ abstract class BaseMapper implements ICrud
         $mapperTable = Registry::getConfigClass()->get('mapperTableRelations')[$className];
 
         if (empty($mapperTable)) {
-            throw new \Exception("Mapper table is not specified for class: {$className}");
+            // mapper table is not specified in the config file, generate the name automatically
+
+	    // convert camel case to snake case
+	    $snakeCaseClassName = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $className));
+
+	    // remove mapper from the end of the string
+	    $snakeCaseClassName = preg_replace('#_mapper$#', '', $snakeCaseClassName);
+
+	    // add s if it is not an xref mapper
+	    $mapperTable = !preg_match('#_xref$#', $snakeCaseClassName) ? $snakeCaseClassName . 's' : $snakeCaseClassName;
         }
 
         $this->setTable($mapperTable);
