@@ -64,6 +64,11 @@ class Router
                     'controller' => 'MemberGroup',
                     'action' => 'listGroups'
                 ],
+                '/admin/contact/messages' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact',
+                    'action' => 'listMessages'
+                ],
                 '/admin/profile' => [
                     'component' => 'user',
                     'controller' => 'AdminUser',
@@ -166,6 +171,26 @@ class Router
                     'component' => 'user',
                     'controller' => 'MemberGroup',
                     'action' => 'batchDeleteGroup'
+                ],
+                '/admin/contact/safe-delete-message' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact',
+                    'action' => 'safeDeleteMessage'
+                ],
+                '/admin/contact/safe-batch-delete-message' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact',
+                    'action' => 'safeBatchDeleteMessage'
+                ],
+                '/admin/contact/delete-message' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact',
+                    'action' => 'deleteMessage'
+                ],
+                '/admin/contact/batch-delete-message' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact',
+                    'action' => 'batchDeleteMessage'
                 ],
                 '/account/notify' => [
                     'component' => 'user',
@@ -275,6 +300,12 @@ class Router
                     'controller' => 'MemberGroup',
                     'action' => 'listGroups',
                     'base' => '/admin/groups'
+                ],
+                '/admin/contact/messages/page/{page:int}/limit/{limit:int:?}' => [
+                    'component' => 'contact',
+                    'controller' => 'Contact',
+                    'action' => 'listMessages',
+                    'base' => '/admin/contact/messages'
                 ],
                 // TODO think about type of parameter: currently is any
                 '/reset-password/email/{email:any}/token/{token:any}' => [
@@ -555,7 +586,7 @@ class Router
         /**
          * Authorization - DO NOT REMOVE THIS:
          */
-        $authorized = $this->authorizeRoute($accessRole, $rootNamespace, $component, $controller);
+        $authorized = $this->authorizeRoute($accessRole, $rootNamespace, 'user', $controller);
 
         // get controller
         $component = !empty($component) ? $component : static::$defaultComponent;

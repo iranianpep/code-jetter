@@ -57,4 +57,9 @@ class StringUtility
     {
         return htmlspecialchars($string, ENT_QUOTES);
     }
+
+    public function camelCaseToSnakeCase($string)
+    {
+        return preg_replace('/([a-z])([A-Z])/', '$1_$2', $string);
+    }
 }

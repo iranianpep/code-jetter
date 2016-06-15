@@ -4,7 +4,7 @@ namespace CodeJetter\components\contact\models;
 
 use CodeJetter\core\BaseModel;
 
-class ContactMessageModel extends BaseModel
+class ContactMessage extends BaseModel
 {
     private $name;
     private $email;
