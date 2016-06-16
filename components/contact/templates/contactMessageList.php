@@ -113,10 +113,10 @@
     // batch delete confirmation modal
     $batchDeleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', $formHandler, 'deleteForm', '/admin/contact/batch-delete-message');
 
-    // safe delete group-member confirmation modal
+    // safe delete message confirmation modal
     $safeDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeDeleteConfirmationModal', 'safeDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/contact/safe-delete-message');
 
-    // safe batch delete group-member confirmation modal
+    // safe batch delete message confirmation modal
     $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/contact/safe-batch-delete-message');
 
     return "<div class='container-fluid'>

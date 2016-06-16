@@ -58,14 +58,16 @@ class ContactController extends BaseController
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function newMessage()
     {
         $inputs = (new Request('POST'))->getInputs();
 
-        $addOutput = (new ContactMessageMapper())->add($inputs);
+        $output = (new ContactMessageMapper())->add($inputs);
 
-        $output = new Output();
-        if ($addOutput->getSuccess() === true) {
+        if ($output->getSuccess() === true) {
             /**
              * hi to language
              */
@@ -76,6 +78,7 @@ class ContactController extends BaseController
              */
 
             // do not expose anything to world, that's why another output is created
+            $output->setData('');
             $output->setSuccess(true);
             $output->setMessage($successfulSubmission);
         }
@@ -83,6 +86,9 @@ class ContactController extends BaseController
         (new Response())->echoContent($output->toJSON());
     }
 
+    /**
+     * @throws \Exception
+     */
     public function listMessages()
     {
         // for pagination
