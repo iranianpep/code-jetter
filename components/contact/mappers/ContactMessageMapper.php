@@ -50,17 +50,14 @@ class ContactMessageMapper extends BaseMapper
             [
                 'column' => 'name',
                 'value' => $name,
-
             ],
             [
                 'column' => 'email',
                 'value' => $inputs['email'],
-
             ],
             [
                 'column' => 'message',
                 'value' => $inputs['message'],
-
             ],
         ];
 
