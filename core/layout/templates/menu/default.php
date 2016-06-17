@@ -41,6 +41,7 @@ if (!empty($personalizedMenuHtml)) {
             <div class=\"navbar-menu responsive-hidden\">
                 <ul class=\"zetta-menu zm-response-stack zm-full-width\">
                     <li><a href='/'>Home</a></li>
+                    <li><a href='/contact'>Contact</a></li>
                     {$personalizedSection}
                 </ul>
             </div>
