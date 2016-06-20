@@ -324,30 +324,36 @@ class ConfigTemplate
     ];
 
     /**
-     * @param $key
+     * @param      $key
+     * @param null $component
      *
      * @return mixed
-     *
      * @throws \Exception
      */
     public function get($key, $component = null)
     {
         if ($component !== null) {
             // check to see component / dir exist
-            $configPath = $this->get('URI') . 'components' . DIRECTORY_SEPARATOR . $component . DIRECTORY_SEPARATOR . $this->get('defaultComponentConfigFile');
+            $configPath = $this->get('URI') . 'components' . DIRECTORY_SEPARATOR . strtolower($component)
+                . DIRECTORY_SEPARATOR . $this->get('defaultComponentConfigFile');
 
+            // TODO maybe add the component configs to the global one instead of reading the file each time
             if (file_exists($configPath)) {
-
+                $configs = json_decode(file_get_contents($configPath), true);
+            } else {
+                throw new \Exception("Configs file: '{$configPath}' does not exist");
             }
+        } else {
+            $configs = static::$configs;
         }
 
         // get app to get environment first
         $app = App::getInstance();
 
-        if (array_key_exists($key, static::$configs[$app->getEnvironment()])) {
-            return static::$configs[$app->getEnvironment()][$key];
-        } elseif (array_key_exists($key, static::$configs)) {
-            return static::$configs[$key];
+        if (isset($configs[$app->getEnvironment()]) && array_key_exists($key, $configs[$app->getEnvironment()])) {
+            return $configs[$app->getEnvironment()][$key];
+        } elseif (array_key_exists($key, $configs)) {
+            return $configs[$key];
         } else {
             throw new \Exception("Key: '{$key}' does not exist in configs");
         }

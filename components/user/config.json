@@ -1,5 +1,3 @@
 {
-  "testEmpty": "",
-  "testStringFalse": "false",
-  "testFalse": false,
+  "test": "test"
 }
