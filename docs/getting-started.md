@@ -27,7 +27,7 @@ As you see the default tables prefix is `cj` which is specified in your config f
 
 <a name="config"></a>
 ## Create The Config File
-At this stage you need to change `CodeJetter/core/Config.Template.php` as you need and then rename the file AND class names to `Config.php` and `Config` respectively. For the time being, you only need to worry about these config parameters:
+At this stage you need to change `CodeJetter/Config.Template.php` as you need and then rename the file AND class names to `Config.php` and `Config` respectively. For the time being, you only need to worry about these config parameters:
 
 <table width='100%'>
 <thead>
