@@ -11,7 +11,7 @@ class ConfigTemplate extends BaseConfig
      */
     const SESSION_TIMEOUT = 3600;
 
-    private static $configs = [
+    protected static $configs = [
         /******************************
          * common configs between dev and prod environments
          */
