@@ -1,20 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ehsanabbasi
- * Date: 24/04/15
- * Time: 7:11 PM
- */
 
-namespace CodeJetter\core;
+namespace CodeJetter;
 
-/**
- * Class ConfigTemplate
- * @package CodeJetter\core
- *
- * The class and file names MUST be changed to Config after setting the values
- */
-class ConfigTemplate
+use CodeJetter\core\BaseConfig;
+
+class ConfigTemplate extends BaseConfig
 {
     /**
      * To avoid duplicates, use const in this case
@@ -322,68 +312,4 @@ class ConfigTemplate
             ]
         ]
     ];
-
-    /**
-     * @param      $key
-     * @param null $component
-     *
-     * @return mixed
-     * @throws \Exception
-     */
-    public function get($key, $component = null)
-    {
-        if ($component !== null) {
-            // check to see component / dir exist
-            $configPath = $this->get('URI') . 'components' . DIRECTORY_SEPARATOR . strtolower($component)
-                . DIRECTORY_SEPARATOR . $this->get('defaultComponentConfigFile');
-
-            // TODO maybe add the component configs to the global one instead of reading the file each time
-            if (file_exists($configPath)) {
-                $configs = json_decode(file_get_contents($configPath), true);
-            } else {
-                throw new \Exception("Configs file: '{$configPath}' does not exist");
-            }
-        } else {
-            $configs = static::$configs;
-        }
-
-        // get app to get environment first
-        $app = App::getInstance();
-
-        if (isset($configs[$app->getEnvironment()]) && array_key_exists($key, $configs[$app->getEnvironment()])) {
-            return $configs[$app->getEnvironment()][$key];
-        } elseif (array_key_exists($key, $configs)) {
-            return $configs[$key];
-        } else {
-            throw new \Exception("Key: '{$key}' does not exist in configs");
-        }
-    }
-
-    /**
-     * @param $key
-     * @param $value
-     *
-     * @throws \Exception
-     */
-    public function set($key, $value)
-    {
-        // get app to get environment first
-        $app = App::getInstance();
-
-        if (array_key_exists($key, static::$configs[$app->getEnvironment()])) {
-            static::$configs[$app->getEnvironment()][$key] = $value;
-        } elseif (array_key_exists($key, static::$configs)) {
-            static::$configs[$key] = $value;
-        } else {
-            throw new \Exception("Key: '{$key}' does not exist in configs");
-        }
-    }
-
-    /**
-     * @return array
-     */
-    public function getConfigs()
-    {
-        return static::$configs;
-    }
 }

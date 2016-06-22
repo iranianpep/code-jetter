@@ -3,7 +3,7 @@
 namespace CodeJetter\tests;
 
 use CodeJetter\core\App;
-use CodeJetter\core\Config;
+use CodeJetter\Config;
 use CodeJetter\core\Language;
 
 // this is to fix Cannot send session cookie - headers already sent

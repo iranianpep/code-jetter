@@ -58,6 +58,13 @@ class StringUtility
         return htmlspecialchars($string, ENT_QUOTES);
     }
 
+    /**
+     * Convert camel case to snake case e.g. AdminUser becomes admin_user
+     *
+     * @param $string
+     *
+     * @return mixed
+     */
     public function camelCaseToSnakeCase($string)
     {
         return preg_replace('/([a-z])([A-Z])/', '$1_$2', $string);

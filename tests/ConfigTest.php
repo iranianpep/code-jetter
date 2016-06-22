@@ -2,7 +2,7 @@
 
     namespace CodeJetter\tests;
 
-    use CodeJetter\core\Config;
+    use CodeJetter\Config;
 
     // this is to fix Cannot send session cookie - headers already sent
     @session_start();

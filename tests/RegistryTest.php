@@ -15,14 +15,14 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
 
         $registry::resetContainer();
 
-        $config = new \CodeJetter\core\Config();
+        $config = new \CodeJetter\Config();
 
         $registry->add($config);
         $registry->add($config, 'config2');
 
         $classes = [
-            'Config' => new \CodeJetter\core\Config(),
-            'config2' => new \CodeJetter\core\Config()
+            'Config' => new \CodeJetter\Config(),
+            'config2' => new \CodeJetter\Config()
         ];
 
         $this->assertEquals($classes, $registry->getClasses());
@@ -34,7 +34,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
 
         $registry::resetContainer();
 
-        $config = new \CodeJetter\core\Config();
+        $config = new \CodeJetter\Config();
         $config->set('mapperSuffix', 'blah blah value');
 
         $registry->add($config);
@@ -51,14 +51,14 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
 
         $registry::resetContainer();
 
-        $config = new \CodeJetter\core\Config();
+        $config = new \CodeJetter\Config();
 
         $registry->add($config);
         $registry->add($config, 'config2');
 
         $classes = [
-            'Config' => 'CodeJetter\core\Config',
-            'config2' => 'CodeJetter\core\Config'
+            'Config' => 'CodeJetter\Config',
+            'config2' => 'CodeJetter\Config'
         ];
 
         $this->assertEquals($classes, $registry->getClassList());
@@ -70,7 +70,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
 
         $registry::resetContainer();
 
-        $config = new \CodeJetter\core\Config();
+        $config = new \CodeJetter\Config();
 
         $registry->add($config, 'config3');
         $registry->add($config, 'config2');
@@ -92,7 +92,7 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
 
         $registry::resetContainer();
 
-        $config = new \CodeJetter\core\Config();
+        $config = new \CodeJetter\Config();
         $registry->add($config);
 
         $this->setExpectedException('Exception', "'Config' is a reserved class. Cannot be removed");

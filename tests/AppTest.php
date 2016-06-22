@@ -27,7 +27,8 @@
         {
             $app = App::getInstance();
             $singletons = [
-                'Config' => 'CodeJetter\core\Config',
+                //'Config' => 'CodeJetter\core\Config',
+                'Config' => 'CodeJetter\Config',
                 'Router' => 'CodeJetter\core\Router',
                 'MySQL' => 'CodeJetter\core\database\MySQLDatabase',
                 'Language' => 'CodeJetter\core\Language'
