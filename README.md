@@ -1,4 +1,4 @@
-# Code Jetter
+# <img src='http://codejetter.com/images/logo.png' width='260' alt='code jetter logo'>
 Code Jetter is a PHP MVC Framework which is handcrafted with love! Some of the features that make a developer life easier are:
 - Advanced routing system
 - Built-in user authentication
