@@ -41,4 +41,30 @@ class DateTimeUtility
 
         return $sign . str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes, 2, '0');
     }
+
+    /**
+     * Return date difference in full hours
+     *
+     * @param $startDate
+     * @param $endDate
+     * @return int
+     */
+    public function diffInFullHours($startDate, $endDate)
+    {
+        $diff = (new DateTime($startDate))->diff(new DateTime($endDate));
+        return ($diff->h + ($diff->days * 24));
+    }
+
+    /**
+     * Return date difference in full minutes
+     *
+     * @param $startDate
+     * @param $endDate
+     * @return int
+     */
+    public function diffInFullMinutes($startDate, $endDate)
+    {
+        $diff = (new DateTime($startDate))->diff(new DateTime($endDate));
+        return $this->diffInFullHours($startDate, $endDate) * 60 + $diff->i;
+    }
 }

@@ -69,4 +69,23 @@ class StringUtility
     {
         return preg_replace('/([a-z])([A-Z])/', '$1_$2', $string);
     }
+
+    /**
+     * Remove http and www from url
+     *
+     * @param  $domain
+     * @return mixed
+     */
+    public static function removeURLProtocol($domain)
+    {
+        // If scheme not included, prepend it
+        if (!preg_match('#^http(s)?://#', $domain)) {
+            $domain = 'http://' . $domain;
+        }
+
+        $urlParts = parse_url($domain);
+
+        // remove www
+        return preg_replace('/^www\./', '', $urlParts['host']);
+    }
 }
