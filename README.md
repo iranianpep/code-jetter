@@ -27,3 +27,6 @@ https://github.com/iranianpep/php-table-generator
 
 Bootstrap
 http://getbootstrap.com
+
+## Reporting security issues
+To report any security vulnerabilities, please drop an email to info@codejetter.com and do NOT report it on GitHub.
