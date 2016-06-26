@@ -2,6 +2,7 @@
 - [Check The Requirements](#requirements)
 - [Apply Database Changes](#database)
 - [Create The Config File](#config)
+- [Create The Route File](#route)
 - [Move Code Jetter Files To Your Host](#copy-files)
 - [Include Autoloader In The Index](#autoloader)
 - [Troubleshooting](#toubleshooting)
@@ -60,6 +61,10 @@ At this stage you need to change `CodeJetter/Config.Template.php` as you need an
 </tr>
 </tbody>
 </table>
+
+<a name="route"></a>
+## Create The Route File
+The same as the config file change `CodeJetter/Routes.Template.php` file and `RoutesTemplate` class names to `CodeJetter/Routes.php` and `Routes` respectively.
 
 <a name="copy-files"></a>
 ## Move Code Jetter Files To Your Host
