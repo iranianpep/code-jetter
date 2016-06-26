@@ -22,7 +22,6 @@ class App extends Singleton
      * This cannot be moved to Config class since it includes Config as well
      */
     private static $singletons = [
-        //'Config' => 'CodeJetter\core\Config',
         'Config' => 'CodeJetter\Config',
         'Router' => 'CodeJetter\core\Router',
         'MySQL' => 'CodeJetter\core\database\MySQLDatabase',

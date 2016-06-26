@@ -43,7 +43,7 @@ class ContactController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('/components/contact/templates/contactForm.php');
+        $componentTemplate->setTemplatePath('components/contact/templates/contactForm.php');
         $componentTemplate->setData([
             'requiredFields' => $requiredFields
         ]);

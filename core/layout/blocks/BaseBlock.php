@@ -290,7 +290,7 @@ abstract class BaseBlock
     }
 
     /**
-     * @return \CodeJetter\core\Config
+     * @return \CodeJetter\core\BaseConfig
      */
     public function getConfig()
     {
