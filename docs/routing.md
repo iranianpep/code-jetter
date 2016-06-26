@@ -4,7 +4,7 @@
 
 <a name="basic"></a>
 ## Basic Routing
-In Code Jetter all the routes are located in `core/Router.php` and that is probably the first place to start with for creating a new application or adding a new feature. To add a new route a new array element needs to be added to `$routes` variable.
+In Code Jetter all the routes are located in `CodeJetter/Routes.php` and that is probably the first place to start with for creating a new application or adding a new feature. To add a new route a new array element needs to be added to `$routes` variable. Also you need to change `Routes.Templates.php` file and `RouterTemplate` class names to `Routes.php` and `Router` respectively. 
 
 Currently, there are two types of routing:
 - Simple: routes do not have parameters, therefore it is faster to be processed.
@@ -12,7 +12,7 @@ Currently, there are two types of routing:
 
 Also each type can contain different request methods such as `POST`, `GET`, etc. For example, if you need to add a simple `GET` route for `Page` component it should be like this:
 ``` php
-private $routes = [
+public $routes = [
     'simple' => [
         'GET' => [
             '/welcome' => [
@@ -67,7 +67,7 @@ In the following table all the required details for a route are explained:
 ## Passing Parameters
 To pass parameters for example an `id`, route should be specified as a regex route:
 ``` php
-private $routes = [
+public $routes = [
     'regex' => [
         'GET' => [
             '/account/member/{id:int}' => [
@@ -87,7 +87,7 @@ $id = $this->getURLParameters()['id'];
 
 Also `int` specifies that `id` must be integer otherwise it does not route to the action. To specify optional parameters you should add question mark (?) to the route:
 ```
-private $routes = [
+public $routes = [
     'regex' => [
         'GET' => [
             '/account/members/page/{page:int}/limit/{limit:int:?}' => [

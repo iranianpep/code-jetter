@@ -122,7 +122,7 @@ class Registry extends Singleton
     /**
      * return config class for ease of use
      *
-     * @return Config
+     * @return BaseConfig
      * @throws \Exception
      */
     public static function getConfigClass()

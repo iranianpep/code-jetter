@@ -1,4 +1,5 @@
 Config.php
+Router.php
 composer.json
 composer.lock
 vendor/
