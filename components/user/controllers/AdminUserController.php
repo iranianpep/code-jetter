@@ -54,7 +54,7 @@ class AdminUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/adminLogin.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'adminLogin.php');
         $componentTemplate->setData([
             'requiredFields' => $requiredFields
         ]);
@@ -154,7 +154,7 @@ class AdminUserController extends BaseController
 
         // create component
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/adminMembersList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'adminMembersList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
             'listHeaders' => $listHeaders,
@@ -496,7 +496,7 @@ class AdminUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberView.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberView.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 
@@ -557,7 +557,7 @@ class AdminUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberForgotPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberForgotPassword.php');
         $componentTemplate->setData([
             'formUrl' => '/admin/forgot-password',
             'requiredFields' => $requiredFields
@@ -587,7 +587,7 @@ class AdminUserController extends BaseController
         $page->setTitle('Reset your password');
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberResetPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberResetPassword.php');
         $componentTemplate->setData([
             'tokenValid' => $output->getSuccess(),
             'email' => $inputs['email'],
@@ -642,7 +642,7 @@ class AdminUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/profile.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'profile.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 

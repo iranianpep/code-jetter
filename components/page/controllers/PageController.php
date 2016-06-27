@@ -22,7 +22,7 @@ class PageController extends BaseController
         $page->setTitle('Welcome');
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/page/templates/defaultIndex.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'defaultIndex.php');
 
         (new View())->make(
             $page,

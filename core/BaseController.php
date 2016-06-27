@@ -78,4 +78,15 @@ abstract class BaseController
     {
         $this->routeInfo = $routeInfo;
     }
+
+    /**
+     * @return string
+     */
+    public function getTemplatesPath()
+    {
+        $component = $this->getRouteInfo()->getComponent();
+
+        return 'components' . DIRECTORY_SEPARATOR . strtolower($component) . DIRECTORY_SEPARATOR . 'templates' .
+        DIRECTORY_SEPARATOR;
+    }
 }

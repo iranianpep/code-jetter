@@ -103,7 +103,7 @@ class MemberGroupController extends BaseController
 
         // create component
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberGroupList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberGroupList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
             'listHeaders' => $listHeaders,

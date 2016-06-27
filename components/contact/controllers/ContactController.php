@@ -43,7 +43,7 @@ class ContactController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/contact/templates/contactForm.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'contactForm.php');
         $componentTemplate->setData([
             'requiredFields' => $requiredFields
         ]);
@@ -140,7 +140,7 @@ class ContactController extends BaseController
 
         // create component template
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/contact/templates/contactMessageList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'contactMessageList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
             'listHeaders' => $listHeaders,

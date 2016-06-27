@@ -56,7 +56,7 @@ class MemberUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberRegister.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberRegister.php');
         $componentTemplate->setData([
             'requiredFields' => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
@@ -115,7 +115,7 @@ class MemberUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberLogin.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberLogin.php');
         $componentTemplate->setData([
             'requiredFields' => $requiredFields
         ]);
@@ -234,7 +234,7 @@ class MemberUserController extends BaseController
 
         // create component
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/membersList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'membersList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
             'listHeaders' => $listHeaders,
@@ -308,7 +308,7 @@ class MemberUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberForgotPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberForgotPassword.php');
         $componentTemplate->setData([
             'formUrl' => '/forgot-password',
             'requiredFields' => $requiredFields
@@ -351,7 +351,7 @@ class MemberUserController extends BaseController
         $page->setTitle('Reset your password');
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberResetPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberResetPassword.php');
         $componentTemplate->setData([
             'tokenValid' => $output->getSuccess(),
             'email' => $inputs['email'],
@@ -458,7 +458,7 @@ class MemberUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/memberView.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberView.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 
@@ -636,7 +636,7 @@ class MemberUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath('components/user/templates/profile.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'profile.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 
