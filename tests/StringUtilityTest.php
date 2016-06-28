@@ -4,7 +4,7 @@
 
     use CodeJetter\core\utility\StringUtility;
 
-    class UtilityTest extends \PHPUnit_Framework_TestCase
+    class StringUtilityTest extends \PHPUnit_Framework_TestCase
     {
         public function testGetClassNameFromNamespace()
         {
@@ -86,6 +86,66 @@
 
             foreach ($inputOutputs as $inputOutput) {
                 $this->assertEquals($inputOutput['output'], $utility->stringLastReplace($inputOutput['search'], $inputOutput['replace'], $inputOutput['input']));
+            }
+        }
+
+        public function testCamelCaseToSnakeCase()
+        {
+            $utility = new StringUtility();
+
+            $inputOutputs = [
+                [
+                    'input' => 'AdminUser',
+                    'output' => 'Admin_User'
+                ],
+                [
+                    'input' => 'GroupUserXref',
+                    'output' => 'Group_User_Xref'
+                ],
+                [
+                    'input' => 'GroupMemberUserXref',
+                    'output' => 'Group_Member_User_Xref'
+                ],
+                [
+                    'input' => 'HttpRequests',
+                    'output' => 'Http_Requests'
+                ]
+            ];
+
+            foreach ($inputOutputs as $inputOutput) {
+                $this->assertEquals($inputOutput['output'], $utility->camelCaseToSnakeCase($inputOutput['input']));
+            }
+        }
+
+        public function testRemoveURLProtocol()
+        {
+            $utility = new StringUtility();
+
+            $inputOutputs = [
+                [
+                    'input' => 'www.example.com',
+                    'output' => 'example.com'
+                ],
+                [
+                    'input' => 'http://example.com',
+                    'output' => 'example.com'
+                ],
+                [
+                    'input' => 'http://www.example.com',
+                    'output' => 'example.com'
+                ],
+                [
+                    'input' => 'http://www.example.com/test',
+                    'output' => 'example.com/test'
+                ],
+                [
+                    'input' => 'http://test.example.com/test',
+                    'output' => 'test.example.com/test'
+                ],
+            ];
+
+            foreach ($inputOutputs as $inputOutput) {
+                $this->assertEquals($inputOutput['output'], $utility->removeURLProtocol($inputOutput['input']));
             }
         }
     }

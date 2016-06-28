@@ -59,7 +59,7 @@ class StringUtility
     }
 
     /**
-     * Convert camel case to snake case e.g. AdminUser becomes admin_user
+     * Convert camel case to snake case e.g. AdminUser becomes Admin_User
      *
      * @param $string
      *
@@ -72,11 +72,12 @@ class StringUtility
 
     /**
      * Remove http and www from url
+     * www.example.com/test becomes example.com/test
      *
      * @param  $domain
      * @return mixed
      */
-    public static function removeURLProtocol($domain)
+    public function removeURLProtocol($domain)
     {
         // If scheme not included, prepend it
         if (!preg_match('#^http(s)?://#', $domain)) {
@@ -85,7 +86,9 @@ class StringUtility
 
         $urlParts = parse_url($domain);
 
+        $path = empty($urlParts['path']) ? '' : $urlParts['path'];
+
         // remove www
-        return preg_replace('/^www\./', '', $urlParts['host']);
+        return preg_replace('/^www\./', '', $urlParts['host'] . $path);
     }
 }
