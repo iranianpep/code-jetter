@@ -139,8 +139,12 @@
                     'output' => 'example.com/test'
                 ],
                 [
-                    'input' => 'http://test.example.com/test',
-                    'output' => 'test.example.com/test'
+                    'input' => 'http://test.example.com/test?id=1',
+                    'output' => 'test.example.com/test?id=1'
+                ],
+                [
+                    'input' => 'http://test.example.com?id=1',
+                    'output' => 'test.example.com?id=1'
                 ],
             ];
 

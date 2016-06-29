@@ -87,8 +87,9 @@ class StringUtility
         $urlParts = parse_url($domain);
 
         $path = empty($urlParts['path']) ? '' : $urlParts['path'];
+        $query = empty($urlParts['query']) ? '' : '?' . $urlParts['query'];
 
         // remove www
-        return preg_replace('/^www\./', '', $urlParts['host'] . $path);
+        return preg_replace('/^www\./', '', $urlParts['host'] . $path . $query);
     }
 }
