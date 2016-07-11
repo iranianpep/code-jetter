@@ -19,7 +19,7 @@ class PageController extends BaseController
     public function index()
     {
         $page = new Page($this->getRouteInfo()->getAccessRole());
-        $page->setTitle('Welcome');
+        //$page->setTitle('Welcome');
 
         $componentTemplate = new ComponentTemplate();
         $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'defaultIndex.php');

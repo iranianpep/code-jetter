@@ -145,10 +145,8 @@ class Router
             $result = ['info' => $routes['simple'][$requestMethod][$URLPath]];
         } else {
             // look for regex
-            $regexRoutes = $routes['regex'][$requestMethod];
-
-            if (!empty($regexRoutes)) {
-                foreach ($regexRoutes as $routePattern => $routeInfo) {
+            if (!empty($routes['regex'][$requestMethod])) {
+                foreach ($routes['regex'][$requestMethod] as $routePattern => $routeInfo) {
                     // find the match and return parameters if there is any
                     $found = $this->regexMatch($routePattern, $URLPath);
 

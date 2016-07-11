@@ -2,7 +2,13 @@
 body {
 	font-family: 'Droid Sans', sans-serif;
 	font-weight: 400;
+    font-size: 16px;
 	padding-top: 61px;
+}
+
+p {
+	line-height:28px;
+	text-align:justify;
 }
 
 /*LINKS*/
@@ -15,11 +21,17 @@ a {
 }
 a:hover { color: #3aa3e3; text-decoration: none; }
 
-/*Content*/
-.container-fluid {
-	background-color: #f7f7f7;
-	padding-top: 35px;
-}
+/* To add margin to bootstrap row */
+.vertical-offset  { margin-top: 2px; }
+.vertical-offset-1 { margin-top: 5px; }
+.vertical-offset-2 { margin-top: 10px; }
+.vertical-offset-3 { margin-top: 15px; }
+.vertical-offset-4 { margin-top: 30px; }
+.vertical-offset-5 { margin-top: 40px; }
+.vertical-offset-6 { margin-top: 60px; }
+.vertical-offset-7 { margin-top: 80px; }
+.vertical-offset-8 { margin-top: 100px; }
+.vertical-offset-9 { margin-top: 150px; }
 
 /* To Fix Bootstrap Modal issue */
 body {
@@ -39,11 +51,42 @@ body.modal-open {
 	padding-bottom: 10px;
 }
 
+/* For opacity in background */
+.alpha60 {
+	/* Fallback for web browsers that don't support RGBa */
+	background-color: rgb(0, 0, 0);
+	/* RGBa with 0.6 opacity */
+	background-color: rgba(0, 0, 0, 0.6);
+	/* For IE 5.5 - 7*/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
 .intro {
 	font-size: 15px;
 	padding-left: 2px;
 	padding-bottom: 10px;
 	line-height: 25px;
+}
+
+.intro-quote {
+	color: #eee;
+	height: 50px;
+	line-height: 50px;
+	padding: 0px 10px 0px 10px;
+}
+
+.demo-bg {
+    min-height:450px;
+    background:url(../images/demo_bg.png) no-repeat center fixed;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
+    background-size:cover;
+    border-bottom-style:solid;
+    border-bottom-color:#d3d3d3;
+    border-bottom-width:1px
 }
 
 /*btn default*/

@@ -28,7 +28,11 @@
     $pageIntro = $page->getIntro();
     $pageCategory = $page->getCategory();
 
-    $banner = "<!-- banner -->
+    // if page title and intro are not see, do nothing
+    if (empty($pageTitle) && empty($pageIntro)) {
+        $banner = '';
+    } else {
+        $banner = "<!-- banner -->
 <div id='banner'>
     <div class='container intro_wrapper'>
         <div class='inner_content'>
@@ -39,6 +43,7 @@
     </div>
 </div>
 <!--/ banner -->";
+    }
 
     $components = '';
 foreach ($this->getComponentTemplates() as $componentTemplate) {

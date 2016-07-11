@@ -3,7 +3,7 @@
     $data = $this->getCurrentComponentTemplate()->getData();
 
     return "<div class='container-fluid'>
-        <div class='row'>
+        <div class='row vertical-offset-4'>
             <div class='col-md-6 col-md-offset-3'>
                 <form role='form' data-url='/contact/new' data-reset-on-success='true'>
                     <div class='row'>
