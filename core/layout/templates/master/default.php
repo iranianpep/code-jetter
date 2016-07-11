@@ -96,7 +96,7 @@ if ($config->get('debugTemplates') === true) {
      */
     return "<!DOCTYPE html>
 <html lang='en'>
-<html>{$headerHtml}
+{$headerHtml}
 <body>
 {$menuHtml}
 {$banner}
