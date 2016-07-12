@@ -8,7 +8,7 @@
     /** @var CodeJetter\core\FormHandler $formHandler */
 
     return "<div class='container-fluid'>
-    <div class='row'>
+    <div class='row vertical-offset-4'>
         <div class='col-md-4 col-md-offset-4'>
             <form name='forgotPasswordForm' id='forgotPasswordForm' data-url='{$url}' data-reset-on-success='true'>
                 <div class='row'>

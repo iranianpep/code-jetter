@@ -120,7 +120,7 @@
     $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/contact/safe-batch-delete-message');
 
     return "<div class='container-fluid'>
-    <div class='row'>
+    <div class='row vertical-offset-4'>
         <div class='col-md-offset-1 col-md-10'>
             {$searchFieldHtml}
             <div class='row'>

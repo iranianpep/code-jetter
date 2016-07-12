@@ -80,7 +80,7 @@ if (isset($data['statuses'])) {
     ]);
 
 return "<div class='container-fluid'>
-        <div class='row'>
+        <div class='row vertical-offset-4'>
 <!-- details -->
 <div class='col-md-6 col-md-offset-3'>
     <form role='form' data-url='{$updateFormUrl}' data-submitter='global' data-refresh='true'>

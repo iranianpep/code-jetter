@@ -116,9 +116,9 @@ class MemberGroupController extends BaseController
 
         // create the page for view
         $page = new Page($this->getRouteInfo()->getAccessRole());
-        $page->setTitle('Group List');
+        $page->setTitle('Groups');
         $page->setIntro('Here you can manage the groups for members');
-        $page->setCategory('Group Management');
+        //$page->setCategory('Group Management');
 
         (new View())->make(
             $page,

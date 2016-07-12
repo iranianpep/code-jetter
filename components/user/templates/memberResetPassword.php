@@ -11,7 +11,7 @@ if ($data['tokenValid'] !== true) {
 }
 
 return "<div class='container-fluid'>
-    <div class='row'>
+    <div class='row vertical-offset-4'>
         <div class='col-md-offset-1 col-md-10'>
             Enter New Password
             <section id='intro' class='container-fluid'>
