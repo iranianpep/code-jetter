@@ -72,7 +72,7 @@ body.modal-open {
 
 .intro-quote {
 	color: #eee;
-	height: 50px;
+	min-height: 50px;
 	line-height: 50px;
 	padding: 0px 10px 0px 10px;
 }
