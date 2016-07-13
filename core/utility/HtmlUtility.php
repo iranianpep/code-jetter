@@ -51,10 +51,10 @@ class HtmlUtility
             return '';
         }
 
-        $multiple = (isset($configs['multiple']) && $configs['multiple'] === true) ? 'multiple' : '';
-        $name = ($name !== null) ? "name = '{$name}'" : '';
-        $class = isset($configs['class']) ? "class = '{$configs['class']}'" : '';
-        $id = isset($configs['id']) ? "id = '{$configs['id']}'" : '';
+        $multiple = (isset($configs['multiple']) && $configs['multiple'] === true) ? ' multiple' : '';
+        $name = ($name !== null) ? " name='{$name}'" : '';
+        $class = isset($configs['class']) ? " class='{$configs['class']}'" : '';
+        $id = isset($configs['id']) ? " id='{$configs['id']}'" : '';
 
         if (!isset($configs['ucfirstTitle'])) {
             $configs['ucfirstTitle'] = false;
@@ -62,20 +62,20 @@ class HtmlUtility
 
         $stringUtility = new StringUtility();
 
-        $html = "<select {$name} {$class} {$id} {$multiple}>";
+        $html = "<select{$name}{$class}{$id}{$multiple}>";
         foreach ($options as $key => $option) {
             // determine checked option(s)
             if (is_array($selected) && in_array($option, $selected)) {
-                $selectedOption = 'selected';
+                $selectedOption = ' selected';
             } else {
-                $selectedOption = $option == $selected ? 'selected' : '';
+                $selectedOption = $option == $selected ? ' selected' : '';
             }
 
             // determine the title
             if (!empty($configs['titleMapper']) && is_array($configs['titleMapper'])
                 && array_key_exists($option, $configs['titleMapper'])) {
                 $title = $configs['titleMapper'][$option];
-            } elseif (isset($configs['titleMapper']) && $configs['titleMapper'] = 'key') {
+            } elseif (isset($configs['titleMapper']) && $configs['titleMapper'] == 'key') {
                 $title = $key;
             } else {
                 $title = $option;
@@ -86,7 +86,7 @@ class HtmlUtility
             // If in the future, string should not be converted to its html entities, disable it in the configs
             $title = $stringUtility->prepareForView($title);
 
-            $html .= "<option value='{$option}' {$selectedOption}>{$title}</option>";
+            $html .= "<option value='{$option}'{$selectedOption}>{$title}</option>";
         }
         $html .= "</select>";
 
