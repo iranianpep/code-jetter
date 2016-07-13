@@ -88,7 +88,7 @@ class HtmlUtility
 
             $html .= "<option value='{$option}'{$selectedOption}>{$title}</option>";
         }
-        $html .= "</select>";
+        $html .= '</select>';
 
         return $html;
     }

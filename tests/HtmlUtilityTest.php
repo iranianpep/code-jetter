@@ -75,6 +75,17 @@ class HtmlUtilityTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 'o' => "<select name='statuses'><option value='a'>0</option><option value='b' selected>1</option></select>"
+            ],
+            [
+                'i' => [
+                    'options' => ['a'],
+                    'name' => 'statuses',
+                    'selected' => 'b',
+                    'configs' => [
+                        'titleMapper' => 'key'
+                    ]
+                ],
+                'o' => "<select name='statuses'><option value='a'>0</option></select>"
             ]
         ];
 
