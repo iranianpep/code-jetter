@@ -81,7 +81,8 @@ class HtmlUtility
                 $title = $option;
             }
 
-            $title = $configs['ucfirstTitle'] === true ? ucfirst($title) : $title;
+            $title = isset($configs['ucfirstTitle']) && $configs['ucfirstTitle'] === true
+                ? ucfirst($title) : $title;
 
             // If in the future, string should not be converted to its html entities, disable it in the configs
             $title = $stringUtility->prepareForView($title);
@@ -113,38 +114,38 @@ class HtmlUtility
     {
         $html = '';
 
+        $type = 'radio';
+        $name = ($name !== null) ? " name='{$name}'" : '';
+        $class = isset($configs['class']) ? " class = '{$configs['class']}'" : '';
+
         $stringUtility = new StringUtility();
-        foreach ($options as $option) {
-            $optionName = isset($name) ? $name : '';
-            $checkedOption = ($option == $checked) ? 'checked' : '';
+        foreach ($options as $key => $option) {
+            $checkedOption = ($option == $checked) ? ' checked' : '';
 
             // determine the title
-            $title = $option;
-            if (array_key_exists($option, $configs['titleMapper'])) {
+            if (!empty($configs['titleMapper']) && is_array($configs['titleMapper'])
+                && array_key_exists($option, $configs['titleMapper'])) {
                 $title = $configs['titleMapper'][$option];
+            } elseif (isset($configs['titleMapper']) && $configs['titleMapper'] == 'key') {
+                $title = $key;
+            } else {
+                $title = $option;
             }
 
-            $title = ($configs['ucfirstTitle'] === true) ? ucfirst($title) : $title;
-
-            $class = isset($configs['class']) ? "class = '{$configs['class']}'" : '';
+            $title = isset($configs['ucfirstTitle']) && $configs['ucfirstTitle'] === true ?
+                ucfirst($title) : $title;
 
             // determine disabled
-            $disabled = (in_array($option, $configs['disabled'])) ? $disabled = 'disabled' : '';
-
-            $title = ($configs['ucfirstTitle'] === true) ? ucfirst($title) : $title;
+            $disabled = isset($configs['disabled']) && in_array($option, $configs['disabled']) ?
+                $disabled = ' disabled' : '';
 
             // If in the future, string should not be converted to its html entities, disable it in the configs
             $title = $stringUtility->prepareForView($title);
 
-            $type = 'radio';
-
             if (isset($configs['inline'])) {
-                $html .= "<label {$class}>
-<input type='{$type}' {$optionName} value='{$option['value']}' {$checkedOption} {$disabled}> {$title}</label>";
+                $html .= "<label{$class}><input type='{$type}'{$name} value='{$option['value']}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div {$class}><label><input type='{$type}' {$optionName}
-value='{$option}' {$checkedOption} {$disabled}> {$title}
-</label></div>";
+                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$option}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
@@ -171,44 +172,44 @@ value='{$option}' {$checkedOption} {$disabled}> {$title}
     {
         $html = '';
 
-        $stringUtility = new StringUtility();
-        foreach ($options as $option) {
-            $optionName = isset($name) ? $name : '';
+        $name = ($name !== null) ? " name='{$name}'" : '';
+        $type = 'checkbox';
 
+        $class = isset($configs['class']) ? " class = '{$configs['class']}'" : '';
+
+        $stringUtility = new StringUtility();
+        foreach ($options as $key => $option) {
             // determine checked option(s)
             if (is_array($checked) && in_array($option, $checked)) {
-                $checkedOption = 'checked';
+                $checkedOption = ' checked';
             } else {
-                $checkedOption = ($option == $checked) ? 'checked' : '';
+                $checkedOption = ($option == $checked) ? ' checked' : '';
             }
 
             // determine the title
-            $title = $option;
-            if (array_key_exists($option, $configs['titleMapper'])) {
+            if (!empty($configs['titleMapper']) && is_array($configs['titleMapper'])
+                && array_key_exists($option, $configs['titleMapper'])) {
                 $title = $configs['titleMapper'][$option];
+            } elseif (isset($configs['titleMapper']) && $configs['titleMapper'] == 'key') {
+                $title = $key;
+            } else {
+                $title = $option;
             }
 
-            $title = ($configs['ucfirstTitle'] === true) ? ucfirst($title) : $title;
-
-            $class = isset($configs['class']) ? "class = '{$configs['class']}'" : '';
-
-            // determine disabled
-            $disabled = (in_array($option, $configs['disabled'])) ? $disabled = 'disabled' : '';
-
-            $title = ($configs['ucfirstTitle'] === true) ? ucfirst($title) : $title;
+            $title = isset($configs['ucfirstTitle']) && $configs['ucfirstTitle'] === true ?
+                ucfirst($title) : $title;
 
             // If in the future, string should not be converted to its html entities, disable it in the configs
             $title = $stringUtility->prepareForView($title);
 
-            $type = 'checkbox';
+            // determine disabled
+            $disabled = isset($configs['disabled']) && in_array($option, $configs['disabled']) ?
+                $disabled = ' disabled' : '';
 
             if (isset($configs['inline'])) {
-                $html .= "<label {$class}>
-<input type='{$type}' {$optionName} value='{$option['value']}' {$checkedOption} {$disabled}> {$title}</label>";
+                $html .= "<label{$class}><input type='{$type}'{$name} value='{$option['value']}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div {$class}><label>
-<input type='{$type}' {$optionName} value='{$option}' {$checkedOption} {$disabled}> {$title}
-</label></div>";
+                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$option}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
@@ -217,11 +218,11 @@ value='{$option}' {$checkedOption} {$disabled}> {$title}
     
     public function generateCheckbox($name = null, $value = null, $class = null)
     {
-        $nameHtml = $name !== null ? "name='{$name}'" : '';
-        $valueHtml = $value !== null ? "value='{$value}'" : '';
-        $classHtml = $class !== null ? "class = {$class}" : '';
+        $nameHtml = $name !== null ? " name='{$name}'" : '';
+        $valueHtml = $value !== null ? " value='{$value}'" : '';
+        $classHtml = $class !== null ? " class = {$class}" : '';
 
-        return "<input type='checkbox' {$nameHtml} {$valueHtml} {$classHtml}>";
+        return "<input type='checkbox'{$nameHtml}{$valueHtml}{$classHtml}>";
     }
 
     /**
@@ -294,7 +295,8 @@ value='{$option}' {$checkedOption} {$disabled}> {$title}
         $formClass,
         $formAction,
         $submitter = 'global',
-        $refresh = true) {
+        $refresh = true
+    ) {
         return "<div class='modal fade' id='{$divId}' tabindex='-1' role='dialog' aria-labelledby='{$labelId}'>
   <div class='modal-dialog modal-sm' role='document'>
     <div class='modal-content'>
