@@ -89,4 +89,20 @@ abstract class BaseController
         return 'components' . DIRECTORY_SEPARATOR . strtolower($component) . DIRECTORY_SEPARATOR . 'templates' .
         DIRECTORY_SEPARATOR;
     }
+
+    /**
+     * @param bool $lowercase
+     *
+     * @return string
+     */
+    public function getComponentName($lowercase = false)
+    {
+        $componentName = $this->getRouteInfo()->getComponent();
+
+        if ($lowercase === true) {
+            return strtolower($componentName);
+        } else {
+            return $componentName;
+        }
+    }
 }
