@@ -87,7 +87,10 @@ class HtmlUtility
             // If in the future, string should not be converted to its html entities, disable it in the configs
             $title = $stringUtility->prepareForView($title);
 
-            $html .= "<option value='{$option}'{$selectedOption}>{$title}</option>";
+            // determine the value
+            $value = (!empty($configs['keyAsValue'])) ? $key : $option;
+
+            $html .= "<option value='{$value}'{$selectedOption}>{$title}</option>";
         }
         $html .= '</select>';
 
