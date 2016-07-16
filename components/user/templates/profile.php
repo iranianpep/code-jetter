@@ -7,7 +7,7 @@
     /** @var CodeJetter\core\FormHandler $formHandler */
 /** @var CodeJetter\core\View $this */
 $this->getFooter()->addScriptFile($this->getConfig()->get('URL') . '/scripts/chosen.jquery.min.js');
-$this->getHeader()->addStyleFile($this->getConfig()->get('URL') . '/styles/chosen.min.css');
+$this->getHeader()->addStyleFile($this->getConfig()->get('URL') . '/styles/bootstrap-chosen.min.css');
 $data = $this->getCurrentComponentTemplate()->getData();
 $member = $data['member'];
 $updateFormUrl = $data['updateFormUrl'];
