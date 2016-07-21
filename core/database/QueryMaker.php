@@ -61,6 +61,45 @@ class QueryMaker
         return $query;
     }
 
+    public function selectJoinQuery(array $joins, array $criteria = [], $fromColumns = '*', $order = '', $start = 0, $limit = 0)
+    {
+        // append from columns
+        if (empty($fromColumns)) {
+            // from all
+            $fromColumns = '*';
+        } elseif (is_array($fromColumns)) {
+            $fromColumns = implode(', ', $fromColumns);
+        }
+
+        $query = "SELECT {$fromColumns} FROM {$this->getTable()}";
+
+        if (!empty($joins)) {
+            //$counter = 2;
+            foreach ($joins as $key => $join) {
+                $query .= " JOIN {$join['table']}";
+
+                if (empty($join['on']) || !is_array($join['on'])) {
+                    throw new \Exception("join array must have 'on'");
+                }
+
+                $query .= ' ON ' . implode(' = ', $join['on']);
+            }
+        }
+
+        // append where clause - criteria
+        $query .= $this->where($criteria);
+
+        // append order by if it is specified
+        $query .= $this->orderBy($order);
+
+        // append start and limit if they are specified
+        $query .= $this->startLimit($start, $limit);
+
+        $query .= ';';
+
+        return $query;
+    }
+
     /**
      * @param array $criteria
      * @param       $fieldsValues
@@ -96,7 +135,8 @@ class QueryMaker
             if (isset($fieldValue['bind']) && $fieldValue['bind'] === false) {
                 $query .= "{$fieldValue['column']} = {$fieldValue['value']}{$comma}";
             } else {
-                $query .= "{$fieldValue['column']} = :{$fieldValue['column']}{$comma}";
+                $placeholder = $this->preparePlaceholder($fieldValue['column']);
+                $query .= "{$fieldValue['column']} = :{$placeholder}{$comma}";
             }
         }
 
@@ -136,7 +176,8 @@ class QueryMaker
             if (isset($fieldValue['bind']) && $fieldValue['bind'] === false) {
                 $parameters[] = "{$fieldValue['value']}";
             } else {
-                $parameters[] = ":{$fieldValue['column']}";
+                $placeholder = $this->preparePlaceholder($fieldValue['column']);
+                $parameters[] = ":{$placeholder}";
             }
         }
 
@@ -178,7 +219,8 @@ class QueryMaker
                 if (isset($fieldValue['bind']) && $fieldValue['bind'] === false) {
                     $parameters[] = "{$fieldValue['value']}";
                 } else {
-                    $parameters[] = ":{$fieldValue['column']}{$key}";
+                    $placeholder = $this->preparePlaceholder($fieldValue['column']);
+                    $parameters[] = ":{$placeholder}{$key}";
                 }
             }
             $parameters = implode(',', $parameters);
@@ -287,18 +329,21 @@ class QueryMaker
                         // value is array
                         $newParameters = [];
                         foreach ($aCriteria['value'] as $key => $value) {
-                            $newParameters[] = ":{$aCriteria['column']}{$counter}{$key}";
+                            $placeholder = $this->preparePlaceholder($aCriteria['column']);
+                            $newParameters[] = ":{$placeholder}{$counter}{$key}";
                         }
 
                         $toBeAppended .= '('. implode(',', $newParameters) .') ';
                     } else {
                         // value is not array
-                        $toBeAppended .= "(:{$aCriteria['column']}{$counter}) ";
+                        $placeholder = $this->preparePlaceholder($aCriteria['column']);
+                        $toBeAppended .= "(:{$placeholder}{$counter}) ";
                     }
                 } else {
                     // IS NULL and IS NOT NULL do NOT need a parameter
                     if ($aCriteria['operator'] !== 'IS NULL' && $aCriteria['operator'] !== 'IS NOT NULL') {
-                        $toBeAppended .= ":{$aCriteria['column']}{$counter} ";
+                        $placeholder = $this->preparePlaceholder($aCriteria['column']);
+                        $toBeAppended .= ":{$placeholder}{$counter} ";
                     }
                 }
 
@@ -399,7 +444,8 @@ class QueryMaker
                     $fieldValue['type'] = \PDO::PARAM_STR;
                 }
 
-                $st->bindValue(':' . $fieldValue['column'], $fieldValue['value'], $fieldValue['type']);
+                $placeholder = $this->preparePlaceholder($fieldValue['column']);
+                $st->bindValue(':' . $placeholder, $fieldValue['value'], $fieldValue['type']);
             }
         }
 
@@ -437,19 +483,20 @@ class QueryMaker
                     continue;
                 }
 
+                $placeholder = $this->preparePlaceholder($aCriteria['column']);
                 if ($aCriteria['operator'] === 'IN' || $aCriteria['operator'] === 'NOT IN') {
                     if (is_array($aCriteria['value'])) {
                         // value is array
                         foreach ($aCriteria['value'] as $key => $value) {
                             // to override the automatic detection $aCriteria['type'] needs to be passed
                             $type = empty($aCriteria['type']) ? $this->detectParameterType($value) : $aCriteria['type'];
-                            $st->bindValue(':' . $aCriteria['column'] . $counter . $key, $value, $type);
+                            $st->bindValue(':' . $placeholder . $counter . $key, $value, $type);
                         }
                     } else {
                         // value is not array
                         // to override the automatic detection $aCriteria['type'] needs to be passed
                         $type = empty($aCriteria['type']) ? $this->detectParameterType($aCriteria['value']) : $aCriteria['type'];
-                        $st->bindValue(':' . $aCriteria['column'] . $counter, $aCriteria['value'], $type);
+                        $st->bindValue(':' . $placeholder . $counter, $aCriteria['value'], $type);
                     }
                 } else {
                     // set the type to string if it is empty
@@ -457,7 +504,7 @@ class QueryMaker
                         $aCriteria['type'] = \PDO::PARAM_STR;
                     }
 
-                    $st->bindValue(':' . $aCriteria['column'] . $counter, $aCriteria['value'], $aCriteria['type']);
+                    $st->bindValue(':' . $placeholder . $counter, $aCriteria['value'], $aCriteria['type']);
                 }
             }
         }
@@ -503,7 +550,8 @@ class QueryMaker
                             $fieldValue['type'] = \PDO::PARAM_STR;
                         }
 
-                        $st->bindValue(':' . $fieldValue['column'] . $key, $fieldValue['value'], $fieldValue['type']);
+                        $placeholder = $this->preparePlaceholder($fieldValue['column']);
+                        $st->bindValue(':' . $placeholder . $key, $fieldValue['value'], $fieldValue['type']);
                     }
                 }
             }
@@ -550,5 +598,17 @@ class QueryMaker
     private function detectParameterType($value)
     {
         return is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR;
+    }
+
+    /**
+     * PDO placeholders can only be: [a-zA-Z0-9_]+
+     *
+     * @param $placeholder
+     *
+     * @return mixed
+     */
+    private function preparePlaceholder($placeholder)
+    {
+        return preg_replace("/[^a-zA-Z0-9_]/", '_', $placeholder);
     }
 }

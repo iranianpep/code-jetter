@@ -450,5 +450,101 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expectedQuery, $query);
     }
+
+    public function testSelectJoinQuery()
+    {
+        $queryMaker = new \CodeJetter\core\database\QueryMaker('cj_states');
+
+        $joins = [
+            [
+                'table' => 'cj_cities',
+                'on' => [
+                    'cj_states.id',
+                    'cj_cities.stateId'
+                ]
+            ],
+            [
+                'table' => 'cj_countries',
+                'on' => [
+                    'cj_countries.code',
+                    'cj_states.countryCode'
+                ]
+            ]
+        ];
+
+        $query = $queryMaker->selectJoinQuery($joins);
+        $expectedQuery = "SELECT * FROM cj_states JOIN cj_cities ON cj_states.id = cj_cities.stateId JOIN cj_countries ON cj_countries.code = cj_states.countryCode;";
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker('cj_states');
+
+        $joins = [
+            [
+                'table' => 'cj_cities',
+                'on' => [
+                    'cj_states.id',
+                    'cj_cities.stateId'
+                ]
+            ],
+            [
+                'table' => 'cj_countries',
+                'on' => [
+                    'cj_countries.code',
+                    'cj_states.countryCode'
+                ]
+            ]
+        ];
+
+        $fromColumns = [
+            'cj_states.name',
+            'cj_countries.name'
+        ];
+
+        $query = $queryMaker->selectJoinQuery($joins, [], $fromColumns);
+        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM cj_states JOIN cj_cities ON cj_states.id = cj_cities.stateId JOIN cj_countries ON cj_countries.code = cj_states.countryCode;";
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker('cj_states');
+
+        $joins = [
+            [
+                'table' => 'cj_cities',
+                'on' => [
+                    'cj_states.id',
+                    'cj_cities.stateId'
+                ]
+            ],
+            [
+                'table' => 'cj_countries',
+                'on' => [
+                    'cj_countries.code',
+                    'cj_states.countryCode'
+                ]
+            ]
+        ];
+
+        $fromColumns = [
+            'cj_states.name',
+            'cj_countries.name'
+        ];
+
+        $criteria = [
+            [
+                'column' => 'cj_states.status',
+                'value' => 'active'
+            ],
+            [
+                'column' => 'cj_states.archivedAt',
+                'operator' => 'IS NULL'
+            ]
+        ];
+
+        $query = $queryMaker->selectJoinQuery($joins, $criteria, $fromColumns, 'cj_states.status ASC', 0, 10);
+        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM cj_states JOIN cj_cities ON cj_states.id = cj_cities.stateId JOIN cj_countries ON cj_countries.code = cj_states.countryCode WHERE cj_states.status = :cj_states_status1 AND cj_states.archivedAt IS NULL ORDER BY cj_states.status ASC LIMIT :limit;";
+
+        $this->assertEquals($expectedQuery, $query);
+    }
 }
  

@@ -28,6 +28,7 @@ abstract class BaseMapper implements ICrud
      */
     public function __construct($database = null)
     {
+        // TODO this needs to be in its own function
         $className = (new StringUtility())->getClassNameFromNamespace(get_called_class());
         $mapperTableRelations = Registry::getConfigClass()->get('mapperTableRelations');
 
