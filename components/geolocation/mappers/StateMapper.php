@@ -72,7 +72,7 @@ class StateMapper extends BaseMapper
             $st = (new QueryMaker())->bindValues($st, $criteria, $start, $limit);
             $st->execute();
 
-            $result = $st->fetchAll();
+            $result = $st->fetchAll(\PDO::FETCH_ASSOC);
 
             if ($returnTotalNo == true) {
                 $total = $this->countByCriteria($criteria);
@@ -83,5 +83,33 @@ class StateMapper extends BaseMapper
         } catch (\PDOException $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
+    }
+
+    public function getStatesCitiesGroupedByStates(
+        array $criteria = [],
+        $order = null,
+        $start = 0,
+        $limit = 0,
+        $excludeArchived = true
+    ) {
+        $stateTable = $this->getTable();
+        $cityTable = (new CityMapper())->getTable();
+
+        $fromColumns = [
+            "{$stateTable}.name AS state",
+            "{$cityTable}.name AS city",
+            "{$cityTable}.id AS cityId",
+        ];
+
+        $stateCities = $this->getStatesCities($criteria, $fromColumns, $order, $start, $limit, false, $excludeArchived);
+
+        $groupedCities = [];
+        if (!empty($stateCities)) {
+            foreach ($stateCities as $city) {
+                $groupedCities[$city['state']][] = $city;
+            }
+        }
+
+        return $groupedCities;
     }
 }
