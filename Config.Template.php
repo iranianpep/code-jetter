@@ -20,8 +20,6 @@ class ConfigTemplate extends BaseConfig
         // this is added to each model
         'mapperSuffix' => 'Mapper',
         'defaultTimeZone' => 'Australia/Melbourne',
-        'defaultLanguageCode' => 'AU',
-        'defaultCity' => 'Melbourne',
         // must have a file in language folder e.g. en.json
         'defaultLanguage' => 'en',
         'defaultComponentConfigFile' => 'config.json',
