@@ -1,6 +1,6 @@
 <?php
 
-namespace CodeJetter\components\user;
+namespace CodeJetter\components\geolocation;
 
 use CodeJetter\core\BaseConfig;
 
