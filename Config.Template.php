@@ -166,7 +166,7 @@ class ConfigTemplate extends BaseConfig
             'MemberUserMapper' => 'member_users',
             'AdminUserMapper' => 'admin_users',
             'MemberGroupMapper' => 'member_groups',
-            'GroupMemberUserXrefMapper' => 'group_member_user_xref'
+            'GroupMemberUserXrefMapper' => 'group_member_user_xrefs'
         ],
         /**
          * Error handler & logger

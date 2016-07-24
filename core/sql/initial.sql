@@ -62,10 +62,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cj_group_member_user_xref`
+-- Table structure for table `cj_group_member_user_xrefs`
 --
 
-CREATE TABLE `cj_group_member_user_xref` (
+CREATE TABLE `cj_group_member_user_xrefs` (
 `id` int(11) unsigned NOT NULL,
   `groupId` int(11) unsigned NOT NULL,
   `memberId` int(11) unsigned NOT NULL,
@@ -76,10 +76,10 @@ CREATE TABLE `cj_group_member_user_xref` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Triggers `cj_group_member_user_xref`
+-- Triggers `cj_group_member_user_xrefs`
 --
 DELIMITER //
-CREATE TRIGGER `updateModifiedAtGroupMemberUserXref` BEFORE UPDATE ON `cj_group_member_user_xref`
+CREATE TRIGGER `updateModifiedAtGroupMemberUserXref` BEFORE UPDATE ON `cj_group_member_user_xrefs`
  FOR EACH ROW SET NEW.modifiedAt = CURRENT_TIMESTAMP
 //
 DELIMITER ;
@@ -153,10 +153,10 @@ ALTER TABLE `cj_admin_users`
  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cj_group_member_user_xref`
+-- Indexes for table `cj_group_member_user_xrefs`
 --
-ALTER TABLE `cj_group_member_user_xref`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `Unique relation` (`groupId`,`memberId`,`live`), ADD KEY `ehsan_group_member_user_xref_ibfk_2` (`memberId`);
+ALTER TABLE `cj_group_member_user_xrefs`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `Unique relation` (`groupId`,`memberId`,`live`), ADD KEY `ehsan_group_member_user_xrefs_ibfk_2` (`memberId`);
 
 --
 -- Indexes for table `cj_member_groups`
@@ -180,9 +180,9 @@ ALTER TABLE `cj_member_users`
 ALTER TABLE `cj_admin_users`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `cj_group_member_user_xref`
+-- AUTO_INCREMENT for table `cj_group_member_user_xrefs`
 --
-ALTER TABLE `cj_group_member_user_xref`
+ALTER TABLE `cj_group_member_user_xrefs`
 MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `cj_member_groups`
@@ -199,11 +199,11 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=207;
 --
 
 --
--- Constraints for table `cj_group_member_user_xref`
+-- Constraints for table `cj_group_member_user_xrefs`
 --
-ALTER TABLE `cj_group_member_user_xref`
-ADD CONSTRAINT `cj_group_member_user_xref_ibfk_1` FOREIGN KEY (`groupId`) REFERENCES `cj_member_groups` (`id`) ON DELETE CASCADE,
-ADD CONSTRAINT `cj_group_member_user_xref_ibfk_2` FOREIGN KEY (`memberId`) REFERENCES `cj_member_users` (`id`) ON DELETE CASCADE;
+ALTER TABLE `cj_group_member_user_xrefs`
+ADD CONSTRAINT `cj_group_member_user_xrefs_ibfk_1` FOREIGN KEY (`groupId`) REFERENCES `cj_member_groups` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `cj_group_member_user_xrefs_ibfk_2` FOREIGN KEY (`memberId`) REFERENCES `cj_member_users` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -43,17 +43,12 @@ abstract class BaseMapper implements ICrud
             // remove mapper from the end of the string
             $snakeCaseClassName = preg_replace('#_mapper$#', '', $snakeCaseClassName);
 
-            // add 's' if it is NOT an xref mapper
-            if (!preg_match('#_xref$#', $snakeCaseClassName)) {
-                // replace 'y' with 'ie' if 'y' is the last character
-                if (substr($snakeCaseClassName, -1) === 'y') {
-                    $snakeCaseClassName = substr_replace($snakeCaseClassName, 'ie', -1);
-                }
-
-                $mapperTable = $snakeCaseClassName . 's';
-            } else {
-                $mapperTable = $snakeCaseClassName;
+            // replace 'y' with 'ie' if 'y' is the last character
+            if (substr($snakeCaseClassName, -1) === 'y') {
+                $snakeCaseClassName = substr_replace($snakeCaseClassName, 'ie', -1);
             }
+
+            $mapperTable = $snakeCaseClassName . 's';
         }
 
         $this->setTable($mapperTable);
