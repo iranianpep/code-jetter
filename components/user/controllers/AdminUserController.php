@@ -431,7 +431,7 @@ class AdminUserController extends BaseController
         if (!empty($inputs['id'])) {
             $output = (new MemberUserMapper())->updateById($inputs['id'], $inputs);
 
-            echo $output->toJSON();
+            (new Response())->echoContent($output->toJSON());
         }
     }
 
@@ -681,7 +681,7 @@ class AdminUserController extends BaseController
         if ($currentUser instanceof AdminUser) {
             $output = (new AdminUserMapper())->updateById($currentUser->getId(), $inputs);
 
-            echo $output->toJSON();
+            (new Response())->echoContent($output->toJSON());
         }
     }
 }
