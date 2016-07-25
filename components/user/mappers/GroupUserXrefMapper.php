@@ -3,6 +3,7 @@
 namespace CodeJetter\components\user\mappers;
 
 use CodeJetter\core\BaseMapper;
+use CodeJetter\core\database\BaseXrefMapper;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
@@ -13,7 +14,7 @@ use CodeJetter\core\utility\ArrayUtility;
  * Class GroupUserXrefMapper
  * @package CodeJetter\components\user\mappers
  */
-abstract class GroupUserXrefMapper extends BaseMapper
+abstract class GroupUserXrefMapper extends BaseXrefMapper
 {
     /**
      * @param array $inputs
@@ -104,47 +105,5 @@ abstract class GroupUserXrefMapper extends BaseMapper
         }
 
         $this->batchInsert($fieldsValuesCollection);
-    }
-
-    /**
-     * @param array $oldXrefs
-     * @param array $newXrefs
-     *
-     * @throws \Exception
-     */
-    public function updateXref(array $oldXrefs, array $newXrefs)
-    {
-        $result = (new ArrayUtility())->arrayComparison($oldXrefs, $newXrefs);
-
-        if (!empty($result['toBeDeleted'])) {
-            // remove relations
-            $criteria = [];
-
-            $counter = 0;
-            foreach ($result['toBeDeleted'] as $toBeDeletedId => $toBeDeleted) {
-                if ($counter !== 0) {
-                    // is not first element
-                    $tempCriteria = ['logicalOperator' => 'OR'];
-                } else {
-                    $tempCriteria = [];
-                }
-
-                $tempCriteria['column'] = 'id';
-                $tempCriteria['operator'] = '=';
-                $tempCriteria['value'] = $toBeDeletedId;
-                $tempCriteria['type'] = \PDO::PARAM_INT;
-
-                $criteria[] = $tempCriteria;
-
-                $counter++;
-            }
-
-            $this->delete($criteria);
-        }
-
-        if (!empty($result['toBeAdded'])) {
-            // add relations
-            $this->batchAdd($result['toBeAdded']);
-        }
     }
 }
