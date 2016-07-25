@@ -507,11 +507,17 @@ class Validator
      */
     private function validateRequired(array $args)
     {
+        if (isset($args['toBeCheckedInput']) && is_string($args['toBeCheckedInput'])) {
+            $toBeChecked = trim($args['toBeCheckedInput']);
+        } else {
+            $toBeChecked = $args['toBeCheckedInput'];
+        }
+
         $output = new Output();
-        if (empty(trim($args['toBeCheckedInput']))
-            && $args['toBeCheckedInput'] !== 0
-            && $args['toBeCheckedInput'] !== '0'
-            && $args['toBeCheckedInput'] !== false) {
+        if (empty($toBeChecked)
+            && $toBeChecked !== 0
+            && $toBeChecked !== '0'
+            && $toBeChecked !== false) {
             $output->setSuccess(false);
             $output->setMessage("{$args['inputTitle']} is required.");
         } else {
