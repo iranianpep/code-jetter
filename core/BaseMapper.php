@@ -20,13 +20,15 @@ abstract class BaseMapper implements ICrud
     protected $table;
     protected $modelName;
     protected $lastQuery;
+    protected $component;
 
     /**
      * BaseMapper constructor.
      *
      * @param null $database
+     * @param      $component
      */
-    public function __construct($database = null)
+    public function __construct($database = null, $component = null)
     {
         // TODO this needs to be in its own function
         $className = (new StringUtility())->getClassNameFromNamespace(get_called_class());
@@ -53,6 +55,7 @@ abstract class BaseMapper implements ICrud
 
         $this->setTable($mapperTable);
         $this->setDatabase($database);
+        $this->setComponent($component);
     }
 
     /**
@@ -632,5 +635,21 @@ abstract class BaseMapper implements ICrud
     public function setDatabase($database)
     {
         $this->database = $database;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComponent()
+    {
+        return $this->component;
+    }
+
+    /**
+     * @param string $component
+     */
+    public function setComponent($component)
+    {
+        $this->component = $component;
     }
 }
