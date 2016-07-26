@@ -698,7 +698,7 @@ class Validator
             $output->setSuccess(true);
         } else {
             $output->setSuccess(false);
-            $output->setMessage('input is not valid.');
+            $output->setMessage("{$args['toBeCheckedInput']} is not valid.");
         }
 
         return $output;
