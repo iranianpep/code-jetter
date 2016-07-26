@@ -118,9 +118,9 @@ abstract class BaseMapper implements ICrud
      * @param int   $limit
      * @param bool  $returnTotalNo
      * @param bool  $excludeArchived
+     * @param int   $fetchStyle
      *
-     * @return mixed
-     *
+     * @return array
      * @throws \Exception
      */
     public function getAll(
@@ -130,7 +130,8 @@ abstract class BaseMapper implements ICrud
         $start = 0,
         $limit = 0,
         $returnTotalNo = false,
-        $excludeArchived = true
+        $excludeArchived = true,
+        $fetchStyle = \PDO::FETCH_CLASS
     ) {
         // By default do not return archived records
         if ($excludeArchived === true) {
@@ -159,7 +160,11 @@ abstract class BaseMapper implements ICrud
             $st = (new QueryMaker())->bindValues($st, $criteria, $start, $limit);
             $st->execute();
 
-            $result = $st->fetchAll(\PDO::FETCH_CLASS, $this->getModelName());
+            if ($fetchStyle === \PDO::FETCH_CLASS) {
+                $result = $st->fetchAll(\PDO::FETCH_CLASS, $this->getModelName());
+            } else {
+                $result = $st->fetchAll($fetchStyle);
+            }
 
             if ($returnTotalNo == true) {
                 $total = $this->countByCriteria($criteria);
