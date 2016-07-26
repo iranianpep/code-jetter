@@ -650,19 +650,19 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'toCheckInput' => ''
                 ],
-                'output' => ['input is not valid.']
+                'output' => ['ToCheckInput is not valid.']
             ],
             [
                 'inputs' => [
                     'toCheckInput' => [1, 2, 3]
                 ],
-                'output' => ['input is not valid.']
+                'output' => ['ToCheckInput is not valid.']
             ],
             [
                 'inputs' => [
                     'toCheckInput' => '0'
                 ],
-                'output' => ['input is not valid.']
+                'output' => ['ToCheckInput is not valid.']
             ]
         ];
 
