@@ -109,6 +109,18 @@ class HtmlUtilityTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 'o' => "<select name='statuses'><option value='a_key'>a_key</option></select>"
+            ],
+            [
+                'i' => [
+                    'options' => ['a' => 'A', 'b' => 'B'],
+                    'name' => 'statuses',
+                    'selected' => ['a', 'b'],
+                    'configs' => [
+                        'keyAsValue' => true,
+                        'multiple' => true
+                    ]
+                ],
+                'o' => "<select name='statuses' multiple><option value='a' selected>A</option><option value='b' selected>B</option></select>"
             ]
         ];
 
@@ -154,6 +166,42 @@ class HtmlUtilityTest extends \PHPUnit_Framework_TestCase
         foreach ($ios as $io) {
             $this->assertEquals($io['o'], $utility->generateCheckboxes($io['i']['options'], $io['i']['name'], $io['i']['checked']));
         }
+
+        $ios = [
+            [
+                'i' => [
+                    'options' => ['a' => 'A', 'b' => 'B'],
+                    'name' => 'groups[]',
+                    'checked' => ['a', 'b'],
+                    'configs' => [
+                        'keyAsValue' => true
+                    ]
+                ],
+                'o' => "<div><label><input type='checkbox' name='groups[]' value='a' checked> A</label></div><div><label><input type='checkbox' name='groups[]' value='b' checked> B</label></div>"
+            ]
+        ];
+
+        foreach ($ios as $io) {
+            $this->assertEquals($io['o'], $utility->generateCheckboxes($io['i']['options'], $io['i']['name'], $io['i']['checked'], $io['i']['configs']));
+        }
+
+        $ios = [
+            [
+                'i' => [
+                    'options' => ['a' => 'A', 'b' => 'B'],
+                    'name' => 'groups[]',
+                    'checked' => 'a',
+                    'configs' => [
+                        'keyAsValue' => true
+                    ]
+                ],
+                'o' => "<div><label><input type='checkbox' name='groups[]' value='a' checked> A</label></div><div><label><input type='checkbox' name='groups[]' value='b'> B</label></div>"
+            ]
+        ];
+
+        foreach ($ios as $io) {
+            $this->assertEquals($io['o'], $utility->generateCheckboxes($io['i']['options'], $io['i']['name'], $io['i']['checked'], $io['i']['configs']));
+        }
     }
 
     public function testGenerateRadioButtons()
@@ -192,6 +240,24 @@ class HtmlUtilityTest extends \PHPUnit_Framework_TestCase
 
         foreach ($ios as $io) {
             $this->assertEquals($io['o'], $utility->generateRadioButtons($io['i']['options'], $io['i']['name'], $io['i']['checked']));
+        }
+
+        $ios = [
+            [
+                'i' => [
+                    'options' => ['a' => 'A', 'b' => 'B'],
+                    'name' => 'groups',
+                    'checked' => 'b',
+                    'configs' => [
+                        'keyAsValue' => true
+                    ]
+                ],
+                'o' => "<div><label><input type='radio' name='groups' value='a'> A</label></div><div><label><input type='radio' name='groups' value='b' checked> B</label></div>"
+            ]
+        ];
+
+        foreach ($ios as $io) {
+            $this->assertEquals($io['o'], $utility->generateRadioButtons($io['i']['options'], $io['i']['name'], $io['i']['checked'], $io['i']['configs']));
         }
     }
 }

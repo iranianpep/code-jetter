@@ -64,11 +64,14 @@ class HtmlUtility
 
         $html = "<select{$name}{$class}{$id}{$multiple}>";
         foreach ($options as $key => $option) {
+            // determine the value
+            $value = (!empty($configs['keyAsValue'])) ? $key : $option;
+
             // determine checked option(s)
-            if (is_array($selected) && in_array($option, $selected)) {
+            if (is_array($selected) && in_array($value, $selected)) {
                 $selectedOption = ' selected';
             } else {
-                $selectedOption = $option == $selected ? ' selected' : '';
+                $selectedOption = $value == $selected ? ' selected' : '';
             }
 
             // determine the title
@@ -86,9 +89,6 @@ class HtmlUtility
 
             // If in the future, string should not be converted to its html entities, disable it in the configs
             $title = $stringUtility->prepareForView($title);
-
-            // determine the value
-            $value = (!empty($configs['keyAsValue'])) ? $key : $option;
 
             $html .= "<option value='{$value}'{$selectedOption}>{$title}</option>";
         }
@@ -123,7 +123,10 @@ class HtmlUtility
 
         $stringUtility = new StringUtility();
         foreach ($options as $key => $option) {
-            $checkedOption = ($option == $checked) ? ' checked' : '';
+            // determine the value
+            $value = (!empty($configs['keyAsValue'])) ? $key : $option;
+
+            $checkedOption = ($value == $checked) ? ' checked' : '';
 
             // determine the title
             if (!empty($configs['titleMapper']) && is_array($configs['titleMapper'])
@@ -146,9 +149,9 @@ class HtmlUtility
             $title = $stringUtility->prepareForView($title);
 
             if (isset($configs['inline'])) {
-                $html .= "<label{$class}><input type='{$type}'{$name} value='{$option['value']}'{$checkedOption}{$disabled}> {$title}</label>";
+                $html .= "<label{$class}><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$option}'{$checkedOption}{$disabled}> {$title}</label></div>";
+                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
@@ -182,11 +185,14 @@ class HtmlUtility
 
         $stringUtility = new StringUtility();
         foreach ($options as $key => $option) {
+            // determine the value
+            $value = (!empty($configs['keyAsValue'])) ? $key : $option;
+
             // determine checked option(s)
-            if (is_array($checked) && in_array($option, $checked)) {
+            if (is_array($checked) && in_array($value, $checked)) {
                 $checkedOption = ' checked';
             } else {
-                $checkedOption = ($option == $checked) ? ' checked' : '';
+                $checkedOption = ($value == $checked) ? ' checked' : '';
             }
 
             // determine the title
@@ -210,9 +216,9 @@ class HtmlUtility
                 $disabled = ' disabled' : '';
 
             if (isset($configs['inline'])) {
-                $html .= "<label{$class}><input type='{$type}'{$name} value='{$option['value']}'{$checkedOption}{$disabled}> {$title}</label>";
+                $html .= "<label{$class}><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$option}'{$checkedOption}{$disabled}> {$title}</label></div>";
+                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
