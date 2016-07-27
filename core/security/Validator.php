@@ -474,6 +474,25 @@ class Validator
 
     /**
      * @param array $args
+     *
+     * @return Output
+     * @throws \Exception
+     */
+    private function validateNumber(array $args)
+    {
+        $output = new Output();
+        if (is_numeric($args['toBeCheckedInput'])) {
+            $output->setSuccess(true);
+        } else {
+            $output->setSuccess(false);
+            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid number.");
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param array $args
      * @return bool
      * @throws \Exception
      */
