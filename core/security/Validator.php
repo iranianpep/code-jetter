@@ -493,6 +493,25 @@ class Validator
 
     /**
      * @param array $args
+     *
+     * @return Output
+     * @throws \Exception
+     */
+    private function validateMoney(array $args)
+    {
+        $output = new Output();
+        if (preg_match("/^-?[0-9]+(?:\.[0-9]{1,2})?$/", $args['toBeCheckedInput'])) {
+            $output->setSuccess(true);
+        } else {
+            $output->setSuccess(false);
+            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid money value.");
+        }
+
+        return $output;
+    }
+
+    /**
+     * @param array $args
      * @return bool
      * @throws \Exception
      */

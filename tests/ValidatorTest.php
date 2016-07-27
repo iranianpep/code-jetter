@@ -673,6 +673,159 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testValidateNumber()
+    {
+        $app = App::getInstance();
+        $app->init('dev');
+
+        $numberRule = new ValidatorRule('number');
+        $dummyInput = new Input('toCheckInput', [$numberRule]);
+
+        $inputsOutputs = [
+            [
+                'inputs' => [
+                    'toCheckInput' => '1'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '65000.00'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '123.23'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => 'eee'
+                ],
+                'output' => [
+                    "&#039;eee&#039; is not a valid number."
+                ]
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '12.3e'
+                ],
+                'output' => [
+                    "&#039;12.3e&#039; is not a valid number."
+                ]
+            ],
+            [
+                'inputs' => [
+                    // e actually a number
+                    'toCheckInput' => '12.e343'
+                ],
+                'output' => []
+            ],
+        ];
+
+        foreach ($inputsOutputs as $inputsOutput) {
+            $validator = new Validator([$dummyInput], $inputsOutput['inputs']);
+            $output = $validator->validate();
+            $this->assertEquals($inputsOutput['output'], $output->getMessages());
+        }
+    }
+
+    public function testValidateMoney()
+    {
+        $app = App::getInstance();
+        $app->init('dev');
+
+        $rule = new ValidatorRule('money');
+        $dummyInput = new Input('toCheckInput', [$rule]);
+
+        $inputsOutputs = [
+            [
+                'inputs' => [
+                    'toCheckInput' => '1'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '1.0'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '1.00'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '11.00'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '111.00'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '111.56'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '1.0 '
+                ],
+                'output' => [
+                    "&#039;1.0 &#039; is not a valid money value."
+                ]
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => 'e'
+                ],
+                'output' => [
+                    "&#039;e&#039; is not a valid money value."
+                ]
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '   '
+                ],
+                'output' => [
+                    "&#039;   &#039; is not a valid money value."
+                ]
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '1.000'
+                ],
+                'output' => [
+                    "&#039;1.000&#039; is not a valid money value."
+                ]
+            ],
+            [
+                'inputs' => [
+                    'toCheckInput' => '12.e343'
+                ],
+                'output' => [
+                    "&#039;12.e343&#039; is not a valid money value."
+                ]
+            ],
+        ];
+
+        foreach ($inputsOutputs as $inputsOutput) {
+            $validator = new Validator([$dummyInput], $inputsOutput['inputs']);
+            $output = $validator->validate();
+            $this->assertEquals($inputsOutput['output'], $output->getMessages());
+        }
+    }
+
     public function testGetErrors()
     {
         $app = App::getInstance();
