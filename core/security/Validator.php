@@ -732,7 +732,25 @@ class Validator
             throw new \Exception('whitelist must be specified and must be an array in validateWhiteList');
         }
 
-        if (in_array($args['toBeCheckedInput'], $args['whitelist'])) {
+        $flag = false;
+        if (is_array($args['toBeCheckedInput'])) {
+            foreach ($args['toBeCheckedInput'] as $input) {
+                if (!in_array($input, $args['whitelist'])) {
+                    $foundInvalid = false;
+                    break;
+                }
+            }
+
+            if (!isset($foundInvalid) || $foundInvalid != false) {
+                $flag = true;
+            }
+        } elseif (in_array($args['toBeCheckedInput'], $args['whitelist'])) {
+            $flag = true;
+        } else {
+            $flag = false;
+        }
+
+        if ($flag === true) {
             $output->setSuccess(true);
         } else {
             $output->setSuccess(false);
