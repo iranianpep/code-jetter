@@ -504,7 +504,7 @@ class Validator
             $output->setSuccess(true);
         } else {
             $output->setSuccess(false);
-            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid money value.");
+            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid money value. It can have 2 decimal points at most.");
         }
 
         return $output;
