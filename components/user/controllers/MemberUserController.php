@@ -115,9 +115,11 @@ class MemberUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberLogin.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'login.php');
         $componentTemplate->setData([
-            'requiredFields' => $requiredFields
+            'requiredFields' => $requiredFields,
+            'url' => '/login',
+            'forgotPasswordUrl' => '/forgot-password'
         ]);
 
         (new View())->make(

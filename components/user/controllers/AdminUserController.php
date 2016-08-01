@@ -54,9 +54,11 @@ class AdminUserController extends BaseController
          */
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'adminLogin.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'login.php');
         $componentTemplate->setData([
-            'requiredFields' => $requiredFields
+            'requiredFields' => $requiredFields,
+            'url' => '/admin/login',
+            'forgotPasswordUrl' => '/admin/forgot-password'
         ]);
 
         (new View())->make(
