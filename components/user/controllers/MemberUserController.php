@@ -83,7 +83,6 @@ class MemberUserController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         $inputs['parentId'] = 0;
-        $inputs['status'] = 'active';
         $inputs['passwordRequired'] = true;
 
         $output = (new MemberUserMapper())->add($inputs);

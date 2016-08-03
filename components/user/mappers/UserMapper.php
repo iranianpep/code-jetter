@@ -2,9 +2,11 @@
 
 namespace CodeJetter\components\user\mappers;
 
+use CodeJetter\components\user\models\User;
 use CodeJetter\core\BaseMapper;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
+use CodeJetter\core\security\Security;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
 
@@ -180,11 +182,146 @@ abstract class UserMapper extends BaseMapper
      */
     public function add(array $inputs, array $fieldsValues = [])
     {
-        // validate inputs
+        /**
+         * Start validating common inputs
+         */
+        $output = new Output();
+        try {
+            // TODO if status is set, check it again the whitelist
 
-        // check unique email and username
+            $requiredRule = new ValidatorRule('required');
 
-        // start inserting and merge specific fields values with the common ones
+            $emailRule = new ValidatorRule('email');
+            $usernameRule = new ValidatorRule('username');
 
+            $nameInput = new Input('name');
+            $emailInput = new Input('email', [$requiredRule, $emailRule]);
+            $phoneInput = new Input('phone');
+            $usernameInput = new Input('username', [$requiredRule, $usernameRule]);
+
+            $definedInputs = [$nameInput, $emailInput, $phoneInput, $usernameInput];
+
+            if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
+                if ($inputs['password'] !== $inputs['passwordConfirmation']) {
+                    $output->setSuccess(false);
+                    $output->setMessage('Password does not match with Confirm password');
+                    return $output;
+                }
+
+                // update password is not empty
+                $passwordRule = new ValidatorRule('password');
+                $definedInputs[] = new Input('password', [$requiredRule, $passwordRule]);
+            }
+
+            if (isset($inputs['status'])) {
+                $statusesWhitelist = $this->getEnumValues('status');
+
+                $statusesWhitelistRule = new ValidatorRule('whitelist', ['whitelist' => $statusesWhitelist]);
+                $definedInputs[] = new Input('status', [$statusesWhitelistRule]);
+            } else {
+                $inputs['status'] = 'active';
+            }
+
+            $validator = new Validator($definedInputs, $inputs);
+            $validatorOutput = $validator->validate();
+
+            if ($validatorOutput->getSuccess() !== true) {
+                $output->setSuccess(false);
+                $output->setMessages($validatorOutput->getMessages());
+                return $output;
+            }
+        } catch (\Exception $e) {
+            (new \CodeJetter\core\ErrorHandler())->logError($e);
+        }
+        /**
+         * Finish validating common inputs
+         */
+
+        /**
+         * Start checking if the email exists
+         */
+        $found = $this->getOneByEmail($inputs['email'])->getData();
+
+        if (!empty($found) && $found instanceof User) {
+            $output->setSuccess(false);
+            $output->setMessage('Email already exists');
+            return $output;
+        }
+        /**
+         * Finish checking if the email exists
+         */
+
+        /**
+         * Start checking if the username exists
+         */
+        $found = $this->getOneByUsername($inputs['username'])->getData();
+
+        if (!empty($found) && $found instanceof User) {
+            $output->setSuccess(false);
+            $output->setMessage('Username already exists');
+            return $output;
+        }
+        /**
+         * Finish checking if the username exists
+         */
+
+        /**
+         * Start inserting
+         */
+        $commonFieldsValues = [
+            [
+                'column' => 'name',
+                'value' => isset($inputs['name']) ? $inputs['name'] : '',
+
+            ],
+            [
+                'column' => 'email',
+                'value' => $inputs['email'],
+
+            ],
+            [
+                'column' => 'phone',
+                'value' => isset($inputs['phone']) ? $inputs['phone'] : '',
+
+            ],
+            [
+                'column' => 'status',
+                'value' => $inputs['status'],
+
+            ],
+            [
+                'column' => 'username',
+                'value' => $inputs['username'],
+
+            ]
+        ];
+
+        $fieldsValues = array_merge($commonFieldsValues, $fieldsValues);
+
+        if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
+            $hashedPassword = (new Security())->hashPassword($inputs['password']);
+
+            // add to fields values
+            array_push($fieldsValues, [
+                'column' => 'password',
+                'value' => $hashedPassword,
+
+            ]);
+        }
+
+        $insertedId = $this->insertOne($fieldsValues);
+
+        if (!empty($insertedId) && is_numeric($insertedId) && (int) $insertedId > 0) {
+            $output->setSuccess(true);
+            $output->setMessage('Added successfully');
+            $output->setData($insertedId);
+        } else {
+            $output->setSuccess(false);
+        }
+        /**
+         * Finish inserting
+         */
+
+        return $output;
     }
 }

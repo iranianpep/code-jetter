@@ -290,35 +290,15 @@ class MemberUserMapper extends UserMapper
     public function add(array $inputs, array $fieldsValues = [])
     {
         /**
-         * Start validating
+         * Start validating specific inputs to this user
          */
         $output = new Output();
         try {
             $requiredRule = new ValidatorRule('required');
             $idRule = new ValidatorRule('id', ['includingZero' => true]);
-            $emailRule = new ValidatorRule('email');
-            $usernameRule = new ValidatorRule('username');
 
             $parentIdInput = new Input('parentId', [$requiredRule, $idRule]);
-            $nameInput = new Input('name');
-            $emailInput = new Input('email', [$requiredRule, $emailRule]);
-            $phoneInput = new Input('phone');
-            $statusInput = new Input('status', [$requiredRule]);
-            $usernameInput = new Input('username', [$requiredRule, $usernameRule]);
-
-            $definedInputs = [$parentIdInput, $nameInput, $emailInput, $phoneInput, $statusInput, $usernameInput];
-
-            if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
-                if ($inputs['password'] !== $inputs['passwordConfirmation']) {
-                    $output->setSuccess(false);
-                    $output->setMessage('Password does not match with Confirm password');
-                    return $output;
-                }
-
-                // update password is not empty
-                $passwordRule = new ValidatorRule('password');
-                $definedInputs[] = new Input('password', [$requiredRule, $passwordRule]);
-            }
+            $definedInputs = [$parentIdInput];
 
             $validator = new Validator($definedInputs, $inputs);
             $validatorOutput = $validator->validate();
@@ -332,101 +312,18 @@ class MemberUserMapper extends UserMapper
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * Finish validating
+         * Finish validating specific inputs to this user
          */
-
-        /**
-         * Start checking if the email exists
-         */
-        $found = $this->getOneByEmail($inputs['email'])->getData();
-
-        if (!empty($found) && $found instanceof MemberUser) {
-            $output->setSuccess(false);
-            $output->setMessage('Email already exists');
-            return $output;
-        }
-        /**
-         * Finish checking if the email exists
-         */
-
-        /**
-         * Start checking if the username exists
-         */
-        $found = $this->getOneByUsername($inputs['username'])->getData();
-
-        if (!empty($found) && $found instanceof MemberUser) {
-            $output->setSuccess(false);
-            $output->setMessage('Username already exists');
-            return $output;
-        }
-        /**
-         * Finish checking if the username exists
-         */
-
-        /**
-         * Start inserting
-         */
-        $name = isset($inputs['name']) ? $inputs['name'] : '';
-        $phone = isset($inputs['phone']) ? $inputs['phone'] : '';
 
         $fieldsValues = [
             [
                 'column' => 'parentId',
                 'value' => $inputs['parentId'],
                 'type' => \PDO::PARAM_INT
-            ],
-            [
-                'column' => 'name',
-                'value' => $name,
-
-            ],
-            [
-                'column' => 'email',
-                'value' => $inputs['email'],
-
-            ],
-            [
-                'column' => 'phone',
-                'value' => $phone,
-
-            ],
-            [
-                'column' => 'status',
-                'value' => $inputs['status'],
-
-            ],
-            [
-                'column' => 'username',
-                'value' => $inputs['username'],
-
             ]
         ];
 
-        if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
-            $hashedPassword = (new Security())->hashPassword($inputs['password']);
-
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'password',
-                'value' => $hashedPassword,
-
-            ]);
-        }
-
-        $insertedId = $this->insertOne($fieldsValues);
-
-        if (!empty($insertedId) && is_numeric($insertedId) && (int) $insertedId > 0) {
-            $output->setSuccess(true);
-            $output->setMessage('Added successfully');
-            $output->setData($insertedId);
-        } else {
-            $output->setSuccess(false);
-        }
-        /**
-         * Finish inserting
-         */
-
-        return $output;
+        return parent::add($inputs, $fieldsValues);
     }
 
     /**
