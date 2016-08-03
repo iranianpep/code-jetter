@@ -206,6 +206,13 @@ class Validator
                 throw new \Exception('defined input is not instance of Input');
             }
 
+            /**
+             * If isAllRequired is set, add it to all the inputs
+             */
+            if (!empty($this->isAllRequired())) {
+                $input->addRule(new ValidatorRule('required'));
+            }
+
             $newInputs[$input->getKey()] = $input;
         }
 
@@ -451,6 +458,54 @@ class Validator
         }
 
         $this->success = $success;
+    }
+
+    /**
+     * @var boolean
+     */
+    private $allRequired;
+
+    /**
+     * @return boolean
+     */
+    public function isAllRequired()
+    {
+        return $this->allRequired;
+    }
+
+    /**
+     * @param boolean $allRequired
+     */
+    public function setAllRequired($allRequired)
+    {
+        if ($allRequired == true) {
+            // add the rule to the defined inputs
+            $this->addRequiredRule();
+            $this->allRequired = true;
+        } else {
+            $this->allRequired = false;
+        }
+    }
+
+    /**
+     * Fetch all the defined inputs and add required rule to all of them
+     *
+     * @throws \Exception
+     */
+    private function addRequiredRule()
+    {
+        $inputs = $this->getDefinedInputs();
+        if (!empty($inputs)) {
+            foreach ($inputs as $input) {
+                if (!$input instanceof Input) {
+                    continue;
+                }
+
+                $input->addRule(new ValidatorRule('required'));
+            }
+
+            $this->setDefinedInputs($inputs);
+        }
     }
 
     // ********** Add validation functions here ********** //

@@ -800,7 +800,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '1.0 '
                 ],
                 'output' => [
-                    "&#039;1.0 &#039; is not a valid money value."
+                    "&#039;1.0 &#039; is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -808,7 +808,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => 'e'
                 ],
                 'output' => [
-                    "&#039;e&#039; is not a valid money value."
+                    "&#039;e&#039; is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -816,7 +816,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '   '
                 ],
                 'output' => [
-                    "&#039;   &#039; is not a valid money value."
+                    "&#039;   &#039; is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -824,7 +824,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '1.000'
                 ],
                 'output' => [
-                    "&#039;1.000&#039; is not a valid money value."
+                    "&#039;1.000&#039; is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -832,13 +832,67 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '12.e343'
                 ],
                 'output' => [
-                    "&#039;12.e343&#039; is not a valid money value."
+                    "&#039;12.e343&#039; is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
         ];
 
         foreach ($inputsOutputs as $inputsOutput) {
             $validator = new Validator([$dummyInput], $inputsOutput['inputs']);
+            $output = $validator->validate();
+            $this->assertEquals($inputsOutput['output'], $output->getMessages());
+        }
+    }
+
+    public function testIsAllRequired()
+    {
+        $app = App::getInstance();
+        $app->init('dev');
+
+        $dummyInput1 = new Input('name');
+        $dummyInput2 = new Input('email');
+
+        $inputsOutputs = [
+            [
+                'inputs' => [
+                    'toCheckInput' => '1'
+                ],
+                'output' => [
+                    'Name is required.',
+                    'Email is required.'
+                ]
+            ],
+            [
+                'inputs' => [
+                    'name' => 'ehsan',
+                    'email' => 'ehsan@ehsan.com'
+                ],
+                'output' => []
+            ],
+            [
+                'inputs' => [
+                    'name' => 'ehsan'
+                ],
+                'output' => [
+                    'Email is required.'
+                ]
+            ],
+        ];
+
+        // calling setAllRequired after setting inputs
+        foreach ($inputsOutputs as $inputsOutput) {
+            $validator = new Validator([$dummyInput1, $dummyInput2], $inputsOutput['inputs']);
+            $validator->setAllRequired(true);
+            $output = $validator->validate();
+            $this->assertEquals($inputsOutput['output'], $output->getMessages());
+        }
+
+        // calling setAllRequired before setting inputs
+        foreach ($inputsOutputs as $inputsOutput) {
+            $validator = new Validator();
+            $validator->setAllRequired(true);
+            $validator->setDefinedInputs([$dummyInput1, $dummyInput2]);
+            $validator->setToCheckInputs($inputsOutput['inputs']);
             $output = $validator->validate();
             $this->assertEquals($inputsOutput['output'], $output->getMessages());
         }
