@@ -8,7 +8,7 @@ use CodeJetter\core\Registry;
 
 class StateMapper extends BaseMapper
 {
-    public function add(array $inputs)
+    public function add(array $inputs, array $fieldsValues = [])
     {
         // TODO: No need to implement the body at this point
     }

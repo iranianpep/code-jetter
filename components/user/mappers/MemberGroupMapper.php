@@ -20,7 +20,7 @@ class MemberGroupMapper extends GroupMapper
      * @return Output
      * @throws \Exception
      */
-    public function add(array $inputs)
+    public function add(array $inputs, array $fieldsValues = [])
     {
         /**
          * Start validating

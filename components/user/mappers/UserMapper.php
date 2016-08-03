@@ -172,4 +172,19 @@ abstract class UserMapper extends BaseMapper
 
         return $this->update($criteria, $inputs, 1);
     }
+
+    /**
+     * Contains all the common functions and checks for adding a user
+     * Any specific function or check happens in the children 'add' functions
+     * And this function is called after the specific ones
+     */
+    public function add(array $inputs, array $fieldsValues = [])
+    {
+        // validate inputs
+
+        // check unique email and username
+
+        // start inserting and merge specific fields values with the common ones
+
+    }
 }

@@ -242,7 +242,7 @@ class AdminUserMapper extends UserMapper
     /**
      * @param array $inputs
      */
-    public function add(array $inputs)
+    public function add(array $inputs, array $fieldsValues = [])
     {
         // TODO: Implement add() method.
     }

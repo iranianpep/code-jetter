@@ -287,7 +287,7 @@ class MemberUserMapper extends UserMapper
      * @return Output
      * @throws \Exception
      */
-    public function add(array $inputs)
+    public function add(array $inputs, array $fieldsValues = [])
     {
         /**
          * Start validating
@@ -417,7 +417,7 @@ class MemberUserMapper extends UserMapper
 
         if (!empty($insertedId) && is_numeric($insertedId) && (int) $insertedId > 0) {
             $output->setSuccess(true);
-            $output->setMessage('Member added successfully');
+            $output->setMessage('Added successfully');
             $output->setData($insertedId);
         } else {
             $output->setSuccess(false);

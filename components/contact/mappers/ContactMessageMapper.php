@@ -10,7 +10,7 @@ use CodeJetter\core\security\ValidatorRule;
 
 class ContactMessageMapper extends BaseMapper
 {
-    public function add(array $inputs)
+    public function add(array $inputs, array $fieldsValues = [])
     {
         /**
          * Start validating
