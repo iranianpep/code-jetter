@@ -7,6 +7,10 @@ use CodeJetter\core\BaseConfig;
 class UserConfig extends BaseConfig
 {
     protected static $configs = [
-        'testUser' => 'testUser'
+        'testUser' => 'testUser',
+        'personalizedMenus' => [
+            'member' => 'memberPersonalizedMenu.php',
+            'admin' => 'adminPersonalizedMenu.php'
+        ]
     ];
 }

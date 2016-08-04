@@ -39,10 +39,9 @@ class Menu extends BaseBlock
          */
         $personalizedMenu = new Menu($this->getView());
 
-        if ($routeInfo->getAccessRole() === 'member') {
-            $personalizedMenu->setTemplateName('memberPersonalizedMenu.php');
-        } elseif ($routeInfo->getAccessRole() === 'admin') {
-            $personalizedMenu->setTemplateName('adminPersonalizedMenu.php');
+        $personalizedMenus = Registry::getConfigClass()->get('personalizedMenus', 'user');
+        if (array_key_exists($routeInfo->getAccessRole(), $personalizedMenus)) {
+            $personalizedMenu->setTemplateName($personalizedMenus[$routeInfo->getAccessRole()]);
         } else {
             // public
 
