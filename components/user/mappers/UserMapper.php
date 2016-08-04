@@ -187,8 +187,6 @@ abstract class UserMapper extends BaseMapper
          */
         $output = new Output();
         try {
-            // TODO if status is set, check it again the whitelist
-
             $requiredRule = new ValidatorRule('required');
 
             $emailRule = new ValidatorRule('email');
