@@ -435,11 +435,15 @@ class Router
                     $output = new Output();
                     $output->setSuccess(true);
                     $output->setMessage('Already logged in');
-                    $output->setRedirectTo($redirections[$userModel]['default']);
+                    if (isset($redirections[$userModel]) && isset($redirections[$userModel]['default'])) {
+                        $output->setRedirectTo($redirections[$userModel]['default']);
+                    }
 
                     (new Response())->echoContent($output->toJSON());
                 } else {
-                    header('Location: ' . $redirections[$userModel]['default']);
+                    if (isset($redirections[$userModel]) && isset($redirections[$userModel]['default'])) {
+                        header('Location: ' . $redirections[$userModel]['default']);
+                    }
                     exit;
                 }
             }
