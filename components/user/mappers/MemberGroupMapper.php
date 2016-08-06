@@ -20,7 +20,7 @@ class MemberGroupMapper extends GroupMapper
      * @return Output
      * @throws \Exception
      */
-    public function add(array $inputs, array $fieldsValues = [])
+    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
         /**
          * Start validating
@@ -127,7 +127,7 @@ class MemberGroupMapper extends GroupMapper
             ]
         ];
 
-        return $this->update($criteria, $inputs, 1);
+        return $this->update($criteria, $inputs, [], 1);
     }
 
     /**
@@ -138,7 +138,7 @@ class MemberGroupMapper extends GroupMapper
      * @return Output
      * @throws \Exception
      */
-    public function update(array $criteria, array $inputs, $limit = 0)
+    public function update(array $criteria, array $inputs, array $fieldsValues, $limit = 0, $additionalDefinedInputs = [], $excludeArchived = true)
     {
         /**
          * start validating
@@ -230,7 +230,7 @@ class MemberGroupMapper extends GroupMapper
             ]);
         }
 
-        $changedRows = parent::update($criteria, $fieldsValues, $limit);
+        $changedRows = parent::update($criteria, [], $fieldsValues, $limit);
 
         if (!empty($changedRows) && is_numeric($changedRows) && (int) $changedRows > 0) {
             $output->setSuccess(true);

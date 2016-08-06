@@ -26,7 +26,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'email' => '',
                     'name' => ''
                 ],
-                'output' => ['Email is required.', "&#039;&#039; is not a valid email."]
+                'output' => ['Email is required.', "'' is not a valid email."]
             ],
             [
                 'inputs' => [
@@ -38,13 +38,13 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'email' => ' test@test.com'
                 ],
-                'output' => ["&#039; test@test.com&#039; is not a valid email."]
+                'output' => ["' test@test.com' is not a valid email."]
             ],
             [
                 'inputs' => [
                     'email' => 'test'
                 ],
-                'output' => ["&#039;test&#039; is not a valid email."]
+                'output' => ["'test' is not a valid email."]
             ],
         ];
 
@@ -70,7 +70,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals([
             'Email is required.',
-            "&#039;&#039; is not a valid email.",
+            "'' is not a valid email.",
             'Name is required.'
         ], $output->getMessages());
 
@@ -96,43 +96,43 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'id' => ''
                 ],
-                'output' => ['Id is required.', "&#039;&#039; is not a valid Id."]
+                'output' => ['Id is required.', "'' is not a valid Id."]
             ],
             [
                 'inputs' => [
                     'id' => '0'
                 ],
-                'output' => ["&#039;0&#039; is not a valid Id."]
+                'output' => ["'0' is not a valid Id."]
             ],
             [
                 'inputs' => [
                     'id' => 0
                 ],
-                'output' => ["&#039;0&#039; is not a valid Id."]
+                'output' => ["'0' is not a valid Id."]
             ],
             [
                 'inputs' => [
                     'id' => '12d'
                 ],
-                'output' => ["&#039;12d&#039; is not a valid Id."]
+                'output' => ["'12d' is not a valid Id."]
             ],
             [
                 'inputs' => [
                     'id' => 'd12'
                 ],
-                'output' => ["&#039;d12&#039; is not a valid Id."]
+                'output' => ["'d12' is not a valid Id."]
             ],
             [
                 'inputs' => [
                     'id' => ' 12'
                 ],
-                'output' => ["&#039; 12&#039; is not a valid Id."]
+                'output' => ["' 12' is not a valid Id."]
             ],
             [
                 'inputs' => [
                     'id' => '1 2'
                 ],
-                'output' => ["&#039;1 2&#039; is not a valid Id."]
+                'output' => ["'1 2' is not a valid Id."]
             ],
             [
                 'inputs' => [
@@ -168,19 +168,19 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'url' => 'ddd'
                 ],
-                'output' => ["&#039;ddd&#039; is not a valid URL."]
+                'output' => ["'ddd' is not a valid URL."]
             ],
             [
                 'inputs' => [
                     'url' => 'http://'
                 ],
-                'output' => ["&#039;http://&#039; is not a valid URL."]
+                'output' => ["'http://' is not a valid URL."]
             ],
             [
                 'inputs' => [
                     'url' => 'http://ajax'
                 ],
-                'output' => ["&#039;http://ajax&#039; is not a valid URL."]
+                'output' => ["'http://ajax' is not a valid URL."]
             ],
             [
                 'inputs' => [
@@ -199,7 +199,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'url' => 'www.ajax.com'
                 ],
                 // http must be passed
-                'output' => ["&#039;www.ajax.com&#039; is not a valid URL."]
+                'output' => ["'www.ajax.com' is not a valid URL."]
             ],
             [
                 'inputs' => [
@@ -217,25 +217,25 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'url' => 0
                 ],
-                'output' => ["&#039;0&#039; is not a valid URL."]
+                'output' => ["'0' is not a valid URL."]
             ],
             [
                 'inputs' => [
                     'url' => '0'
                 ],
-                'output' => ["&#039;0&#039; is not a valid URL."]
+                'output' => ["'0' is not a valid URL."]
             ],
             [
                 'inputs' => [
                     'url' => ' '
                 ],
-                'output' => ["&#039; &#039; is not a valid URL."]
+                'output' => ["' ' is not a valid URL."]
             ],
             [
                 'inputs' => [
                     'url' => ' http://www.ehsan.com'
                 ],
-                'output' => ["&#039; http://www.ehsan.com&#039; is not a valid URL."]
+                'output' => ["' http://www.ehsan.com' is not a valid URL."]
             ],
         ];
 
@@ -248,7 +248,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $differentNameURL = new Input('testURL', [$urlRule]);
         $validator = new Validator([$differentNameURL], ['testURL' => 'tet']);
         $output = $validator->validate();
-        $this->assertEquals(["&#039;tet&#039; is not a valid URL."], $output->getMessages());
+        $this->assertEquals(["'tet' is not a valid URL."], $output->getMessages());
     }
 
     public function testValidateRequired()
@@ -416,7 +416,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'username' => ''
                 ],
-                'output' => ["&#039;&#039; is not a valid username."]
+                'output' => ["'' is not a valid username."]
             ],
             [
                 'inputs' => [
@@ -428,19 +428,19 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'username' => 'te st'
                 ],
-                'output' => ["&#039;te st&#039; is not a valid username."]
+                'output' => ["'te st' is not a valid username."]
             ],
             [
                 'inputs' => [
                     'username' => 'tt'
                 ],
-                'output' => ["&#039;tt&#039; is not a valid username."]
+                'output' => ["'tt' is not a valid username."]
             ],
             [
                 'inputs' => [
                     'username' => '_tt'
                 ],
-                'output' => ["&#039;_tt&#039; is not a valid username."]
+                'output' => ["'_tt' is not a valid username."]
             ],
             [
                 'inputs' => [
@@ -452,7 +452,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'username' => 'tt '
                 ],
-                'output' => ["&#039;tt &#039; is not a valid username."]
+                'output' => ["'tt ' is not a valid username."]
             ],
             [
                 'inputs' => [
@@ -464,13 +464,13 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                 'inputs' => [
                     'username' => '12345678912345678910_'
                 ],
-                'output' => ["&#039;12345678912345678910_&#039; is not a valid username."]
+                'output' => ["'12345678912345678910_' is not a valid username."]
             ],
             [
                 'inputs' => [
                     'username' => '12345678912345678910 '
                 ],
-                'output' => ["&#039;12345678912345678910 &#039; is not a valid username."]
+                'output' => ["'12345678912345678910 ' is not a valid username."]
             ],
         ];
 
@@ -723,7 +723,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => 'eee'
                 ],
                 'output' => [
-                    "&#039;eee&#039; is not a valid number."
+                    "'eee' is not a valid number."
                 ]
             ],
             [
@@ -731,7 +731,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '12.3e'
                 ],
                 'output' => [
-                    "&#039;12.3e&#039; is not a valid number."
+                    "'12.3e' is not a valid number."
                 ]
             ],
             [
@@ -800,7 +800,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '1.0 '
                 ],
                 'output' => [
-                    "&#039;1.0 &#039; is not a valid money value. It can have 2 decimal points at most."
+                    "'1.0 ' is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -808,7 +808,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => 'e'
                 ],
                 'output' => [
-                    "&#039;e&#039; is not a valid money value. It can have 2 decimal points at most."
+                    "'e' is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -816,7 +816,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '   '
                 ],
                 'output' => [
-                    "&#039;   &#039; is not a valid money value. It can have 2 decimal points at most."
+                    "'   ' is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -824,7 +824,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '1.000'
                 ],
                 'output' => [
-                    "&#039;1.000&#039; is not a valid money value. It can have 2 decimal points at most."
+                    "'1.000' is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
             [
@@ -832,7 +832,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
                     'toCheckInput' => '12.e343'
                 ],
                 'output' => [
-                    "&#039;12.e343&#039; is not a valid money value. It can have 2 decimal points at most."
+                    "'12.e343' is not a valid money value. It can have 2 decimal points at most."
                 ]
             ],
         ];

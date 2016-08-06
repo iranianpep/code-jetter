@@ -233,7 +233,7 @@ abstract class BaseMapper implements ICrud
     public function updateOne(array $criteria, array $fieldsValues, $excludeArchived = true)
     {
         // 'self' is used instead of 'this' to avoid update function overridden in subclasses
-        return self::update($criteria, $fieldsValues, 1, $excludeArchived);
+        return self::update($criteria, [], $fieldsValues, 1, $excludeArchived);
     }
 
     /**
@@ -245,12 +245,12 @@ abstract class BaseMapper implements ICrud
      * @return int
      * @throws \Exception
      */
-    public function update(array $criteria, array $fieldsValues, $limit = 0, $excludeArchived = true)
+    public function update(array $criteria, array $inputs, array $fieldsValues, $limit = 0, $additionalDefinedInputs = [], $excludeArchived = true)
     {
 
         // TODO validation for those who use this function instead of overridden one?
 
-        // By default do not return archived records
+        // By default do not update archived records
         if ($excludeArchived === true) {
             $criteria[] = [
                 'column' => 'archivedAt',
@@ -430,7 +430,7 @@ abstract class BaseMapper implements ICrud
                 'bind' => false]
         ];
 
-        return $this->update($criteria, $fieldsValues, $limit);
+        return $this->update($criteria, [], $fieldsValues, $limit);
     }
 
     /**

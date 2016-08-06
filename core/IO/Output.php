@@ -58,9 +58,13 @@ class Output
     public function getMessages($prepareForView = true)
     {
         if ($prepareForView === true) {
+            $stringUtility = new StringUtility();
             $messages = $this->messages;
-            foreach ($messages as $key => $message) {
-                $messages[$key] = $message;
+
+            if (!empty($messages)) {
+                foreach ($messages as $key => $message) {
+                    $messages[$key] = $stringUtility->prepareForView($message);
+                }
             }
 
             return $messages;
@@ -75,6 +79,16 @@ class Output
     public function setMessages($messages)
     {
         $this->messages = $messages;
+    }
+
+    /**
+     * @param $message
+     */
+    public function addMessage($message)
+    {
+        $messages = $this->getMessages();
+        $messages[] = $message;
+        $this->setMessages($messages);
     }
 
     /**

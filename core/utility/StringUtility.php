@@ -55,7 +55,7 @@ class StringUtility
      */
     public function prepareForView($string)
     {
-        return htmlspecialchars($string, ENT_QUOTES);
+        return htmlspecialchars($string);
     }
 
     /**

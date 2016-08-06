@@ -3,6 +3,7 @@
 namespace CodeJetter\components\user\mappers;
 
 use CodeJetter\components\user\models\MemberUser;
+use CodeJetter\components\user\models\User;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Security;
@@ -278,7 +279,7 @@ class MemberUserMapper extends UserMapper
             ]
         ];
 
-        return $this->update($criteria, $inputs, 1);
+        return $this->update($criteria, $inputs, [], 1);
     }
 
     /**
@@ -287,33 +288,13 @@ class MemberUserMapper extends UserMapper
      * @return Output
      * @throws \Exception
      */
-    public function add(array $inputs, array $fieldsValues = [])
+    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
-        /**
-         * Start validating specific inputs to this user
-         */
-        $output = new Output();
-        try {
-            $requiredRule = new ValidatorRule('required');
-            $idRule = new ValidatorRule('id', ['includingZero' => true]);
+        $requiredRule = new ValidatorRule('required');
+        $idRule = new ValidatorRule('id', ['includingZero' => true]);
 
-            $parentIdInput = new Input('parentId', [$requiredRule, $idRule]);
-            $definedInputs = [$parentIdInput];
-
-            $validator = new Validator($definedInputs, $inputs);
-            $validatorOutput = $validator->validate();
-
-            if ($validatorOutput->getSuccess() !== true) {
-                $output->setSuccess(false);
-                $output->setMessages($validatorOutput->getMessages());
-                return $output;
-            }
-        } catch (\Exception $e) {
-            (new \CodeJetter\core\ErrorHandler())->logError($e);
-        }
-        /**
-         * Finish validating specific inputs to this user
-         */
+        $parentIdInput = new Input('parentId', [$requiredRule, $idRule]);
+        $definedInputs = [$parentIdInput];
 
         $fieldsValues = [
             [
@@ -323,7 +304,7 @@ class MemberUserMapper extends UserMapper
             ]
         ];
 
-        return parent::add($inputs, $fieldsValues);
+        return parent::add($inputs, $fieldsValues, $definedInputs);
     }
 
     /**
@@ -334,175 +315,18 @@ class MemberUserMapper extends UserMapper
      * @return Output
      * @throws \Exception
      */
-    public function update(array $criteria, array $inputs, $limit = 0)
+    public function update(array $criteria, array $inputs, array $fieldsValues, $limit = 0, $additionalDefinedInputs = [], $excludeArchived = true)
     {
-        /**
-         * start validating
-         */
         $output = new Output();
 
-        try {
+        $definedInputs = [];
+        if (isset($inputs['parentId'])) {
             $requiredRule = new ValidatorRule('required');
             $idRule = new ValidatorRule('id', ['includingZero' => true]);
-            $emailRule = new ValidatorRule('email');
-            $usernameRule = new ValidatorRule('username');
-            $whitelistRule = new ValidatorRule(
-                'whitelist',
-                [
-                    'whitelist' => (new DateTimeUtility())->getTimeZones()
-                ]
-            );
-
-            //$idInput = new Input('id', [$requiredRule, $idRule]);
-            // for batch update (e.g. group actions) id should not be required
-            $idInput = new Input('id', [$idRule]);
-            $nameInput = new Input('name');
-            $phoneInput = new Input('phone');
-            $emailInput = new Input('email', [$emailRule]);
-            $statusInput = new Input('status');
-            $usernameInput = new Input('username', [$usernameRule]);
-            $timezoneInput = new Input('timeZone', [$whitelistRule]);
-
-            $definedInputs = [
-                $idInput,
-                $nameInput,
-                $phoneInput,
-                $emailInput,
-                $statusInput,
-                $usernameInput,
-                $timezoneInput
-            ];
-
-            if (isset($inputs['parentId'])) {
-                // update password is not empty
-                $definedInputs[] = new Input('parentId', [$requiredRule, $idRule]);
-            }
-
-            if (!empty($inputs['password'])) {
-                if ($inputs['password'] !== $inputs['passwordConfirmation']) {
-                    $output->setSuccess(false);
-                    $output->setMessage('Password does not match with Confirm password');
-                    return $output;
-                }
-
-                // update password is not empty
-                $passwordRule = new ValidatorRule('password');
-                $definedInputs[] = new Input('password', [$passwordRule]);
-            }
-
-            $validator = new Validator($definedInputs, $inputs);
-            $validatorOutput = $validator->validate();
-
-            if ($validatorOutput->getSuccess() !== true) {
-                $output->setSuccess(false);
-                $output->setMessages($validatorOutput->getMessages());
-                return $output;
-            }
-        } catch (\Exception $e) {
-            (new \CodeJetter\core\ErrorHandler())->logError($e);
+            $definedInputs[] = new Input('parentId', [$requiredRule, $idRule]);
         }
-        /**
-         * finish validating
-         */
-
-        /**
-         * Start checking if the username exists
-         */
-        if (isset($inputs['id'])) {
-            $foundCurrentUser = $this->getOneById($inputs['id'])->getData();
-        }
-
-        // Keep this commented since this is not gonna work for batch update (multiple users)
-//        if (empty($foundCurrentUser) || !($foundCurrentUser instanceof MemberUser)) {
-//            return false;
-//        }
-
-        if (!empty($inputs['username'])) {
-            if ($foundCurrentUser->getUsername() !== $inputs['username']) {
-                // Username is updated, check if it does not exist
-                $found = $this->getOneByUsername($inputs['username'])->getData();
-
-                if (!empty($found) && $found instanceof MemberUser) {
-                    $output->setSuccess(false);
-                    $output->setMessage('Username already exists');
-                    return $output;
-                }
-            }
-        }
-        /**
-         * Finish checking if the username exists
-         */
-
-        /**
-         * Start checking if the email exists
-         */
-        if (!empty($inputs['email'])) {
-            if ($foundCurrentUser->getEmail() !== $inputs['email']) {
-                // Username is updated, check if it does not exist
-                $found = $this->getOneByEmail($inputs['email'])->getData();
-
-                if (!empty($found) && $found instanceof MemberUser) {
-                    $output->setSuccess(false);
-                    $output->setMessage('Email already exists');
-                    return $output;
-                }
-            }
-        }
-        /**
-         * Finish checking if the email exists
-         */
 
         $fieldsValues = [];
-
-        if (isset($inputs['name'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'name',
-                'value' => $inputs['name'],
-
-            ]);
-        }
-
-        // username cannot be empty
-        if (!empty($inputs['username'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'username',
-                'value' => $inputs['username'],
-
-            ]);
-        }
-
-        // email cannot be empty
-        if (!empty($inputs['email'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'email',
-                'value' => $inputs['email'],
-
-            ]);
-        }
-
-        if (isset($inputs['phone'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'phone',
-                'value' => $inputs['phone'],
-
-            ]);
-        }
-
-        if (!empty($inputs['password'])) {
-            $hashedPassword = (new Security())->hashPassword($inputs['password']);
-
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'password',
-                'value' => $hashedPassword,
-
-            ]);
-        }
-
         if (isset($inputs['parentId'])) {
             // if parent id is 0, do not check it
             if ((int) $inputs['parentId'] !== 0) {
@@ -531,88 +355,51 @@ class MemberUserMapper extends UserMapper
             ]);
         }
 
-        if (isset($inputs['status'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'status',
-                'value' => $inputs['status'],
+        $updateOutput = parent::update($criteria, $inputs, $fieldsValues, $limit, $definedInputs);
+        $updatedRows = $updateOutput->getData();
 
-            ]);
-        }
-
-        if (isset($inputs['token'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'token',
-                'value' => $inputs['token'],
-
-            ]);
-
-            array_push($fieldsValues, [
-                'column' => 'tokenGeneratedAt',
-                'value' => 'NOW()',
-                'bind' => false
-            ]);
-        }
-
-        if (isset($inputs['archivedAt'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'archivedAt',
-                'value' => $inputs['archivedAt']['value'],
-                'bind' => $inputs['archivedAt']['bind']
-            ]);
-        }
-
-        if (isset($inputs['live'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'live',
-                'value' => $inputs['live']['value'],
-                'bind' => $inputs['live']['bind']
-            ]);
-        }
-
-        if (!empty($inputs['timeZone'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'timeZone',
-                'value' => $inputs['timeZone']
-            ]);
+        if ($updateOutput->getSuccess() !== true) {
+            $output->setSuccess(false);
+            $output->setMessages($updateOutput->getMessages());
+            return $output;
         }
 
         // if id is not passed, ignore updating groups
-        if (isset($inputs['id'])) {
+        if ($updateOutput->getSuccess() === true && $updatedRows > 0 && isset($inputs['id'])) {
             // To avoid not removing the relations when nothing is chosen
             if (!isset($inputs['groups'])) {
                 $inputs['groups'] = [];
             }
 
             // get current groups
-            $assignedGroupIds = $foundCurrentUser->getGroupIds();
+            $foundCurrentUser = $this->getOneById($inputs['id'])->getData();
 
-            $oldGroupMemberXrefs = [];
-            foreach ($assignedGroupIds as $key => $assignedGroupId) {
-                $oldGroupMemberXrefs[$key] = [
-                    'groupId' => $assignedGroupId,
-                    'memberId' => $inputs['id']
-                ];
+            if (!empty($foundCurrentUser) && $foundCurrentUser instanceof User) {
+                $assignedGroupIds = $foundCurrentUser->getGroupIds();
+
+                $oldGroupMemberXrefs = [];
+                foreach ($assignedGroupIds as $key => $assignedGroupId) {
+                    $oldGroupMemberXrefs[$key] = [
+                        'groupId' => $assignedGroupId,
+                        'memberId' => $inputs['id']
+                    ];
+                }
+
+                $newGroupMemberXrefs = [];
+                foreach ($inputs['groups'] as $group) {
+                    $newGroupMemberXrefs[] = [
+                        'groupId' => $group,
+                        'memberId' => $inputs['id']
+                    ];
+                }
+
+                $updatedGroups = (new GroupMemberUserXrefMapper())->updateXref($oldGroupMemberXrefs, $newGroupMemberXrefs);
+            } else {
+                $updatedGroups = 0;
             }
-
-            $newGroupMemberXrefs = [];
-            foreach ($inputs['groups'] as $group) {
-                $newGroupMemberXrefs[] = [
-                    'groupId' => $group,
-                    'memberId' => $inputs['id']
-                ];
-            }
-
-            $updatedGroups = (new GroupMemberUserXrefMapper())->updateXref($oldGroupMemberXrefs, $newGroupMemberXrefs);
         } else {
             $updatedGroups = 0;
         }
-
-        $updatedRows = parent::update($criteria, $fieldsValues, $limit);
 
         $output->setSuccess(true);
         if ($updatedRows + $updatedGroups > 0) {

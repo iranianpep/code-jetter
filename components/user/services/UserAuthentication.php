@@ -147,7 +147,10 @@ class UserAuthentication
                 continue;
             }
 
-            $output = (new $loggedIn['mapper'])->getOneById($loggedIn['userId']);
+            $output = new Output();
+            if (class_exists($loggedIn['mapper'])) {
+                $output = (new $loggedIn['mapper'])->getOneById($loggedIn['userId']);
+            }
 
             if (!$output instanceof Output || $output->getSuccess() !== true) {
                 continue;
