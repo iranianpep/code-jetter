@@ -11,10 +11,11 @@ class FileUtility
     /**
      * Validate and convert a (JSON) file content to a PHP array
      *
-     * @param $filePath
-     * @param bool $checkFileType Check file extension is json if it is true
+     * @param      $filePath
+     * @param bool $checkFileType
+     *
      * @return array|mixed
-     * @throws Exception
+     * @throws \Exception
      */
     public function jsonFileToArray($filePath, $checkFileType = false)
     {
@@ -31,12 +32,7 @@ class FileUtility
         }
 
         $content = file_get_contents($filePath);
-        $jsonArray = empty($content) ? [] : json_decode($content, true);
 
-        if ($jsonArray === null || !is_array($jsonArray) || json_last_error() !== 0) {
-            throw new \Exception("File: '{$filePath}' does not contain valid json");
-        } else {
-            return $jsonArray;
-        }
+        return (new StringUtility())->jsonToArray($content);
     }
 }
