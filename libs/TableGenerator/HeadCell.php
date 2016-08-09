@@ -42,6 +42,11 @@ class HeadCell extends Cell
      */
     private $selectable;
 
+    /**
+     * @var string $searchPattern
+     */
+    private $searchPattern;
+
     private $selectAllSelector;
 
     public function __construct($title = null, $alias = null, $content = null, $htmlspecialchars = false)
@@ -103,6 +108,14 @@ class HeadCell extends Cell
     }
 
     /**
+     * @return string
+     */
+    public function getSearchPattern()
+    {
+        return $this->searchPattern;
+    }
+
+    /**
      * @param boolean $sortable
      */
     public function setSortable($sortable)
@@ -119,11 +132,20 @@ class HeadCell extends Cell
     }
 
     /**
-     * @param boolean $searchable
+     * @param        $searchable
+     * @param string $searchPattern Valid values: `q`, `*q`, `q*`, `*q*`
+     *
+     * @throws \Exception
      */
-    public function setSearchable($searchable)
+    public function setSearchable($searchable, $searchPattern = 'q')
     {
         $this->searchable = $searchable;
+
+        if (!in_array($searchPattern, ['q', '*q', 'q*', '*q*'])) {
+            throw new \Exception("'{$searchPattern}' is not a valid search pattern");
+        }
+
+        $this->searchPattern = $searchPattern;
     }
 
     /**

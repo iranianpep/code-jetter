@@ -90,25 +90,39 @@ class MysqlUtility
             }
         }
 
-        $in = [];
+        if (empty($query)) {
+            return [];
+        }
+
+        $criteria = [];
         foreach ($listHeaders as $listHeader) {
             if (!$listHeader instanceof HeadCell) {
                 continue;
             }
 
+            // on purpose === true is not used, since by default we want a header to be searchable
             if ($listHeader->isSearchable() !== false) {
-                $in[] = $listHeader->getAlias();
-            }
-        }
+                switch ($listHeader->getSearchPattern()) {
+                    case 'q':
+                        $searchQuery = $query;
+                        break;
+                    case '*q':
+                        $searchQuery = "%{$query}";
+                        break;
+                    case 'q*':
+                        $searchQuery = "{$query}%";
+                        break;
+                    case '*q*':
+                        $searchQuery = "%{$query}%";
+                        break;
+                    default:
+                        $searchQuery = "%{$query}%";
+                }
 
-        // for each in, create the criteria
-        $criteria = [];
-        if (!empty($in) && isset($query)) {
-            foreach ($in as $inElement) {
                 $criteria[] = [
                     'logicalOperator' => 'OR',
-                    'column' => $inElement,
-                    'value' => '%' . $query . '%',
+                    'column' => $listHeader->getAlias(),
+                    'value' => $searchQuery,
                     'operator' => 'LIKE',
                     'nested' => [
                         'key' => 'search'
