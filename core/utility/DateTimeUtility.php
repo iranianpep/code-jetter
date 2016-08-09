@@ -67,4 +67,18 @@ class DateTimeUtility
         $diff = (new DateTime($startDate))->diff(new DateTime($endDate));
         return $this->diffInFullHours($startDate, $endDate) * 60 + $diff->i;
     }
+
+    /**
+     * Return date difference in full days - If start date is earlier than end date it returns positive
+     *
+     * @param $startDate
+     * @param $endDate
+     *
+     * @return int
+     */
+    public function diffInFullDays($startDate, $endDate)
+    {
+        $diff = (new DateTime($startDate))->diff(new DateTime($endDate));
+        return (int) $diff->format('%r%a');
+    }
 }
