@@ -73,6 +73,9 @@ $(document).ready(function(){
                         if (resetForm === 'true') {
                             // probably wont work if there more than one form in the page
                             $(form)[0].reset();
+
+                            // reset chosen as well
+                            $(form).find('.chosen-select').trigger('chosen:updated');
                         }
                     }
 
