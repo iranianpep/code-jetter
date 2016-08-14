@@ -15,9 +15,10 @@
 
         $file = dirname(__DIR__) . DIRECTORY_SEPARATOR . $className . '.php';
 
-        if (file_exists($file)) {
+        // leave the file_exists commented in production, for debugging add the file_exists check
+        //if (file_exists($file)) {
             require_once $file;
-        } else {
-            (new \CodeJetter\core\ErrorHandler())->logError("Class file '{$file}' does not exist");
-        }
+        //} else {
+        //    (new \CodeJetter\core\ErrorHandler())->logError("Class file '{$file}' does not exist");
+        //}
     });
