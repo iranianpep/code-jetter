@@ -65,7 +65,7 @@ class MemberUser extends User
         if (!empty($groupMemberXrefs)) {
             foreach ($groupMemberXrefs as $groupMemberXref) {
                 if ($groupMemberXref instanceof GroupMemberUserXref) {
-                    $groupIds[$groupMemberXref->getId()] = $groupMemberXref->getGroupId();
+                    $groupIds[$groupMemberXref->getId()] = (int) $groupMemberXref->getGroupId();
                 }
             }
         }
