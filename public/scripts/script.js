@@ -148,6 +148,9 @@ $(document).ready(function(){
     $(".zetta-menu").on('click', function(e){
         $(e.target).parent('li').toggleClass('zm-opened');
     });
+
+    // initialize tooltip - the rest is handled by bootstrap
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 function redirectToPage(basePath, page, limit, queryString)
