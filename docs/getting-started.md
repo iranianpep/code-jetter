@@ -5,6 +5,7 @@
 - [Create The Route File](#route)
 - [Move Code Jetter Files To Your Host](#copy-files)
 - [Include Autoloader In The Index](#autoloader)
+- [Run Composer](#composer)
 - [Troubleshooting](#toubleshooting)
 - [Where To Go From Here](#where)
 
@@ -73,6 +74,10 @@ Finally copy the `CodeJetter/public` folder **content** to your host public dire
 <a name="autoloader"></a>
 ## Include Autoloader In The Index
 Open `public/index.php` and change the path to `autoloader.php` based on the place that `CodeJetter/autoloader.php` is located. Now if you check `URL` in the browser you will see the welcome page.
+
+<a name="composer"></a>
+## Run Composer
+If you do not have `Composer` first you need to install it. Then run it the in the project root to download all the required libraries.
 
 <a name="toubleshooting"></a>
 ## Troubleshooting
