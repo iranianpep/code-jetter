@@ -1,5 +1,3 @@
 Config.php
-composer.json
-composer.lock
 vendor/
 Routes.php
