@@ -2,13 +2,13 @@
 
 namespace CodeJetter\core;
 
-use CodeJetter\libs\Monolog\Formatter\LineFormatter;
-use CodeJetter\libs\Monolog\Handler\ChromePHPHandler;
-use CodeJetter\libs\Monolog\Handler\HipChatHandler;
-use CodeJetter\libs\Monolog\Handler\MongoDBHandler;
-use CodeJetter\libs\Monolog\Handler\StreamHandler;
-use CodeJetter\libs\Monolog\Logger;
-use CodeJetter\libs\Psr\Log\LoggerInterface;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\ChromePHPHandler;
+use Monolog\Handler\HipChatHandler;
+use Monolog\Handler\MongoDBHandler;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class ErrorHandler

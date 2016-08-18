@@ -5,8 +5,7 @@ namespace CodeJetter\core;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
-use CodeJetter\libs\PHPMailer\PHPMailer;
-use CodeJetter\libs\PHPMailer\phpmailerException;
+use PHPMailer;
 
 /**
  * Class Mailer
