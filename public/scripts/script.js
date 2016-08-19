@@ -235,6 +235,8 @@ function populateFormWithDataObject(data, form)
 function getFormData(form)
 {
     var data = $(form).serializeArray();
+
+    // Submitted input does not include in serializeArray() - Also only pick the submitted input
     var submitted = $(form).find("input[type=submit][submitted=true], button[type=submit][submitted=true]");
     data.push({name: $(submitted).attr('name'), value: $(submitted).attr('value')});
 
