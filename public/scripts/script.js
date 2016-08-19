@@ -6,10 +6,10 @@ $(document).ready(function(){
         "timeOut": 8000
     };
 
-    // set the clicked / submitted input or button - for cases when there is more than one submit in a form
+    // set the submitted input or button - for cases when there is more than one submit in a form
     $("form input[type=submit], form button[type=submit]").on('click', function() {
-        $("input[type=submit], button[type=submit]", $(this).parents("form")).removeAttr("clicked");
-        $(this).attr("clicked", "true");
+        $("input[type=submit], button[type=submit]", $(this).parents("form")).removeAttr("submitted");
+        $(this).attr("submitted", "true");
     });
 
     $('form').on('submit', function(e){
@@ -25,7 +25,7 @@ $(document).ready(function(){
         e.preventDefault();
 
         // find the element fired the submit
-        var triggeredBy = $("input[type=submit][clicked=true], button[type=submit][clicked=true]");
+        var triggeredBy = $("input[type=submit][submitted=true], button[type=submit][submitted=true]");
 
         if ((triggeredBy).prop('nodeName') === 'BUTTON') {
             $(triggeredBy).attr('disabled', true);
@@ -37,7 +37,7 @@ $(document).ready(function(){
         var refresh = this.getAttribute('data-refresh');
         var resetForm = this.getAttribute('data-reset-on-success');
 
-        var data = $(this).serializeArray();
+        var data = getFormData(this);
 
         $.ajax({
             type: 'POST',
@@ -230,6 +230,15 @@ function populateFormWithDataObject(data, form)
     } else {
         alert('Data or form is undefined. Contact admin.')
     }
+}
+
+function getFormData(form)
+{
+    var data = $(form).serializeArray();
+    var submitted = $(form).find("input[type=submit][submitted=true], button[type=submit][submitted=true]");
+    data.push({name: $(submitted).attr('name'), value: $(submitted).attr('value')});
+
+    return data;
 }
 
 function getFormModal(form)
