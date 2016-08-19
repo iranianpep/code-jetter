@@ -11,7 +11,7 @@
 
 <a name="requirements"></a>
 ## Check The Requirements
-Currently the main requirement for Code Jetter to run is PHP 5.6+. If your PHP version is not 5.6 or above that, an error will be thrown. The good news is that Code Jetter can run on a shared host.
+Currently the main requirement for Code Jetter to run is PHP 5.6+. If your PHP version is not 5.6 or above that, an error will be thrown.
 
 <a name="database"></a>
 ## Apply Database Changes
