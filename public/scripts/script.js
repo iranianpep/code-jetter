@@ -6,6 +6,12 @@ $(document).ready(function(){
         "timeOut": 8000
     };
 
+    // set the clicked / submitted input or button - for cases when there is more than one submit in a form
+    $("form input[type=submit], form button[type=submit]").on('click', function() {
+        $("input[type=submit], button[type=submit]", $(this).parents("form")).removeAttr("clicked");
+        $(this).attr("clicked", "true");
+    });
+
     $('form').on('submit', function(e){
 
         // todo replace all the other this with form - be careful about this inside the ajax call
@@ -19,7 +25,7 @@ $(document).ready(function(){
         e.preventDefault();
 
         // find the element fired the submit
-        var triggeredBy = $(e.target).find('[type=submit]');
+        var triggeredBy = $("input[type=submit][clicked=true], button[type=submit][clicked=true]");
 
         if ((triggeredBy).prop('nodeName') === 'BUTTON') {
             $(triggeredBy).attr('disabled', true);
