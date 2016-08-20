@@ -4,6 +4,7 @@ namespace CodeJetter\core;
 
 use CodeJetter\components\page\models\Page;
 use CodeJetter\components\user\services\UserAuthentication;
+use CodeJetter\Config;
 use CodeJetter\core\io\Response;
 use CodeJetter\core\layout\blocks\Master;
 use CodeJetter\core\layout\blocks\Footer;
