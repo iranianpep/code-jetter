@@ -23,6 +23,7 @@ abstract class BaseDatabase
     private $pass;
     private $databaseName;
     private $connection;
+    private $dbInfo;
 
     /**
      * BaseDatabase constructor.
@@ -109,9 +110,7 @@ abstract class BaseDatabase
                 $this->setDatabase($database);
             }
 
-            $database = $this->getDatabase();
-            $databases = Registry::getConfigClass()->get('databases');
-            $this->connection = $this->connect($databases[$database]);
+            $this->connection = $this->connect($this->getDbInfo());
         }
 
         return $this->connection;
@@ -187,6 +186,29 @@ abstract class BaseDatabase
     public function setPass($pass)
     {
         $this->pass = $pass;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDbInfo()
+    {
+        if (!isset($this->dbInfo)) {
+            $database = $this->getDatabase();
+            $databases = Registry::getConfigClass()->get('databases');
+
+            $this->dbInfo = $databases[$database];
+        }
+
+        return $this->dbInfo;
+    }
+
+    /**
+     * @param array $dbInfo
+     */
+    public function setDbInfo(array $dbInfo)
+    {
+        $this->dbInfo = $dbInfo;
     }
 }
 

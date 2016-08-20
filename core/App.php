@@ -92,7 +92,7 @@ class App extends Singleton
         $request = new Request();
         $serverName = $request->getServerName();
 
-        if ($serverName === 'localhost' || $serverName === '127.0.0.1') {
+        if ($serverName === 'localhost' || $serverName === '127.0.0.1' || empty($serverName)) {
             $this->setEnvironment('dev');
         } else {
             $this->setEnvironment('prod');
