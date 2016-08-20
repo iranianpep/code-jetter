@@ -121,6 +121,19 @@ class HtmlUtilityTest extends \PHPUnit_Framework_TestCase
                     ]
                 ],
                 'o' => "<select name='statuses' multiple><option value='a' selected>A</option><option value='b' selected>B</option></select>"
+            ],
+            [
+                'i' => [
+                    'options' => ['a' => 'A', 'b' => 'B'],
+                    'name' => 'statuses',
+                    'selected' => ['a', 'b'],
+                    'configs' => [
+                        'keyAsValue' => true,
+                        'multiple' => true,
+                        'placeholder' => 'select one item ...'
+                    ]
+                ],
+                'o' => "<select name='statuses' data-placeholder='select one item ...' multiple><option value='a' selected>A</option><option value='b' selected>B</option></select>"
             ]
         ];
 

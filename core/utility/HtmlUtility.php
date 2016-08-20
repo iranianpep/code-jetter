@@ -23,7 +23,6 @@ class HtmlUtility
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -55,6 +54,7 @@ class HtmlUtility
         $name = ($name !== null) ? " name='{$name}'" : '';
         $class = isset($configs['class']) ? " class='{$configs['class']}'" : '';
         $id = isset($configs['id']) ? " id='{$configs['id']}'" : '';
+        $placeholder = isset($configs['placeholder']) ? " data-placeholder='{$configs['placeholder']}'" : '';
 
         if (!isset($configs['ucfirstTitle'])) {
             $configs['ucfirstTitle'] = false;
@@ -62,7 +62,7 @@ class HtmlUtility
 
         $stringUtility = new StringUtility();
 
-        $html = "<select{$name}{$class}{$id}{$multiple}>";
+        $html = "<select{$name}{$class}{$id}{$placeholder}{$multiple}>";
         foreach ($options as $key => $option) {
             // determine the value
             $value = (!empty($configs['keyAsValue'])) ? $key : $option;
@@ -224,7 +224,14 @@ class HtmlUtility
 
         return $html;
     }
-    
+
+    /**
+     * @param null $name
+     * @param null $value
+     * @param null $class
+     *
+     * @return string
+     */
     public function generateCheckbox($name = null, $value = null, $class = null)
     {
         $nameHtml = $name !== null ? " name='{$name}'" : '';
