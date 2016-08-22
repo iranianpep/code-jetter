@@ -30,6 +30,11 @@ class MySQLDatabase extends BaseDatabase
             $pass = $this->getPass();
 
             $connection = new \PDO("mysql:host={$host};dbname={$databaseName};charset=utf8", $user, $pass);
+
+            if (empty($connection)) {
+                (new \CodeJetter\core\ErrorHandler())->logError("Could not connect to database: {$databaseName}");
+            }
+
             $connection->setAttribute(\PDO::ATTR_PERSISTENT, true);
             $connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
