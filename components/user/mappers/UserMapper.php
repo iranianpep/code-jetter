@@ -172,7 +172,7 @@ abstract class UserMapper extends BaseMapper
                 ]
             );
 
-            // for batch update (e.g. group actions) id should not be required
+            // for batch update (e.g. group actions) id should not be required.
             // TODO however there should be a check to avoid updating the all records if id or ids are not passed
             $idInput = new Input('id', [$idRule]);
             $nameInput = new Input('name');
