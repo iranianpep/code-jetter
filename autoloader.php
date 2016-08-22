@@ -3,7 +3,7 @@
     require_once 'vendor/autoload.php';
 
     // If the later function cannot handle autoloading, uncomment the default one as well
-//    set_include_path(get_include_path().PATH_SEPARATOR.dirname(__DIR__));
+    set_include_path(get_include_path().PATH_SEPARATOR.dirname(__DIR__));
 
 //    spl_autoload_extensions('.php');
 //
