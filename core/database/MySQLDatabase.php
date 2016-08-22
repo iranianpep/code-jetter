@@ -31,10 +31,6 @@ class MySQLDatabase extends BaseDatabase
 
             $connection = new \PDO("mysql:host={$host};dbname={$databaseName};charset=utf8", $user, $pass);
 
-            if (empty($connection)) {
-                (new \CodeJetter\core\ErrorHandler())->logError("Could not connect to database: {$databaseName}");
-            }
-
             $connection->setAttribute(\PDO::ATTR_PERSISTENT, true);
             $connection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
@@ -43,6 +39,8 @@ class MySQLDatabase extends BaseDatabase
             return $connection;
         } catch (\PDOException $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
+            echo 'Could not connect to database';
+            exit;
         }
     }
 
