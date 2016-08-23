@@ -258,7 +258,7 @@ class ConfigTemplate extends BaseConfig
         /******************************
          * dev and prod environments configs
          */
-
+        'environment' => 'dev',
         'dev' => [
             /**
              * general

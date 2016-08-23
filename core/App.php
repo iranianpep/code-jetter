@@ -2,7 +2,6 @@
 
 namespace CodeJetter\core;
 
-use CodeJetter\core\io\Request;
 use CodeJetter\core\security\Security;
 use CodeJetter\core\utility\DateTimeUtility;
 
@@ -75,37 +74,21 @@ class App extends Singleton
      */
     public function setEnvironment($environment)
     {
-        if ($environment !== null) {
-            $this->environment = $environment;
-        } else {
-            $this->detectEnvironment();
-        }
+        $this->environment = $environment;
     }
 
     /**
-     * detect environment
-     *
-     * @return string
-     */
-    private function detectEnvironment()
-    {
-        $request = new Request();
-        $serverName = $request->getServerName();
-
-        if ($serverName === 'localhost' || $serverName === '127.0.0.1' || empty($serverName)) {
-            $this->setEnvironment('dev');
-        } else {
-            $this->setEnvironment('prod');
-        }
-    }
-
-    /**
-     * @return string
+     * @return mixed
+     * @throws \Exception
      */
     public function getEnvironment()
     {
         if (empty($this->environment)) {
-            $this->detectEnvironment();
+            $this->environment = Registry::getConfigClass()->get('environment', null, false);
+
+            if (empty($this->environment)) {
+                throw new \Exception('Environment cannot be empty');
+            }
         }
 
         return $this->environment;

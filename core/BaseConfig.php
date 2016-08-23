@@ -10,11 +10,12 @@ abstract class BaseConfig
     /**
      * @param      $key
      * @param null $component
+     * @param bool $checkInEnvironment
      *
      * @return mixed
      * @throws \Exception
      */
-    public function get($key, $component = null)
+    public function get($key, $component = null, $checkInEnvironment = true)
     {
         if ($component !== null) {
             $rootNamespace = $this->get('ROOT_NAMESPACE');
@@ -40,7 +41,7 @@ abstract class BaseConfig
         // get app to get environment first
         $app = App::getInstance();
 
-        if (isset($configs[$app->getEnvironment()]) && array_key_exists($key, $configs[$app->getEnvironment()])) {
+        if ($checkInEnvironment === true && isset($configs[$app->getEnvironment()]) && array_key_exists($key, $configs[$app->getEnvironment()])) {
             return $configs[$app->getEnvironment()][$key];
         } elseif (array_key_exists($key, $configs)) {
             return $configs[$key];
