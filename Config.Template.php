@@ -197,7 +197,7 @@ class ConfigTemplate extends BaseConfig
                     'file' => [
                         'active' => true,
                         // should be full path
-                        'path' => '/Applications/MAMP/htdocs/CodeJetter/temp/custom_error_log.log'
+                        'path' => 'tmp/custom_error_log.log'
                     ],
                     'hipchat' => [
                         'active' => false,

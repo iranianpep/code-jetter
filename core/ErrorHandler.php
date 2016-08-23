@@ -107,11 +107,13 @@ class ErrorHandler
                 $activeHandlers[] = new ChromePHPHandler();
                 break;
             case 'file':
-                if (empty($handlerConfig['path'])) {
+                $path = Registry::getConfigClass()->get('URI') . $handlerConfig['path'];
+
+                if (empty($path)) {
                     throw new \Exception('File path is empty');
                 }
 
-                $activeHandlers[] = new StreamHandler($handlerConfig['path']);
+                $activeHandlers[] = new StreamHandler($path);
                 break;
         }
 
