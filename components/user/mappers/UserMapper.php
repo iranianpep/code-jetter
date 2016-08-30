@@ -374,13 +374,8 @@ abstract class UserMapper extends BaseMapper
         $updatedRows = parent::update($criteria, [], $fieldsValues, $limit);
 
         $output->setSuccess(true);
-        if ($updatedRows > 0) {
-            $output->setData($updatedRows);
-            $output->setMessage('Member updated successfully');
-        } else {
-            $output->setData(0);
-            $output->setMessage('Nothing changed');
-        }
+        $output->setMessage('Updated successfully');
+        $output->setData($updatedRows);
 
         return $output;
     }

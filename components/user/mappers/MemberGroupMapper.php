@@ -234,10 +234,11 @@ class MemberGroupMapper extends GroupMapper
 
         if (!empty($changedRows) && is_numeric($changedRows) && (int) $changedRows > 0) {
             $output->setSuccess(true);
-            $output->setMessage('Group updated successfully');
+            $output->setMessage('Updated successfully');
             $output->setData($changedRows);
         } else {
             $output->setSuccess(false);
+            $output->setMessage('Updated successfully');
         }
 
         return $output;

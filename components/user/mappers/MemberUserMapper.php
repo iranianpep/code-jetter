@@ -365,7 +365,7 @@ class MemberUserMapper extends UserMapper
         }
 
         // if id is not passed, ignore updating groups
-        if ($updateOutput->getSuccess() === true && $updatedRows > 0 && isset($inputs['id'])) {
+        if ($updateOutput->getSuccess() === true && isset($inputs['id'])) {
             // To avoid not removing the relations when nothing is chosen
             if (!isset($inputs['groups'])) {
                 $inputs['groups'] = [];
@@ -402,12 +402,8 @@ class MemberUserMapper extends UserMapper
         }
 
         $output->setSuccess(true);
-        if ($updatedRows + $updatedGroups > 0) {
-            $output->setData($updatedRows + $updatedGroups);
-            $output->setMessage('Member updated successfully');
-        } else {
-            $output->setMessage('Nothing changed');
-        }
+        $output->setMessage('Updated successfully');
+        $output->setData($updatedRows + $updatedGroups);
 
         return $output;
     }
