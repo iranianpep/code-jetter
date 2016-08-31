@@ -22,7 +22,7 @@ abstract class BaseMapper implements ICrud
     protected $lastQuery;
     protected $component;
 
-    abstract public function getDefinedInputs();
+    abstract public function getDefinedInputs($case);
 
     /**
      * BaseMapper constructor.

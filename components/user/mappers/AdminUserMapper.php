@@ -24,7 +24,7 @@ class AdminUserMapper extends UserMapper
         // TODO: Implement add() method.
     }
 
-    public function getDefinedInputs()
+    public function getDefinedInputs($case)
     {
         // TODO: Implement getDefinedInputs() method.
     }
