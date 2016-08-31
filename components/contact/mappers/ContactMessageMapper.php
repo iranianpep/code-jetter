@@ -76,4 +76,9 @@ class ContactMessageMapper extends BaseMapper
 
         return $output;
     }
+
+    public function getDefinedInputs()
+    {
+        // TODO: Implement getDefinedInputs() method.
+    }
 }

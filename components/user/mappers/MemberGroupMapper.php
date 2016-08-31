@@ -28,7 +28,6 @@ class MemberGroupMapper extends GroupMapper
         $output = new Output();
         try {
             $requiredRule = new ValidatorRule('required');
-
             $nameInput = new Input('name', [$requiredRule]);
             $statusInput = new Input('status', [$requiredRule]);
 
@@ -242,5 +241,10 @@ class MemberGroupMapper extends GroupMapper
         }
 
         return $output;
+    }
+
+    public function getDefinedInputs()
+    {
+        // TODO: Implement getDefinedInputs() method.
     }
 }

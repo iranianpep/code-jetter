@@ -9,4 +9,8 @@ namespace CodeJetter\components\user\mappers;
 class GroupMemberUserXrefMapper extends GroupUserXrefMapper
 {
 
+    public function getDefinedInputs()
+    {
+        // TODO: Implement getDefinedInputs() method.
+    }
 }

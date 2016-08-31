@@ -23,4 +23,9 @@ class AdminUserMapper extends UserMapper
     {
         // TODO: Implement add() method.
     }
+
+    public function getDefinedInputs()
+    {
+        // TODO: Implement getDefinedInputs() method.
+    }
 }

@@ -10,4 +10,9 @@ class CityMapper extends BaseMapper
     {
         // TODO: No need to implement the body at this point
     }
+
+    public function getDefinedInputs()
+    {
+        // TODO: Implement getDefinedInputs() method.
+    }
 }

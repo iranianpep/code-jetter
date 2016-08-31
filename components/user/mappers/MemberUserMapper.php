@@ -407,4 +407,9 @@ class MemberUserMapper extends UserMapper
 
         return $output;
     }
+
+    public function getDefinedInputs()
+    {
+        // TODO: Implement getDefinedInputs() method.
+    }
 }
