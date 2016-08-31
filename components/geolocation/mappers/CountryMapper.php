@@ -11,7 +11,7 @@ class CountryMapper extends BaseMapper
         // TODO: No need to implement the body at this point
     }
 
-    public function getDefinedInputs($case)
+    public function getDefinedInputs($case = null)
     {
         // TODO: Implement getDefinedInputs() method.
     }

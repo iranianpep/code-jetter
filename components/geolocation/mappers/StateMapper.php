@@ -113,7 +113,7 @@ class StateMapper extends BaseMapper
         return $groupedCities;
     }
 
-    public function getDefinedInputs($case)
+    public function getDefinedInputs($case = null)
     {
         // TODO: Implement getDefinedInputs() method.
     }
