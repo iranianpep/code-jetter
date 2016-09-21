@@ -16,6 +16,7 @@
     "monolog/monolog": "~1.21",
     "psr/log": "^1.0",
     "phpmailer/phpmailer": "^5.2",
-    "robmorgan/phinx": "^0.6.4"
+    "robmorgan/phinx": "^0.6.4",
+    "php-table-generator/php-table-generator": "^1.0"
   }
 }
