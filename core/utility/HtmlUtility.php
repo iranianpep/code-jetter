@@ -9,8 +9,11 @@
 namespace CodeJetter\core\utility;
 
 use CodeJetter\core\FormHandler;
-use CodeJetter\libs\TableGenerator\HeadCell;
-use CodeJetter\libs\TableGenerator\Row;
+use CodeJetter\core\io\Request;
+use CodeJetter\core\Registry;
+use TableGenerator\HeadCell;
+use TableGenerator\Row;
+use TableGenerator\Table;
 
 /**
  * Class HtmlUtility
@@ -279,12 +282,25 @@ class HtmlUtility
     {
         $headRow = new Row();
 
+        /**
+         * Set list sorting parameters
+         */
+        $listConfig = Registry::getConfigClass()->get('list');
+
+        $request = new Request();
+        $sortDir = $request->getQueryStringVariables($listConfig['orderDir']);
+        $sortBy = $request->getQueryStringVariables($listConfig['orderBy']);
+
         if (!empty($headers)) {
             foreach ($headers as $header) {
                 if (!$header instanceof HeadCell) {
                     continue;
                 }
 
+                $header->setListSortByKey($listConfig['orderBy']);
+                $header->setListSortBy($sortBy);
+                $header->setListSortDirKey($listConfig['orderDir']);
+                $header->setListSortDir($sortDir);
                 $headRow->addCell($header);
             }
         }
