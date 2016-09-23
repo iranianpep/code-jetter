@@ -23,7 +23,7 @@ use CodeJetter\core\utility\DateTimeUtility;
 use CodeJetter\core\utility\MysqlUtility;
 use CodeJetter\core\View;
 use CodeJetter\components\page\models\Page;
-use CodeJetter\libs\TableGenerator\HeadCell;
+use TableGenerator\HeadCell;
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

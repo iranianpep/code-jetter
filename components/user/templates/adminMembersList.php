@@ -2,12 +2,12 @@
 
     use CodeJetter\core\utility\HtmlUtility;
     use CodeJetter\core\utility\StringUtility;
-    use CodeJetter\libs\TableGenerator\Cell;
-    use CodeJetter\libs\TableGenerator\HeadCell;
-    use CodeJetter\libs\TableGenerator\Row;
-    use CodeJetter\libs\TableGenerator\Head;
-    use CodeJetter\libs\TableGenerator\Body;
-    use CodeJetter\libs\TableGenerator\Table;
+    use TableGenerator\Cell;
+    use TableGenerator\HeadCell;
+    use TableGenerator\Row;
+    use TableGenerator\Head;
+    use TableGenerator\Body;
+    use TableGenerator\Table;
 
     /** @var CodeJetter\core\FormHandler $formHandler */
     /** @var CodeJetter\core\View $this */

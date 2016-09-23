@@ -4,7 +4,7 @@ namespace CodeJetter\core\utility;
 
 use CodeJetter\core\io\Request;
 use CodeJetter\core\Registry;
-use CodeJetter\libs\TableGenerator\HeadCell;
+use TableGenerator\HeadCell;
 
 /**
  * Class MysqlUtility

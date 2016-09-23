@@ -17,7 +17,7 @@ use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
 use CodeJetter\core\utility\MysqlUtility;
 use CodeJetter\core\View;
-use CodeJetter\libs\TableGenerator\HeadCell;
+use TableGenerator\HeadCell;
 
 /**
  * Class ContactController
