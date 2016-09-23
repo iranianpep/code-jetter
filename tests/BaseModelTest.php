@@ -11,9 +11,6 @@
 
 class BaseModelTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testGetMapperName()
     {
         $userModel = new \CodeJetter\components\user\models\MemberUser();

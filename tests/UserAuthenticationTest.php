@@ -13,9 +13,6 @@
 
     class UserAuthenticationTest extends \PHPUnit_Framework_TestCase
     {
-        /**
-         * @runInSeparateProcess
-         */
         public function testLogin()
         {
             $app = App::getInstance();
@@ -59,9 +56,6 @@
             }
         }
 
-        /**
-         * @runInSeparateProcess
-         */
         public function testIsUserActive()
         {
             $userAuthentication = new UserAuthentication();
@@ -94,9 +88,6 @@
             $this->assertEquals(false, $result);
         }
 
-        /**
-         * @runInSeparateProcess
-         */
         public function testIsLoggedIn()
         {
             $app = App::getInstance();

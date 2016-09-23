@@ -12,9 +12,6 @@ use CodeJetter\core\security\ValidatorRule;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @runInSeparateProcess
-     */
     public function testValidateEmail()
     {
         $app = App::getInstance();
