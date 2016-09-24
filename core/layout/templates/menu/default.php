@@ -32,7 +32,7 @@ if (!empty($personalizedMenuHtml)) {
         <div>
             <div class=\"navbar-logo-container\">
                 <div class=\"navbar-logo\">
-                    <a href=''><img title=\"logo\" src=\"/images/logo.png\" alt=\"\" width='100%'></a>
+                    <a href='/'><img title=\"logo\" src=\"/images/logo.png\" alt=\"\" width='100%'></a>
                 </div>
                 <div class=\"menu-bars\" onclick=\"showHideMenu();\">
                     <i class=\"fa fa-bars fa-2x\"></i>
