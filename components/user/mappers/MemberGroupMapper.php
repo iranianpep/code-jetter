@@ -27,14 +27,9 @@ class MemberGroupMapper extends GroupMapper
          */
         $output = new Output();
         try {
-            $requiredRule = new ValidatorRule('required');
-            $nameInput = new Input('name', [$requiredRule]);
-            $statusInput = new Input('status', [$requiredRule]);
+            $definedInputs = $this->getDefinedInputs();
 
-            $validator = new Validator(
-                [$nameInput, $statusInput],
-                $inputs
-            );
+            $validator = new Validator($definedInputs, $inputs);
 
             $validatorOutput = $validator->validate();
 
@@ -97,18 +92,8 @@ class MemberGroupMapper extends GroupMapper
      */
     public function updateById($id, array $inputs)
     {
-        $requiredRule = new ValidatorRule('required');
-        $idRule = new ValidatorRule('id');
-
-        $idInput = new Input('id', [$idRule, $requiredRule]);
-        $nameInput = new Input('name', [$requiredRule]);
-        $statusInput = new Input('status', [$requiredRule]);
-
-        $validator = new Validator(
-            [$idInput, $nameInput, $statusInput],
-            $inputs
-        );
-
+        $definedInputs = $this->getDefinedInputs('all');
+        $validator = new Validator($definedInputs, $inputs);
         $validatorOutput = $validator->validate();
 
         if ($validatorOutput->getSuccess() !== true) {
@@ -147,7 +132,6 @@ class MemberGroupMapper extends GroupMapper
         try {
             // because of group actions, only id is checked if it is set
             $idRule = new ValidatorRule('id');
-
             $idInput = new Input('id', [$idRule]);
 
             $validator = new Validator(
@@ -245,6 +229,17 @@ class MemberGroupMapper extends GroupMapper
 
     public function getDefinedInputs($case = null)
     {
-        // TODO: Implement getDefinedInputs() method.
+        $requiredRule = new ValidatorRule('required');
+        $definedInputs = [
+            new Input('name', [$requiredRule]),
+            new Input('status', [$requiredRule])
+        ];
+
+        if ($case === 'all') {
+            $idRule = new ValidatorRule('id');
+            $definedInputs[] = new Input('id', [$idRule, $requiredRule]);
+        }
+
+        return $definedInputs;
     }
 }

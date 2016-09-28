@@ -17,14 +17,7 @@ class ContactMessageMapper extends BaseMapper
          */
         $output = new Output();
         try {
-            $requiredRule = new ValidatorRule('required');
-            $emailRule = new ValidatorRule('email');
-
-            $definedInputs = [
-                new Input('name'),
-                new Input('email', [$requiredRule, $emailRule]),
-                new Input('message', [$requiredRule])
-            ];
+            $definedInputs = $this->getDefinedInputs();
 
             $validator = new Validator($definedInputs, $inputs);
             $validatorOutput = $validator->validate();
@@ -79,6 +72,13 @@ class ContactMessageMapper extends BaseMapper
 
     public function getDefinedInputs($case = null)
     {
-        // TODO: Implement getDefinedInputs() method.
+        $requiredRule = new ValidatorRule('required');
+        $emailRule = new ValidatorRule('email');
+
+        return [
+            new Input('name'),
+            new Input('email', [$requiredRule, $emailRule]),
+            new Input('message', [$requiredRule])
+        ];
     }
 }
