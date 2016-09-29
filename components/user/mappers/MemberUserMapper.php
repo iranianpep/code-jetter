@@ -6,10 +6,8 @@ use CodeJetter\components\user\models\MemberUser;
 use CodeJetter\components\user\models\User;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
-use CodeJetter\core\security\Security;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
-use CodeJetter\core\utility\DateTimeUtility;
 
 /**
  * Class MemberUserMapper
@@ -411,5 +409,10 @@ class MemberUserMapper extends UserMapper
     public function getDefinedInputs($case = null)
     {
         // TODO: Implement getDefinedInputs() method.
+    }
+
+    public function getFieldsValues($inputs, $case = null)
+    {
+        // TODO: Implement getFieldsValues() method.
     }
 }

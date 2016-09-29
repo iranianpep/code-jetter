@@ -37,23 +37,7 @@ class ContactMessageMapper extends BaseMapper
         /**
          * Start inserting
          */
-        $name = isset($inputs['name']) ? $inputs['name'] : '';
-
-        $fieldsValues = [
-            [
-                'column' => 'name',
-                'value' => $name,
-            ],
-            [
-                'column' => 'email',
-                'value' => $inputs['email'],
-            ],
-            [
-                'column' => 'message',
-                'value' => $inputs['message'],
-            ],
-        ];
-
+        $fieldsValues = $this->getFieldsValues($inputs);
         $insertedId = $this->insertOne($fieldsValues);
 
         $output = new Output();
@@ -79,6 +63,26 @@ class ContactMessageMapper extends BaseMapper
             new Input('name'),
             new Input('email', [$requiredRule, $emailRule]),
             new Input('message', [$requiredRule])
+        ];
+    }
+
+    public function getFieldsValues($inputs, $case = null)
+    {
+        $name = isset($inputs['name']) ? $inputs['name'] : '';
+
+        return [
+            [
+                'column' => 'name',
+                'value' => $name,
+            ],
+            [
+                'column' => 'email',
+                'value' => $inputs['email'],
+            ],
+            [
+                'column' => 'message',
+                'value' => $inputs['message'],
+            ],
         ];
     }
 }

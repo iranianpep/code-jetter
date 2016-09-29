@@ -23,6 +23,7 @@ abstract class BaseMapper implements ICrud
     protected $component;
 
     abstract public function getDefinedInputs($case = null);
+    abstract public function getFieldsValues($inputs, $case = null);
 
     /**
      * BaseMapper constructor.

@@ -15,4 +15,9 @@ class CityMapper extends BaseMapper
     {
         // TODO: Implement getDefinedInputs() method.
     }
+
+    public function getFieldsValues($inputs, $case = null)
+    {
+        // TODO: Implement getFieldsValues() method.
+    }
 }
