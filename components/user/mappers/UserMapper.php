@@ -277,8 +277,6 @@ abstract class UserMapper extends BaseMapper
          * Finish checking if the email exists
          */
 
-        $fieldsValues = [];
-
         if (isset($inputs['name'])) {
             // add to fields values
             array_push($fieldsValues, [

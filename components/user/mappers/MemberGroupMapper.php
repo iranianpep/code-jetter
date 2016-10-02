@@ -177,8 +177,6 @@ class MemberGroupMapper extends GroupMapper
          * Finish checking if the name exists
          */
 
-        $fieldsValues = [];
-
         if (isset($inputs['name'])) {
             // add to fields values
             array_push($fieldsValues, [

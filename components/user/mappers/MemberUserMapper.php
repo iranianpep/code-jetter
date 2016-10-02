@@ -324,7 +324,6 @@ class MemberUserMapper extends UserMapper
             $definedInputs[] = new Input('parentId', [$requiredRule, $idRule]);
         }
 
-        $fieldsValues = [];
         if (isset($inputs['parentId'])) {
             // if parent id is 0, do not check it
             if ((int) $inputs['parentId'] !== 0) {
