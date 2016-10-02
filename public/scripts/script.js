@@ -125,28 +125,19 @@ $(document).ready(function(){
             modal.find('.modal-title').text(modal.data('titleprefix') + ' ' + data.name);
         }
 
-        //if (form.length > 0) {
-        //    // add data to form inside the modal
-        //    appendDataObjectToForm(data, form);
-        //}
-
-        // TODO this needs to be controlled from form itself -> by passing the callback function
-        if (data.target === '#notifyModal') {
-            //modal.find('.modal-title').text('Notify ' + data.name);
-        } else if (data.target === '#deleteConfirmationModal') {
-            //modal.find('.modal-title').text('Delete ' + data.name);
-            appendDataObjectToForm(data, form);
-        } else if (data.target === '#safeDeleteConfirmationModal') {
-            //modal.find('.modal-title').text('Safe Delete ' + data.name);
-            appendDataObjectToForm(data, form);
-        } else if (data.target === '#editModal') {
-            //modal.find('.modal-title').text('Edit ' + data.name);
-            appendDataObjectToForm(data, form, ['id']);
+        if (typeof form.data('populate') !== 'undefined' && form.data('populate') == true) {
             populateFormWithDataObject(data, form);
-        } else {
-            appendDataObjectToForm(data, form);
         }
 
+        // by default we want to appendDataObjectToForm
+        if (typeof form.data('append') == 'undefined' || form.data('append') == true) {
+            if (typeof form.data('appendwhitelist') !== 'undefined') {
+                var whitelist = form.data('appendwhitelist').split(',');
+                appendDataObjectToForm(data, form, whitelist);
+            } else {
+                appendDataObjectToForm(data, form);
+            }
+        }
     });
 
     // TODO this needs to have another approach - maybe load it in the page uses this

@@ -328,7 +328,9 @@ class HtmlUtility
         $formClass,
         $formAction,
         $submitter = 'global',
-        $refresh = true
+        $refresh = true,
+        $appendData = true,
+        $populateForm = false
     ) {
         return "<div class='modal fade' id='{$divId}' tabindex='-1' role='dialog' aria-labelledby='{$labelId}' data-titleprefix='{$modalTitlePrefix}'>
   <div class='modal-dialog modal-sm' role='document'>
@@ -338,7 +340,7 @@ class HtmlUtility
         <span aria-hidden='true'>&times;</span></button>
         <h4 class='modal-title' id='{$labelId}'>Delete Group(s)</h4>
       </div>
-      <form class='{$formClass}' data-url='{$formAction}' data-submitter='{$submitter}' data-refresh='{$refresh}'>
+      <form class='{$formClass}' data-url='{$formAction}' data-submitter='{$submitter}' data-refresh='{$refresh}' data-append='{$appendData}' data-populate='{$populateForm}'>
       <input type='hidden' class='additional-data'>
           <div class='modal-body'>
             <p>Are you sure?</p>
