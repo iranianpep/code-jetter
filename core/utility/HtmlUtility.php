@@ -323,13 +323,14 @@ class HtmlUtility
     public function generateConfirmationModal(
         $divId,
         $labelId,
+        $modalTitlePrefix,
         FormHandler $formHandler,
         $formClass,
         $formAction,
         $submitter = 'global',
         $refresh = true
     ) {
-        return "<div class='modal fade' id='{$divId}' tabindex='-1' role='dialog' aria-labelledby='{$labelId}'>
+        return "<div class='modal fade' id='{$divId}' tabindex='-1' role='dialog' aria-labelledby='{$labelId}' data-titleprefix='{$modalTitlePrefix}'>
   <div class='modal-dialog modal-sm' role='document'>
     <div class='modal-content'>
       <div class='modal-header'>

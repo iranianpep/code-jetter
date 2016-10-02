@@ -119,7 +119,11 @@ $(document).ready(function(){
 
         var modal = $(this);
         // find form inside the modal
-        var form = $(modal).find('form');
+        var form = modal.find('form');
+
+        if (typeof modal.data('titleprefix') !== 'undefined') {
+            modal.find('.modal-title').text(modal.data('titleprefix') + ' ' + data.name);
+        }
 
         //if (form.length > 0) {
         //    // add data to form inside the modal
@@ -128,15 +132,15 @@ $(document).ready(function(){
 
         // TODO this needs to be controlled from form itself -> by passing the callback function
         if (data.target === '#notifyModal') {
-            modal.find('.modal-title').text('Notify ' + data.name);
+            //modal.find('.modal-title').text('Notify ' + data.name);
         } else if (data.target === '#deleteConfirmationModal') {
-            modal.find('.modal-title').text('Delete ' + data.name);
+            //modal.find('.modal-title').text('Delete ' + data.name);
             appendDataObjectToForm(data, form);
         } else if (data.target === '#safeDeleteConfirmationModal') {
-            modal.find('.modal-title').text('Safe Delete ' + data.name);
+            //modal.find('.modal-title').text('Safe Delete ' + data.name);
             appendDataObjectToForm(data, form);
         } else if (data.target === '#editModal') {
-            modal.find('.modal-title').text('Edit ' + data.name);
+            //modal.find('.modal-title').text('Edit ' + data.name);
             appendDataObjectToForm(data, form, ['id']);
             populateFormWithDataObject(data, form);
         } else {

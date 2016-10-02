@@ -108,16 +108,16 @@
     $pagerHtml = $this->getCurrentComponentTemplate()->getPager()->getHtml();
 
     // delete confirmation modal
-    $deleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', $formHandler, 'deleteForm', '/admin/contact/delete-message');
+    $deleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', 'Delete', $formHandler, 'deleteForm', '/admin/contact/delete-message');
 
     // batch delete confirmation modal
-    $batchDeleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', $formHandler, 'deleteForm', '/admin/contact/batch-delete-message');
+    $batchDeleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', 'Delete', $formHandler, 'deleteForm', '/admin/contact/batch-delete-message');
 
     // safe delete message confirmation modal
-    $safeDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeDeleteConfirmationModal', 'safeDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/contact/safe-delete-message');
+    $safeDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeDeleteConfirmationModal', 'safeDeleteConfirmationModalLabel', 'Safe Delete', $formHandler, 'safeDeleteForm', '/admin/contact/safe-delete-message');
 
     // safe batch delete message confirmation modal
-    $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/contact/safe-batch-delete-message');
+    $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', 'Safe Delete', $formHandler, 'safeDeleteForm', '/admin/contact/safe-batch-delete-message');
 
     return "<div class='container-fluid'>
     <div class='row vertical-offset-4'>

@@ -97,10 +97,10 @@ $searchFieldHtml = (new HtmlUtility())->generateSearchField($searchQuery, $searc
 $pagerHtml = $this->getCurrentComponentTemplate()->getPager()->getHtml();
 
 // delete member confirmation modal
-$deleteModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', $formHandler, 'deleteForm', '/account/delete-child');
+$deleteModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', 'Delete', $formHandler, 'deleteForm', '/account/delete-child');
 
 // batch delete member confirmation modal
-$batchDeleteModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', $formHandler, 'batchDeleteForm', '/account/batch-delete-child');
+$batchDeleteModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', 'Delete', $formHandler, 'batchDeleteForm', '/account/batch-delete-child');
 
 // new member modal
 $newModalHtml = "<div class='modal fade' id='addMemberModal' tabindex='-1' role='dialog' aria-labelledby='addMemberModalLabel'>

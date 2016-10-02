@@ -109,16 +109,16 @@
     $pagerHtml = $this->getCurrentComponentTemplate()->getPager()->getHtml();
 
     // delete member confirmation modal
-    $deleteModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', $formHandler, 'deleteForm', '/admin/delete-member');
+    $deleteModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', 'Delete', $formHandler, 'deleteForm', '/admin/delete-member');
 
     // batch delete member confirmation modal
-    $batchDeleteModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', $formHandler, 'batchDeleteForm', '/admin/batch-delete-member');
+    $batchDeleteModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', 'Delete', $formHandler, 'batchDeleteForm', '/admin/batch-delete-member');
 
     // safe delete member confirmation modal
-    $safeDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeDeleteConfirmationModal', 'safeDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/safe-delete-member');
+    $safeDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeDeleteConfirmationModal', 'safeDeleteConfirmationModalLabel', 'Safe Delete', $formHandler, 'safeDeleteForm', '/admin/safe-delete-member');
 
     // batch delete member confirmation modal
-    $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', $formHandler, 'batchDeleteForm', '/admin/safe-batch-delete-member');
+    $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', 'Safe Delete', $formHandler, 'batchDeleteForm', '/admin/safe-batch-delete-member');
 
     // New modal
     $newModalHtml = "<div class='modal fade' id='addModal' tabindex='-1' role='dialog' aria-labelledby='addModalLabel'>

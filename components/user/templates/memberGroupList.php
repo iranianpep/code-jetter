@@ -106,16 +106,16 @@
     $pagerHtml = $this->getCurrentComponentTemplate()->getPager()->getHtml();
 
     // delete confirmation modal
-    $deleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', $formHandler, 'deleteForm', '/admin/delete-group-member');
+    $deleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('deleteConfirmationModal', 'deleteConfirmationModalLabel', 'Delete', $formHandler, 'deleteForm', '/admin/delete-group-member');
 
     // batch delete confirmation modal
-    $batchDeleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', $formHandler, 'deleteForm', '/admin/batch-delete-group-member');
+    $batchDeleteConfirmationModalHtml = $htmlUtility->generateConfirmationModal('batchDeleteConfirmationModal', 'batchDeleteConfirmationModalLabel', 'Delete', $formHandler, 'deleteForm', '/admin/batch-delete-group-member');
 
     // safe delete group-member confirmation modal
-    $safeDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeDeleteConfirmationModal', 'safeDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/safe-delete-group-member');
+    $safeDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeDeleteConfirmationModal', 'safeDeleteConfirmationModalLabel', 'Safe Delete', $formHandler, 'safeDeleteForm', '/admin/safe-delete-group-member');
 
     // safe batch delete group-member confirmation modal
-    $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', $formHandler, 'safeDeleteForm', '/admin/safe-batch-delete-group-member');
+    $safeBatchDeleteModalHtml = $htmlUtility->generateConfirmationModal('safeBatchDeleteConfirmationModal', 'safeBatchDeleteConfirmationModalLabel', 'Safe Delete', $formHandler, 'safeDeleteForm', '/admin/safe-batch-delete-group-member');
 
     // New modal
     $newModalHtml = "<div class='modal fade' id='addModal' tabindex='-1' role='dialog' aria-labelledby='addModalLabel'>
