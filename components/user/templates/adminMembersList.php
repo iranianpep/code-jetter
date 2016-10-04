@@ -94,7 +94,7 @@
         }
     } else {
         $tmpCell = new Cell('No record.');
-        $tmpCell->addColspan(8);
+        $tmpCell->addColspan(count($data['listHeaders']));
         $body->addRow(new Row([$tmpCell]));
     }
 
