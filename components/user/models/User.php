@@ -201,21 +201,33 @@ abstract class User extends BaseModel
     }
 
     /**
-     * @param $username
-     * @param $password
+     * @param $key String Specify the user property / attribute which is used to search for an existing user
+     * @param $value String
+     * @param $password String
      *
      * @return bool|Output
      * @throws \Exception
      */
-    public function login($username, $password)
+    public function login($key, $value, $password)
     {
         // determine which mapper should be called
         $mapperName = $this->getMapperName();
 
-        // get user by username
-        $output = (new $mapperName())->getOneByUsername($username);
+        switch ($key) {
+            case 'email':
+                // get user by username
+                $output = (new $mapperName())->getOneByEmail($value);
+                break;
+            case 'username':
+                // get user by username
+                $output = (new $mapperName())->getOneByUsername($value);
+                break;
+            default:
+                throw new \Exception("key: {$key} is not a valid user property");
+                break;
+        }
 
-        if (!$output instanceof Output) {
+        if (!isset($output) || !$output instanceof Output) {
             return false;
         }
 

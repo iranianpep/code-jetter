@@ -89,7 +89,7 @@ class MemberUserController extends BaseController
 
         if ($output->getSuccess() === true) {
             // On successful register, login automatically
-            $output = (new MemberUser())->login($inputs['username'], $inputs['password']);
+            $output = (new MemberUser())->login('username', $inputs['username'], $inputs['password']);
         }
 
         (new Response())->echoContent($output->toJSON());
@@ -139,7 +139,7 @@ class MemberUserController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         if (isset($inputs['username']) && isset($inputs['password'])) {
-            $output = (new MemberUser())->login($inputs['username'], $inputs['password']);
+            $output = (new MemberUser())->login('username', $inputs['username'], $inputs['password']);
 
             // redirection is happening in javascript
             (new Response())->echoContent($output->toJSON());

@@ -79,7 +79,7 @@ class AdminUserController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         if (isset($inputs['username']) && isset($inputs['password'])) {
-            $output = (new AdminUser())->login($inputs['username'], $inputs['password']);
+            $output = (new AdminUser())->login('username', $inputs['username'], $inputs['password']);
 
             // redirection is happening in javascript
             (new Response())->echoContent($output->toJSON());
