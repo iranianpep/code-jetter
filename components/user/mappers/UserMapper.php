@@ -199,7 +199,7 @@ abstract class UserMapper extends BaseMapper
             $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
 
             if (!empty($inputs['password'])) {
-                if (!isset($inputs['passwordConfirmation']) || $inputs['password'] !== $inputs['passwordConfirmation']) {
+                if (isset($inputs['passwordConfirmation']) && $inputs['password'] !== $inputs['passwordConfirmation']) {
                     $output->setSuccess(false);
                     $output->addMessage('Password does not match with Confirm password');
                     return $output;
@@ -435,7 +435,7 @@ abstract class UserMapper extends BaseMapper
             $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
 
             if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
-                if ($inputs['password'] !== $inputs['passwordConfirmation']) {
+                if (isset($inputs['passwordConfirmation']) && $inputs['password'] !== $inputs['passwordConfirmation']) {
                     $output->setSuccess(false);
                     $output->setMessage('Password does not match with Confirm password');
                     return $output;
