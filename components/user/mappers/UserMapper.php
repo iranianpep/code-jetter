@@ -164,7 +164,7 @@ abstract class UserMapper extends BaseMapper
         try {
             $idRule = new ValidatorRule('id');
             $emailRule = new ValidatorRule('email');
-            $usernameRule = new ValidatorRule('username');
+
             $whitelistRule = new ValidatorRule(
                 'whitelist',
                 [
@@ -179,7 +179,6 @@ abstract class UserMapper extends BaseMapper
             $phoneInput = new Input('phone');
             $emailInput = new Input('email', [$emailRule]);
             $statusInput = new Input('status');
-            $usernameInput = new Input('username', [$usernameRule]);
             $timezoneInput = new Input('timeZone', [$whitelistRule]);
 
             $definedInputs = [
@@ -188,9 +187,14 @@ abstract class UserMapper extends BaseMapper
                 $phoneInput,
                 $emailInput,
                 $statusInput,
-                $usernameInput,
                 $timezoneInput
             ];
+
+            if (isset($inputs['username'])) {
+                $usernameRule = new ValidatorRule('username');
+                $usernameInput = new Input('username', [$usernameRule]);
+                $definedInputs[] = $usernameInput;
+            }
 
             /**
              * Merge the default defined inputs with the additional one
