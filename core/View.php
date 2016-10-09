@@ -66,17 +66,12 @@ class View
      */
     public function getLoggedIn()
     {
-        $routeInfo = Registry::getRouterClass()->getLastRoute();
-
-        if (empty($routeInfo)) {
-            return false;
-        }
+        $accessRole = $this->viewingAs();
 
         $config = $this->getConfig();
 
-        $accessRole = $routeInfo->getAccessRole();
         $roles = $config->get('roles');
-        if (isset($accessRole) && isset($roles[$accessRole])) {
+        if (isset($roles[$accessRole])) {
             $userModel = $roles[$accessRole];
         }
 
@@ -85,6 +80,33 @@ class View
         } else {
             return false;
         }
+    }
+
+    /**
+     * Return the current access role
+     *
+     * @param bool $lowercase
+     *
+     * @return bool|string
+     */
+    public function viewingAs($lowercase = true)
+    {
+        $routeInfo = Registry::getRouterClass()->getLastRoute();
+
+        if (empty($routeInfo)) {
+            return false;
+        }
+
+        return $lowercase === true ? strtolower($routeInfo->getAccessRole()) : $routeInfo->getAccessRole();
+    }
+
+    /**
+     * @return bool
+     */
+    public function viewingAsAdmin()
+    {
+        $viewingAs = $this->viewingAs();
+        return $viewingAs === 'admin' ? true : false;
     }
 
     /**
