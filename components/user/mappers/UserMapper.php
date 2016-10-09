@@ -415,14 +415,18 @@ abstract class UserMapper extends BaseMapper
             $requiredRule = new ValidatorRule('required');
 
             $emailRule = new ValidatorRule('email');
-            $usernameRule = new ValidatorRule('username');
 
             $nameInput = new Input('name');
             $emailInput = new Input('email', [$requiredRule, $emailRule]);
             $phoneInput = new Input('phone');
-            $usernameInput = new Input('username', [$requiredRule, $usernameRule]);
 
-            $definedInputs = [$nameInput, $emailInput, $phoneInput, $usernameInput];
+            $definedInputs = [$nameInput, $emailInput, $phoneInput];
+
+            if (isset($inputs['username'])) {
+                $usernameRule = new ValidatorRule('username');
+                $usernameInput = new Input('username', [$requiredRule, $usernameRule]);
+                $definedInputs[] = $usernameInput;
+            }
 
             /**
              * Merge the default defined inputs with the additional one
@@ -483,12 +487,14 @@ abstract class UserMapper extends BaseMapper
         /**
          * Start checking if the username exists
          */
-        $found = $this->getOneByUsername($inputs['username'])->getData();
+        if (isset($inputs['username'])) {
+            $found = $this->getOneByUsername($inputs['username'])->getData();
 
-        if (!empty($found) && $found instanceof User) {
-            $output->setSuccess(false);
-            $output->setMessage('Username already exists');
-            return $output;
+            if (!empty($found) && $found instanceof User) {
+                $output->setSuccess(false);
+                $output->setMessage('Username already exists');
+                return $output;
+            }
         }
         /**
          * Finish checking if the username exists
@@ -501,29 +507,27 @@ abstract class UserMapper extends BaseMapper
             [
                 'column' => 'name',
                 'value' => isset($inputs['name']) ? $inputs['name'] : '',
-
             ],
             [
                 'column' => 'email',
                 'value' => $inputs['email'],
-
             ],
             [
                 'column' => 'phone',
                 'value' => isset($inputs['phone']) ? $inputs['phone'] : '',
-
             ],
             [
                 'column' => 'status',
                 'value' => $inputs['status'],
-
             ],
-            [
+        ];
+
+        if (isset($inputs['username'])) {
+            $commonFieldsValues[] = [
                 'column' => 'username',
                 'value' => $inputs['username'],
-
-            ]
-        ];
+            ];
+        }
 
         $fieldsValues = array_merge($commonFieldsValues, $fieldsValues);
 
