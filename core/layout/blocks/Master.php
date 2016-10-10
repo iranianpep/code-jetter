@@ -2,6 +2,7 @@
 
 namespace CodeJetter\core\layout\blocks;
 
+use CodeJetter\components\user\models\User;
 use CodeJetter\core\Registry;
 
 /**
@@ -43,9 +44,8 @@ class Master extends BaseBlock
     {
         $script = '';
 
-        $loggedInUser = $this->getView()->getLoggedIn();
-        if (!empty($loggedInUser)) {
-            $loggedInUser = array_pop($loggedInUser);
+        $loggedInUser = $this->getView()->getCurrentLoggedIn();
+        if (!empty($loggedInUser) && $loggedInUser instanceof User) {
             $userModel = $loggedInUser->getClassNameFromNamespace();
 
             // stuff for registered users

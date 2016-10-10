@@ -13,7 +13,6 @@ use CodeJetter\core\io\Request;
 use CodeJetter\core\Registry;
 use TableGenerator\HeadCell;
 use TableGenerator\Row;
-use TableGenerator\Table;
 
 /**
  * Class HtmlUtility

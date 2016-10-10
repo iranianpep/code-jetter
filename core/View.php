@@ -3,7 +3,6 @@
 namespace CodeJetter\core;
 
 use CodeJetter\components\page\models\Page;
-use CodeJetter\components\user\services\UserAuthentication;
 use CodeJetter\Config;
 use CodeJetter\core\io\Response;
 use CodeJetter\core\layout\blocks\Master;
@@ -18,7 +17,7 @@ use CodeJetter\core\utility\StringUtility;
  * Class View
  * @package CodeJetter\core
  */
-class View
+class View extends Base
 {
     private $config;
     private $master;
@@ -58,55 +57,6 @@ class View
         $this->setHeader(new Header($this));
         $this->setFooter(new Footer($this));
         $this->setMenu(new Menu($this));
-    }
-
-    /**
-     * @return array|bool
-     * @throws \Exception
-     */
-    public function getLoggedIn()
-    {
-        $accessRole = $this->viewingAs();
-
-        $config = $this->getConfig();
-
-        $roles = $config->get('roles');
-        if (isset($roles[$accessRole])) {
-            $userModel = $roles[$accessRole];
-        }
-
-        if (isset($userModel['user'])) {
-            return (new UserAuthentication())->getLoggedIn([$userModel['user']]);
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Return the current access role
-     *
-     * @param bool $lowercase
-     *
-     * @return bool|string
-     */
-    public function viewingAs($lowercase = true)
-    {
-        $routeInfo = Registry::getRouterClass()->getLastRoute();
-
-        if (empty($routeInfo)) {
-            return false;
-        }
-
-        return $lowercase === true ? strtolower($routeInfo->getAccessRole()) : $routeInfo->getAccessRole();
-    }
-
-    /**
-     * @return bool
-     */
-    public function viewingAsAdmin()
-    {
-        $viewingAs = $this->viewingAs();
-        return $viewingAs === 'admin' ? true : false;
     }
 
     /**

@@ -195,7 +195,7 @@ abstract class User extends BaseModel
     public function getLoggedIn()
     {
         $userModel = (new StringUtility())->getClassNameFromNamespace(get_class($this));
-        $result = (new UserAuthentication())->getLoggedIn([$userModel]);
+        $result = (new UserAuthentication())->getAllLoggedIn([$userModel]);
 
         return isset($result[$userModel]) ? $result[$userModel] : false;
     }

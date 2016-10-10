@@ -3,7 +3,7 @@
 
 namespace CodeJetter\core;
 
-abstract class BaseConfig
+abstract class BaseConfig extends Base
 {
     protected static $configs;
 

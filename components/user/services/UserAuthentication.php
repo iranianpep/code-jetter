@@ -92,7 +92,7 @@ class UserAuthentication
     {
         $userModel = $user->getClassNameFromNamespace();
 
-        $loggedInUsers = $this->getLoggedIn([$userModel]);
+        $loggedInUsers = $this->getAllLoggedIn([$userModel]);
 
         // before updating $updateLastActivityAt make sure user is logged in
         if (!empty($loggedInUsers) && $updateLastActivityAt === true) {
@@ -130,7 +130,7 @@ class UserAuthentication
      * @return array|bool
      * @throws \Exception
      */
-    public function getLoggedIn(array $whiteList = null)
+    public function getAllLoggedIn(array $whiteList = null)
     {
         if (!isset($_SESSION['loggedIn']) || empty($_SESSION['loggedIn']) || !is_array($_SESSION['loggedIn'])) {
             return false;
@@ -184,6 +184,30 @@ class UserAuthentication
     }
 
     /**
+     * Return the current access role
+     *
+     * @return bool|string
+     */
+    public function viewingAs()
+    {
+        $routeInfo = Registry::getRouterClass()->getLastRoute();
+
+        if (empty($routeInfo)) {
+            return false;
+        }
+
+        return $routeInfo->getAccessRole();
+    }
+
+    /**
+     * @return bool
+     */
+    public function viewingAsAdmin()
+    {
+        return ($this->viewingAs()) === 'admin' ? true : false;
+    }
+
+    /**
      * @return bool
      * @throws \Exception
      */
@@ -205,7 +229,7 @@ class UserAuthentication
             return false;
         }
 
-        $loggedIn = $this->getLoggedIn([$roles[$routeInfo->getAccessRole()]['user']]);
+        $loggedIn = $this->getAllLoggedIn([$roles[$routeInfo->getAccessRole()]['user']]);
 
         if (empty($loggedIn)) {
             return false;

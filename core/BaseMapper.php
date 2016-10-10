@@ -14,7 +14,7 @@ use CodeJetter\core\utility\StringUtility;
  * Class BaseMapper
  * @package CodeJetter\core
  */
-abstract class BaseMapper implements ICrud
+abstract class BaseMapper extends Base implements ICrud
 {
     protected $database;
     protected $table;

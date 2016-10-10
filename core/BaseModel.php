@@ -14,7 +14,7 @@ use CodeJetter\core\utility\StringUtility;
  * Class BaseModel
  * @package CodeJetter\core
  */
-abstract class BaseModel
+abstract class BaseModel extends Base
 {
     protected $id;
     protected $createdAt;

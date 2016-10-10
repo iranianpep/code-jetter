@@ -2,13 +2,11 @@
 
 namespace CodeJetter\components\user\mappers;
 
-use CodeJetter\core\BaseMapper;
 use CodeJetter\core\database\BaseXrefMapper;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
-use CodeJetter\core\utility\ArrayUtility;
 
 /**
  * Class GroupUserXrefMapper

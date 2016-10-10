@@ -12,7 +12,7 @@ namespace CodeJetter\core;
  * Class BaseController
  * @package CodeJetter\core
  */
-abstract class BaseController
+abstract class BaseController extends Base
 {
     private $HTTPInputs;
     private $routeInfo;

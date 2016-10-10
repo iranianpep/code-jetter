@@ -47,7 +47,7 @@ class Menu extends BaseBlock
 
             $redirections = Registry::getConfigClass()->get('redirections');
 
-            $loggedInUsers = (new UserAuthentication())->getLoggedIn();
+            $loggedInUsers = (new UserAuthentication())->getAllLoggedIn();
 
             $usersDefaultLinks = [];
             if (!empty($loggedInUsers)) {
