@@ -551,7 +551,8 @@ abstract class UserMapper extends BaseMapper
         );
 
         $idInput = new Input('id', [$idRule]);
-        $nameInput = new Input('name');
+        $nameInput = (isset($options['nameRequired']) && $options['nameRequired'] === true) ?
+            new Input('name', [$requiredRule]) : new Input('name');
         $phoneInput = new Input('phone');
         $emailInput = new Input('email', [$emailRule, $requiredRule]);
         $usernameInput = new Input('username', [$usernameRule]);
