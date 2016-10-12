@@ -54,7 +54,7 @@ class ContactMessageMapper extends BaseMapper
         return $output;
     }
 
-    public function getDefinedInputs($case = null)
+    public function getDefinedInputs(array $options = [])
     {
         $requiredRule = new ValidatorRule('required');
         $emailRule = new ValidatorRule('email');

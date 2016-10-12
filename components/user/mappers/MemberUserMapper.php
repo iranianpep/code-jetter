@@ -261,7 +261,7 @@ class MemberUserMapper extends UserMapper
     public function updateChildById($childId, array $inputs, MemberUser $userMember = null)
     {
         if ($userMember === null) {
-            $userMember =  (new MemberUser())->getLoggedIn();
+            $userMember = (new MemberUser())->getLoggedIn();
         }
 
         $criteria = [
@@ -405,9 +405,9 @@ class MemberUserMapper extends UserMapper
         return $output;
     }
 
-    public function getDefinedInputs($case = null)
+    public function getDefinedInputs(array $options = [])
     {
-        // TODO: Implement getDefinedInputs() method.
+        return parent::getDefinedInputs($options);
     }
 
     public function getFieldsValues($inputs, $case = null)

@@ -915,5 +915,54 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($toBeCheckedInputs, $validator->getToCheckInputs());
     }
+
+    public function testGetFilteredInputs()
+    {
+        $dummyInput1 = new Input('name');
+        $dummyInput2 = new Input('email');
+
+        $inputsOutputs = [
+            [
+                'inputs' => [
+                    'name' => 'ehsan',
+                    'email' => 'ehsan@ehsan.com'
+                ],
+                'output' => [
+                    'name' => 'ehsan',
+                    'email' => 'ehsan@ehsan.com'
+                ]
+            ],
+            [
+                'inputs' => [
+                    'name' => 'ehsan',
+                    'token' => 'g87g87f8f8bbm'
+                ],
+                'output' => [
+                    'name' => 'ehsan',
+                ]
+            ],
+            [
+                'inputs' => [
+                    'username' => 'ehsan',
+                    'token' => 'g87g87f8f8bbm'
+                ],
+                'output' => []
+            ],
+        ];
+
+        foreach ($inputsOutputs as $inputsOutput) {
+            $validator = new Validator([$dummyInput1, $dummyInput2], $inputsOutput['inputs']);
+            $filteredInputs = $validator->getFilteredInputs();
+            $this->assertEquals($inputsOutput['output'], $filteredInputs);
+        }
+
+        // this time with validate()
+        foreach ($inputsOutputs as $inputsOutput) {
+            $validator = new Validator([$dummyInput1, $dummyInput2], $inputsOutput['inputs']);
+            $validator->validate();
+            $filteredInputs = $validator->getFilteredInputs();
+            $this->assertEquals($inputsOutput['output'], $filteredInputs);
+        }
+    }
 }
  

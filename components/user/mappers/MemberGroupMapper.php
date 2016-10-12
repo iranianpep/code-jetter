@@ -92,7 +92,7 @@ class MemberGroupMapper extends GroupMapper
      */
     public function updateById($id, array $inputs)
     {
-        $definedInputs = $this->getDefinedInputs('all');
+        $definedInputs = $this->getDefinedInputs(['all']);
         $validator = new Validator($definedInputs, $inputs);
         $validatorOutput = $validator->validate();
 
@@ -225,7 +225,7 @@ class MemberGroupMapper extends GroupMapper
         return $output;
     }
 
-    public function getDefinedInputs($case = null)
+    public function getDefinedInputs(array $options = [])
     {
         $requiredRule = new ValidatorRule('required');
         $definedInputs = [
@@ -233,7 +233,7 @@ class MemberGroupMapper extends GroupMapper
             new Input('status', [$requiredRule])
         ];
 
-        if ($case === 'all') {
+        if (in_array('all', $options)) {
             $idRule = new ValidatorRule('id');
             $definedInputs[] = new Input('id', [$idRule, $requiredRule]);
         }

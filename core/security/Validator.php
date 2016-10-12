@@ -60,8 +60,15 @@ class Validator
     private $rulesConfigs;
 
     /**
-     * @param array $definedInputs
-     * @param array $toCheckInputs
+     * @var
+     */
+    private $filteredInputs;
+
+    /**
+     * Validator constructor.
+     *
+     * @param array|null $definedInputs
+     * @param array|null $toCheckInputs
      */
     public function __construct(array $definedInputs = null, array $toCheckInputs = null)
     {
@@ -97,6 +104,14 @@ class Validator
         // iterate through each defined input rules
         if (!empty($this->getDefinedInputs())) {
             foreach ($this->getDefinedInputs() as $definedInputKey => $definedInput) {
+                if (!$definedInput instanceof Input) {
+                    continue;
+                }
+
+                if (array_key_exists($definedInputKey, $toBeCheckedInputs)) {
+                    $this->filteredInputs[$definedInputKey] = $toBeCheckedInputs[$definedInputKey];
+                }
+
                 // extract rules from the current defined input
                 $rules = $definedInput->getRules();
 
@@ -171,6 +186,30 @@ class Validator
         $output->setData($this->getData());
 
         return $output;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilteredInputs()
+    {
+        if (!isset($this->filteredInputs)) {
+            $this->filteredInputs = [];
+            if (!empty($this->getDefinedInputs())) {
+                $toBeCheckedInputs = $this->getToCheckInputs();
+                foreach ($this->getDefinedInputs() as $definedInputKey => $definedInput) {
+                    if (!$definedInput instanceof Input) {
+                        continue;
+                    }
+
+                    if (array_key_exists($definedInputKey, $toBeCheckedInputs)) {
+                        $this->filteredInputs[$definedInputKey] = $toBeCheckedInputs[$definedInputKey];
+                    }
+                }
+            }
+        }
+
+        return $this->filteredInputs;
     }
 
     /**

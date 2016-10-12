@@ -154,47 +154,50 @@ abstract class UserMapper extends BaseMapper
         }
     }
 
-    public function update(array $criteria, array $inputs, array $fieldsValues, $limit = 0, $additionalDefinedInputs = [], $excludeArchived = true)
-    {
+    /**
+     * @param array $criteria
+     * @param array $inputs
+     * @param array $fieldsValues
+     * @param int   $limit
+     * @param array $additionalDefinedInputs
+     * @param bool  $excludeArchived
+     *
+     * @return Output
+     * @throws \Exception
+     */
+    public function update(
+        array $criteria,
+        array $inputs,
+        array $fieldsValues,
+        $limit = 0,
+        $additionalDefinedInputs = [],
+        $excludeArchived = true
+    ) {
         /**
          * start validating
          */
         $output = new Output();
 
         try {
-            $idRule = new ValidatorRule('id');
-            $emailRule = new ValidatorRule('email');
-
-            $whitelistRule = new ValidatorRule(
-                'whitelist',
-                [
-                    'whitelist' => (new DateTimeUtility())->getTimeZones()
-                ]
-            );
-
-            // for batch update (e.g. group actions) id should not be required.
-            // TODO however there should be a check to avoid updating the all records if id or ids are not passed
-            $idInput = new Input('id', [$idRule]);
-            $nameInput = new Input('name');
-            $phoneInput = new Input('phone');
-            $emailInput = new Input('email', [$emailRule]);
-            $statusInput = new Input('status');
-            $timezoneInput = new Input('timeZone', [$whitelistRule]);
-
-            $definedInputs = [
-                $idInput,
-                $nameInput,
-                $phoneInput,
-                $emailInput,
-                $statusInput,
-                $timezoneInput
-            ];
-
-            if (isset($inputs['username'])) {
-                $usernameRule = new ValidatorRule('username');
-                $usernameInput = new Input('username', [$usernameRule]);
-                $definedInputs[] = $usernameInput;
+            $definedInputsConditions = [];
+            if (!empty($inputs['password'])) {
+                $definedInputsConditions = ['passwordRequired' => true];
+                if (isset($inputs['passwordConfirmation'])) {
+                    $definedInputsConditions['passwordConfirmation'] = $inputs['passwordConfirmation'];
+                }
             }
+
+            $updatingChildByParent = false;
+            foreach ($criteria as $aCriteriaKey => $aCriteriaInfo) {
+                if ($aCriteriaInfo['column'] === 'parentId' && $aCriteriaInfo['value'] > 0) {
+                    $updatingChildByParent = true;
+                    break;
+                }
+            }
+
+            $definedInputsConditions['updatingChildByParent'] = $updatingChildByParent;
+
+            $definedInputs = $this->getDefinedInputs($definedInputsConditions);
 
             /**
              * Merge the default defined inputs with the additional one
@@ -202,20 +205,11 @@ abstract class UserMapper extends BaseMapper
              */
             $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
 
-            if (!empty($inputs['password'])) {
-                if (isset($inputs['passwordConfirmation']) && $inputs['password'] !== $inputs['passwordConfirmation']) {
-                    $output->setSuccess(false);
-                    $output->addMessage('Password does not match with Confirm password');
-                    return $output;
-                }
-
-                // update password is not empty
-                $passwordRule = new ValidatorRule('password');
-                $definedInputs[] = new Input('password', [$passwordRule]);
-            }
-
             $validator = new Validator($definedInputs, $inputs);
             $validatorOutput = $validator->validate();
+
+            // Get filtered inputs
+            $inputs = $validator->getFilteredInputs();
 
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
@@ -408,6 +402,12 @@ abstract class UserMapper extends BaseMapper
      * Contains all the common functions and checks for adding a user
      * Any specific function or check happens in the children 'add' functions
      * And this function is called after the specific ones
+     * @param array $inputs
+     * @param array $fieldsValues
+     * @param array $additionalDefinedInputs
+     *
+     * @return Output
+     * @throws \Exception
      */
     public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
@@ -416,21 +416,12 @@ abstract class UserMapper extends BaseMapper
          */
         $output = new Output();
         try {
-            $requiredRule = new ValidatorRule('required');
-
-            $emailRule = new ValidatorRule('email');
-
-            $nameInput = new Input('name');
-            $emailInput = new Input('email', [$requiredRule, $emailRule]);
-            $phoneInput = new Input('phone');
-
-            $definedInputs = [$nameInput, $emailInput, $phoneInput];
-
-            if (isset($inputs['username'])) {
-                $usernameRule = new ValidatorRule('username');
-                $usernameInput = new Input('username', [$requiredRule, $usernameRule]);
-                $definedInputs[] = $usernameInput;
+            $definedInputsConditions = ['passwordRequired' => true];
+            if (isset($inputs['passwordConfirmation'])) {
+                $definedInputsConditions['passwordConfirmation'] = $inputs['passwordConfirmation'];
             }
+
+            $definedInputs = $this->getDefinedInputs($definedInputsConditions);
 
             /**
              * Merge the default defined inputs with the additional one
@@ -438,24 +429,7 @@ abstract class UserMapper extends BaseMapper
              */
             $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
 
-            if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
-                if (isset($inputs['passwordConfirmation']) && $inputs['password'] !== $inputs['passwordConfirmation']) {
-                    $output->setSuccess(false);
-                    $output->setMessage('Password does not match with Confirm password');
-                    return $output;
-                }
-
-                // update password is not empty
-                $passwordRule = new ValidatorRule('password');
-                $definedInputs[] = new Input('password', [$requiredRule, $passwordRule]);
-            }
-
-            if (isset($inputs['status'])) {
-                $statusesWhitelist = $this->getEnumValues('status');
-
-                $statusesWhitelistRule = new ValidatorRule('whitelist', ['whitelist' => $statusesWhitelist]);
-                $definedInputs[] = new Input('status', [$statusesWhitelistRule]);
-            } else {
+            if (!isset($inputs['status'])) {
                 $inputs['status'] = 'active';
             }
 
@@ -560,5 +534,58 @@ abstract class UserMapper extends BaseMapper
          */
 
         return $output;
+    }
+
+    public function getDefinedInputs(array $options = [])
+    {
+        $idRule = new ValidatorRule('id');
+        $emailRule = new ValidatorRule('email');
+        $requiredRule = new ValidatorRule('required');
+        $usernameRule = new ValidatorRule('username');
+
+        $whitelistRule = new ValidatorRule(
+            'whitelist',
+            [
+                'whitelist' => (new DateTimeUtility())->getTimeZones()
+            ]
+        );
+
+        $idInput = new Input('id', [$idRule]);
+        $nameInput = new Input('name');
+        $phoneInput = new Input('phone');
+        $emailInput = new Input('email', [$emailRule, $requiredRule]);
+        $usernameInput = new Input('username', [$usernameRule]);
+        $timezoneInput = new Input('timeZone', [$whitelistRule]);
+
+        $definedInputs = [
+            $idInput,
+            $nameInput,
+            $phoneInput,
+            $emailInput,
+            $timezoneInput,
+            $usernameInput
+        ];
+
+        if ($this->viewingAsAdmin() === true ||
+            (isset($options['updatingChildByParent']) && $options['updatingChildByParent'] === true)) {
+            $statusesWhitelist = $this->getEnumValues('status');
+            $statusesWhitelistRule = new ValidatorRule('whitelist', ['whitelist' => $statusesWhitelist]);
+
+            $statusInput = new Input('status', [$statusesWhitelistRule]);
+            $definedInputs[] = $statusInput;
+        }
+
+        if (isset($options['passwordRequired'])) {
+            if (isset($options['passwordConfirmation'])) {
+                $passwordRuleOptions = ['confirmation' => $options['passwordConfirmation']];
+            } else {
+                $passwordRuleOptions = [];
+            }
+
+            $passwordRule = new ValidatorRule('password', $passwordRuleOptions);
+            $definedInputs[] = new Input('password', [$requiredRule, $passwordRule]);
+        }
+
+        return $definedInputs;
     }
 }
