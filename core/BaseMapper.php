@@ -138,15 +138,7 @@ abstract class BaseMapper extends Base implements ICrud
     ) {
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria[] = [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ];
-
-            $criteria[] = [
-                'column' => 'live',
-                'value' => '1'
-            ];
+            $criteria += $this->getExcludeArchivedCriteria();
         }
 
         // generate the query
@@ -181,6 +173,22 @@ abstract class BaseMapper extends Base implements ICrud
         }
     }
 
+    public function getExcludeArchivedCriteria($table = '')
+    {
+        $columnPrefix = !empty($table) ? "{$table}." : '';
+
+        return [
+            [
+                'column' => "{$columnPrefix}archivedAt",
+                'operator' => 'IS NULL'
+            ],
+            [
+                'column' => "{$columnPrefix}live",
+                'value' => '1'
+            ]
+        ];
+    }
+
     /**
      * @param array $criteria
      * @param array $fromColumns
@@ -194,15 +202,7 @@ abstract class BaseMapper extends Base implements ICrud
     {
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria[] = [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ];
-
-            $criteria[] = [
-                'column' => 'live',
-                'value' => '1'
-            ];
+            $criteria += $this->getExcludeArchivedCriteria();
         }
 
         // generate the query
@@ -255,15 +255,7 @@ abstract class BaseMapper extends Base implements ICrud
 
         // By default do not update archived records
         if ($excludeArchived === true) {
-            $criteria[] = [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ];
-
-            $criteria[] = [
-                'column' => 'live',
-                'value' => '1'
-            ];
+            $criteria += $this->getExcludeArchivedCriteria();
         }
 
         // generate the query
@@ -490,15 +482,7 @@ abstract class BaseMapper extends Base implements ICrud
     {
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria[] = [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ];
-
-            $criteria[] = [
-                'column' => 'live',
-                'value' => '1'
-            ];
+            $criteria += $this->getExcludeArchivedCriteria();
         }
 
         $query = (new QueryMaker($this->getTable()))->countQuery($criteria);

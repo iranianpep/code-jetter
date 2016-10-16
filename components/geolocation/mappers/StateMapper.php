@@ -28,25 +28,8 @@ class StateMapper extends BaseMapper
 
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria[] = [
-                'column' => "{$stateTable}.archivedAt",
-                'operator' => 'IS NULL'
-            ];
-
-            $criteria[] = [
-                'column' => "{$stateTable}.live",
-                'value' => '1'
-            ];
-
-            $criteria[] = [
-                'column' => "{$cityTable}.archivedAt",
-                'operator' => 'IS NULL'
-            ];
-
-            $criteria[] = [
-                'column' => "{$cityTable}.live",
-                'value' => '1'
-            ];
+            $criteria += $this->getExcludeArchivedCriteria($stateTable);
+            $criteria += $this->getExcludeArchivedCriteria($cityTable);
         }
 
         $joins = [
