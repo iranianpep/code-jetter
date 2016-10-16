@@ -171,7 +171,7 @@
         <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
         <h4 class='modal-title' id='editModalLabel'>Edit Member</h4>
       </div>
-      <form class='updateForm' data-url='/admin/update-group-member' data-submitter='global' data-refresh='true'>
+      <form class='updateForm' data-url='/admin/update-group-member' data-submitter='global' data-refresh='true' data-populate='true' data-appendwhitelist='id'>
           <div class='modal-body'>
               <div class='row'>
                 <div class='col-md-12'>

@@ -219,7 +219,7 @@ class MemberGroupMapper extends GroupMapper
             $output->setData($changedRows);
         } else {
             $output->setSuccess(false);
-            $output->setMessage('Updated successfully');
+            $output->setMessage('Did not updated');
         }
 
         return $output;
