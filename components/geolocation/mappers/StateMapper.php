@@ -28,8 +28,8 @@ class StateMapper extends BaseMapper
 
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria += $this->getExcludeArchivedCriteria($stateTable);
-            $criteria += $this->getExcludeArchivedCriteria($cityTable);
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria($stateTable));
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria($cityTable));
         }
 
         $joins = [

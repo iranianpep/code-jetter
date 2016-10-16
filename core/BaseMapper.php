@@ -138,7 +138,7 @@ abstract class BaseMapper extends Base implements ICrud
     ) {
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria += $this->getExcludeArchivedCriteria();
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria());
         }
 
         // generate the query
@@ -202,7 +202,7 @@ abstract class BaseMapper extends Base implements ICrud
     {
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria += $this->getExcludeArchivedCriteria();
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria());
         }
 
         // generate the query
@@ -255,7 +255,7 @@ abstract class BaseMapper extends Base implements ICrud
 
         // By default do not update archived records
         if ($excludeArchived === true) {
-            $criteria += $this->getExcludeArchivedCriteria();
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria());
         }
 
         // generate the query
@@ -482,7 +482,7 @@ abstract class BaseMapper extends Base implements ICrud
     {
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria += $this->getExcludeArchivedCriteria();
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria());
         }
 
         $query = (new QueryMaker($this->getTable()))->countQuery($criteria);
