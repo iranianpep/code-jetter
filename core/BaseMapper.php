@@ -41,24 +41,83 @@ abstract class BaseMapper extends Base implements ICrud
 
         if (empty($mapperTable)) {
             // mapper table is not specified in the config file, generate the name automatically
-
-            // convert camel case to snake case
-            $snakeCaseClassName = strtolower((new StringUtility())->camelCaseToSnakeCase($className));
-
-            // remove mapper from the end of the string
-            $snakeCaseClassName = preg_replace('#_mapper$#', '', $snakeCaseClassName);
-
-            // replace 'y' with 'ie' if 'y' is the last character
-            if (substr($snakeCaseClassName, -1) === 'y') {
-                $snakeCaseClassName = substr_replace($snakeCaseClassName, 'ie', -1);
-            }
-
-            $mapperTable = $snakeCaseClassName . 's';
+            $mapperTable = $this->getTableNameByClassName($className);
         }
 
         $this->setTable($mapperTable);
         $this->setDatabase($database);
         $this->setComponent($component);
+    }
+
+    /**
+     * @param $className
+     *
+     * @return string
+     */
+    public function getTableNameByClassName($className)
+    {
+        // convert camel case to snake case
+        $stringUtility = new StringUtility();
+        $snakeCaseClassName = strtolower($stringUtility->camelCaseToSnakeCase($className));
+
+        // remove mapper from the end of the string
+        $snakeCaseClassName = preg_replace('#_mapper$#', '', $snakeCaseClassName);
+
+        return $stringUtility->singularToPlural($snakeCaseClassName);
+    }
+
+    /**
+     * @param      $tableName
+     * @param null $baseNamespace
+     * @param null $tablePrefix
+     * @param null $tableSuffix
+     *
+     * @return bool|mixed|string
+     */
+    public function getClassNameByTableName($tableName, $baseNamespace = null, $tablePrefix = null, $tableSuffix = null)
+    {
+        // get the prefix
+        if ($tablePrefix === null) {
+            $defaultDbInfo = $this->getDefaultDbInfo();
+
+            if (isset($defaultDbInfo['tablePrefix'])) {
+                $tablePrefix = $defaultDbInfo['tablePrefix'];
+            }
+        }
+
+        // get the suffix
+        if ($tableSuffix === null) {
+            $defaultDbInfo = $this->getDefaultDbInfo();
+
+            if (isset($defaultDbInfo['tableSuffix'])) {
+                $tableSuffix = $defaultDbInfo['tableSuffix'];
+            }
+        }
+
+        $stringUtility = new StringUtility();
+
+        $className = $tableName;
+
+        // drop the prefix
+        if (!empty($tablePrefix)) {
+            $className = $stringUtility->removePrefix($className, $tablePrefix);
+        }
+
+        // drop the suffix
+        if (!empty($tableSuffix)) {
+            $className = $stringUtility->removeSuffix($className, $tableSuffix);
+        }
+
+        $className = $stringUtility->pluralToSingular($className);
+
+        // snakeCase to camelCase
+        $className = $stringUtility->snakeCaseToCamelCase($className);
+
+        if ($baseNamespace !== null) {
+            $className = "{$baseNamespace}\\{$className}";
+        }
+
+        return $className;
     }
 
     /**
@@ -540,18 +599,32 @@ abstract class BaseMapper extends Base implements ICrud
             throw new \Exception('Table name has not been specified for this mapper');
         }
 
+        $defaultDbInfo = $this->getDefaultDbInfo();
+
+        $table = $this->table;
+
         // append suffix if specified
+        if (isset($defaultDbInfo['tableSuffix'])) {
+            $table = $table . $defaultDbInfo['tableSuffix'];
+        }
+
+        // append prefix if specified
+        if (isset($defaultDbInfo['tablePrefix'])) {
+            $table = $defaultDbInfo['tablePrefix'] . $table;
+        }
+
+        return $table;
+    }
+
+    /**
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getDefaultDbInfo()
+    {
         $defaultDb = Registry::getConfigClass()->get('defaultDB');
         $databases = Registry::getConfigClass()->get('databases');
-        $defaultDbInfo = $databases[$defaultDb];
-
-        if (isset($defaultDbInfo['tableSuffix'])) {
-            return $this->table . $defaultDbInfo['tableSuffix'];
-        } elseif (isset($defaultDbInfo['tablePrefix'])) {
-            return $defaultDbInfo['tablePrefix'] . $this->table;
-        } else {
-            return $this->table;
-        }
+        return $databases[$defaultDb];
     }
 
     /**

@@ -210,4 +210,355 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
             }
         }
     }
+
+    public function testSnakeCaseToCamelCase()
+    {
+        $utility = new StringUtility();
+
+        $inputOutputs = [
+            [
+                'input' => 'admin_user',
+                'output' => 'AdminUser'
+            ],
+            [
+                'input' => 'member_group',
+                'output' => 'MemberGroup'
+            ],
+            [
+                'input' => 'group_member_user_xrefs',
+                'output' => 'GroupMemberUserXrefs'
+            ],
+        ];
+
+        foreach ($inputOutputs as $inputOutput) {
+            $this->assertEquals($inputOutput['output'], $utility->snakeCaseToCamelCase($inputOutput['input']));
+        }
+    }
+
+    public function testSingularToPlural()
+    {
+        $utility = new StringUtility();
+
+        $inputOutputs = [
+            [
+                'input' => 'user',
+                'output' => 'users'
+            ],
+            [
+                'input' => 'party',
+                'output' => 'parties'
+            ],
+            [
+                'input' => 'bottle',
+                'output' => 'bottles'
+            ],
+            [
+                'input' => 'box',
+                'output' => 'boxes'
+            ],
+            [
+                'input' => 'watch',
+                'output' => 'watches'
+            ],
+            [
+                'input' => 'moss',
+                'output' => 'mosses'
+            ],
+            [
+                'input' => 'bus',
+                'output' => 'buses'
+            ],
+            [
+                'input' => 'wolf',
+                'output' => 'wolves'
+            ],
+            [
+                'input' => 'wife',
+                'output' => 'wives'
+            ],
+            [
+                'input' => 'leaf',
+                'output' => 'leaves'
+            ],
+            [
+                'input' => 'life',
+                'output' => 'lives'
+            ],
+            [
+                'input' => 'child',
+                'output' => 'children'
+            ],
+            [
+                'input' => 'woman',
+                'output' => 'women'
+            ],
+            [
+                'input' => 'man',
+                'output' => 'men'
+            ],
+            [
+                'input' => 'mouse',
+                'output' => 'mice'
+            ],
+            [
+                'input' => 'goose',
+                'output' => 'geese'
+            ],
+            [
+                'input' => 'baby',
+                'output' => 'babies'
+            ],
+            [
+                'input' => 'toy',
+                'output' => 'toys'
+            ],
+            [
+                'input' => 'kidney',
+                'output' => 'kidneys'
+            ],
+            [
+                'input' => 'potato',
+                'output' => 'potatoes'
+            ],
+            [
+                'input' => 'memo',
+                'output' => 'memos'
+            ],
+            [
+                'input' => 'stereo',
+                'output' => 'stereos'
+            ],
+            [
+                'input' => 'sheep',
+                'output' => 'sheep'
+            ],
+            [
+                'input' => 'deer',
+                'output' => 'deer'
+            ],
+            [
+                'input' => 'series',
+                'output' => 'series'
+            ],
+            [
+                'input' => 'species',
+                'output' => 'species'
+            ],
+            [
+                'input' => 'business',
+                'output' => 'businesses'
+            ],
+        ];
+
+        foreach ($inputOutputs as $inputOutput) {
+            $this->assertEquals($inputOutput['output'], $utility->singularToPlural($inputOutput['input']));
+        }
+    }
+
+    public function testPluralToSingular()
+    {
+        $utility = new StringUtility();
+
+        $inputOutputs = [
+            [
+                'output' => 'user',
+                'input' => 'users'
+            ],
+            [
+                'output' => 'party',
+                'input' => 'parties'
+            ],
+            [
+                'output' => 'bottle',
+                'input' => 'bottles'
+            ],
+            [
+                'output' => 'box',
+                'input' => 'boxes'
+            ],
+            [
+                'output' => 'watch',
+                'input' => 'watches'
+            ],
+            [
+                'output' => 'moss',
+                'input' => 'mosses'
+            ],
+            [
+                'output' => 'bus',
+                'input' => 'buses'
+            ],
+            [
+                'output' => 'wolf',
+                'input' => 'wolves'
+            ],
+            [
+                'output' => 'wife',
+                'input' => 'wives'
+            ],
+            [
+                'output' => 'leaf',
+                'input' => 'leaves'
+            ],
+            [
+                'output' => 'life',
+                'input' => 'lives'
+            ],
+            [
+                'output' => 'child',
+                'input' => 'children'
+            ],
+            [
+                'output' => 'woman',
+                'input' => 'women'
+            ],
+            [
+                'output' => 'man',
+                'input' => 'men'
+            ],
+            [
+                'output' => 'mouse',
+                'input' => 'mice'
+            ],
+            [
+                'output' => 'goose',
+                'input' => 'geese'
+            ],
+            [
+                'output' => 'baby',
+                'input' => 'babies'
+            ],
+            [
+                'output' => 'toy',
+                'input' => 'toys'
+            ],
+            [
+                'output' => 'kidney',
+                'input' => 'kidneys'
+            ],
+            [
+                'output' => 'potato',
+                'input' => 'potatoes'
+            ],
+            [
+                'output' => 'memo',
+                'input' => 'memos'
+            ],
+            [
+                'output' => 'stereo',
+                'input' => 'stereos'
+            ],
+            [
+                'output' => 'sheep',
+                'input' => 'sheep'
+            ],
+            [
+                'output' => 'deer',
+                'input' => 'deer'
+            ],
+            [
+                'output' => 'series',
+                'input' => 'series'
+            ],
+            [
+                'output' => 'species',
+                'input' => 'species'
+            ],
+            [
+                'output' => 'business',
+                'input' => 'businesses'
+            ],
+        ];
+
+        foreach ($inputOutputs as $inputOutput) {
+            $this->assertEquals($inputOutput['output'], $utility->pluralToSingular($inputOutput['input']));
+        }
+    }
+
+    public function testRemovePrefix()
+    {
+        $utility = new StringUtility();
+
+        $inputOutputs = [
+            [
+                'output' => 'jobs',
+                'input' => [
+                    'text' => 'cj_jobs',
+                    'prefix' => 'cj_'
+                ]
+            ],
+            [
+                'output' => 'cj_jobs',
+                'input' => [
+                    'text' => 'cj_jobs',
+                    'prefix' => ''
+                ]
+            ],
+            [
+                'output' => '',
+                'input' => [
+                    'text' => 'cj_jobs',
+                    'prefix' => 'cj_jobs'
+                ]
+            ],
+            [
+                'output' => 'cj_jobs',
+                'input' => [
+                    'text' => 'cj_jobs',
+                    'prefix' => 'cj_jobsv'
+                ]
+            ],
+            [
+                'output' => 'string_bla_bla_bla',
+                'input' => [
+                    'text' => 'bla_string_bla_bla_bla',
+                    'prefix' => 'bla_'
+                ]
+            ],
+        ];
+
+        foreach ($inputOutputs as $inputOutput) {
+            $this->assertEquals($inputOutput['output'], $utility->removePrefix($inputOutput['input']['text'], $inputOutput['input']['prefix']));
+        }
+    }
+
+    public function testRemoveSuffix()
+    {
+        $utility = new StringUtility();
+
+        $inputOutputs = [
+            [
+                'output' => 'cj_jobs',
+                'input' => [
+                    'text' => 'cj_jobs_xyz',
+                    'suffix' => '_xyz'
+                ]
+            ],
+            [
+                'output' => 'c',
+                'input' => [
+                    'text' => 'cj_jobs_xyz',
+                    'suffix' => 'j_jobs_xyz'
+                ]
+            ],
+            [
+                'output' => '',
+                'input' => [
+                    'text' => 'cj_jobs_xyz',
+                    'suffix' => 'cj_jobs_xyz'
+                ]
+            ],
+            [
+                'output' => 'cj_jobs_xyz',
+                'input' => [
+                    'text' => 'cj_jobs_xyz',
+                    'suffix' => 'bcj_jobs_xyz'
+                ]
+            ],
+        ];
+
+        foreach ($inputOutputs as $inputOutput) {
+            $this->assertEquals($inputOutput['output'], $utility->removeSuffix($inputOutput['input']['text'], $inputOutput['input']['suffix']));
+        }
+    }
 }
