@@ -15,7 +15,6 @@ namespace CodeJetter\core;
 abstract class BaseController extends Base
 {
     private $HTTPInputs;
-    private $routeInfo;
 
     /**
      * @param RouteInfo $routeInfo
@@ -64,22 +63,6 @@ abstract class BaseController extends Base
     }
 
     /**
-     * @return RouteInfo
-     */
-    public function getRouteInfo()
-    {
-        return $this->routeInfo;
-    }
-
-    /**
-     * @param RouteInfo $routeInfo
-     */
-    public function setRouteInfo(RouteInfo $routeInfo)
-    {
-        $this->routeInfo = $routeInfo;
-    }
-
-    /**
      * @return string
      */
     public function getTemplatesPath()
@@ -88,21 +71,5 @@ abstract class BaseController extends Base
 
         return 'components' . DIRECTORY_SEPARATOR . strtolower($component) . DIRECTORY_SEPARATOR . 'templates' .
         DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @param bool $lowercase
-     *
-     * @return string
-     */
-    public function getComponentName($lowercase = false)
-    {
-        $componentName = $this->getRouteInfo()->getComponent();
-
-        if ($lowercase === true) {
-            return strtolower($componentName);
-        } else {
-            return $componentName;
-        }
     }
 }

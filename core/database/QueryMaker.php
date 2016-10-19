@@ -61,20 +61,19 @@ class QueryMaker
         return $query;
     }
 
-    public function selectJoinQuery(array $joins, array $criteria = [], $fromColumns = '*', $order = '', $start = 0, $limit = 0)
+    public function selectJoinQuery(array $joins, array $criteria = [], $fromColumns = null, $order = '', $start = 0, $limit = 0)
     {
-        // append from columns
-        if (empty($fromColumns)) {
-            // from all
-            $fromColumns = '*';
-        } elseif (is_array($fromColumns)) {
+        $query = 'SELECT ';
+
+        if (is_array($fromColumns)) {
             $fromColumns = implode(', ', $fromColumns);
+        } elseif ($fromColumns !== null) {
+            $fromColumns = '*';
+        } else {
+            // TODO
         }
 
-        $query = "SELECT {$fromColumns} FROM {$this->getTable()}";
-
         if (!empty($joins)) {
-            //$counter = 2;
             foreach ($joins as $key => $join) {
                 $query .= " JOIN {$join['table']}";
 
@@ -85,6 +84,16 @@ class QueryMaker
                 $query .= ' ON ' . implode(' = ', $join['on']);
             }
         }
+
+        // append from columns
+        if (empty($fromColumns)) {
+            // from all
+            $fromColumns = '*';
+        } elseif (is_array($fromColumns)) {
+            $fromColumns = implode(', ', $fromColumns);
+        }
+
+        $query = "SELECT {$fromColumns} FROM {$this->getTable()}";
 
         // append where clause - criteria
         $query .= $this->where($criteria);
