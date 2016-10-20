@@ -234,15 +234,15 @@ abstract class BaseMapper extends Base implements ICrud
 
     public function getExcludeArchivedCriteria($table = '')
     {
-        $columnPrefix = !empty($table) ? "{$table}." : '';
+        $columnPrefix = !empty($table) ? "`{$table}`." : '';
 
         return [
             [
-                'column' => "{$columnPrefix}archivedAt",
+                'column' => "{$columnPrefix}`archivedAt`",
                 'operator' => 'IS NULL'
             ],
             [
-                'column' => "{$columnPrefix}live",
+                'column' => "{$columnPrefix}`live`",
                 'value' => '1'
             ]
         ];

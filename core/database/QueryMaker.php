@@ -2,6 +2,8 @@
 
 namespace CodeJetter\core\database;
 
+use CodeJetter\core\utility\MysqlUtility;
+
 /**
  * Class QueryMaker
  * @package CodeJetter\core\database
@@ -61,39 +63,50 @@ class QueryMaker
         return $query;
     }
 
-    public function selectJoinQuery(array $joins, array $criteria = [], $fromColumns = null, $order = '', $start = 0, $limit = 0)
-    {
-        $query = 'SELECT ';
+    public function selectJoinQuery(
+        array $tables,
+        array $criteria = [],
+        $fromColumns = null,
+        $order = '',
+        $start = 0,
+        $limit = 0
+    ) {
+        $joinedSelect = [];
+        $counter = 1;
+        $from = '';
+        foreach ($tables as $tableAlias => $table) {
+            if ($counter === 1) {
+                $from .= "`{$table['name']}` AS `{$tableAlias}`";
+            } else {
+                $from .= " JOIN `{$table['name']}` AS `{$tableAlias}`";
 
-        if (is_array($fromColumns)) {
-            $fromColumns = implode(', ', $fromColumns);
-        } elseif ($fromColumns !== null) {
-            $fromColumns = '*';
-        } else {
-            // TODO
-        }
-
-        if (!empty($joins)) {
-            foreach ($joins as $key => $join) {
-                $query .= " JOIN {$join['table']}";
-
-                if (empty($join['on']) || !is_array($join['on'])) {
+                if (empty($table['on']) || !is_array($table['on'])) {
                     throw new \Exception("join array must have 'on'");
                 }
 
-                $query .= ' ON ' . implode(' = ', $join['on']);
+                $from .= ' ON ' . implode(' = ', $table['on']);
             }
+
+            $columns = (new MysqlUtility())->getTableColumns($table['name']);
+
+            if ($fromColumns === null) {
+                foreach ($columns as $column) {
+                    $joinedSelect[] = "`{$tableAlias}`.`{$column}` AS `{$tableAlias}.{$column}`";
+                }
+            }
+
+            $counter++;
         }
 
-        // append from columns
-        if (empty($fromColumns)) {
-            // from all
-            $fromColumns = '*';
+        if ($fromColumns === null) {
+            $fromColumns = implode(', ', $joinedSelect);
         } elseif (is_array($fromColumns)) {
             $fromColumns = implode(', ', $fromColumns);
+        } else {
+            $fromColumns = '*';
         }
 
-        $query = "SELECT {$fromColumns} FROM {$this->getTable()}";
+        $query = "SELECT {$fromColumns} FROM {$from}";
 
         // append where clause - criteria
         $query .= $this->where($criteria);
@@ -618,6 +631,7 @@ class QueryMaker
      */
     private function preparePlaceholder($placeholder)
     {
+        $placeholder = str_replace('`', '', $placeholder);
         return preg_replace("/[^a-zA-Z0-9_]/", '_', $placeholder);
     }
 }

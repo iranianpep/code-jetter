@@ -20,11 +20,11 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             [
-                'column' => 'archivedAt',
+                'column' => '`archivedAt`',
                 'operator' => 'IS NULL'
             ],
             [
-                'column' => 'live',
+                'column' => '`live`',
                 'value' => '1'
             ]
         ];
@@ -35,11 +35,11 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             [
-                'column' => 'dummyTable.archivedAt',
+                'column' => '`dummyTable`.`archivedAt`',
                 'operator' => 'IS NULL'
             ],
             [
-                'column' => 'dummyTable.live',
+                'column' => '`dummyTable`.`live`',
                 'value' => '1'
             ]
         ];
