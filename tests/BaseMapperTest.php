@@ -3,6 +3,7 @@
 namespace CodeJetter\tests;
 
 use CodeJetter\components\geolocation\mappers\StateMapper;
+use CodeJetter\components\user\mappers\MemberUserMapper;
 use CodeJetter\core\App;
 
 // this is to fix Cannot send session cookie - headers already sent
@@ -99,5 +100,43 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
         foreach ($inputOutputs as $inputOutput) {
             $this->assertEquals($inputOutput['output'], $stateMapper->getClassNameByTableName($inputOutput['input']['name'], $inputOutput['input']['namespace'], $inputOutput['input']['prefix'], $inputOutput['input']['suffix']));
         }
+    }
+
+    public function testGetMappersPath()
+    {
+        $app = App::getInstance();
+        $app->init();
+
+        $mapper = new MemberUserMapper();
+        $path = $mapper->getMappersPath('user');
+
+        $expected = 'CodeJetter/components/user/mappers/';
+
+        $this->assertEquals($expected, $path);
+
+        $path = $mapper->getMappersPath('user', false);
+
+        $expected = 'CodeJetter/components/user/mappers';
+
+        $this->assertEquals($expected, $path);
+    }
+
+    public function testGetMappersNamespace()
+    {
+        $app = App::getInstance();
+        $app->init();
+
+        $mapper = new MemberUserMapper();
+        $namespacePath = $mapper->getMappersNamespace('user');
+
+        $expected = 'CodeJetter\\components\\user\\mappers\\';
+
+        $this->assertEquals($expected, $namespacePath);
+
+        $namespacePath = $mapper->getMappersNamespace('user', false);
+
+        $expected = 'CodeJetter\\components\\user\\mappers';
+
+        $this->assertEquals($expected, $namespacePath);
     }
 }
