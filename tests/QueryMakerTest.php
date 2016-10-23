@@ -475,7 +475,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        $query = $queryMaker->selectJoinQuery($joins, [], '');
+        $query = $queryMaker->selectJoinQuery($joins, [], '*');
         $expectedQuery = "SELECT * FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;";
 
         $this->assertEquals($expectedQuery, $query);

@@ -102,8 +102,6 @@ class QueryMaker
             $fromColumns = implode(', ', $joinedSelect);
         } elseif (is_array($fromColumns)) {
             $fromColumns = implode(', ', $fromColumns);
-        } else {
-            $fromColumns = '*';
         }
 
         $query = "SELECT {$fromColumns} FROM {$from}";
