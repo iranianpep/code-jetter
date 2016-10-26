@@ -717,4 +717,54 @@ abstract class BaseMapper extends Base implements ICrud
     {
         $this->component = $component;
     }
+
+    /**
+     * Map rows to the relevant object
+     *
+     * @param array $tables Contains table alias / name as the key for each array element. Each element must have class
+     * @param array $rows Table rows
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function mapRowsToObjects(array $tables, array $rows)
+    {
+        /**
+         * Initialize $mappedObjects
+         */
+        $mappedObjects = [];
+
+        if (!empty($rows)) {
+            foreach ($rows as $row) {
+                if (empty($row)) {
+                    continue;
+                }
+
+                /**
+                 * Initialize $mappedObject
+                 */
+                $mappedObject = [];
+                foreach ($tables as $tableAlias => $table) {
+                    if (empty($table['class'])) {
+                        throw new \Exception('Class must be specified for a table to map a row to its object');
+                    }
+
+                    $mappedObject[$tableAlias] = new $table['class'];
+                }
+
+                foreach ($row as $key => $value) {
+                    $keySegments = explode('.', $key);
+
+                    if (isset($keySegments[0]) && array_key_exists($keySegments[0], $mappedObject)) {
+                        // call setProperty() on $mappedObjects[$keySegments[0]] object
+                        $mappedObject[$keySegments[0]]->{'set' . ucwords($keySegments[1])}($value);
+                    }
+                }
+
+                $mappedObjects[] = $mappedObject;
+            }
+        }
+
+        return $mappedObjects;
+    }
 }
