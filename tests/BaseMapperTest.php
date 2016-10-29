@@ -139,4 +139,57 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($expected, $namespacePath);
     }
+
+    public function testMapRowsToObjects()
+    {
+        $app = App::getInstance();
+        $app->init();
+
+        $mapper = new MemberUserMapper();
+        $model = $mapper->getModelName();
+
+        $dummyRows = [
+            [
+                'member.id' => 1
+            ],
+            [
+                'member.id' => 2
+            ]
+        ];
+
+        $tables = [
+            'member' => [
+                'name' => 'cj_member_users',
+                'class' => $model
+            ]
+        ];
+
+        $objects = $mapper->mapRowsToObjects($dummyRows, $tables);
+
+        foreach ($objects as $index => $object) {
+            $this->assertEquals($dummyRows[$index]['member.id'], $object['member']->getId());
+        }
+
+        $dummyRows = [
+            [
+                'member.id' => 1
+            ],
+            [
+                'member.id' => 2
+            ]
+        ];
+
+        $tables = [
+            'member' => [
+                'name' => 'cj_member_users',
+                'class' => $model
+            ]
+        ];
+
+        $objects = $mapper->mapRowsToObjects($dummyRows, $tables);
+
+        foreach ($objects as $index => $object) {
+            $this->assertEquals($dummyRows[$index]['member.id'], $object['member']->getId());
+        }
+    }
 }

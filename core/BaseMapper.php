@@ -719,6 +719,7 @@ abstract class BaseMapper extends Base implements ICrud
     }
 
     /**
+     * TODO enhance this function to be able to construct $tables array, if nothing is passed
      * Map rows to the relevant object
      *
      * @param array $tables Contains table alias / name as the key for each array element. Each element must have class
@@ -727,7 +728,7 @@ abstract class BaseMapper extends Base implements ICrud
      * @return array
      * @throws \Exception
      */
-    public function mapRowsToObjects(array $tables, array $rows)
+    public function mapRowsToObjects(array $rows, array $tables = [])
     {
         /**
          * Initialize $mappedObjects
@@ -744,6 +745,11 @@ abstract class BaseMapper extends Base implements ICrud
                  * Initialize $mappedObject
                  */
                 $mappedObject = [];
+
+                if (empty($tables)) {
+                    // TODO can be used to generate $tables using the current mapper table
+                }
+
                 foreach ($tables as $tableAlias => $table) {
                     if (empty($table['class'])) {
                         throw new \Exception('Class must be specified for a table to map a row to its object');

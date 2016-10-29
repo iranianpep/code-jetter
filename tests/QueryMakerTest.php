@@ -24,7 +24,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], 'name ASC', 5, 10);
-        $expectedQuery = "SELECT * FROM testTable WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL ORDER BY name ASC LIMIT :start, :limit;";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL ORDER BY name ASC LIMIT :start, :limit;";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -37,7 +37,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], 'name ASC', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE parentId = :parentId1 ORDER BY name ASC;";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE parentId = :parentId1 ORDER BY name ASC;";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -51,7 +51,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], 'name ASC', 0, 10);
-        $expectedQuery = "SELECT * FROM testTable WHERE testColumn1 NOT LIKE :testColumn11 ORDER BY name ASC LIMIT :limit;";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE testColumn1 NOT LIKE :testColumn11 ORDER BY name ASC LIMIT :limit;";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -70,7 +70,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE id = :id1 OR id = :id2;";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id = :id1 OR id = :id2;";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -88,7 +88,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE archivedAt IS NULL OR live = :live2;";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE archivedAt IS NULL OR live = :live2;";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -112,7 +112,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE (archivedAt IS NULL OR live = :live2);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL OR live = :live2);";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -136,7 +136,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE (archivedAt IS NULL) AND (live = :live2);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL) AND (live = :live2);";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -157,7 +157,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE archivedAt IS NULL AND (live = :live2);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE archivedAt IS NULL AND (live = :live2);";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -178,7 +178,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE (archivedAt IS NULL) AND live = :live2;";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL) AND live = :live2;";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -205,7 +205,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE (archivedAt IS NULL AND archivedAtTest IS NULL) AND live = :live3;";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL AND archivedAtTest IS NULL) AND live = :live3;";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -233,7 +233,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE live = :live1 OR (archivedAt IS NULL AND archivedAtTest IS NULL);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE live = :live1 OR (archivedAt IS NULL AND archivedAtTest IS NULL);";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -246,7 +246,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE id IN (:id1);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id1);";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -259,7 +259,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE id IN (:id10,:id11,:id12);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id10,:id11,:id12);";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -277,7 +277,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE id IN (:id10,:id11,:id12) AND id IN (:id2);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id10,:id11,:id12) AND id IN (:id2);";
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -295,7 +295,106 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM testTable WHERE id IN (:id1) AND id IN (:id20,:id21,:id22);";
+        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id1) AND id IN (:id20,:id21,:id22);";
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $tables = [
+            'cj_states' => [
+                'name' => 'cj_states',
+            ],
+            'cj_cities' => [
+                'name' => 'cj_cities',
+                'on' => [
+                    '`cj_states`.`id`',
+                    '`cj_cities`.`stateId`'
+                ]
+            ],
+            'cj_countries' => [
+                'name' => 'cj_countries',
+                'on' => [
+                    '`cj_countries`.`code`',
+                    '`cj_states`.`countryCode`'
+                ]
+            ]
+        ];
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker($tables);
+        $query = $queryMaker->selectQuery([], '*');
+        $expectedQuery = "SELECT * FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;";
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $tables = [
+            'cj_states' => [
+                'name' => 'cj_states',
+            ],
+            'cj_cities' => [
+                'name' => 'cj_cities',
+                'on' => [
+                    '`cj_states`.`id`',
+                    '`cj_cities`.`stateId`'
+                ]
+            ],
+            'cj_countries' => [
+                'name' => 'cj_countries',
+                'on' => [
+                    '`cj_countries`.`code`',
+                    '`cj_states`.`countryCode`'
+                ]
+            ]
+        ];
+
+        $fromColumns = [
+            'cj_states.name',
+            'cj_countries.name'
+        ];
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker($tables);
+        $query = $queryMaker->selectQuery([], $fromColumns);
+        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;";
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $tables = [
+            'cj_states' => [
+                'name' => 'cj_states',
+            ],
+            'cj_cities' => [
+                'name' => 'cj_cities',
+                'on' => [
+                    'cj_states.id',
+                    'cj_cities.stateId'
+                ]
+            ],
+            'cj_countries' => [
+                'name' => 'cj_countries',
+                'on' => [
+                    'cj_countries.code',
+                    'cj_states.countryCode'
+                ]
+            ]
+        ];
+
+        $fromColumns = [
+            'cj_states.name',
+            'cj_countries.name'
+        ];
+
+        $criteria = [
+            [
+                'column' => 'cj_states.status',
+                'value' => 'active'
+            ],
+            [
+                'column' => 'cj_states.archivedAt',
+                'operator' => 'IS NULL'
+            ]
+        ];
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker($tables);
+        $query = $queryMaker->selectQuery($criteria, $fromColumns, 'cj_states.status ASC', 0, 10);
+        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON cj_states.id = cj_cities.stateId JOIN `cj_countries` AS `cj_countries` ON cj_countries.code = cj_states.countryCode WHERE cj_states.status = :cj_states_status1 AND cj_states.archivedAt IS NULL ORDER BY cj_states.status ASC LIMIT :limit;";
 
         $this->assertEquals($expectedQuery, $query);
     }
@@ -451,109 +550,49 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedQuery, $query);
     }
 
-    public function testSelectJoinQuery()
+    public function testGetTable()
     {
-        $queryMaker = new \CodeJetter\core\database\QueryMaker();
+        $queryMaker = new \CodeJetter\core\database\QueryMaker('testTable');
+        $this->assertEquals(['name' => 'testTable'], $queryMaker->getTable());
 
-        $joins = [
-            'cj_states' => [
-                'name' => 'cj_states',
+        $queryMaker = new \CodeJetter\core\database\QueryMaker('testTable');
+        $this->assertEquals(['name' => 'testTable'], $queryMaker->getTable('testTable'));
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker([
+            'testTable' => [
+                'name' => 'testTableName'
             ],
-            'cj_cities' => [
-                'name' => 'cj_cities',
-                'on' => [
-                    '`cj_states`.`id`',
-                    '`cj_cities`.`stateId`'
-                ]
+            'testTable1' => [
+                'name' => 'testTableName'
             ],
-            'cj_countries' => [
-                'name' => 'cj_countries',
-                'on' => [
-                    '`cj_countries`.`code`',
-                    '`cj_states`.`countryCode`'
-                ]
+        ]);
+
+        $this->assertEquals(['name' => 'testTableName'], $queryMaker->getTable());
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker([
+            'testTable' => [
+                'name' => 'testTableName'
+            ],
+            'testTable1' => [
+                'name' => 'testTableName'
+            ],
+        ]);
+
+        $this->assertEquals(['name' => 'testTableName'], $queryMaker->getTable('testTable'));
+    }
+
+    public function testGetTables()
+    {
+        $queryMaker = new \CodeJetter\core\database\QueryMaker('testTable');
+        $this->assertEquals(['testTable' => ['name' => 'testTable']], $queryMaker->getTables());
+
+        $queryMaker = new \CodeJetter\core\database\QueryMaker([
+            'testTable' => [
+                'name' => 'testTableName'
             ]
-        ];
+        ]);
 
-        $query = $queryMaker->selectJoinQuery($joins, [], '*');
-        $expectedQuery = "SELECT * FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;";
-
-        $this->assertEquals($expectedQuery, $query);
-
-        $queryMaker = new \CodeJetter\core\database\QueryMaker();
-
-        $joins = [
-            'cj_states' => [
-                'name' => 'cj_states',
-            ],
-            'cj_cities' => [
-                'name' => 'cj_cities',
-                'on' => [
-                    '`cj_states`.`id`',
-                    '`cj_cities`.`stateId`'
-                ]
-            ],
-            'cj_countries' => [
-                'name' => 'cj_countries',
-                'on' => [
-                    '`cj_countries`.`code`',
-                    '`cj_states`.`countryCode`'
-                ]
-            ]
-        ];
-
-        $fromColumns = [
-            'cj_states.name',
-            'cj_countries.name'
-        ];
-
-        $query = $queryMaker->selectJoinQuery($joins, [], $fromColumns);
-        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;";
-
-        $this->assertEquals($expectedQuery, $query);
-
-        $queryMaker = new \CodeJetter\core\database\QueryMaker();
-
-        $joins = [
-            'cj_states' => [
-                'name' => 'cj_states',
-            ],
-            'cj_cities' => [
-                'name' => 'cj_cities',
-                'on' => [
-                    'cj_states.id',
-                    'cj_cities.stateId'
-                ]
-            ],
-            'cj_countries' => [
-                'name' => 'cj_countries',
-                'on' => [
-                    'cj_countries.code',
-                    'cj_states.countryCode'
-                ]
-            ]
-        ];
-
-        $fromColumns = [
-            'cj_states.name',
-            'cj_countries.name'
-        ];
-
-        $criteria = [
-            [
-                'column' => 'cj_states.status',
-                'value' => 'active'
-            ],
-            [
-                'column' => 'cj_states.archivedAt',
-                'operator' => 'IS NULL'
-            ]
-        ];
-
-        $query = $queryMaker->selectJoinQuery($joins, $criteria, $fromColumns, 'cj_states.status ASC', 0, 10);
-        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON cj_states.id = cj_cities.stateId JOIN `cj_countries` AS `cj_countries` ON cj_countries.code = cj_states.countryCode WHERE cj_states.status = :cj_states_status1 AND cj_states.archivedAt IS NULL ORDER BY cj_states.status ASC LIMIT :limit;";
-
-        $this->assertEquals($expectedQuery, $query);
+        $this->assertEquals(['testTable' => ['name' => 'testTableName']], $queryMaker->getTables());
     }
 }
  

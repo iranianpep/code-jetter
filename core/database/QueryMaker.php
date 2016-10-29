@@ -10,7 +10,7 @@ use CodeJetter\core\utility\MysqlUtility;
  */
 class QueryMaker
 {
-    private $table;
+    private $tables;
     private $validComparisonOperators = ['LIKE', 'NOT LIKE', '=', '!=', '<>', '<', '<=', '>', '>=', '<=>', 'IS NOT',
         'IS', 'IS NOT NULL', 'IS NULL', 'IN', 'NOT IN'];
     private $validLogicalOperators = ['AND', 'OR', 'XOR', 'NOT'];
@@ -18,12 +18,22 @@ class QueryMaker
     /**
      * QueryMaker constructor.
      *
-     * @param null $table
+     * @param null $tables
      */
-    public function __construct($table = null)
+    public function __construct($tables = null)
     {
-        if ($table !== null) {
-            $this->setTable($table);
+        if ($tables !== null) {
+            if (is_array($tables)) {
+                $this->setTables($tables);
+            } else {
+                // $tables is string, treat it as a table
+                $this->addTable(
+                    $tables,
+                    [
+                        'name' => $tables
+                    ]
+                );
+            }
         }
     }
 
@@ -47,64 +57,7 @@ class QueryMaker
             $fromColumns = implode(', ', $fromColumns);
         }
 
-        $query = "SELECT {$fromColumns} FROM {$this->getTable()}";
-
-        // append where clause - criteria
-        $query .= $this->where($criteria);
-
-        // append order by if it is specified
-        $query .= $this->orderBy($order);
-
-        // append start and limit if they are specified
-        $query .= $this->startLimit($start, $limit);
-
-        $query .= ';';
-
-        return $query;
-    }
-
-    public function selectJoinQuery(
-        array $tables,
-        array $criteria = [],
-        $fromColumns = null,
-        $order = '',
-        $start = 0,
-        $limit = 0
-    ) {
-        $joinedSelect = [];
-        $counter = 1;
-        $from = '';
-        foreach ($tables as $tableAlias => $table) {
-            if ($counter === 1) {
-                $from .= "`{$table['name']}` AS `{$tableAlias}`";
-            } else {
-                $from .= " JOIN `{$table['name']}` AS `{$tableAlias}`";
-
-                if (empty($table['on']) || !is_array($table['on'])) {
-                    throw new \Exception("join array must have 'on'");
-                }
-
-                $from .= ' ON ' . implode(' = ', $table['on']);
-            }
-
-            $columns = (new MysqlUtility())->getTableColumns($table['name']);
-
-            if ($fromColumns === null) {
-                foreach ($columns as $column) {
-                    $joinedSelect[] = "`{$tableAlias}`.`{$column}` AS `{$tableAlias}.{$column}`";
-                }
-            }
-
-            $counter++;
-        }
-
-        if ($fromColumns === null) {
-            $fromColumns = implode(', ', $joinedSelect);
-        } elseif (is_array($fromColumns)) {
-            $fromColumns = implode(', ', $fromColumns);
-        }
-
-        $query = "SELECT {$fromColumns} FROM {$from}";
+        $query = $this->getSelectFromTables($fromColumns);
 
         // append where clause - criteria
         $query .= $this->where($criteria);
@@ -135,7 +88,7 @@ class QueryMaker
             throw new \Exception('fieldsValues cannot be empty in updateQuery function');
         }
 
-        $query = "UPDATE {$this->getTable()} SET ";
+        $query = "UPDATE {$this->getTable()['name']} SET ";
 
         // point to end of the array
         end($fieldsValues);
@@ -180,7 +133,7 @@ class QueryMaker
             throw new \Exception('fieldsValues cannot be empty in insertQuery function');
         }
 
-        $query = "INSERT INTO {$this->getTable()}";
+        $query = "INSERT INTO {$this->getTable()['name']}";
 
         $columns = [];
         $parameters = [];
@@ -220,7 +173,7 @@ class QueryMaker
             throw new \Exception('fieldsValues cannot be empty in insertQuery function');
         }
 
-        $query = "INSERT INTO {$this->getTable()}";
+        $query = "INSERT INTO {$this->getTable()['name']}";
 
         $parametersArray = [];
         foreach ($fieldsValuesCollection as $key => $fieldsValues) {
@@ -264,7 +217,7 @@ class QueryMaker
      */
     public function deleteQuery(array $criteria, $start, $limit)
     {
-        $query = "DELETE FROM {$this->getTable()}";
+        $query = "DELETE FROM {$this->getTable()['name']}";
         $query .= $this->where($criteria);
         $query .= $this->startLimit($start, $limit);
         $query .= ';';
@@ -279,7 +232,7 @@ class QueryMaker
      */
     public function countQuery(array $criteria)
     {
-        $query = "SELECT COUNT(*) FROM {$this->getTable()}";
+        $query = "SELECT COUNT(*) FROM {$this->getTable()['name']}";
         $query .= $this->where($criteria);
         $query .= ';';
         return $query;
@@ -589,25 +542,93 @@ class QueryMaker
     }
 
     /**
-     * @return string
+     * @param null $tableAlias
+     *
+     * @return mixed
+     * @throws \Exception
      */
-    public function getTable()
+    public function getTable($tableAlias = null)
     {
-        return $this->table;
+        $tables = $this->getTables();
+        if ($tableAlias === null) {
+            return array_shift($tables);
+        } else {
+            if (array_key_exists($tableAlias, $tables)) {
+                return $tables[$tableAlias];
+            } else {
+                throw new \Exception("Requested table does not exist for the alias: {$tableAlias}");
+            }
+        }
     }
 
     /**
-     * @param $table
-     *
-     * @throws \Exception
+     * @param array $tables
      */
-    public function setTable($table)
+    public function setTables(array $tables)
     {
-        if (empty($table)) {
-            throw new \Exception('Table name cannot be empty');
+        $this->tables = $tables;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTables()
+    {
+        return $this->tables;
+    }
+
+    public function getSelectFromTables($fromColumns = null)
+    {
+        $joinedSelect = [];
+        $counter = 1;
+        $from = '';
+
+        if (empty($this->getTables())) {
+            throw new \Exception('Tables cannot be empty');
         }
 
-        $this->table = $table;
+        foreach ($this->getTables() as $tableAlias => $table) {
+            if ($counter === 1) {
+                $from .= "`{$table['name']}` AS `{$tableAlias}`";
+            } else {
+                $from .= " JOIN `{$table['name']}` AS `{$tableAlias}`";
+
+                if (empty($table['on']) || !is_array($table['on'])) {
+                    throw new \Exception("join array must have 'on'");
+                }
+
+                $from .= ' ON ' . implode(' = ', $table['on']);
+            }
+
+            $columns = (new MysqlUtility())->getTableColumns($table['name']);
+
+            if ($fromColumns === null) {
+                foreach ($columns as $column) {
+                    $joinedSelect[] = "`{$tableAlias}`.`{$column}` AS `{$tableAlias}.{$column}`";
+                }
+            }
+
+            $counter++;
+        }
+
+        if ($fromColumns === null) {
+            $fromColumns = implode(', ', $joinedSelect);
+        } elseif (is_array($fromColumns)) {
+            $fromColumns = implode(', ', $fromColumns);
+        }
+
+        return "SELECT {$fromColumns} FROM {$from}";
+    }
+
+    /**
+     * @param $tableAlias
+     * @param $table
+     */
+    public function addTable($tableAlias, $table)
+    {
+        $tables = $this->getTables();
+        $tables[$tableAlias] = $table;
+        $this->setTables($tables);
     }
 
     /**
