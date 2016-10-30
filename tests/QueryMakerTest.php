@@ -545,7 +545,7 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         ];
 
         $query = $queryMaker->countQuery($criteria);
-        $expectedQuery = "SELECT COUNT(*) FROM testTable WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;";
+        $expectedQuery = "SELECT COUNT(*) FROM `testTable` AS `testTable` WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;";
 
         $this->assertEquals($expectedQuery, $query);
     }

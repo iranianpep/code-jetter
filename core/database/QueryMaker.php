@@ -232,7 +232,7 @@ class QueryMaker
      */
     public function countQuery(array $criteria)
     {
-        $query = "SELECT COUNT(*) FROM {$this->getTable()['name']}";
+        $query = $this->getSelectFromTables('COUNT(*)');
         $query .= $this->where($criteria);
         $query .= ';';
         return $query;
@@ -577,6 +577,12 @@ class QueryMaker
         return $this->tables;
     }
 
+    /**
+     * @param null $fromColumns
+     *
+     * @return string
+     * @throws \Exception
+     */
     public function getSelectFromTables($fromColumns = null)
     {
         $joinedSelect = [];
@@ -602,7 +608,7 @@ class QueryMaker
 
             $columns = (new MysqlUtility())->getTableColumns($table['name']);
 
-            if ($fromColumns === null) {
+            if ($fromColumns === null && !empty($columns)) {
                 foreach ($columns as $column) {
                     $joinedSelect[] = "`{$tableAlias}`.`{$column}` AS `{$tableAlias}.{$column}`";
                 }
