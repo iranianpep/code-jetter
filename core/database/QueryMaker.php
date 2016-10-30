@@ -50,7 +50,7 @@ class QueryMaker
     public function selectQuery(array $criteria = [], $fromColumns = '*', $order = '', $start = 0, $limit = 0)
     {
         // append from columns
-        if (empty($fromColumns)) {
+        if (empty($fromColumns) && $fromColumns !== null) {
             // from all
             $fromColumns = '*';
         } elseif (is_array($fromColumns)) {
