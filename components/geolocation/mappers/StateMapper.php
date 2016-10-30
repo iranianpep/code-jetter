@@ -15,7 +15,7 @@ class StateMapper extends BaseMapper
 
     public function getStatesCities(
         array $criteria = [],
-        array $fromColumns = [],
+        $fromColumns = null,
         $order = null,
         $start = 0,
         $limit = 0,
@@ -26,23 +26,29 @@ class StateMapper extends BaseMapper
 
         $stateTable = $this->getTable();
 
-        // By default do not return archived records
-        if ($excludeArchived === true) {
-            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria($stateTable));
-            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria($cityTable));
-        }
-
-        $joins = [
-            [
-                'table' => $cityTable,
+        $tables = [
+            'state' => [
+                'name' => $stateTable,
+                'class' => $this->getModelName()
+            ],
+            'city' => [
+                'name' => $cityTable,
+                'class' => $this->getModelsNamespace('geolocation') . 'City',
                 'on' => [
-                    "{$stateTable}.id",
-                    "{$cityTable}.stateId"
+                    "`state`.`id`",
+                    "`city`.`stateId`"
                 ]
             ]
         ];
 
-        $query = (new QueryMaker($stateTable))->selectJoinQuery($joins, $criteria, $fromColumns, $order, $start, $limit);
+        // By default do not return archived records
+        if ($excludeArchived === true) {
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria('state'));
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria('city'));
+        }
+
+        $queryMaker = new QueryMaker($tables);
+        $query = $queryMaker->selectQuery($criteria, $fromColumns, $order, $start, $limit);
 
         try {
             $connection = Registry::getMySQLDBClass()->getConnection($this->getDatabase());
@@ -52,16 +58,33 @@ class StateMapper extends BaseMapper
             $this->setLastQuery($st->queryString);
 
             // bind values
-            $st = (new QueryMaker())->bindValues($st, $criteria, $start, $limit);
+            $st = $queryMaker->bindValues($st, $criteria, $start, $limit);
             $st->execute();
 
             $result = $st->fetchAll(\PDO::FETCH_ASSOC);
 
+            /**
+             * Map rows to objects
+             */
+            $mappedObjects = $this->mapRowsToObjects($result, $tables);
+
             if ($returnTotalNo == true) {
-                $total = $this->countByCriteria($criteria);
-                return ['result' => $result, 'total' => $total];
+                $query = $queryMaker->countQuery($criteria);
+
+                $st = $connection->prepare($query);
+
+                // set last query
+                $this->setLastQuery($st->queryString);
+
+                // bind values
+                $st = $queryMaker->bindValues($st, $criteria);
+                $st->execute();
+
+                $total = (int) $st->fetchColumn();
+
+                return ['result' => $mappedObjects, 'total' => $total];
             } else {
-                return $result;
+                return $mappedObjects;
             }
         } catch (\PDOException $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);

@@ -2,9 +2,12 @@
 
 namespace CodeJetter\components\geolocation\models;
 
-class State
+use CodeJetter\core\BaseModel;
+
+class State extends BaseModel
 {
     private $name;
+    private $abbr;
     private $countryCode;
 
     /**
@@ -43,5 +46,21 @@ class State
         }
 
         $this->countryCode = $countryCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAbbr()
+    {
+        return $this->abbr;
+    }
+
+    /**
+     * @param string $abbr
+     */
+    public function setAbbr($abbr)
+    {
+        $this->abbr = $abbr;
     }
 }

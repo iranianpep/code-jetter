@@ -2,7 +2,9 @@
 
 namespace CodeJetter\components\geolocation\models;
 
-class City
+use CodeJetter\core\BaseModel;
+
+class City extends BaseModel
 {
     private $name;
     private $stateId;
