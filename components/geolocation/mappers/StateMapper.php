@@ -24,29 +24,32 @@ class StateMapper extends BaseMapper
         $returnTotalNo = false,
         $excludeArchived = true
     ) {
-        $cityTable = (new CityMapper())->getTable();
+        $cityMapper = new CityMapper();
+        $cityTable = $cityMapper->getTable();
+        $cityTableAlias = $cityMapper->getTableAlias();
 
         $stateTable = $this->getTable();
+        $stateTableAlias = $this->getTableAlias();
 
         $tables = [
-            'state' => [
+            $stateTableAlias => [
                 'name' => $stateTable,
                 'class' => $this->getModelName()
             ],
-            'city' => [
+            $cityTableAlias => [
                 'name' => $cityTable,
                 'class' => $this->getModelsNamespace('geolocation') . 'City',
                 'on' => [
-                    "`state`.`id`",
-                    "`city`.`stateId`"
+                    "`{$stateTableAlias}`.`id`",
+                    "`{$cityTableAlias}`.`stateId`"
                 ]
             ]
         ];
 
         // By default do not return archived records
         if ($excludeArchived === true) {
-            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria('state'));
-            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria('city'));
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria($stateTableAlias));
+            $criteria = array_merge($criteria, $this->getExcludeArchivedCriteria($cityTableAlias));
         }
 
         $queryMaker = new QueryMaker($tables);

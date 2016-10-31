@@ -50,23 +50,33 @@ abstract class BaseMapper extends Base implements ICrud
     }
 
     /**
+     * Return table name WITHOUT suffix or prefix by model OR mapper class name
+     * For example, AdminUser table is admin_users
+     *
      * @param $className
      *
      * @return string
      */
     public function getTableNameByClassName($className)
     {
+        if (empty(trim($className))) {
+            $className = $this->getModelName(false);
+        }
+
         // convert camel case to snake case
         $stringUtility = new StringUtility();
         $snakeCaseClassName = strtolower($stringUtility->camelCaseToSnakeCase($className));
 
-        // remove mapper from the end of the string
+        // remove mapper from the end of the string if exist
         $snakeCaseClassName = preg_replace('#_mapper$#', '', $snakeCaseClassName);
 
         return $stringUtility->singularToPlural($snakeCaseClassName);
     }
 
     /**
+     * Return class (model) name by table name
+     * For example, cj_jobs model is Job
+     *
      * @param      $tableName
      * @param null $baseNamespace
      * @param null $tablePrefix
@@ -76,6 +86,57 @@ abstract class BaseMapper extends Base implements ICrud
      */
     public function getClassNameByTableName($tableName, $baseNamespace = null, $tablePrefix = null, $tableSuffix = null)
     {
+        $trimmedTableName = $this->removeTablePrefixAndSuffix($tableName, $tablePrefix, $tableSuffix);
+
+        $stringUtility = new StringUtility();
+        $className = $stringUtility->pluralToSingular($trimmedTableName);
+
+        // snakeCase to camelCase
+        $className = $stringUtility->snakeCaseToCamelCase($className);
+
+        if ($baseNamespace !== null) {
+            $className = "{$baseNamespace}\\{$className}";
+        }
+
+        return $className;
+    }
+
+    /**
+     * Generate a table alias by removing prefix and suffix
+     *
+     * @param null $tableName
+     * @param null $tablePrefix
+     * @param null $tableSuffix
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public function getTableAlias($tableName = null, $tablePrefix = null, $tableSuffix = null)
+    {
+        if (empty(trim($tableName))) {
+            $tableName = $this->getTable();
+        }
+
+        $tableName = $this->removeTablePrefixAndSuffix($tableName, $tablePrefix, $tableSuffix);
+        return strtolower($tableName);
+    }
+
+    /**
+     * Remove table name prefix and suffix if they exist
+     *
+     * @param null $tableName
+     * @param null $tablePrefix
+     * @param null $tableSuffix
+     *
+     * @return bool|mixed|null|string
+     * @throws \Exception
+     */
+    public function removeTablePrefixAndSuffix($tableName = null, $tablePrefix = null, $tableSuffix = null)
+    {
+        if (empty(trim($tableName))) {
+            $tableName = $this->getTable();
+        }
+
         // get the prefix
         if ($tablePrefix === null) {
             $defaultDbInfo = $this->getDefaultDbInfo();
@@ -96,28 +157,17 @@ abstract class BaseMapper extends Base implements ICrud
 
         $stringUtility = new StringUtility();
 
-        $className = $tableName;
-
         // drop the prefix
         if (!empty($tablePrefix)) {
-            $className = $stringUtility->removePrefix($className, $tablePrefix);
+            $tableName = $stringUtility->removePrefix($tableName, $tablePrefix);
         }
 
         // drop the suffix
         if (!empty($tableSuffix)) {
-            $className = $stringUtility->removeSuffix($className, $tableSuffix);
+            $tableName = $stringUtility->removeSuffix($tableName, $tableSuffix);
         }
 
-        $className = $stringUtility->pluralToSingular($className);
-
-        // snakeCase to camelCase
-        $className = $stringUtility->snakeCaseToCamelCase($className);
-
-        if ($baseNamespace !== null) {
-            $className = "{$baseNamespace}\\{$className}";
-        }
-
-        return $className;
+        return $tableName;
     }
 
     /**

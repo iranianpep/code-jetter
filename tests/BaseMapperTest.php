@@ -65,6 +65,22 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
                 'input' => 'GroupUserXref',
                 'output' => 'group_user_xrefs'
             ],
+            [
+                'input' => null,
+                'output' => 'states'
+            ],
+            [
+                'input' => '',
+                'output' => 'states'
+            ],
+            [
+                'input' => ' ',
+                'output' => 'states'
+            ],
+            [
+                'input' => 'StateMapper',
+                'output' => 'states'
+            ],
         ];
 
         foreach ($inputOutputs as $inputOutput) {
@@ -95,10 +111,157 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
                 ],
                 'output' => 'CodeJetter\components\user\models\GroupMemberUserXref'
             ],
+            [
+                'input' => [
+                    'name' => '',
+                    'namespace' => null,
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'State'
+            ],
+            [
+                'input' => [
+                    'name' => null,
+                    'namespace' => null,
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'State'
+            ],
+            [
+                'input' => [
+                    'name' => null,
+                    'namespace' => null,
+                    'prefix' => null,
+                    'suffix' => null
+                ],
+                'output' => 'State'
+            ],
         ];
 
         foreach ($inputOutputs as $inputOutput) {
             $this->assertEquals($inputOutput['output'], $stateMapper->getClassNameByTableName($inputOutput['input']['name'], $inputOutput['input']['namespace'], $inputOutput['input']['prefix'], $inputOutput['input']['suffix']));
+        }
+    }
+
+    public function testRemoveTablePrefixAndSuffix()
+    {
+        $stateMapper = new StateMapper();
+
+        $inputOutputs = [
+            [
+                'input' => [
+                    'name' => 'CJ_JOBS',
+                    'prefix' => 'CJ_',
+                    'suffix' => ''
+                ],
+                'output' => 'JOBS'
+            ],
+            [
+                'input' => [
+                    'name' => 'cj_jobs',
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'jobs'
+            ],
+            [
+                'input' => [
+                    'name' => 'cj_group_member_user_xrefs',
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'group_member_user_xrefs'
+            ],
+            [
+                'input' => [
+                    'name' => '',
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'states'
+            ],
+            [
+                'input' => [
+                    'name' => null,
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'states'
+            ],
+            [
+                'input' => [
+                    'name' => null,
+                    'prefix' => null,
+                    'suffix' => null
+                ],
+                'output' => 'states'
+            ],
+        ];
+
+        foreach ($inputOutputs as $inputOutput) {
+            $this->assertEquals($inputOutput['output'], $stateMapper->removeTablePrefixAndSuffix($inputOutput['input']['name'], $inputOutput['input']['prefix'], $inputOutput['input']['suffix']));
+        }
+    }
+
+    public function testGetTableAlias()
+    {
+        $stateMapper = new StateMapper();
+
+        $inputOutputs = [
+            [
+                'input' => [
+                    'name' => 'CJ_JOBS',
+                    'prefix' => 'CJ_',
+                    'suffix' => ''
+                ],
+                'output' => 'jobs'
+            ],
+            [
+                'input' => [
+                    'name' => 'cj_jobs',
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'jobs'
+            ],
+            [
+                'input' => [
+                    'name' => 'cj_group_member_user_xrefs',
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'group_member_user_xrefs'
+            ],
+            [
+                'input' => [
+                    'name' => '',
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'states'
+            ],
+            [
+                'input' => [
+                    'name' => null,
+                    'prefix' => 'cj_',
+                    'suffix' => ''
+                ],
+                'output' => 'states'
+            ],
+            [
+                'input' => [
+                    'name' => null,
+                    'prefix' => null,
+                    'suffix' => null
+                ],
+                'output' => 'states'
+            ],
+        ];
+
+        foreach ($inputOutputs as $inputOutput) {
+            $this->assertEquals($inputOutput['output'], $stateMapper->getTableAlias($inputOutput['input']['name'], $inputOutput['input']['prefix'], $inputOutput['input']['suffix']));
         }
     }
 
