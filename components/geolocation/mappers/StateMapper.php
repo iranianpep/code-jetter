@@ -104,16 +104,19 @@ class StateMapper extends BaseMapper
         $excludeArchived = true
     ) {
         $statesCities = $this->getStatesCities($criteria, null, $order, $start, $limit, false, $excludeArchived);
+        $stateTableAlias = $this->getTableAlias();
+
+        $cityTableAlias = (new CityMapper())->getTableAlias();
 
         $groupedCities = [];
         if (!empty($statesCities)) {
             foreach ($statesCities as $stateCity) {
-                if (!isset($stateCity['state']) || !isset($stateCity['city'])) {
+                if (!isset($stateCity[$stateTableAlias]) || !isset($stateCity[$cityTableAlias])) {
                     continue;
                 }
 
-                $state = $stateCity['state'];
-                $city = $stateCity['city'];
+                $state = $stateCity[$stateTableAlias];
+                $city = $stateCity[$cityTableAlias];
 
                 if (!$state instanceof State || !$city instanceof City) {
                     continue;
