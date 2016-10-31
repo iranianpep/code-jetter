@@ -2,6 +2,8 @@
 
 namespace CodeJetter\components\geolocation\mappers;
 
+use CodeJetter\components\geolocation\models\City;
+use CodeJetter\components\geolocation\models\State;
 use CodeJetter\core\BaseMapper;
 use CodeJetter\core\database\QueryMaker;
 use CodeJetter\core\Registry;
@@ -98,21 +100,23 @@ class StateMapper extends BaseMapper
         $limit = 0,
         $excludeArchived = true
     ) {
-        $stateTable = $this->getTable();
-        $cityTable = (new CityMapper())->getTable();
-
-        $fromColumns = [
-            "{$stateTable}.name AS state",
-            "{$cityTable}.name AS city",
-            "{$cityTable}.id AS cityId",
-        ];
-
-        $stateCities = $this->getStatesCities($criteria, $fromColumns, $order, $start, $limit, false, $excludeArchived);
+        $statesCities = $this->getStatesCities($criteria, null, $order, $start, $limit, false, $excludeArchived);
 
         $groupedCities = [];
-        if (!empty($stateCities)) {
-            foreach ($stateCities as $city) {
-                $groupedCities[$city['state']][] = $city;
+        if (!empty($statesCities)) {
+            foreach ($statesCities as $stateCity) {
+                if (!isset($stateCity['state']) || !isset($stateCity['city'])) {
+                    continue;
+                }
+
+                $state = $stateCity['state'];
+                $city = $stateCity['city'];
+
+                if (!$state instanceof State || !$city instanceof City) {
+                    continue;
+                }
+
+                $groupedCities[$state->getName()][] = ['cityId' => $city->getId(), 'city' => $city->getName()];
             }
         }
 
