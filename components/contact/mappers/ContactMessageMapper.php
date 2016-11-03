@@ -7,6 +7,7 @@ use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
+use CodeJetter\core\utility\InputUtility;
 
 class ContactMessageMapper extends BaseMapper
 {
@@ -59,8 +60,11 @@ class ContactMessageMapper extends BaseMapper
         $requiredRule = new ValidatorRule('required');
         $emailRule = new ValidatorRule('email');
 
+        $nameInput = new Input('name');
+        $nameInput->setDefaultValue('');
+
         return [
-            new Input('name'),
+            $nameInput,
             new Input('email', [$requiredRule, $emailRule]),
             new Input('message', [$requiredRule])
         ];
@@ -68,21 +72,28 @@ class ContactMessageMapper extends BaseMapper
 
     public function getFieldsValues($inputs, $case = null)
     {
-        $name = isset($inputs['name']) ? $inputs['name'] : '';
+        return (new InputUtility())->getFieldsValues($inputs, $this->getDefinedInputs());
 
-        return [
-            [
-                'column' => 'name',
-                'value' => $name,
-            ],
-            [
-                'column' => 'email',
-                'value' => $inputs['email'],
-            ],
-            [
-                'column' => 'message',
-                'value' => $inputs['message'],
-            ],
-        ];
+        /**
+         * If anything else is needed for fields values which might not be in the inputs, add it here
+         */
+
+        // Another way of returning the fields and values:
+//        $name = isset($inputs['name']) ? $inputs['name'] : '';
+//
+//        return [
+//            [
+//                'column' => 'name',
+//                'value' => $name,
+//            ],
+//            [
+//                'column' => 'email',
+//                'value' => $inputs['email'],
+//            ],
+//            [
+//                'column' => 'message',
+//                'value' => $inputs['message'],
+//            ],
+//        ];
     }
 }

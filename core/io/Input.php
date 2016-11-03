@@ -20,6 +20,10 @@ class Input
     private $title;
     private $rules;
     private $value;
+    private $defaultValue;
+    private $column;
+    private $PDOType;
+    private $skipIfIsNotSet;
 
     /**
      * Input constructor.
@@ -110,6 +114,11 @@ class Input
      */
     public function getValue()
     {
+        // return the default value, in case value is not set
+        if (!isset($this->value)) {
+            return $this->getDefaultValue();
+        }
+
         return $this->value;
     }
 
@@ -150,5 +159,86 @@ class Input
         }
 
         return $rules[$key];
+    }
+
+    /**
+     * Return the associated column name with this input in database
+     *
+     * @return string
+     */
+    public function getColumn()
+    {
+        // if column name is not set, consider the key as column name
+        if (!isset($this->column)) {
+            return $this->getKey();
+        }
+
+        return $this->column;
+    }
+
+    /**
+     * Set the associated column name with this input in database
+     *
+     * @param string $column
+     */
+    public function setColumn($column)
+    {
+        $this->column = $column;
+    }
+
+    /**
+     * Get the default value
+     * Default value is used in case the value is not set
+     *
+     * @return mixed
+     */
+    public function getDefaultValue()
+    {
+        return $this->defaultValue;
+    }
+
+    /**
+     * Set the default value
+     * Default value is used in case the value is not set
+     *
+     * @param mixed $defaultValue
+     */
+    public function setDefaultValue($defaultValue)
+    {
+        $this->defaultValue = $defaultValue;
+    }
+
+    /**
+     * Get PDO type e.g. \PDO::PARAM_INT
+     *
+     * @return mixed
+     */
+    public function getPDOType()
+    {
+        return $this->PDOType;
+    }
+
+    /**
+     * Set PDO type e.g. \PDO::PARAM_INT
+     *
+     * @param mixed $PDOType
+     */
+    public function setPDOType($PDOType)
+    {
+        $this->PDOType = $PDOType;
+    }
+
+    /**
+     * Determine whether to include or exclude this input from fieldsValues
+     * If default value is not set, it means that this input can be excluded from fieldsValues
+     * IF external input is not set
+     *
+     * @return bool
+     */
+    public function skipIfIsNotSet()
+    {
+        $defaultValue = $this->getDefaultValue();
+
+        return !isset($defaultValue) ? true : false;
     }
 }
