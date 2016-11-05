@@ -31,11 +31,12 @@ abstract class BaseMapper extends Base implements ICrud
 
     /**
      * @param array $inputs
+     * @param array $definedInputs
      * @param null  $case
      *
-     * @return array
+     * @return mixed
      */
-    abstract public function getFieldsValues(array $inputs, $case = null);
+    abstract public function getFieldsValues(array $inputs, array $definedInputs = [], $case = null);
 
     /**
      * BaseMapper constructor.

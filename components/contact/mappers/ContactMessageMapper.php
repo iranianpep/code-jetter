@@ -70,7 +70,7 @@ class ContactMessageMapper extends BaseMapper
         ];
     }
 
-    public function getFieldsValues(array $inputs, $case = null)
+    public function getFieldsValues(array $inputs, array $definedInputs = [], $case = null)
     {
         return (new InputUtility())->getFieldsValues($inputs, $this->getDefinedInputs(), $case);
 
