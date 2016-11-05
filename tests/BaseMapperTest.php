@@ -355,4 +355,25 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($dummyRows[$index]['member.id'], $object['member']->getId());
         }
     }
+
+    public function testGetTableColumns()
+    {
+        $app = App::getInstance();
+        $app->init('dev');
+
+        $stateMapper = new StateMapper();
+
+        $expected = [
+            'id',
+            'name',
+            'abbr',
+            'countryCode',
+            'createdAt',
+            'modifiedAt',
+            'live',
+            'archivedAt'
+        ];
+
+        $this->assertEquals($expected, $stateMapper->getTableColumns());
+    }
 }

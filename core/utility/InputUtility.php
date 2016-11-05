@@ -16,16 +16,24 @@ class InputUtility
      * @param array $inputs
      * @param array $definedInputs
      * @param       $case
+     * @param array $tableColumnsWhitelist
      *
      * @return array
      */
-    public function getFieldsValues(array $inputs, array $definedInputs, $case)
+    public function getFieldsValues(array $inputs, array $definedInputs, $case, array $tableColumnsWhitelist = [])
     {
         $fieldsValues = [];
         if (!empty($definedInputs)) {
             foreach ($definedInputs as $definedInput) {
                 if (!$definedInput instanceof DatabaseInput) {
                     continue;
+                }
+
+                // If $tableColumnsWhitelist is set, ignore those defined inputs that are not in the whitelist
+                if (!empty($tableColumnsWhitelist) && is_array($tableColumnsWhitelist)) {
+                    if (!in_array($definedInput->getColumn(), $tableColumnsWhitelist)) {
+                        continue;
+                    }
                 }
 
                 // If the defined input is not set in the external inputs, check to see if it can be excluded or not
