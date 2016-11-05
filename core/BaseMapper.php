@@ -22,8 +22,20 @@ abstract class BaseMapper extends Base implements ICrud
     protected $lastQuery;
     protected $component;
 
+    /**
+     * @param array $options
+     *
+     * @return array
+     */
     abstract public function getDefinedInputs(array $options = []);
-    abstract public function getFieldsValues($inputs, $case = null);
+
+    /**
+     * @param array $inputs
+     * @param null  $case
+     *
+     * @return array
+     */
+    abstract public function getFieldsValues(array $inputs, $case = null);
 
     /**
      * BaseMapper constructor.

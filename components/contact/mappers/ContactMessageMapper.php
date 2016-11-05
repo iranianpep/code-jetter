@@ -3,7 +3,7 @@
 namespace CodeJetter\components\contact\mappers;
 
 use CodeJetter\core\BaseMapper;
-use CodeJetter\core\io\Input;
+use CodeJetter\core\io\DatabaseInput;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
@@ -38,7 +38,7 @@ class ContactMessageMapper extends BaseMapper
         /**
          * Start inserting
          */
-        $fieldsValues = $this->getFieldsValues($inputs);
+        $fieldsValues = $this->getFieldsValues($inputs, 'add');
         $insertedId = $this->insertOne($fieldsValues);
 
         $output = new Output();
@@ -60,19 +60,19 @@ class ContactMessageMapper extends BaseMapper
         $requiredRule = new ValidatorRule('required');
         $emailRule = new ValidatorRule('email');
 
-        $nameInput = new Input('name');
+        $nameInput = new DatabaseInput('name');
         $nameInput->setDefaultValue('');
 
         return [
             $nameInput,
-            new Input('email', [$requiredRule, $emailRule]),
-            new Input('message', [$requiredRule])
+            new DatabaseInput('email', [$requiredRule, $emailRule]),
+            new DatabaseInput('message', [$requiredRule])
         ];
     }
 
-    public function getFieldsValues($inputs, $case = null)
+    public function getFieldsValues(array $inputs, $case = null)
     {
-        return (new InputUtility())->getFieldsValues($inputs, $this->getDefinedInputs());
+        return (new InputUtility())->getFieldsValues($inputs, $this->getDefinedInputs(), $case);
 
         /**
          * If anything else is needed for fields values which might not be in the inputs, add it here

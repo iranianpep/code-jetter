@@ -3,6 +3,7 @@
 namespace CodeJetter\components\user\mappers;
 
 use CodeJetter\components\user\models\MemberGroup;
+use CodeJetter\core\io\DatabaseInput;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
@@ -229,19 +230,19 @@ class MemberGroupMapper extends GroupMapper
     {
         $requiredRule = new ValidatorRule('required');
         $definedInputs = [
-            new Input('name', [$requiredRule]),
-            new Input('status', [$requiredRule])
+            new DatabaseInput('name', [$requiredRule]),
+            new DatabaseInput('status', [$requiredRule])
         ];
 
         if (in_array('all', $options)) {
             $idRule = new ValidatorRule('id');
-            $definedInputs[] = new Input('id', [$idRule, $requiredRule]);
+            $definedInputs[] = new DatabaseInput('id', [$idRule, $requiredRule]);
         }
 
         return $definedInputs;
     }
 
-    public function getFieldsValues($inputs, $case = null)
+    public function getFieldsValues(array $inputs, $case = null)
     {
         // TODO: Implement getFieldsValues() method.
     }

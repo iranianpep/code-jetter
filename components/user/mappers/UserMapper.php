@@ -4,6 +4,7 @@ namespace CodeJetter\components\user\mappers;
 
 use CodeJetter\components\user\models\User;
 use CodeJetter\core\BaseMapper;
+use CodeJetter\core\io\DatabaseInput;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Security;
@@ -550,13 +551,13 @@ abstract class UserMapper extends BaseMapper
             ]
         );
 
-        $idInput = new Input('id', [$idRule]);
+        $idInput = new DatabaseInput('id', [$idRule]);
         $nameInput = (isset($options['nameRequired']) && $options['nameRequired'] === true) ?
-            new Input('name', [$requiredRule]) : new Input('name');
-        $phoneInput = new Input('phone');
-        $emailInput = new Input('email', [$emailRule, $requiredRule]);
-        $usernameInput = new Input('username', [$usernameRule]);
-        $timezoneInput = new Input('timeZone', [$whitelistRule]);
+            new DatabaseInput('name', [$requiredRule]) : new DatabaseInput('name');
+        $phoneInput = new DatabaseInput('phone');
+        $emailInput = new DatabaseInput('email', [$emailRule, $requiredRule]);
+        $usernameInput = new DatabaseInput('username', [$usernameRule]);
+        $timezoneInput = new DatabaseInput('timeZone', [$whitelistRule]);
 
         $definedInputs = [
             $idInput,
@@ -572,19 +573,15 @@ abstract class UserMapper extends BaseMapper
             $statusesWhitelist = $this->getEnumValues('status');
             $statusesWhitelistRule = new ValidatorRule('whitelist', ['whitelist' => $statusesWhitelist]);
 
-            $statusInput = new Input('status', [$statusesWhitelistRule]);
-            $definedInputs[] = $statusInput;
+            $definedInputs[] = new DatabaseInput('status', [$statusesWhitelistRule]);
         }
 
         if (isset($options['passwordRequired'])) {
-            if (isset($options['passwordConfirmation'])) {
-                $passwordRuleOptions = ['confirmation' => $options['passwordConfirmation']];
-            } else {
-                $passwordRuleOptions = [];
-            }
+            $passwordRuleOptions = isset($options['passwordConfirmation']) ?
+                ['confirmation' => $options['passwordConfirmation']] : [];
 
-            $passwordRule = new ValidatorRule('password', $passwordRuleOptions);
-            $definedInputs[] = new Input('password', [$requiredRule, $passwordRule]);
+            $passwordRule = new DatabaseInput('password', $passwordRuleOptions);
+            $definedInputs[] = new DatabaseInput('password', [$requiredRule, $passwordRule]);
         }
 
         return $definedInputs;

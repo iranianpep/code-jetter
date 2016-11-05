@@ -134,7 +134,7 @@ class StateMapper extends BaseMapper
         // TODO: Implement getDefinedInputs() method.
     }
 
-    public function getFieldsValues($inputs, $case = null)
+    public function getFieldsValues(array $inputs, $case = null)
     {
         // TODO: Implement getFieldsValues() method.
     }
