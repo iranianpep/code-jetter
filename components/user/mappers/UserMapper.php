@@ -180,11 +180,13 @@ abstract class UserMapper extends BaseMapper
         $output = new Output();
 
         try {
-            $definedInputsConditions = [];
+            $includingInputs = [];
             if (!empty($inputs['password'])) {
-                $definedInputsConditions = ['passwordRequired' => true];
+                $includingInputs[] = 'password';
                 if (isset($inputs['passwordConfirmation'])) {
-                    $definedInputsConditions['passwordConfirmation'] = $inputs['passwordConfirmation'];
+                    // TODO check $inputs['passwordConfirmation'] value
+                    // If it is false do not add it
+                    $includingInputs[] = 'passwordConfirmation';
                 }
             }
 
@@ -196,9 +198,11 @@ abstract class UserMapper extends BaseMapper
                 }
             }
 
-            $definedInputsConditions['updatingChildByParent'] = $updatingChildByParent;
+            if ($updatingChildByParent === true) {
+                $includingInputs[] = 'status';
+            }
 
-            $definedInputs = $this->getDefinedInputs($definedInputsConditions);
+            $definedInputs = $this->getDefinedInputs('update', $includingInputs);
 
             /**
              * Merge the default defined inputs with the additional one
@@ -417,12 +421,14 @@ abstract class UserMapper extends BaseMapper
          */
         $output = new Output();
         try {
-            $definedInputsConditions = ['passwordRequired' => true];
+            $includingInputs[] = 'password';
             if (isset($inputs['passwordConfirmation'])) {
-                $definedInputsConditions['passwordConfirmation'] = $inputs['passwordConfirmation'];
+                // TODO check $inputs['passwordConfirmation'] value
+                // if it is false, do not add it
+                $includingInputs[] = 'passwordConfirmation';
             }
 
-            $definedInputs = $this->getDefinedInputs($definedInputsConditions);
+            $definedInputs = $this->getDefinedInputs('add', $includingInputs);
 
             /**
              * Merge the default defined inputs with the additional one
@@ -537,7 +543,7 @@ abstract class UserMapper extends BaseMapper
         return $output;
     }
 
-    public function getDefinedInputs(array $options = [])
+    public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
         $idRule = new ValidatorRule('id');
         $emailRule = new ValidatorRule('email');
@@ -552,7 +558,7 @@ abstract class UserMapper extends BaseMapper
         );
 
         $idInput = new DatabaseInput('id', [$idRule]);
-        $nameInput = (isset($options['nameRequired']) && $options['nameRequired'] === true) ?
+        $nameInput = (in_array('name', $includingInputs)) ?
             new DatabaseInput('name', [$requiredRule]) : new DatabaseInput('name');
         $phoneInput = new DatabaseInput('phone');
         $emailInput = new DatabaseInput('email', [$emailRule, $requiredRule]);
@@ -568,17 +574,16 @@ abstract class UserMapper extends BaseMapper
             $usernameInput
         ];
 
-        if ($this->viewingAsAdmin() === true ||
-            (isset($options['updatingChildByParent']) && $options['updatingChildByParent'] === true)) {
+        if ($this->viewingAsAdmin() === true || in_array('status', $includingInputs)) {
             $statusesWhitelist = $this->getEnumValues('status');
             $statusesWhitelistRule = new ValidatorRule('whitelist', ['whitelist' => $statusesWhitelist]);
 
             $definedInputs[] = new DatabaseInput('status', [$statusesWhitelistRule]);
         }
 
-        if (isset($options['passwordRequired'])) {
-            $passwordRuleOptions = isset($options['passwordConfirmation']) ?
-                ['confirmation' => $options['passwordConfirmation']] : [];
+        if (in_array('password', $includingInputs)) {
+            $passwordRuleOptions = in_array('passwordConfirmation', $includingInputs) ?
+                ['confirmation' => true] : [];
 
             $passwordRule = new DatabaseInput('password', $passwordRuleOptions);
             $definedInputs[] = new DatabaseInput('password', [$requiredRule, $passwordRule]);

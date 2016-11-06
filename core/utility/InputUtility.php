@@ -42,12 +42,31 @@ class InputUtility
                     continue;
                 }
 
+                // Determine the value
+                $value = $definedInput->getValue();
+                if (isset($inputs[$definedInput->getKey()]) && isset($value)) {
+                    // check if value is a function
+                    if (is_callable($value)) {
+                        $value = $value($inputs[$definedInput->getKey()]);
+                    }
+                } elseif (isset($inputs[$definedInput->getKey()])) {
+                    $value = $inputs[$definedInput->getKey()];
+                } else {
+                    // fall back to the default value
+                    $value = $definedInput->getDefaultValue();
+                }
+
+                // determine bind
+                $bind = $definedInput->getPDOBind();
+                if (isset($inputs[$definedInput->getKey()]) && is_callable($bind)) {
+                    $bind = $bind($inputs[$definedInput->getKey()]);
+                }
+
                 $fieldsValues[] = [
                     'column' => $definedInput->getColumn(),
-                    'value' => isset($inputs[$definedInput->getKey()]) ?
-                        $inputs[$definedInput->getKey()] : $definedInput->getDefaultValue(),
+                    'value' => $value,
                     'type' => $definedInput->getPDOType(),
-                    'bind' => $definedInput->getPDOBind()
+                    'bind' => $bind
                 ];
             }
         }

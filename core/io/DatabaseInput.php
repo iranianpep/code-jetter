@@ -64,7 +64,7 @@ class DatabaseInput extends Input
     }
 
     /**
-     * @return boolean
+     * @return mixed
      */
     public function getPDOBind()
     {
@@ -72,7 +72,7 @@ class DatabaseInput extends Input
     }
 
     /**
-     * @param boolean $PDOBind
+     * @param mixed $PDOBind
      */
     public function setPDOBind($PDOBind)
     {

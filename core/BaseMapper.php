@@ -27,7 +27,7 @@ abstract class BaseMapper extends Base implements ICrud
      *
      * @return array
      */
-    abstract public function getDefinedInputs(array $options = []);
+    abstract public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = []);
 
     /**
      * @param array $inputs

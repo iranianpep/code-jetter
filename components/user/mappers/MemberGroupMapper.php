@@ -226,7 +226,7 @@ class MemberGroupMapper extends GroupMapper
         return $output;
     }
 
-    public function getDefinedInputs(array $options = [])
+    public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
         $requiredRule = new ValidatorRule('required');
         $definedInputs = [
@@ -234,7 +234,7 @@ class MemberGroupMapper extends GroupMapper
             new DatabaseInput('status', [$requiredRule])
         ];
 
-        if (in_array('all', $options)) {
+        if (in_array('id', $includingInputs)) {
             $idRule = new ValidatorRule('id');
             $definedInputs[] = new DatabaseInput('id', [$idRule, $requiredRule]);
         }

@@ -38,7 +38,7 @@ class ContactMessageMapper extends BaseMapper
         /**
          * Start inserting
          */
-        $fieldsValues = $this->getFieldsValues($inputs, 'add');
+        $fieldsValues = $this->getFieldsValues($inputs, [], 'add');
         $insertedId = $this->insertOne($fieldsValues);
 
         $output = new Output();
@@ -55,7 +55,7 @@ class ContactMessageMapper extends BaseMapper
         return $output;
     }
 
-    public function getDefinedInputs(array $options = [])
+    public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
         $requiredRule = new ValidatorRule('required');
         $emailRule = new ValidatorRule('email');

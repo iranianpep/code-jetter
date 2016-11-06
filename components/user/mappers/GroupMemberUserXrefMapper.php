@@ -9,7 +9,7 @@ namespace CodeJetter\components\user\mappers;
 class GroupMemberUserXrefMapper extends GroupUserXrefMapper
 {
 
-    public function getDefinedInputs(array $options = [])
+    public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
         // TODO: Implement getDefinedInputs() method.
     }
