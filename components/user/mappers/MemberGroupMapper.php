@@ -28,7 +28,7 @@ class MemberGroupMapper extends GroupMapper
          */
         $output = new Output();
         try {
-            $definedInputs = $this->getDefinedInputs();
+            $definedInputs = $this->getDefinedInputs('add');
 
             $validator = new Validator($definedInputs, $inputs);
 
@@ -93,7 +93,7 @@ class MemberGroupMapper extends GroupMapper
      */
     public function updateById($id, array $inputs)
     {
-        $definedInputs = $this->getDefinedInputs(['all']);
+        $definedInputs = $this->getDefinedInputs('update', ['id']);
         $validator = new Validator($definedInputs, $inputs);
         $validatorOutput = $validator->validate();
 

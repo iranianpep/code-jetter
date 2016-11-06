@@ -18,7 +18,7 @@ class ContactMessageMapper extends BaseMapper
          */
         $output = new Output();
         try {
-            $definedInputs = $this->getDefinedInputs();
+            $definedInputs = $this->getDefinedInputs('add');
 
             $validator = new Validator($definedInputs, $inputs);
             $validatorOutput = $validator->validate();
