@@ -370,8 +370,15 @@ abstract class BaseMapper extends Base implements ICrud
      * @return int
      * @throws \Exception
      */
-    public function update(array $criteria, array $inputs, array $fieldsValues, $limit = 0, $additionalDefinedInputs = [], $excludeArchived = true)
-    {
+    public function update(
+        array $criteria,
+        array $inputs,
+        array $fieldsValues,
+        $limit = 0,
+        $additionalDefinedInputs = [],
+        $excludeArchived = true,
+        $batchAction = false
+    ) {
 
         // TODO validation for those who use this function instead of overridden one?
 

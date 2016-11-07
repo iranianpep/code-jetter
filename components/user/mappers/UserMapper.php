@@ -172,7 +172,8 @@ abstract class UserMapper extends BaseMapper
         array $fieldsValues,
         $limit = 0,
         $additionalDefinedInputs = [],
-        $excludeArchived = true
+        $excludeArchived = true,
+        $batchAction = false
     ) {
         /**
          * start validating

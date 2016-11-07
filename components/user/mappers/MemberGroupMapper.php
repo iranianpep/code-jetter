@@ -8,6 +8,7 @@ use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
+use CodeJetter\core\utility\InputUtility;
 
 /**
  * Class MemberGroupMapper
@@ -27,6 +28,7 @@ class MemberGroupMapper extends GroupMapper
          * Start validating
          */
         $output = new Output();
+        $definedInputs = [];
         try {
             $definedInputs = $this->getDefinedInputs('add');
 
@@ -60,16 +62,7 @@ class MemberGroupMapper extends GroupMapper
          * Finish checking if the name exists
          */
 
-        $fieldsValues = [
-            [
-                'column' => 'name',
-                'value' => $inputs['name']
-            ],
-            [
-                'column' => 'status',
-                'value' => $inputs['status']
-            ]
-        ];
+        $fieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'add');
 
         $insertedId = $this->insertOne($fieldsValues);
 
@@ -123,28 +116,41 @@ class MemberGroupMapper extends GroupMapper
      * @return Output
      * @throws \Exception
      */
-    public function update(array $criteria, array $inputs, array $fieldsValues, $limit = 0, $additionalDefinedInputs = [], $excludeArchived = true)
-    {
+    public function update(
+        array $criteria,
+        array $inputs,
+        array $fieldsValues,
+        $limit = 0,
+        $additionalDefinedInputs = [],
+        $excludeArchived = true,
+        $batchAction = false
+    ) {
         /**
          * start validating
          */
         $output = new Output();
 
+        $definedInputs = [];
         try {
             // because of group actions, only id is checked if it is set
             $idRule = new ValidatorRule('id');
             $idInput = new Input('id', [$idRule]);
 
-            $validator = new Validator(
-                [$idInput],
-                $inputs
-            );
+            $definedInputs = $this->getDefinedInputs('update', ['id']);
+
+            // TODO merge additional defined inputs
+
+            //$validator = new Validator([$idInput], $inputs);
+            $validator = new Validator($definedInputs, $inputs);
 
             $validatorOutput = $validator->validate();
 
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
+                var_dump($output);exit;
+
                 return $output;
             }
         } catch (\Exception $e) {
@@ -178,39 +184,41 @@ class MemberGroupMapper extends GroupMapper
          * Finish checking if the name exists
          */
 
-        if (isset($inputs['name'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'name',
-                'value' => $inputs['name']
-            ]);
-        }
+//        if (isset($inputs['name'])) {
+//            // add to fields values
+//            array_push($fieldsValues, [
+//                'column' => 'name',
+//                'value' => $inputs['name']
+//            ]);
+//        }
+//
+//        if (isset($inputs['status'])) {
+//            // add to fields values
+//            array_push($fieldsValues, [
+//                'column' => 'status',
+//                'value' => $inputs['status']
+//            ]);
+//        }
 
-        if (isset($inputs['status'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'status',
-                'value' => $inputs['status']
-            ]);
-        }
+//        if (isset($inputs['archivedAt'])) {
+//            // add to fields values
+//            array_push($fieldsValues, [
+//                'column' => 'archivedAt',
+//                'value' => $inputs['archivedAt']['value'],
+//                'bind' => $inputs['archivedAt']['bind']
+//            ]);
+//        }
+//
+//        if (isset($inputs['live'])) {
+//            // add to fields values
+//            array_push($fieldsValues, [
+//                'column' => 'live',
+//                'value' => $inputs['live']['value'],
+//                'bind' => $inputs['live']['bind']
+//            ]);
+//        }
 
-        if (isset($inputs['archivedAt'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'archivedAt',
-                'value' => $inputs['archivedAt']['value'],
-                'bind' => $inputs['live']['bind']
-            ]);
-        }
-
-        if (isset($inputs['live'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'live',
-                'value' => $inputs['live']['value'],
-                'bind' => $inputs['live']['bind']
-            ]);
-        }
+        $fieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'update');
 
         $changedRows = parent::update($criteria, [], $fieldsValues, $limit);
 
@@ -229,14 +237,26 @@ class MemberGroupMapper extends GroupMapper
     public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
         $requiredRule = new ValidatorRule('required');
-        $definedInputs = [
-            new DatabaseInput('name', [$requiredRule]),
-            new DatabaseInput('status', [$requiredRule])
-        ];
 
-        if (in_array('id', $includingInputs)) {
+        $definedInputs = [];
+        if ($action === 'add' || $action === 'update') {
+            $definedInputs = [
+                'name' => new DatabaseInput('name', [$requiredRule]),
+                'status' => new DatabaseInput('status', [$requiredRule])
+            ];
+        }
+
+        if ($action === 'update') {
+            $archivedAt = new DatabaseInput('archivedAt');
+            $definedInputs['archivedAt'] = $archivedAt;
+
+            $live = new DatabaseInput('live');
+            $definedInputs['live'] = $live;
+        }
+
+        if ($action !== 'add' || in_array('id', $includingInputs)) {
             $idRule = new ValidatorRule('id');
-            $definedInputs[] = new DatabaseInput('id', [$idRule, $requiredRule]);
+            $definedInputs['id'] = new DatabaseInput('id', [$idRule, $requiredRule]);
         }
 
         return $definedInputs;
@@ -244,6 +264,6 @@ class MemberGroupMapper extends GroupMapper
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
-        // TODO: Implement getFieldsValues() method.
+        return (new InputUtility())->getFieldsValues($inputs, $definedInputs, $action);
     }
 }

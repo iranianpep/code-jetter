@@ -313,8 +313,15 @@ class MemberUserMapper extends UserMapper
      * @return Output
      * @throws \Exception
      */
-    public function update(array $criteria, array $inputs, array $fieldsValues, $limit = 0, $additionalDefinedInputs = [], $excludeArchived = true)
-    {
+    public function update(
+        array $criteria,
+        array $inputs,
+        array $fieldsValues,
+        $limit = 0,
+        $additionalDefinedInputs = [],
+        $excludeArchived = true,
+        $batchAction = false
+    ) {
         $output = new Output();
 
         $definedInputs = [];
