@@ -410,7 +410,7 @@ class MemberUserMapper extends UserMapper
         return parent::getDefinedInputs($action, $includingInputs, $excludingInputs);
     }
 
-    public function getFieldsValues(array $inputs, array $definedInputs = [], $case = null)
+    public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
         // TODO: Implement getFieldsValues() method.
     }

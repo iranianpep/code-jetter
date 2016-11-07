@@ -242,7 +242,7 @@ class MemberGroupMapper extends GroupMapper
         return $definedInputs;
     }
 
-    public function getFieldsValues(array $inputs, array $definedInputs = [], $case = null)
+    public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
         // TODO: Implement getFieldsValues() method.
     }

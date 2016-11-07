@@ -16,7 +16,7 @@ class AdminUserMapper extends UserMapper
         // TODO: Implement add() method.
     }
 
-    public function getFieldsValues(array $inputs, array $definedInputs = [], $case = null)
+    public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
         // TODO: Implement getFieldsValues() method.
     }

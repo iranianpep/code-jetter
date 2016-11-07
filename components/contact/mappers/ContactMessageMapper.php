@@ -70,9 +70,9 @@ class ContactMessageMapper extends BaseMapper
         ];
     }
 
-    public function getFieldsValues(array $inputs, array $definedInputs = [], $case = null)
+    public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
-        return (new InputUtility())->getFieldsValues($inputs, $this->getDefinedInputs(), $case);
+        return (new InputUtility())->getFieldsValues($inputs, $this->getDefinedInputs(), $action);
 
         /**
          * If anything else is needed for fields values which might not be in the inputs, add it here
