@@ -62,7 +62,7 @@ class InputUtility
                     $bind = $bind($inputs[$definedInput->getKey()]);
                 }
 
-                $fieldsValues[] = [
+                $fieldsValues[$definedInput->getColumn()] = [
                     'column' => $definedInput->getColumn(),
                     'value' => $value,
                     'type' => $definedInput->getPDOType(),

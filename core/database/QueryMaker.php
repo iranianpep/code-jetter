@@ -101,9 +101,9 @@ class QueryMaker
             $comma = $LastFieldKey === $fieldValueKey ? '' : ', ';
 
             // This is to avoid converting null to an empty string
-            if ($fieldValue['value'] === null) {
-                $fieldValue['value'] = 'null';
-            }
+//            if ($fieldValue['value'] === null) {
+//                $fieldValue['value'] = 'null';
+//            }
 
             if (isset($fieldValue['bind']) && $fieldValue['bind'] === false) {
                 $query .= "{$fieldValue['column']} = {$fieldValue['value']}{$comma}";
@@ -140,9 +140,9 @@ class QueryMaker
 
         foreach ($fieldsValues as $fieldValueKey => $fieldValue) {
             // This is to avoid converting null to an empty string
-            if ($fieldValue['value'] === null) {
-                $fieldValue['value'] = 'null';
-            }
+//            if ($fieldValue['value'] === null) {
+//                $fieldValue['value'] = 'null';
+//            }
 
             $columns[] = "{$fieldValue['column']}";
 
@@ -183,9 +183,9 @@ class QueryMaker
 
             foreach ($fieldsValues as $fieldValueKey => $fieldValue) {
                 // This is to avoid converting null to an empty string
-                if ($fieldValue['value'] === null) {
-                    $fieldValue['value'] = 'null';
-                }
+//                if ($fieldValue['value'] === null) {
+//                    $fieldValue['value'] = 'null';
+//                }
 
                 $columns[] = "{$fieldValue['column']}";
 
@@ -408,9 +408,9 @@ class QueryMaker
                 }
 
                 // This is to avoid converting null to an empty string
-                if ($fieldValue['value'] === null) {
-                    $fieldValue['value'] = 'null';
-                }
+//                if ($fieldValue['value'] === null) {
+//                    $fieldValue['value'] = 'null';
+//                }
 
                 // set the type to string if it is empty
                 if (empty($fieldValue['type'])) {
@@ -514,9 +514,9 @@ class QueryMaker
                         }
 
                         // This is to avoid converting null to an empty string
-                        if ($fieldValue['value'] === null) {
-                            $fieldValue['value'] = 'null';
-                        }
+//                        if ($fieldValue['value'] === null) {
+//                            $fieldValue['value'] = 'null';
+//                        }
 
                         // set the type to string if it is empty
                         if (empty($fieldValue['type'])) {

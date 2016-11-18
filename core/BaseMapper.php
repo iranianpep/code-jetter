@@ -547,14 +547,16 @@ abstract class BaseMapper extends Base implements ICrud
             'archivedAt' => [
                 'column' => 'archivedAt',
                 'value' => 'NOW()',
-                'bind' => false],
+                'bind' => false
+            ],
             'live' => [
                 'column' => 'live',
                 'value' => null,
-                'bind' => false]
+                'bind' => false
+            ]
         ];
 
-        return $this->update($criteria, [], $fieldsValues, $limit);
+        return $this->update($criteria, [], $fieldsValues, $limit, [], true, true);
     }
 
     /**
@@ -566,14 +568,15 @@ abstract class BaseMapper extends Base implements ICrud
      */
     public function safeDeleteOne(array $criteria)
     {
+        //$this->safeDelete($criteria, 1);
         // TODO check if NULL needs to be binded in PDO
         $fieldsValues = [
-            [
+            'archivedAt' => [
                 'column' => 'archivedAt',
                 'value' => 'NOW()',
                 'bind' => false
             ],
-            [
+            'live' => [
                 'column' => 'live',
                 'value' => null,
                 'bind' => false

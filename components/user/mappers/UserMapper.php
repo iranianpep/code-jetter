@@ -11,6 +11,7 @@ use CodeJetter\core\security\Security;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
 use CodeJetter\core\utility\DateTimeUtility;
+use CodeJetter\core\utility\InputUtility;
 
 /**
  * Class UserMapper
@@ -178,6 +179,7 @@ abstract class UserMapper extends BaseMapper
         /**
          * start validating
          */
+        $definedInputs = [];
         $output = new Output();
 
         try {
@@ -203,7 +205,8 @@ abstract class UserMapper extends BaseMapper
                 $includingInputs[] = 'status';
             }
 
-            $definedInputs = $this->getDefinedInputs('update', $includingInputs);
+            $action = $batchAction === true ? 'batchUpdate' : 'update';
+            $definedInputs = $this->getDefinedInputs($action, $includingInputs);
 
             /**
              * Merge the default defined inputs with the additional one
@@ -281,96 +284,14 @@ abstract class UserMapper extends BaseMapper
          * Finish checking if the email exists
          */
 
-        if (isset($inputs['name'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'name',
-                'value' => $inputs['name']
-            ]);
-        }
+        $commonFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'update');
 
-        // username cannot be empty
-        if (!empty($inputs['username'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'username',
-                'value' => $inputs['username']
-            ]);
-        }
+        $fieldsValues = array_merge($commonFieldsValues, $fieldsValues);
 
-        // email cannot be empty
-        if (!empty($inputs['email'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'email',
-                'value' => $inputs['email']
-            ]);
-        }
-
-        if (isset($inputs['phone'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'phone',
-                'value' => $inputs['phone']
-            ]);
-        }
-
-        if (!empty($inputs['password'])) {
+        if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
             $hashedPassword = (new Security())->hashPassword($inputs['password']);
 
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'password',
-                'value' => $hashedPassword
-            ]);
-        }
-
-        if (isset($inputs['status'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'status',
-                'value' => $inputs['status']
-            ]);
-        }
-
-        if (isset($inputs['token'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'token',
-                'value' => $inputs['token']
-            ]);
-
-            array_push($fieldsValues, [
-                'column' => 'tokenGeneratedAt',
-                'value' => 'NOW()',
-                'bind' => false
-            ]);
-        }
-
-        if (isset($inputs['archivedAt'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'archivedAt',
-                'value' => $inputs['archivedAt']['value'],
-                'bind' => $inputs['live']['bind']
-            ]);
-        }
-
-        if (isset($inputs['live'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'live',
-                'value' => $inputs['live']['value'],
-                'bind' => $inputs['live']['bind']
-            ]);
-        }
-
-        if (!empty($inputs['timeZone'])) {
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'timeZone',
-                'value' => $inputs['timeZone']
-            ]);
+            $fieldsValues['password']['value'] = $hashedPassword;
         }
 
         $updatedRows = parent::update($criteria, [], $fieldsValues, $limit);
@@ -420,7 +341,9 @@ abstract class UserMapper extends BaseMapper
         /**
          * Start validating common inputs
          */
+        $definedInputs = [];
         $output = new Output();
+
         try {
             $includingInputs[] = 'password';
             if (isset($inputs['passwordConfirmation'])) {
@@ -489,43 +412,14 @@ abstract class UserMapper extends BaseMapper
         /**
          * Start inserting
          */
-        $commonFieldsValues = [
-            [
-                'column' => 'name',
-                'value' => isset($inputs['name']) ? $inputs['name'] : '',
-            ],
-            [
-                'column' => 'email',
-                'value' => $inputs['email'],
-            ],
-            [
-                'column' => 'phone',
-                'value' => isset($inputs['phone']) ? $inputs['phone'] : '',
-            ],
-            [
-                'column' => 'status',
-                'value' => $inputs['status'],
-            ],
-        ];
-
-        if (isset($inputs['username'])) {
-            $commonFieldsValues[] = [
-                'column' => 'username',
-                'value' => $inputs['username'],
-            ];
-        }
+        $commonFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'add');
 
         $fieldsValues = array_merge($commonFieldsValues, $fieldsValues);
 
         if (!empty($inputs['password']) || (isset($inputs['passwordRequired']) && $inputs['passwordRequired'] === true)) {
             $hashedPassword = (new Security())->hashPassword($inputs['password']);
 
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'password',
-                'value' => $hashedPassword,
-
-            ]);
+            $fieldsValues['password']['value'] = $hashedPassword;
         }
 
         $insertedId = $this->insertOne($fieldsValues);
@@ -546,50 +440,82 @@ abstract class UserMapper extends BaseMapper
 
     public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
-        $idRule = new ValidatorRule('id');
-        $emailRule = new ValidatorRule('email');
-        $requiredRule = new ValidatorRule('required');
-        $usernameRule = new ValidatorRule('username');
+        if ($action === 'batchUpdate') {
+            $idRule = new ValidatorRule('id');
+            $definedInputs['id'] = new DatabaseInput('id', [$idRule]);
+        } else {
+            $emailRule = new ValidatorRule('email');
+            $requiredRule = new ValidatorRule('required');
 
-        $whitelistRule = new ValidatorRule(
-            'whitelist',
-            [
-                'whitelist' => (new DateTimeUtility())->getTimeZones()
-            ]
-        );
+            $nameInput = (in_array('name', $includingInputs)) ?
+                new DatabaseInput('name', [$requiredRule]) : new DatabaseInput('name');
+            $phoneInput = new DatabaseInput('phone');
+            $emailInput = new DatabaseInput('email', [$emailRule, $requiredRule]);
 
-        $idInput = new DatabaseInput('id', [$idRule]);
-        $nameInput = (in_array('name', $includingInputs)) ?
-            new DatabaseInput('name', [$requiredRule]) : new DatabaseInput('name');
-        $phoneInput = new DatabaseInput('phone');
-        $emailInput = new DatabaseInput('email', [$emailRule, $requiredRule]);
-        $usernameInput = new DatabaseInput('username', [$usernameRule]);
-        $timezoneInput = new DatabaseInput('timeZone', [$whitelistRule]);
+            $definedInputs = [
+                'name' => $nameInput,
+                'phone' => $phoneInput,
+                'email' => $emailInput
+            ];
 
-        $definedInputs = [
-            $idInput,
-            $nameInput,
-            $phoneInput,
-            $emailInput,
-            $timezoneInput,
-            $usernameInput
-        ];
+            if ($action !== 'add' || in_array('id', $includingInputs)) {
+                $idRule = new ValidatorRule('id');
+                $definedInputs['id'] = new DatabaseInput('id', [$idRule, $requiredRule]);
+            }
 
-        if ($this->viewingAsAdmin() === true || in_array('status', $includingInputs)) {
-            $statusesWhitelist = $this->getEnumValues('status');
-            $statusesWhitelistRule = new ValidatorRule('whitelist', ['whitelist' => $statusesWhitelist]);
+            if ($action === 'update') {
+                $whitelistRule = new ValidatorRule(
+                    'whitelist',
+                    [
+                        'whitelist' => (new DateTimeUtility())->getTimeZones()
+                    ]
+                );
 
-            $definedInputs[] = new DatabaseInput('status', [$statusesWhitelistRule]);
+                $definedInputs['timezone'] = new DatabaseInput('timeZone', [$whitelistRule]);
+                $definedInputs['token'] = new DatabaseInput('token');
+                $definedInputs['tokenGeneratedAt'] = new DatabaseInput('tokenGeneratedAt');
+            }
+
+            if ($this->viewingAsAdmin() === true || in_array('status', $includingInputs) || $action == 'add') {
+                $statusesWhitelist = $this->getEnumValues('status');
+                $statusesWhitelistRule = new ValidatorRule('whitelist', ['whitelist' => $statusesWhitelist]);
+
+                $definedInputs['status'] = new DatabaseInput('status', [$statusesWhitelistRule]);
+            }
+
+            if (in_array('password', $includingInputs)) {
+                $passwordRuleOptions = in_array('passwordConfirmation', $includingInputs) ?
+                    ['confirmationKey' => 'passwordConfirmation'] : [];
+
+                $passwordRule = new ValidatorRule('password', $passwordRuleOptions);
+                $definedInputs['password'] = new DatabaseInput('password', [$requiredRule, $passwordRule]);
+            }
         }
 
-        if (in_array('password', $includingInputs)) {
-            $passwordRuleOptions = in_array('passwordConfirmation', $includingInputs) ?
-                ['confirmation' => true] : [];
-
-            $passwordRule = new DatabaseInput('password', $passwordRuleOptions);
-            $definedInputs[] = new DatabaseInput('password', [$requiredRule, $passwordRule]);
+        // remove excluded ones
+        if (!empty($definedInputs)) {
+            foreach ($definedInputs as $definedInputKey => $definedInput) {
+                if (in_array($definedInputKey, $excludingInputs)) {
+                    unset($definedInputs[$definedInputKey]);
+                }
+            }
         }
 
         return $definedInputs;
+    }
+
+    public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
+    {
+        $fieldsValues = (new InputUtility())->getFieldsValues($inputs, $definedInputs, $action);
+
+        if (isset($inputs['token'])) {
+            $fieldsValues['tokenGeneratedAt'] = [
+                'column' => 'tokenGeneratedAt',
+                'value' => 'NOW()',
+                'bind' => false
+            ];
+        }
+
+        return $fieldsValues;
     }
 }

@@ -4,7 +4,6 @@ namespace CodeJetter\components\user\mappers;
 
 use CodeJetter\components\user\models\MemberGroup;
 use CodeJetter\core\io\DatabaseInput;
-use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
@@ -62,7 +61,8 @@ class MemberGroupMapper extends GroupMapper
          * Finish checking if the name exists
          */
 
-        $fieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'add');
+        $additionalFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'add');
+        $fieldsValues = $fieldsValues + $additionalFieldsValues;
 
         $insertedId = $this->insertOne($fieldsValues);
 
@@ -132,15 +132,10 @@ class MemberGroupMapper extends GroupMapper
 
         $definedInputs = [];
         try {
-            // because of group actions, only id is checked if it is set
-            $idRule = new ValidatorRule('id');
-            $idInput = new Input('id', [$idRule]);
+            $action = $batchAction === true ? 'batchUpdate' : 'update';
+            $definedInputs = $this->getDefinedInputs($action, ['id']);
+            $definedInputs = $definedInputs + $additionalDefinedInputs;
 
-            $definedInputs = $this->getDefinedInputs('update', ['id']);
-
-            // TODO merge additional defined inputs
-
-            //$validator = new Validator([$idInput], $inputs);
             $validator = new Validator($definedInputs, $inputs);
 
             $validatorOutput = $validator->validate();
@@ -148,8 +143,6 @@ class MemberGroupMapper extends GroupMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
-
-                var_dump($output);exit;
 
                 return $output;
             }
@@ -184,41 +177,8 @@ class MemberGroupMapper extends GroupMapper
          * Finish checking if the name exists
          */
 
-//        if (isset($inputs['name'])) {
-//            // add to fields values
-//            array_push($fieldsValues, [
-//                'column' => 'name',
-//                'value' => $inputs['name']
-//            ]);
-//        }
-//
-//        if (isset($inputs['status'])) {
-//            // add to fields values
-//            array_push($fieldsValues, [
-//                'column' => 'status',
-//                'value' => $inputs['status']
-//            ]);
-//        }
-
-//        if (isset($inputs['archivedAt'])) {
-//            // add to fields values
-//            array_push($fieldsValues, [
-//                'column' => 'archivedAt',
-//                'value' => $inputs['archivedAt']['value'],
-//                'bind' => $inputs['archivedAt']['bind']
-//            ]);
-//        }
-//
-//        if (isset($inputs['live'])) {
-//            // add to fields values
-//            array_push($fieldsValues, [
-//                'column' => 'live',
-//                'value' => $inputs['live']['value'],
-//                'bind' => $inputs['live']['bind']
-//            ]);
-//        }
-
-        $fieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'update');
+        $additionalFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'update');
+        $fieldsValues = $fieldsValues + $additionalFieldsValues;
 
         $changedRows = parent::update($criteria, [], $fieldsValues, $limit);
 
@@ -236,9 +196,17 @@ class MemberGroupMapper extends GroupMapper
 
     public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
+        $definedInputs = [];
+        // for group actions, only id is checked if it is set
+        if ($action === 'batchUpdate') {
+            $idRule = new ValidatorRule('id');
+            $definedInputs['id'] = new DatabaseInput('id', [$idRule]);
+
+            return $definedInputs;
+        }
+
         $requiredRule = new ValidatorRule('required');
 
-        $definedInputs = [];
         if ($action === 'add' || $action === 'update') {
             $definedInputs = [
                 'name' => new DatabaseInput('name', [$requiredRule]),

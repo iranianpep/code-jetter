@@ -801,6 +801,15 @@ class Validator
             }
         }
 
+        if (isset($args['confirmationKey'])) {
+            $inputs = $this->getToCheckInputs();
+            if (!isset($inputs[$args['confirmationKey']]) || $args['toBeCheckedInput'] !== $inputs[$args['confirmationKey']]) {
+                $output->setSuccess(false);
+                $output->setMessage('Password does not match password confirmation.');
+                return $output;
+            }
+        }
+
         if (preg_match($this->getRegexByRule($args['key']), $args['toBeCheckedInput'])) {
             // valid
             $output->setSuccess(true);

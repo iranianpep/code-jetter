@@ -4,6 +4,7 @@ namespace CodeJetter\components\user\mappers;
 
 use CodeJetter\components\user\models\MemberUser;
 use CodeJetter\components\user\models\User;
+use CodeJetter\core\io\DatabaseInput;
 use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
@@ -295,7 +296,7 @@ class MemberUserMapper extends UserMapper
         $definedInputs = [$parentIdInput];
 
         $fieldsValues = [
-            [
+            'parentId' => [
                 'column' => 'parentId',
                 'value' => $inputs['parentId'],
                 'type' => \PDO::PARAM_INT
@@ -328,7 +329,7 @@ class MemberUserMapper extends UserMapper
         if (isset($inputs['parentId'])) {
             $requiredRule = new ValidatorRule('required');
             $idRule = new ValidatorRule('id', ['includingZero' => true]);
-            $definedInputs[] = new Input('parentId', [$requiredRule, $idRule]);
+            $definedInputs['parentId'] = new Input('parentId', [$requiredRule, $idRule]);
         }
 
         if (isset($inputs['parentId'])) {
@@ -350,16 +351,9 @@ class MemberUserMapper extends UserMapper
                     return $output;
                 }
             }
-
-            // add to fields values
-            array_push($fieldsValues, [
-                'column' => 'parentId',
-                'value' => $inputs['parentId'],
-                'type' => \PDO::PARAM_INT
-            ]);
         }
 
-        $updateOutput = parent::update($criteria, $inputs, $fieldsValues, $limit, $definedInputs);
+        $updateOutput = parent::update($criteria, $inputs, $fieldsValues, $limit, $definedInputs, $excludeArchived, $batchAction);
         $updatedRows = $updateOutput->getData();
 
         if ($updateOutput->getSuccess() !== true) {
@@ -414,11 +408,26 @@ class MemberUserMapper extends UserMapper
 
     public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
-        return parent::getDefinedInputs($action, $includingInputs, $excludingInputs);
+        $commonDefinedInputs = parent::getDefinedInputs($action, $includingInputs, $excludingInputs);
+
+        $usernameRule = new ValidatorRule('username');
+        $commonDefinedInputs['username'] = new DatabaseInput('username', [$usernameRule]);
+
+        return $commonDefinedInputs;
     }
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
-        // TODO: Implement getFieldsValues() method.
+        $fieldsValues = parent::getFieldsValues($inputs, $definedInputs, $action);
+
+        if (isset($definedInputs['parentId'])) {
+            $fieldsValues['parentId'] = [
+                'column' => 'parentId',
+                'value' => $inputs['parentId'],
+                'type' => \PDO::PARAM_INT
+            ];
+        }
+
+        return $fieldsValues;
     }
 }

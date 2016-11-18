@@ -336,6 +336,7 @@ class UserAuthentication
         // update user password with the new one
         $mapperName = $user->getMapperName(true);
         $output = (new $mapperName())->updateById($user->getId(), [
+            'email' => $user->getEmail(),
             'password' => $password,
             'passwordConfirmation' => $passwordConfirmation
         ]);
@@ -380,6 +381,7 @@ class UserAuthentication
 
         // store token & token generation time
         $toBeUpdated = [
+            'email' => $user->getEmail(),
             'token' => $token,
             'tokenGeneratedAt' => time()
         ];

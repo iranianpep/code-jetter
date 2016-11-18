@@ -29,19 +29,19 @@ class InputUtilityTest extends \PHPUnit_Framework_TestCase
                 ],
                 'i3' => 'add',
                 'o' => [
-                    [
+                    'name' => [
                         'column' => 'name',
                         'value' => 'test',
                         'type' => null,
                         'bind' => null
                     ],
-                    [
+                    'email' => [
                         'column' => 'email',
                         'value' => 'test@test.com',
                         'type' => null,
                         'bind' => null
                     ],
-                    [
+                    'message' => [
                         'column' => 'message',
                         'value' => 'test message',
                         'type' => null,
@@ -61,13 +61,13 @@ class InputUtilityTest extends \PHPUnit_Framework_TestCase
                 ],
                 'i3' => 'update',
                 'o' => [
-                    [
+                    'email' => [
                         'column' => 'email',
                         'value' => 'test@test.com',
                         'type' => null,
                         'bind' => null
                     ],
-                    [
+                    'message' => [
                         'column' => 'message',
                         'value' => 'test message',
                         'type' => null,
@@ -87,19 +87,19 @@ class InputUtilityTest extends \PHPUnit_Framework_TestCase
                 ],
                 'i3' => 'add',
                 'o' => [
-                    [
+                    'name' => [
                         'column' => 'name',
                         'value' => '',
                         'type' => null,
                         'bind' => null
                     ],
-                    [
+                    'email' => [
                         'column' => 'email',
                         'value' => 'test@test.com',
                         'type' => null,
                         'bind' => null
                     ],
-                    [
+                    'message' => [
                         'column' => 'message',
                         'value' => 'test message',
                         'type' => null,

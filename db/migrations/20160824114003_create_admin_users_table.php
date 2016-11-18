@@ -11,7 +11,7 @@ class CreateAdminUsersTable extends AbstractMigration
   `name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `phone` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(100) COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `password` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `status` enum('active','inactive','suspended') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'inactive',
   `token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,

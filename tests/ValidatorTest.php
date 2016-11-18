@@ -626,6 +626,45 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             $output = $validator->validate();
             $this->assertEquals($inputsOutput['output'], $output->getMessages());
         }
+
+        $passwordRule = new ValidatorRule('password', ['confirmationKey' => 'passwordConfirmation']);
+        $passwordInput = new Input('password', [$passwordRule]);
+
+        $inputsOutputs = [
+            [
+                'inputs' => [
+                    'password' => '',
+                    'passwordConfirmation' => ''
+                ],
+                'output' => ["Password is not valid."]
+            ],
+            [
+                'inputs' => [
+                    'password' => '1'
+                ],
+                'output' => ["Password does not match password confirmation."]
+            ],
+            [
+                'inputs' => [
+                    'password' => '2345e6789235678901E',
+                    'passwordConfirmation' => '1'
+                ],
+                'output' => ["Password does not match password confirmation."]
+            ],
+            [
+                'inputs' => [
+                    'password' => '2345e6789235678901E',
+                    'passwordConfirmation' => '2345e6789235678901E'
+                ],
+                'output' => []
+            ],
+        ];
+
+        foreach ($inputsOutputs as $inputsOutput) {
+            $validator = new Validator([$passwordInput], $inputsOutput['inputs']);
+            $output = $validator->validate();
+            $this->assertEquals($inputsOutput['output'], $output->getMessages());
+        }
     }
 
     public function testValidateWhiteList()
