@@ -499,6 +499,10 @@ abstract class UserMapper extends BaseMapper
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
+        if (empty($definedInputs)) {
+            $definedInputs = $this->getDefinedInputs($action);
+        }
+
         $fieldsValues = (new InputUtility())->getFieldsValues($inputs, $definedInputs, $action);
 
         if (isset($inputs['token'])) {

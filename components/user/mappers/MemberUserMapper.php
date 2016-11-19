@@ -420,6 +420,10 @@ class MemberUserMapper extends UserMapper
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
+        if (empty($definedInputs)) {
+            $definedInputs = $this->getDefinedInputs($action);
+        }
+
         $fieldsValues = parent::getFieldsValues($inputs, $definedInputs, $action);
 
         if (isset($definedInputs['parentId'])) {

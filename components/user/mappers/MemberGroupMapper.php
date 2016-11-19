@@ -234,6 +234,10 @@ class MemberGroupMapper extends GroupMapper
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
     {
+        if (empty($definedInputs)) {
+            $definedInputs = $this->getDefinedInputs($action);
+        }
+
         return (new InputUtility())->getFieldsValues($inputs, $definedInputs, $action);
     }
 }
