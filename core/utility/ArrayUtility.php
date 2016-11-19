@@ -40,4 +40,38 @@ class ArrayUtility
 
         return ['toBeDeleted' => $toBeDeleted, 'toBeAdded' => $toBeAdded];
     }
+
+    /**
+     * Filter an array based on $excludingElements
+     * Filter can be happened by array keys or values in $excludingElements
+     *
+     * @param array  $array
+     * @param array  $excludingElements
+     * @param string $filterBy Can be 'key' or 'value'
+     *
+     * @return array
+     */
+    public function filter(array $array, array $excludingElements, $filterBy = 'key')
+    {
+        if (empty($excludingElements)) {
+            return $array;
+        }
+
+        if (!empty($array)) {
+            foreach ($array as $key => $value) {
+                if ($filterBy === 'key') {
+                    if (in_array($key, $excludingElements)) {
+                        unset($array[$key]);
+                    }
+                } else {
+                    // filter by value
+                    if (in_array($value, $excludingElements)) {
+                        unset($array[$key]);
+                    }
+                }
+            }
+        }
+
+        return $array;
+    }
 }

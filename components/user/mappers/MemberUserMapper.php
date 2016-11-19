@@ -9,6 +9,7 @@ use CodeJetter\core\io\Input;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
+use CodeJetter\core\utility\ArrayUtility;
 
 /**
  * Class MemberUserMapper
@@ -413,7 +414,8 @@ class MemberUserMapper extends UserMapper
         $usernameRule = new ValidatorRule('username');
         $commonDefinedInputs['username'] = new DatabaseInput('username', [$usernameRule]);
 
-        return $commonDefinedInputs;
+        // remove excluded ones
+        return (new ArrayUtility())->filter($commonDefinedInputs, $excludingInputs);
     }
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)

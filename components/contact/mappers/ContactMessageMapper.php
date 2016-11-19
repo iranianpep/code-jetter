@@ -7,6 +7,7 @@ use CodeJetter\core\io\DatabaseInput;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
+use CodeJetter\core\utility\ArrayUtility;
 use CodeJetter\core\utility\InputUtility;
 
 class ContactMessageMapper extends BaseMapper
@@ -63,11 +64,14 @@ class ContactMessageMapper extends BaseMapper
         $nameInput = new DatabaseInput('name');
         $nameInput->setDefaultValue('');
 
-        return [
-            $nameInput,
-            new DatabaseInput('email', [$requiredRule, $emailRule]),
-            new DatabaseInput('message', [$requiredRule])
+        $definedInputs = [
+            'name' => $nameInput,
+            'email' => new DatabaseInput('email', [$requiredRule, $emailRule]),
+            'message' => new DatabaseInput('message', [$requiredRule])
         ];
+
+        // remove excluded ones
+        return (new ArrayUtility())->filter($definedInputs, $excludingInputs);
     }
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)

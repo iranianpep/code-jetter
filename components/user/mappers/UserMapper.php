@@ -10,6 +10,7 @@ use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Security;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
+use CodeJetter\core\utility\ArrayUtility;
 use CodeJetter\core\utility\DateTimeUtility;
 use CodeJetter\core\utility\InputUtility;
 
@@ -493,15 +494,7 @@ abstract class UserMapper extends BaseMapper
         }
 
         // remove excluded ones
-        if (!empty($definedInputs)) {
-            foreach ($definedInputs as $definedInputKey => $definedInput) {
-                if (in_array($definedInputKey, $excludingInputs)) {
-                    unset($definedInputs[$definedInputKey]);
-                }
-            }
-        }
-
-        return $definedInputs;
+        return (new ArrayUtility())->filter($definedInputs, $excludingInputs);
     }
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)

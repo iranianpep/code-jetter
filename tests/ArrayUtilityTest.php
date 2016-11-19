@@ -57,4 +57,56 @@ class ArrayUtilityTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($io['output'], $utility->arrayComparison($io['input']['1'], $io['input']['2']));
         }
     }
+
+    public function testFilter()
+    {
+        $utility = new ArrayUtility();
+
+        $ios = [
+            [
+                'input' => [
+                    'array' => [1, 2, 3],
+                    'excluding' => [2, 3, 4],
+                    'filterBy' => 'value'
+                ],
+                'output' => [1]
+            ],
+            [
+                'input' => [
+                    'array' => [1, 2, 3],
+                    'excluding' => [],
+                    'filterBy' => 'value'
+                ],
+                'output' => [1, 2, 3]
+            ],
+            [
+                'input' => [
+                    'array' => [1, 2, 3],
+                    'excluding' => [1, 2, 3],
+                    'filterBy' => 'value'
+                ],
+                'output' => []
+            ],
+            [
+                'input' => [
+                    'array' => [1, 2, 3],
+                    'excluding' => [1, 2, 3],
+                    'filterBy' => 'key'
+                ],
+                'output' => [1]
+            ],
+            [
+                'input' => [
+                    'array' => [1 => 2, 2 => 3, 3 => 4],
+                    'excluding' => [1, 2, 3],
+                    'filterBy' => 'key'
+                ],
+                'output' => []
+            ],
+        ];
+
+        foreach ($ios as $io) {
+            $this->assertEquals($io['output'], $utility->filter($io['input']['array'], $io['input']['excluding'], $io['input']['filterBy']));
+        }
+    }
 }

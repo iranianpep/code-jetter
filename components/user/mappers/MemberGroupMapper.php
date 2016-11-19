@@ -7,6 +7,7 @@ use CodeJetter\core\io\DatabaseInput;
 use CodeJetter\core\io\Output;
 use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
+use CodeJetter\core\utility\ArrayUtility;
 use CodeJetter\core\utility\InputUtility;
 
 /**
@@ -227,7 +228,8 @@ class MemberGroupMapper extends GroupMapper
             $definedInputs['id'] = new DatabaseInput('id', [$idRule, $requiredRule]);
         }
 
-        return $definedInputs;
+        // remove excluded ones
+        return (new ArrayUtility())->filter($definedInputs, $excludingInputs);
     }
 
     public function getFieldsValues(array $inputs, array $definedInputs = [], $action = null)
