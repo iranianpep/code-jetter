@@ -606,11 +606,13 @@ class QueryMaker
                 $from .= ' ON ' . implode(' = ', $table['on']);
             }
 
-            $columns = (new MysqlUtility())->getTableColumns($table['name']);
-
-            if ($fromColumns === null && !empty($columns)) {
-                foreach ($columns as $column) {
-                    $joinedSelect[] = "`{$tableAlias}`.`{$column}` AS `{$tableAlias}.{$column}`";
+            if ($fromColumns === null) {
+                $columns = (new MysqlUtility())->getTableColumns($table['name']);
+                
+                if (!empty($columns)) {
+                    foreach ($columns as $column) {
+                        $joinedSelect[] = "`{$tableAlias}`.`{$column}` AS `{$tableAlias}.{$column}`";
+                    }
                 }
             }
 
