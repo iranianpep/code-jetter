@@ -1,15 +1,16 @@
 <?php
 
-    namespace CodeJetter\tests;
+namespace CodeJetter\tests;
 
-    use CodeJetter\core\App;
+use CodeJetter\core\App;
     use CodeJetter\core\Router;
     use ReflectionClass;
 
     // this is to fix Cannot send session cookie - headers already sent
     @session_start();
 
-class RouterTest extends \PHPUnit_Framework_TestCase {
+class RouterTest extends \PHPUnit_Framework_TestCase
+{
     public function testRegexMatch()
     {
         $app = App::getInstance();
@@ -19,129 +20,129 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
         $inputOutputs = [
             [
-                'url' => '/account/members/page/1/limit/13',
+                'url'     => '/account/members/page/1/limit/13',
                 'pattern' => '/account/members/page/{page:int}/limit/{limit:int:?}',
-                'match' => [
-                    0 => '/account/members/page/1/limit/13',
-                    'page' => '1',
-                    1 => '1',
+                'match'   => [
+                    0       => '/account/members/page/1/limit/13',
+                    'page'  => '1',
+                    1       => '1',
                     'limit' => '13',
-                    2 => '13'
-                ]
+                    2       => '13',
+                ],
             ],
             [
-                'url' => '/account/members/page/1/limit',
+                'url'     => '/account/members/page/1/limit',
                 'pattern' => '/account/members/page/{page:int}/limit/{limit:int:?}',
-                'match' => [
-                    0 => '/account/members/page/1/limit',
+                'match'   => [
+                    0      => '/account/members/page/1/limit',
                     'page' => '1',
-                    1 => '1'
-                ]
+                    1      => '1',
+                ],
             ],
             [
-                'url' => '/account/members/page/1/',
+                'url'     => '/account/members/page/1/',
                 'pattern' => '/account/members/page/{page:int}/limit/{limit:int:?}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/account/members/page/1',
+                'url'     => '/account/members/page/1',
                 'pattern' => '/account/members/page/{page:int}/limit/{limit:int:?}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/account/members/page/1/limit',
+                'url'     => '/account/members/page/1/limit',
                 'pattern' => '/account/members/page/{page:int}/limit/{limit:int:?}',
-                'match' => [
-                    0 => '/account/members/page/1/limit',
+                'match'   => [
+                    0      => '/account/members/page/1/limit',
                     'page' => '1',
-                    1 => '1'
-                ]
+                    1      => '1',
+                ],
             ],
             [
-                'url' => '/account/members/page//limit/13',
+                'url'     => '/account/members/page//limit/13',
                 'pattern' => '/account/members/page/{page:int}/limit/{limit:int:?}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/account/members',
+                'url'     => '/account/members',
                 'pattern' => '/account/members/page/{page:int}/limit/{limit:int:?}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password',
+                'url'     => '/reset-password',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/',
+                'url'     => '/reset-password/',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/email',
+                'url'     => '/reset-password/email',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/email/',
+                'url'     => '/reset-password/email/',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/email/test@test.com',
+                'url'     => '/reset-password/email/test@test.com',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/email/test@test.com/',
+                'url'     => '/reset-password/email/test@test.com/',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/email/test@test.com/token',
+                'url'     => '/reset-password/email/test@test.com/token',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/email/test@test.com/token/',
+                'url'     => '/reset-password/email/test@test.com/token/',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => false
+                'match'   => false,
             ],
             [
-                'url' => '/reset-password/email/test@test.com/token/123',
+                'url'     => '/reset-password/email/test@test.com/token/123',
                 'pattern' => '/reset-password/email/{email:any}/token/{token:any}',
-                'match' => [
-                    0 => '/reset-password/email/test@test.com/token/123',
+                'match'   => [
+                    0       => '/reset-password/email/test@test.com/token/123',
                     'email' => 'test@test.com',
-                    1 => 'test@test.com',
+                    1       => 'test@test.com',
                     'token' => '123',
-                    2 => '123'
-                ]
+                    2       => '123',
+                ],
             ],
             [
-                'url' => '/reset-password/email/test@test.com',
+                'url'     => '/reset-password/email/test@test.com',
                 'pattern' => '/reset-password/email/{email:any}',
-                'match' => [
-                    0 => '/reset-password/email/test@test.com',
+                'match'   => [
+                    0       => '/reset-password/email/test@test.com',
                     'email' => 'test@test.com',
-                    1 => 'test@test.com'
-                ]
+                    1       => 'test@test.com',
+                ],
             ],
             [
-                'url' => '/reset-password/email',
+                'url'     => '/reset-password/email',
                 'pattern' => '/reset-password/email',
-                'match' => [
-                    0 => '/reset-password/email'
-                ]
+                'match'   => [
+                    0 => '/reset-password/email',
+                ],
             ],
             [
-                'url' => '/account/1',
+                'url'     => '/account/1',
                 'pattern' => '/account/{id:any}',
-                'match' => [
-                    0 => '/account/1',
+                'match'   => [
+                    0    => '/account/1',
                     'id' => '1',
-                    1 => 1
-                ]
+                    1    => 1,
+                ],
             ],
         ];
 
@@ -162,129 +163,129 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 
         $roles1 = [
             'member' => [
-                'user' => 'MemberUser',
+                'user'        => 'MemberUser',
                 'destination' => 'private',
-                'baseURL' => '/account/'
+                'baseURL'     => '/account/',
             ],
             'admin' => [
-                'user' => 'AdminUser',
+                'user'        => 'AdminUser',
                 'destination' => 'private',
-                'baseURL' => '/admin/'
+                'baseURL'     => '/admin/',
             ],
             'guest' => [
-                'destination' => 'guest'
-            ]
+                'destination' => 'guest',
+            ],
         ];
 
         $roles2 = [
             'member' => [
-                'user' => 'MemberUser',
+                'user'        => 'MemberUser',
                 'destination' => 'private',
-                'baseURL' => '/account/admin/'
+                'baseURL'     => '/account/admin/',
             ],
             'admin' => [
-                'user' => 'AdminUser',
+                'user'        => 'AdminUser',
                 'destination' => 'private',
-                'baseURL' => '/account/'
+                'baseURL'     => '/account/',
             ],
             'guest' => [
-                'destination' => 'guest'
-            ]
+                'destination' => 'guest',
+            ],
         ];
 
         $roles3 = [
             'member' => [
-                'user' => 'MemberUser',
+                'user'        => 'MemberUser',
                 'destination' => 'private',
-                'baseURL' => '/account/'
+                'baseURL'     => '/account/',
             ],
             'admin' => [
-                'user' => 'AdminUser',
+                'user'        => 'AdminUser',
                 'destination' => 'private',
-                'baseURL' => '/account/admin/'
+                'baseURL'     => '/account/admin/',
             ],
             'guest' => [
-                'destination' => 'guest'
-            ]
+                'destination' => 'guest',
+            ],
         ];
 
         $inputOutputs = [
             [
-                'roles' => $roles1,
-                'url' => '/account/members',
-                'output' => 'member'
+                'roles'  => $roles1,
+                'url'    => '/account/members',
+                'output' => 'member',
             ],
             [
-                'roles' => $roles1,
-                'url' => '/admin/members',
-                'output' => 'admin'
+                'roles'  => $roles1,
+                'url'    => '/admin/members',
+                'output' => 'admin',
             ],
             [
-                'roles' => $roles1,
-                'url' => '/admin/account/',
-                'output' => 'admin'
+                'roles'  => $roles1,
+                'url'    => '/admin/account/',
+                'output' => 'admin',
             ],
             [
-                'roles' => $roles1,
-                'url' => '/account/admin/',
-                'output' => 'member'
+                'roles'  => $roles1,
+                'url'    => '/account/admin/',
+                'output' => 'member',
             ],
             [
-                'roles' => $roles1,
-                'url' => 'account/members',
-                'output' => 'public'
-            ],
-            //////////
-            [
-                'roles' => $roles2,
-                'url' => '/account/members',
-                'output' => 'admin'
-            ],
-            [
-                'roles' => $roles2,
-                'url' => '/admin/members',
-                'output' => 'public'
-            ],
-            [
-                'roles' => $roles2,
-                'url' => '/admin/account/',
-                'output' => 'public'
-            ],
-            [
-                'roles' => $roles2,
-                'url' => 'account/members',
-                'output' => 'public'
-            ],
-            [
-                'roles' => $roles2,
-                'url' => '/account/admin/',
-                'output' => 'member'
+                'roles'  => $roles1,
+                'url'    => 'account/members',
+                'output' => 'public',
             ],
             //////////
             [
-                'roles' => $roles3,
-                'url' => '/account/members',
-                'output' => 'member'
+                'roles'  => $roles2,
+                'url'    => '/account/members',
+                'output' => 'admin',
             ],
             [
-                'roles' => $roles3,
-                'url' => '/admin/members',
-                'output' => 'public'
+                'roles'  => $roles2,
+                'url'    => '/admin/members',
+                'output' => 'public',
             ],
             [
-                'roles' => $roles3,
-                'url' => '/admin/account/',
-                'output' => 'public'
+                'roles'  => $roles2,
+                'url'    => '/admin/account/',
+                'output' => 'public',
             ],
             [
-                'roles' => $roles3,
-                'url' => 'account/members',
-                'output' => 'public'
+                'roles'  => $roles2,
+                'url'    => 'account/members',
+                'output' => 'public',
             ],
             [
-                'roles' => $roles3,
-                'url' => '/account/admin/',
-                'output' => 'admin'
+                'roles'  => $roles2,
+                'url'    => '/account/admin/',
+                'output' => 'member',
+            ],
+            //////////
+            [
+                'roles'  => $roles3,
+                'url'    => '/account/members',
+                'output' => 'member',
+            ],
+            [
+                'roles'  => $roles3,
+                'url'    => '/admin/members',
+                'output' => 'public',
+            ],
+            [
+                'roles'  => $roles3,
+                'url'    => '/admin/account/',
+                'output' => 'public',
+            ],
+            [
+                'roles'  => $roles3,
+                'url'    => 'account/members',
+                'output' => 'public',
+            ],
+            [
+                'roles'  => $roles3,
+                'url'    => '/account/admin/',
+                'output' => 'admin',
             ],
         ];
 
@@ -297,17 +298,18 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * To test a private method:
+     * To test a private method:.
      *
      * @param $name
      *
      * @return \ReflectionMethod
      */
-    protected static function getMethod($name) {
+    protected static function getMethod($name)
+    {
         $class = new ReflectionClass('CodeJetter\core\Router');
         $method = $class->getMethod($name);
         $method->setAccessible(true);
+
         return $method;
     }
 }
- 

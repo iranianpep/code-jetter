@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 24/04/15
- * Time: 7:23 PM
+ * Time: 7:23 PM.
  */
 
 namespace CodeJetter\components\user\models;
@@ -11,8 +11,7 @@ namespace CodeJetter\components\user\models;
 use CodeJetter\components\user\mappers\GroupMemberUserXrefMapper;
 
 /**
- * Class MemberUser
- * @package CodeJetter\components\user\models
+ * Class MemberUser.
  */
 class MemberUser extends User
 {
@@ -54,9 +53,9 @@ class MemberUser extends User
         $criteria = [
             [
                 'column' => 'memberId',
-                'value' => $this->getId(),
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $this->getId(),
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         $groupMemberXrefs = (new GroupMemberUserXrefMapper())->getAll($criteria);

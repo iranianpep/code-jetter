@@ -17,15 +17,15 @@ class CreateContactMessagesTable extends AbstractMigration
   `archivedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 
-        $this->execute("ALTER TABLE `cj_contact_messages`
-  ADD PRIMARY KEY (`id`);");
+        $this->execute('ALTER TABLE `cj_contact_messages`
+  ADD PRIMARY KEY (`id`);');
 
-        $this->execute("ALTER TABLE `cj_contact_messages`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;");
+        $this->execute('ALTER TABLE `cj_contact_messages`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;');
     }
 
     public function down()
     {
-        $this->execute("DROP TABLE `cj_contact_messages`");
+        $this->execute('DROP TABLE `cj_contact_messages`');
     }
 }

@@ -21,13 +21,12 @@ use CodeJetter\core\View;
 use TableGenerator\HeadCell;
 
 /**
- * Class MemberGroupController
- * @package CodeJetter\components\user\controllers
+ * Class MemberGroupController.
  */
 class MemberGroupController extends BaseController
 {
     /**
-     * Add a group
+     * Add a group.
      */
     public function addGroup()
     {
@@ -39,7 +38,7 @@ class MemberGroupController extends BaseController
     }
 
     /**
-     * List groups
+     * List groups.
      *
      * @throws \Exception
      */
@@ -61,7 +60,7 @@ class MemberGroupController extends BaseController
             $numberCell,
             new HeadCell('Name'),
             new HeadCell('Status'),
-            $actionsCell
+            $actionsCell,
         ];
 
         // get order and search query from the query string
@@ -80,7 +79,7 @@ class MemberGroupController extends BaseController
             true
         );
 
-        /**
+        /*
          * If the current page is not page 1, and there is no data,
          * set pager to page 1 and get data again with start 0
          */
@@ -92,26 +91,26 @@ class MemberGroupController extends BaseController
         $pager->setTotal($output['total']);
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $uniqueFields = $language->get('uniqueField', ['field' => 'Group name']);
         /**
-         * bye to language
+         * bye to language.
          */
 
         // create component
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberGroupList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberGroupList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
-            'listHeaders' => $listHeaders,
-            'groups' => $output['result'],
+            'listHeaders'    => $listHeaders,
+            'groups'         => $output['result'],
             'searchQueryKey' => $listConfig['query'],
-            'searchQuery' => $searchQuery,
+            'searchQuery'    => $searchQuery,
             'requiredFields' => $requiredFields,
-            'uniqueFields' => $uniqueFields
+            'uniqueFields'   => $uniqueFields,
         ]);
 
         // create the page for view
@@ -123,7 +122,7 @@ class MemberGroupController extends BaseController
         (new View())->make(
             $page,
             [
-                'groups' => $componentTemplate
+                'groups' => $componentTemplate,
             ],
             null,
             new FormHandler('List Groups')
@@ -131,7 +130,7 @@ class MemberGroupController extends BaseController
     }
 
     /**
-     * Update a group info
+     * Update a group info.
      */
     public function updateGroup()
     {
@@ -144,7 +143,7 @@ class MemberGroupController extends BaseController
     }
 
     /**
-     * Safely delete a group
+     * Safely delete a group.
      *
      * @throws \Exception
      */
@@ -156,18 +155,18 @@ class MemberGroupController extends BaseController
             $output = (new MemberGroupMapper())->safeDeleteOne([
                 [
                     'column' => 'id',
-                    'value' => $inputs['id'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $inputs['id'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ]);
 
             if ($output > 0) {
                 (new GroupMemberUserXrefMapper())->safeDelete([
                     [
                         'column' => 'groupId',
-                        'value' => $inputs['id'],
-                        'type' => \PDO::PARAM_INT
-                    ]
+                        'value'  => $inputs['id'],
+                        'type'   => \PDO::PARAM_INT,
+                    ],
                 ]);
 
                 $output = new Output();
@@ -180,7 +179,7 @@ class MemberGroupController extends BaseController
     }
 
     /**
-     * Safely batch delete groups
+     * Safely batch delete groups.
      *
      * @throws \Exception
      */
@@ -189,7 +188,7 @@ class MemberGroupController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         if (empty($inputs['callback'])) {
@@ -210,7 +209,7 @@ class MemberGroupController extends BaseController
         $idInput = new Input('id', [$requiredRule, $idRule]);
 
         $definedInputs = [
-            $idInput
+            $idInput,
         ];
 
         foreach ($inputs['callback'] as $id) {
@@ -224,26 +223,25 @@ class MemberGroupController extends BaseController
             }
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $output = (new MemberGroupMapper())->safeDelete([
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => $inputs['callback'],
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'    => $inputs['callback'],
+                'type'     => \PDO::PARAM_INT,
+            ],
         ]);
 
         if ($output instanceof Output and (int) $output->getData() > 0) {
             (new GroupMemberUserXrefMapper())->safeDelete([
                 [
-                    'column' => 'groupId',
+                    'column'   => 'groupId',
                     'operator' => 'IN',
-                    'value' => $inputs['callback'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'    => $inputs['callback'],
+                    'type'     => \PDO::PARAM_INT,
+                ],
             ]);
 
             $output = new Output();
@@ -255,7 +253,7 @@ class MemberGroupController extends BaseController
     }
 
     /**
-     * Delete a group
+     * Delete a group.
      *
      * @throws \Exception
      */
@@ -265,14 +263,14 @@ class MemberGroupController extends BaseController
 
         if (!empty($inputs['id'])) {
             /**
-             * Do not need to delete xref, since foreign key is set to CASCADE on delete
+             * Do not need to delete xref, since foreign key is set to CASCADE on delete.
              */
             $output = (new MemberGroupMapper())->deleteOne([
                 [
                     'column' => 'id',
-                    'value' => $inputs['id'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $inputs['id'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ]);
 
             if ($output == 'true') {
@@ -286,7 +284,7 @@ class MemberGroupController extends BaseController
     }
 
     /**
-     * Batch delete groups
+     * Batch delete groups.
      *
      * @throws \Exception
      */
@@ -295,7 +293,7 @@ class MemberGroupController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         if (empty($inputs['callback'])) {
@@ -316,7 +314,7 @@ class MemberGroupController extends BaseController
         $idInput = new Input('id', [$requiredRule, $idRule]);
 
         $definedInputs = [
-            $idInput
+            $idInput,
         ];
 
         foreach ($inputs['callback'] as $id) {
@@ -330,16 +328,15 @@ class MemberGroupController extends BaseController
             }
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $output = (new MemberGroupMapper())->delete([
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => $inputs['callback'],
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'    => $inputs['callback'],
+                'type'     => \PDO::PARAM_INT,
+            ],
         ]);
 
         if ($output == 'true') {

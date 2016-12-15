@@ -9,293 +9,293 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         $criteria = [
             [
                 'logicalOperator' => '',
-                'column' => 'parentId',
-                'value' => 456,
-                'type' => \PDO::PARAM_INT
+                'column'          => 'parentId',
+                'value'           => 456,
+                'type'            => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'status',
-                'value' => 'active'
+                'value'  => 'active',
             ],
             [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ]
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], 'name ASC', 5, 10);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL ORDER BY name ASC LIMIT :start, :limit;";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL ORDER BY name ASC LIMIT :start, :limit;';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
                 'column' => 'parentId',
-                'value' => 50,
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => 50,
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], 'name ASC', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE parentId = :parentId1 ORDER BY name ASC;";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE parentId = :parentId1 ORDER BY name ASC;';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'testColumn1',
+                'column'   => 'testColumn1',
                 'operator' => 'NOT LIKE',
-                'value' => 'test value',
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'    => 'test value',
+                'type'     => \PDO::PARAM_INT,
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], 'name ASC', 0, 10);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE testColumn1 NOT LIKE :testColumn11 ORDER BY name ASC LIMIT :limit;";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE testColumn1 NOT LIKE :testColumn11 ORDER BY name ASC LIMIT :limit;';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
                 'column' => 'id',
-                'value' => 50,
-                'type' => \PDO::PARAM_INT
+                'value'  => 50,
+                'type'   => \PDO::PARAM_INT,
             ],
             [
                 'logicalOperator' => 'OR',
-                'column' => 'id',
-                'value' => 37,
-                'type' => \PDO::PARAM_INT
-            ]
+                'column'          => 'id',
+                'value'           => 37,
+                'type'            => \PDO::PARAM_INT,
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id = :id1 OR id = :id2;";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE id = :id1 OR id = :id2;';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
             ],
             [
                 'logicalOperator' => 'OR',
-                'column' => 'live',
-                'value' => 1,
-                'type' => \PDO::PARAM_INT
-            ]
+                'column'          => 'live',
+                'value'           => 1,
+                'type'            => \PDO::PARAM_INT,
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE archivedAt IS NULL OR live = :live2;";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE archivedAt IS NULL OR live = :live2;';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'archivedAt',
+                'column'   => 'archivedAt',
                 'operator' => 'IS NULL',
-                'nested' => [
-                    'key' => 'live'
-                ]
+                'nested'   => [
+                    'key' => 'live',
+                ],
             ],
             [
                 'logicalOperator' => 'OR',
-                'column' => 'live',
-                'value' => 1,
-                'type' => \PDO::PARAM_INT,
-                'nested' => [
-                    'key' => 'live'
-                ]
-            ]
+                'column'          => 'live',
+                'value'           => 1,
+                'type'            => \PDO::PARAM_INT,
+                'nested'          => [
+                    'key' => 'live',
+                ],
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL OR live = :live2);";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL OR live = :live2);';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'archivedAt',
+                'column'   => 'archivedAt',
                 'operator' => 'IS NULL',
-                'nested' => [
-                    'key' => 'live1'
-                ]
+                'nested'   => [
+                    'key' => 'live1',
+                ],
             ],
             [
                 'column' => 'live',
-                'value' => 1,
-                'type' => \PDO::PARAM_INT,
+                'value'  => 1,
+                'type'   => \PDO::PARAM_INT,
                 'nested' => [
+                    'key'    => 'live2',
+                    'before' => 'AND',
+                ],
+            ],
+        ];
+
+        $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL) AND (live = :live2);';
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $criteria = [
+            [
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+            ],
+            [
+                'column' => 'live',
+                'value'  => 1,
+                'type'   => \PDO::PARAM_INT,
+                'nested' => [
+                    'key'    => 'live2',
+                    'before' => 'AND',
+                ],
+            ],
+        ];
+
+        $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE archivedAt IS NULL AND (live = :live2);';
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $criteria = [
+            [
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+                'nested'   => [
+                    'key'   => 'live2',
+                    'after' => 'AND',
+                ],
+            ],
+            [
+                'column' => 'live',
+                'value'  => 1,
+                'type'   => \PDO::PARAM_INT,
+            ],
+        ];
+
+        $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL) AND live = :live2;';
+
+        $this->assertEquals($expectedQuery, $query);
+
+        $criteria = [
+            [
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+                'nested'   => [
                     'key' => 'live2',
-                    'before' => 'AND'
-                ]
-            ]
-        ];
-
-        $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL) AND (live = :live2);";
-
-        $this->assertEquals($expectedQuery, $query);
-
-        $criteria = [
-            [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL',
+                ],
             ],
             [
-                'column' => 'live',
-                'value' => 1,
-                'type' => \PDO::PARAM_INT,
-                'nested' => [
+                'column'   => 'archivedAtTest',
+                'operator' => 'IS NULL',
+                'nested'   => [
                     'key' => 'live2',
-                    'before' => 'AND'
-                ]
-            ]
+                ],
+            ],
+            [
+                'column' => 'live',
+                'value'  => 1,
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE archivedAt IS NULL AND (live = :live2);";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL AND archivedAtTest IS NULL) AND live = :live3;';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'archivedAt',
+                'column' => 'live',
+                'value'  => 1,
+                'type'   => \PDO::PARAM_INT,
+            ],
+            [
+                'column'   => 'archivedAt',
                 'operator' => 'IS NULL',
-                'nested' => [
+                'nested'   => [
+                    'key'    => 'live2',
+                    'before' => 'OR',
+                ],
+            ],
+            [
+                'column'   => 'archivedAtTest',
+                'operator' => 'IS NULL',
+                'nested'   => [
                     'key' => 'live2',
-                    'after' => 'AND'
-                ]
+                ],
             ],
-            [
-                'column' => 'live',
-                'value' => 1,
-                'type' => \PDO::PARAM_INT
-            ]
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL) AND live = :live2;";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE live = :live1 OR (archivedAt IS NULL AND archivedAtTest IS NULL);';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL',
-                'nested' => [
-                    'key' => 'live2'
-                ]
+                'column'   => 'id',
+                'operator' => 'IN',
+                'value'    => 2,
             ],
-            [
-                'column' => 'archivedAtTest',
-                'operator' => 'IS NULL',
-                'nested' => [
-                    'key' => 'live2'
-                ]
-            ],
-            [
-                'column' => 'live',
-                'value' => 1,
-                'type' => \PDO::PARAM_INT
-            ]
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE (archivedAt IS NULL AND archivedAtTest IS NULL) AND live = :live3;";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id1);';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'live',
-                'value' => 1,
-                'type' => \PDO::PARAM_INT
+                'column'   => 'id',
+                'operator' => 'IN',
+                'value'    => [2, 3, 24],
             ],
-            [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL',
-                'nested' => [
-                    'key' => 'live2',
-                    'before' => 'OR'
-                ]
-            ],
-            [
-                'column' => 'archivedAtTest',
-                'operator' => 'IS NULL',
-                'nested' => [
-                    'key' => 'live2'
-                ]
-            ]
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE live = :live1 OR (archivedAt IS NULL AND archivedAtTest IS NULL);";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id10,:id11,:id12);';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => 2
-            ]
-        ];
-
-        $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id1);";
-
-        $this->assertEquals($expectedQuery, $query);
-
-        $criteria = [
-            [
-                'column' => 'id',
-                'operator' => 'IN',
-                'value' => [2, 3, 24]
-            ]
-        ];
-
-        $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id10,:id11,:id12);";
-
-        $this->assertEquals($expectedQuery, $query);
-
-        $criteria = [
-            [
-                'column' => 'id',
-                'operator' => 'IN',
-                'value' => [2, 3, 24]
+                'value'    => [2, 3, 24],
             ],
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => 2
-            ]
+                'value'    => 2,
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id10,:id11,:id12) AND id IN (:id2);";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id10,:id11,:id12) AND id IN (:id2);';
 
         $this->assertEquals($expectedQuery, $query);
 
         $criteria = [
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => 2
+                'value'    => 2,
             ],
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => [2, 3, 24]
-            ]
+                'value'    => [2, 3, 24],
+            ],
         ];
 
         $query = $queryMaker->selectQuery($criteria, [], '', 0, 0);
-        $expectedQuery = "SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id1) AND id IN (:id20,:id21,:id22);";
+        $expectedQuery = 'SELECT * FROM `testTable` AS `testTable` WHERE id IN (:id1) AND id IN (:id20,:id21,:id22);';
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -305,23 +305,23 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
             ],
             'cj_cities' => [
                 'name' => 'cj_cities',
-                'on' => [
+                'on'   => [
                     '`cj_states`.`id`',
-                    '`cj_cities`.`stateId`'
-                ]
+                    '`cj_cities`.`stateId`',
+                ],
             ],
             'cj_countries' => [
                 'name' => 'cj_countries',
-                'on' => [
+                'on'   => [
                     '`cj_countries`.`code`',
-                    '`cj_states`.`countryCode`'
-                ]
-            ]
+                    '`cj_states`.`countryCode`',
+                ],
+            ],
         ];
 
         $queryMaker = new \CodeJetter\core\database\QueryMaker($tables);
         $query = $queryMaker->selectQuery([], '*');
-        $expectedQuery = "SELECT * FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;";
+        $expectedQuery = 'SELECT * FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;';
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -331,28 +331,28 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
             ],
             'cj_cities' => [
                 'name' => 'cj_cities',
-                'on' => [
+                'on'   => [
                     '`cj_states`.`id`',
-                    '`cj_cities`.`stateId`'
-                ]
+                    '`cj_cities`.`stateId`',
+                ],
             ],
             'cj_countries' => [
                 'name' => 'cj_countries',
-                'on' => [
+                'on'   => [
                     '`cj_countries`.`code`',
-                    '`cj_states`.`countryCode`'
-                ]
-            ]
+                    '`cj_states`.`countryCode`',
+                ],
+            ],
         ];
 
         $fromColumns = [
             'cj_states.name',
-            'cj_countries.name'
+            'cj_countries.name',
         ];
 
         $queryMaker = new \CodeJetter\core\database\QueryMaker($tables);
         $query = $queryMaker->selectQuery([], $fromColumns);
-        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;";
+        $expectedQuery = 'SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON `cj_states`.`id` = `cj_cities`.`stateId` JOIN `cj_countries` AS `cj_countries` ON `cj_countries`.`code` = `cj_states`.`countryCode`;';
 
         $this->assertEquals($expectedQuery, $query);
 
@@ -362,39 +362,39 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
             ],
             'cj_cities' => [
                 'name' => 'cj_cities',
-                'on' => [
+                'on'   => [
                     'cj_states.id',
-                    'cj_cities.stateId'
-                ]
+                    'cj_cities.stateId',
+                ],
             ],
             'cj_countries' => [
                 'name' => 'cj_countries',
-                'on' => [
+                'on'   => [
                     'cj_countries.code',
-                    'cj_states.countryCode'
-                ]
-            ]
+                    'cj_states.countryCode',
+                ],
+            ],
         ];
 
         $fromColumns = [
             'cj_states.name',
-            'cj_countries.name'
+            'cj_countries.name',
         ];
 
         $criteria = [
             [
                 'column' => 'cj_states.status',
-                'value' => 'active'
+                'value'  => 'active',
             ],
             [
-                'column' => 'cj_states.archivedAt',
-                'operator' => 'IS NULL'
-            ]
+                'column'   => 'cj_states.archivedAt',
+                'operator' => 'IS NULL',
+            ],
         ];
 
         $queryMaker = new \CodeJetter\core\database\QueryMaker($tables);
         $query = $queryMaker->selectQuery($criteria, $fromColumns, 'cj_states.status ASC', 0, 10);
-        $expectedQuery = "SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON cj_states.id = cj_cities.stateId JOIN `cj_countries` AS `cj_countries` ON cj_countries.code = cj_states.countryCode WHERE cj_states.status = :cj_states_status1 AND cj_states.archivedAt IS NULL ORDER BY cj_states.status ASC LIMIT :limit;";
+        $expectedQuery = 'SELECT cj_states.name, cj_countries.name FROM `cj_states` AS `cj_states` JOIN `cj_cities` AS `cj_cities` ON cj_states.id = cj_cities.stateId JOIN `cj_countries` AS `cj_countries` ON cj_countries.code = cj_states.countryCode WHERE cj_states.status = :cj_states_status1 AND cj_states.archivedAt IS NULL ORDER BY cj_states.status ASC LIMIT :limit;';
 
         $this->assertEquals($expectedQuery, $query);
     }
@@ -406,18 +406,18 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         $criteria = [
             [
                 'logicalOperator' => '',
-                'column' => 'parentId',
-                'value' => 456,
-                'type' => \PDO::PARAM_INT
+                'column'          => 'parentId',
+                'value'           => 456,
+                'type'            => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'status',
-                'value' => 'active'
+                'value'  => 'active',
             ],
             [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ]
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+            ],
         ];
 
         $fieldsValues = [
@@ -436,37 +436,37 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         $criteria = [
             [
                 'logicalOperator' => '',
-                'column' => 'parentId',
-                'value' => 456,
-                'type' => \PDO::PARAM_INT
+                'column'          => 'parentId',
+                'value'           => 456,
+                'type'            => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'status',
-                'value' => 'active'
+                'value'  => 'active',
             ],
             [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ]
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+            ],
         ];
 
         $fieldsValues = [
             [
                 'column' => 'name',
-                'value' => 'dummyName'
+                'value'  => 'dummyName',
             ],
             [
                 'column' => 'email',
-                'value' => 'dummyValue'
+                'value'  => 'dummyValue',
             ],
             [
                 'column' => 'phone',
-                'value' => 'dummyPhone'
-            ]
+                'value'  => 'dummyPhone',
+            ],
         ];
 
         $query = $queryMaker->updateQuery($criteria, $fieldsValues, 0, 0);
-        $expectedQuery = "UPDATE testTable SET name = :name, email = :email, phone = :phone WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;";
+        $expectedQuery = 'UPDATE testTable SET name = :name, email = :email, phone = :phone WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;';
 
         $this->assertEquals($expectedQuery, $query);
     }
@@ -478,22 +478,22 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         $fieldsValues = [
             [
                 'column' => 'name',
-                'value' => 'dummyName'
+                'value'  => 'dummyName',
             ],
             [
                 'column' => 'email',
-                'value' => 'dummyValue'
+                'value'  => 'dummyValue',
             ],
             [
                 'column' => 'phone',
-                'value' => 'dummyPhone'
-            ]
+                'value'  => 'dummyPhone',
+            ],
         ];
 
         $query = $queryMaker->insertQuery($fieldsValues);
-        $expectedQuery = "INSERT INTO testTable (name,email,phone) VALUES (:name,:email,:phone);";
+        $expectedQuery = 'INSERT INTO testTable (name,email,phone) VALUES (:name,:email,:phone);';
 
-        $this->assertEquals($expectedQuery,$query);
+        $this->assertEquals($expectedQuery, $query);
     }
 
     public function testDeleteQuery()
@@ -503,22 +503,22 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         $criteria = [
             [
                 'logicalOperator' => '',
-                'column' => 'parentId',
-                'value' => 456,
-                'type' => \PDO::PARAM_INT
+                'column'          => 'parentId',
+                'value'           => 456,
+                'type'            => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'status',
-                'value' => 'active'
+                'value'  => 'active',
             ],
             [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ]
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+            ],
         ];
 
         $query = $queryMaker->deleteQuery($criteria, 0, 0);
-        $expectedQuery = "DELETE FROM testTable WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;";
+        $expectedQuery = 'DELETE FROM testTable WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;';
 
         $this->assertEquals($expectedQuery, $query);
     }
@@ -530,22 +530,22 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
         $criteria = [
             [
                 'logicalOperator' => '',
-                'column' => 'parentId',
-                'value' => 456,
-                'type' => \PDO::PARAM_INT
+                'column'          => 'parentId',
+                'value'           => 456,
+                'type'            => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'status',
-                'value' => 'active'
+                'value'  => 'active',
             ],
             [
-                'column' => 'archivedAt',
-                'operator' => 'IS NULL'
-            ]
+                'column'   => 'archivedAt',
+                'operator' => 'IS NULL',
+            ],
         ];
 
         $query = $queryMaker->countQuery($criteria);
-        $expectedQuery = "SELECT COUNT(*) FROM `testTable` AS `testTable` WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;";
+        $expectedQuery = 'SELECT COUNT(*) FROM `testTable` AS `testTable` WHERE parentId = :parentId1 AND status = :status2 AND archivedAt IS NULL;';
 
         $this->assertEquals($expectedQuery, $query);
     }
@@ -560,10 +560,10 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
 
         $queryMaker = new \CodeJetter\core\database\QueryMaker([
             'testTable' => [
-                'name' => 'testTableName'
+                'name' => 'testTableName',
             ],
             'testTable1' => [
-                'name' => 'testTableName'
+                'name' => 'testTableName',
             ],
         ]);
 
@@ -571,10 +571,10 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
 
         $queryMaker = new \CodeJetter\core\database\QueryMaker([
             'testTable' => [
-                'name' => 'testTableName'
+                'name' => 'testTableName',
             ],
             'testTable1' => [
-                'name' => 'testTableName'
+                'name' => 'testTableName',
             ],
         ]);
 
@@ -588,11 +588,10 @@ class QueryMakerTest extends \PHPUnit_Framework_TestCase
 
         $queryMaker = new \CodeJetter\core\database\QueryMaker([
             'testTable' => [
-                'name' => 'testTableName'
-            ]
+                'name' => 'testTableName',
+            ],
         ]);
 
         $this->assertEquals(['testTable' => ['name' => 'testTableName']], $queryMaker->getTables());
     }
 }
- 

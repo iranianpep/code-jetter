@@ -10,13 +10,12 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 /**
- * Class Security
- * @package CodeJetter\core\security
+ * Class Security.
  */
 class Security
 {
     /**
-     * @var string - This is different from $passwordHashAlgorithm
+     * @var string - This is different from
      */
     private $hashAlgorithm;
 
@@ -36,7 +35,7 @@ class Security
     }
 
     /**
-     * generate a token
+     * generate a token.
      *
      * @return string
      */
@@ -61,11 +60,12 @@ class Security
 
     /**
      * @param $hashAlgorithm
+     *
      * @throws \Exception
      */
     public function setHashAlgorithm($hashAlgorithm)
     {
-        /**
+        /*
          * check if hashing algorithm is valid
          */
         if (!in_array($hashAlgorithm, hash_algos(), true)) {
@@ -79,8 +79,9 @@ class Security
      * @param      $plainPassword
      * @param null $passwordAlgorithmConstant
      *
-     * @return bool|string
      * @throws \Exception
+     *
+     * @return bool|string
      */
     public function hashPassword($plainPassword, $passwordAlgorithmConstant = null)
     {

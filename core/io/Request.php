@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 25/04/15
- * Time: 9:50 PM
+ * Time: 9:50 PM.
  */
 
 namespace CodeJetter\core\io;
@@ -12,8 +12,7 @@ use CodeJetter\core\Registry;
 use CodeJetter\core\security\Security;
 
 /**
- * Class Request
- * @package CodeJetter\core\io
+ * Class Request.
  */
 class Request
 {
@@ -77,6 +76,7 @@ class Request
         }
 
         $this->setInputs($inputs);
+
         return $inputs;
     }
 
@@ -97,8 +97,9 @@ class Request
     }
 
     /**
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function checkOrigin()
     {
@@ -152,9 +153,7 @@ class Request
      */
     public function getUserIP()
     {
-        return $this->getServer('REMOTE_ADDR') ?
-            : $this->getServer('HTTP_X_FORWARDED_FOR') ?
-                : $this->getServer('HTTP_CLIENT_IP');
+        return $this->getServer('REMOTE_ADDR') ?: $this->getServer('HTTP_X_FORWARDED_FOR') ?: $this->getServer('HTTP_CLIENT_IP');
     }
 
     /**
@@ -178,22 +177,21 @@ class Request
      */
     public function getStartTime()
     {
-        /**
+        /*
          * REQUEST_TIME_FLOAT and REQUEST_TIME are not accessible through filter_input
          * This is a reported bug: https://bugs.php.net/bug.php?id=61497
          */
-        return $_SERVER["REQUEST_TIME_FLOAT"];
+        return $_SERVER['REQUEST_TIME_FLOAT'];
     }
 
     /**
      * @param $key
      *
-     * @return string|boolean
+     * @return string|bool
      */
     public function getServer($key)
     {
-        switch ($key)
-        {
+        switch ($key) {
             case 'SERVER_NAME':
                 $info = filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_STRING);
                 break;
@@ -291,7 +289,7 @@ class Request
     }
 
     /**
-     * Get query string parameter - if $key is null, return all
+     * Get query string parameter - if $key is null, return all.
      *
      * @param null $key
      * @param null $queryString
@@ -324,7 +322,7 @@ class Request
         $orderByKey = $config->get('list')['orderBy'];
         $orderDirKey = $config->get('list')['orderDir'];
 
-        $order = (new Request())->getInputs([$orderByKey, $orderDirKey], 'GET');
+        $order = (new self())->getInputs([$orderByKey, $orderDirKey], 'GET');
 
         $orderQuery = '';
 

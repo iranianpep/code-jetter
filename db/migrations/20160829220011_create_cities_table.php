@@ -69,22 +69,22 @@ class CreateCitiesTable extends AbstractMigration
 (49, 'Churchill', 1, 'AU', '2016-07-18 12:34:02', NULL, '1', NULL),
 (50, 'Kyneton', 1, 'AU', '2016-07-18 12:34:02', NULL, '1', NULL);");
 
-        $this->execute("ALTER TABLE `cj_cities`
+        $this->execute('ALTER TABLE `cj_cities`
 ADD PRIMARY KEY (`id`),
 ADD UNIQUE KEY `name` (`name`,`stateId`,`countryCode`),
 ADD KEY `stateId` (`stateId`),
-ADD KEY `countryCode` (`countryCode`);");
+ADD KEY `countryCode` (`countryCode`);');
 
-        $this->execute("ALTER TABLE `cj_cities`
-MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;");
+        $this->execute('ALTER TABLE `cj_cities`
+MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;');
 
-        $this->execute("ALTER TABLE `cj_cities`
+        $this->execute('ALTER TABLE `cj_cities`
 ADD CONSTRAINT `country_code_fk` FOREIGN KEY (`countryCode`) REFERENCES `cj_countries` (`code`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `state_id_fk` FOREIGN KEY (`stateId`) REFERENCES `cj_states` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;");
+ADD CONSTRAINT `state_id_fk` FOREIGN KEY (`stateId`) REFERENCES `cj_states` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;');
     }
 
     public function down()
     {
-        $this->execute("DROP TABLE `cj_cities`");
+        $this->execute('DROP TABLE `cj_cities`');
     }
 }

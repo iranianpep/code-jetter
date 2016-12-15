@@ -8,8 +8,7 @@ use CodeJetter\core\io\Output;
 use CodeJetter\core\Registry;
 
 /**
- * Class Validator
- * @package CodeJetter\core\security
+ * Class Validator.
  */
 class Validator
 {
@@ -29,7 +28,7 @@ class Validator
     private $errors;
 
     /**
-     * This contains returned data from the functions for each rule
+     * This contains returned data from the functions for each rule.
      *
      * @var
      */
@@ -41,17 +40,17 @@ class Validator
     private $success;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $stopAtFirstError;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $alreadyValidated;
 
     /**
-     * contains each rule and its associated function
+     * contains each rule and its associated function.
      *
      * this can be used as a whitelist as well
      *
@@ -126,8 +125,8 @@ class Validator
 
                             $args = [
                                 'toBeCheckedInput' => $toBeCheckedInputs[$definedInputKey],
-                                'inputTitle' => $definedInput->getTitle(),
-                                'key' => $rule->getKey()
+                                'inputTitle'       => $definedInput->getTitle(),
+                                'key'              => $rule->getKey(),
                             ];
 
                             $additionalArgs = $rule->getFunctionArguments();
@@ -247,7 +246,7 @@ class Validator
                 throw new \Exception('defined input is not instance of Input');
             }
 
-            /**
+            /*
              * If isAllRequired is set, add it to all the inputs
              */
             if (!empty($this->isAllRequired())) {
@@ -316,7 +315,7 @@ class Validator
 
     /**
      * @param $key
-     * @param array   $messages
+     * @param array $messages
      */
     public function setError($key, array $messages)
     {
@@ -327,11 +326,13 @@ class Validator
 
     /**
      * @param  $key
+     *
      * @return array
      */
     public function getError($key)
     {
         $errors = $this->getErrors();
+
         return $errors[$key];
     }
 
@@ -345,7 +346,9 @@ class Validator
 
     /**
      * @param  $rule
+     *
      * @throws \Exception
+     *
      * @return string
      */
     public function getFunctionByRule($rule)
@@ -354,7 +357,7 @@ class Validator
 
         if (empty($rulesConfigs[$rule]['function'])) {
             // dynamically create the function name
-            $function = 'validate' . ucfirst(strtolower($rule));
+            $function = 'validate'.ucfirst(strtolower($rule));
         } else {
             // overwrite the normal way
             $function = $rulesConfigs[$rule]['function'];
@@ -370,8 +373,9 @@ class Validator
     /**
      * @param $rule
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getRegexByRule($rule)
     {
@@ -389,7 +393,7 @@ class Validator
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isStopAtFirstError()
     {
@@ -398,6 +402,7 @@ class Validator
 
     /**
      * @param $stopAtFirstError
+     *
      * @throws \Exception
      */
     public function setStopAtFirstError($stopAtFirstError)
@@ -410,7 +415,7 @@ class Validator
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAlreadyValidated()
     {
@@ -419,6 +424,7 @@ class Validator
 
     /**
      * @param $alreadyValidated
+     *
      * @throws \Exception
      */
     public function setAlreadyValidated($alreadyValidated)
@@ -476,11 +482,12 @@ class Validator
 
         $data = $this->getData();
         $value = isset($data[$ruleKey]) ? $data[$ruleKey] : false;
+
         return $value;
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getSuccess()
     {
@@ -502,12 +509,12 @@ class Validator
     }
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $allRequired;
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isAllRequired()
     {
@@ -515,7 +522,7 @@ class Validator
     }
 
     /**
-     * @param boolean $allRequired
+     * @param bool $allRequired
      */
     public function setAllRequired($allRequired)
     {
@@ -529,7 +536,7 @@ class Validator
     }
 
     /**
-     * Fetch all the defined inputs and add required rule to all of them
+     * Fetch all the defined inputs and add required rule to all of them.
      *
      * @throws \Exception
      */
@@ -553,6 +560,7 @@ class Validator
 
     /**
      * @param array $args
+     *
      * @return bool
      */
     private function validateEmail(array $args)
@@ -571,8 +579,9 @@ class Validator
     /**
      * @param array $args
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     private function validateNumber(array $args)
     {
@@ -590,8 +599,9 @@ class Validator
     /**
      * @param array $args
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     private function validateMoney(array $args)
     {
@@ -610,8 +620,10 @@ class Validator
 
     /**
      * @param array $args
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     private function validateSize(array $args)
     {
@@ -639,6 +651,7 @@ class Validator
 
     /**
      * @param array $args
+     *
      * @return bool
      */
     private function validateRequired(array $args)
@@ -695,6 +708,7 @@ class Validator
         if (!isset($args['toBeCheckedInput'])) {
             $output->setSuccess(false);
             $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid Id.");
+
             return $output;
         }
 
@@ -702,6 +716,7 @@ class Validator
         if (preg_match($this->getRegexByRule($args['key']), $args['toBeCheckedInput'])) {
             $output->setSuccess(false);
             $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid Id.");
+
             return $output;
         }
 
@@ -725,8 +740,9 @@ class Validator
     /**
      * @param array $args
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     private function validateToken(array $args)
     {
@@ -739,6 +755,7 @@ class Validator
         if (empty($args['toBeCheckedInput'])) {
             $finalOutput->setSuccess(false);
             $finalOutput->setMessage('Token must be provided.');
+
             return $finalOutput;
         }
 
@@ -759,8 +776,9 @@ class Validator
     /**
      * @param array $args
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     private function validateUsername(array $args)
     {
@@ -768,6 +786,7 @@ class Validator
         if (empty($args['toBeCheckedInput'])) {
             $output->setSuccess(false);
             $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid username.");
+
             return $output;
         }
 
@@ -785,8 +804,9 @@ class Validator
     /**
      * @param array $args
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     private function validatePassword(array $args)
     {
@@ -794,6 +814,7 @@ class Validator
         if (empty($args['toBeCheckedInput'])) {
             $output->setSuccess(false);
             $output->setMessage('Password is not valid.');
+
             return $output;
         }
 
@@ -802,6 +823,7 @@ class Validator
             if ($args['toBeCheckedInput'] !== $args['confirmation']) {
                 $output->setSuccess(false);
                 $output->setMessage('Password does not match password confirmation.');
+
                 return $output;
             }
         }
@@ -812,6 +834,7 @@ class Validator
                 || $args['toBeCheckedInput'] !== $inputs[$args['confirmationKey']]) {
                 $output->setSuccess(false);
                 $output->setMessage('Password does not match password confirmation.');
+
                 return $output;
             }
         }
@@ -830,8 +853,9 @@ class Validator
     /**
      * @param array $args
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     private function validateWhitelist(array $args)
     {

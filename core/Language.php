@@ -3,8 +3,7 @@
 namespace CodeJetter\core;
 
 /**
- * Class Language
- * @package CodeJetter\core
+ * Class Language.
  */
 class Language
 {
@@ -21,7 +20,7 @@ class Language
         $language = $config->get('defaultLanguage');
         $ds = $config->get('DS');
 
-        $this->fileDir = $config->get('URI') . 'core' . $ds . 'language' . $ds;
+        $this->fileDir = $config->get('URI').'core'.$ds.'language'.$ds;
 
         $this->setCurrentLanguage($language);
     }
@@ -31,7 +30,7 @@ class Language
      */
     public function getFileFullPath()
     {
-        return $this->fileDir . $this->getCurrentLanguage() . '.json';
+        return $this->fileDir.$this->getCurrentLanguage().'.json';
     }
 
     /**
@@ -70,7 +69,7 @@ class Language
         }
 
         foreach ($replacements as $key => $value) {
-            $found = str_replace('{' . $key . '}', $value, $found);
+            $found = str_replace('{'.$key.'}', $value, $found);
         }
 
         return $found;
@@ -84,8 +83,9 @@ class Language
     }
 
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     public function getAll()
     {

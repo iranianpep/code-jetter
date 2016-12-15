@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 24/04/15
- * Time: 7:26 PM
+ * Time: 7:26 PM.
  */
 
 namespace CodeJetter\core\layout\blocks;
@@ -11,8 +11,7 @@ namespace CodeJetter\core\layout\blocks;
 use CodeJetter\components\page\models\MetaTag;
 
 /**
- * Class Header
- * @package CodeJetter\core\layout\blocks
+ * Class Header.
  */
 class Header extends BaseBlock
 {

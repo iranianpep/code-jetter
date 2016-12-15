@@ -13,8 +13,7 @@ use CodeJetter\core\layout\blocks\ComponentTemplate;
 use CodeJetter\Routes;
 
 /**
- * Class Router
- * @package CodeJetter\core
+ * Class Router.
  */
 class Router
 {
@@ -38,7 +37,7 @@ class Router
     }
 
     /**
-     * convert pattern to regex and return match ones
+     * convert pattern to regex and return match ones.
      *
      * @param $pattern
      * @param $path
@@ -54,7 +53,7 @@ class Router
         $patternPieces = explode('/', $pattern);
 
         /**
-         * start forming the regex pattern
+         * start forming the regex pattern.
          */
         $regexDelimiter = static::$regexDelimiter;
         $regexPattern = "{$regexDelimiter}^";
@@ -98,15 +97,14 @@ class Router
                 }
 
                 $regexPattern .= "/{$optional}(?<{$parameter}>{$regexTypedPattern}){$optional}";
-
             } else {
-                $regexPattern .= '/' . $patternPiece;
+                $regexPattern .= '/'.$patternPiece;
             }
         }
 
         $regexPattern .= "\${$regexDelimiter}";
         /**
-         * finish forming the regex pattern
+         * finish forming the regex pattern.
          */
 
         // check pattern against path
@@ -120,7 +118,7 @@ class Router
     }
 
     /**
-     * Return route info and parameters by URL path and request method
+     * Return route info and parameters by URL path and request method.
      *
      * @param $URLPath
      * @param $requestMethod
@@ -159,7 +157,7 @@ class Router
             }
         }
 
-        /**
+        /*
          * Start creating route info object
          */
         if (!isset($result)) {
@@ -191,7 +189,7 @@ class Router
             $routeInfoObject->setCheckAntiCSRFToken($result['info']['checkAntiCSRFToken']);
         } else {
             // checkAntiCSRFToken is NOT set, use default value based on request method
-            switch($requestMethod) {
+            switch ($requestMethod) {
                 case 'POST':
                     $routeInfoObject->setCheckAntiCSRFToken(true);
                     break;
@@ -202,7 +200,7 @@ class Router
                     $routeInfoObject->setCheckAntiCSRFToken(true);
             }
         }
-        /**
+        /*
          * Finish creating route info object
          */
 
@@ -225,11 +223,11 @@ class Router
         $routeInfo = $this->getRouteInfo($URLPath, $requestMethod);
 
         // TODO move this somewhere, maybe Response
-        /**
+        /*
          * For the time being, leave 404 handling here
          */
         if (empty($routeInfo)) {
-            header("HTTP/1.0 404 Not Found");
+            header('HTTP/1.0 404 Not Found');
             $page = new Page();
             $page->setTitle('404');
 
@@ -242,7 +240,7 @@ class Router
             (new View())->make(
                 $page,
                 [
-                    '404' => $componentTemplate
+                    '404' => $componentTemplate,
                 ]
             );
             exit();
@@ -256,7 +254,7 @@ class Router
         $action = $routeInfo->getAction();
 
         /**
-         * Authorization - DO NOT REMOVE THIS:
+         * Authorization - DO NOT REMOVE THIS:.
          */
         $authorized = $this->authorizeRoute($accessRole, $rootNamespace, 'user', $controller);
 
@@ -271,12 +269,12 @@ class Router
             throw new \Exception('Controller and action cannot be empty');
         }
 
-        /**
+        /*
          * Set last route info here, after making sure that user is authorized
          */
         $this->setLastRoute($routeInfo);
 
-        /**
+        /*
          * Set user timezone
          */
         if ($authorized === true) {
@@ -326,15 +324,16 @@ class Router
     }
 
     /**
-     * Return access role based on URL
+     * Return access role based on URL.
      *
      * This is used in getRouteInfo and should NOT be public
      *
      * @param       $URLPath
      * @param array $roles
      *
-     * @return int|mixed|string
      * @throws \Exception
+     *
+     * @return int|mixed|string
      */
     private function getAccessRole($URLPath, $roles = [])
     {
@@ -391,8 +390,9 @@ class Router
      * @param      $controller
      * @param bool $redirect
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function authorizeRoute($accessRole, $rootNamespace, $component, $controller, $redirect = true)
     {
@@ -412,9 +412,9 @@ class Router
             $userModel = $controller;
         }
 
-        $user = new $model;
+        $user = new $model();
         if (!$user instanceof User) {
-            throw new \Exception("Invalid User");
+            throw new \Exception('Invalid User');
         }
 
         $userAuthentication = new UserAuthentication();
@@ -423,7 +423,7 @@ class Router
 
             if ($redirect === true && $result !== true) {
                 // e.g. only logged in users should access private destination
-                header('Location: ' . $redirections[$userModel]['login']);
+                header('Location: '.$redirections[$userModel]['login']);
                 exit;
             } else {
                 return $result;
@@ -442,7 +442,7 @@ class Router
                     (new Response())->echoContent($output->toJSON());
                 } else {
                     if (isset($redirections[$userModel]) && isset($redirections[$userModel]['default'])) {
-                        header('Location: ' . $redirections[$userModel]['default']);
+                        header('Location: '.$redirections[$userModel]['default']);
                     }
                     exit;
                 }
@@ -452,7 +452,7 @@ class Router
 
             if ($redirect === true && $result !== true) {
                 // e.g. Login page should not be accessible by logged in users
-                header('Location: ' . $redirections[$userModel]['default']);
+                header('Location: '.$redirections[$userModel]['default']);
                 exit;
             } else {
                 return $result;

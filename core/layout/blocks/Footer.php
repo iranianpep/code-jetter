@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 24/04/15
- * Time: 7:26 PM
+ * Time: 7:26 PM.
  */
 
 namespace CodeJetter\core\layout\blocks;
 
 /**
- * Class Footer
- * @package CodeJetter\core\layout\blocks
+ * Class Footer.
  */
 class Footer extends BaseBlock
 {

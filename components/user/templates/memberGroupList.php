@@ -2,11 +2,11 @@
 
     use CodeJetter\core\utility\HtmlUtility;
     use CodeJetter\core\utility\StringUtility;
+    use TableGenerator\Body;
     use TableGenerator\Cell;
+    use TableGenerator\Head;
     use TableGenerator\HeadCell;
     use TableGenerator\Row;
-    use TableGenerator\Head;
-    use TableGenerator\Body;
     use TableGenerator\Table;
 
     /** @var CodeJetter\core\FormHandler $formHandler */
@@ -19,7 +19,7 @@
     $searchQueryKey = $data['searchQueryKey'];
 
     /**
-     * replace the first element (#) with custom html
+     * replace the first element (#) with custom html.
      */
     $numberHeadCell = $data['listHeaders'][0];
     if ($numberHeadCell instanceof HeadCell) {
@@ -53,7 +53,7 @@
         $counter = $this->getCurrentComponentTemplate()->getPager()->getCounterStartNumber();
         foreach ($groups as $group) {
             /**
-             * @var CodeJetter\components\user\models\MemberUser $group
+             * @var CodeJetter\components\user\models\MemberUser
              */
             $groupId = $group->getId();
             $groupName = (new StringUtility())->prepareForView($group->getName());
@@ -61,7 +61,7 @@
 
             $checkbox = $htmlUtility->generateCheckbox('selectedGroups[]', $groupId);
 
-            $tmpCellNo = new Cell($checkbox . ' ' . $counter);
+            $tmpCellNo = new Cell($checkbox.' '.$counter);
             $tmpCell2 = new Cell($groupName);
             $tmpCell5 = new Cell($groupStatus);
 

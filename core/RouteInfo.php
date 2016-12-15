@@ -3,8 +3,7 @@
 namespace CodeJetter\core;
 
 /**
- * Class RouteInfo
- * @package CodeJetter\core
+ * Class RouteInfo.
  */
 class RouteInfo
 {
@@ -219,7 +218,7 @@ class RouteInfo
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getCheckAntiCSRFToken()
     {
@@ -227,7 +226,7 @@ class RouteInfo
     }
 
     /**
-     * @param boolean $checkAntiCSRFToken
+     * @param bool $checkAntiCSRFToken
      */
     public function setCheckAntiCSRFToken($checkAntiCSRFToken)
     {

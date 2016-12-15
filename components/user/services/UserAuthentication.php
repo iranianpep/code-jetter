@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 24/02/16
- * Time: 8:51 AM
+ * Time: 8:51 AM.
  */
 
 namespace CodeJetter\components\user\services;
@@ -23,8 +23,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 /**
- * Class UserAuthentication
- * @package CodeJetter\components\user\services
+ * Class UserAuthentication.
  */
 class UserAuthentication
 {
@@ -32,8 +31,9 @@ class UserAuthentication
      * @param User $user
      * @param      $password
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function login(User $user, $password)
     {
@@ -45,6 +45,7 @@ class UserAuthentication
         if ($this->isUserActive($user) !== true) {
             $output->setSuccess(false);
             $output->setMessage('Please try again');
+
             return $output;
         }
 
@@ -54,6 +55,7 @@ class UserAuthentication
             $output->setMessage('Logged in successfully');
 
             $output->setRedirectTo($redirections[$userModel]['default']);
+
             return $output;
         }
 
@@ -64,10 +66,10 @@ class UserAuthentication
 
             $time = time();
             $_SESSION['loggedIn'][$userModel] = [
-                'loggedAt' => $time,
+                'loggedAt'       => $time,
                 'lastActivityAt' => $time,
-                'userId' => $user->getId(),
-                'mapper' => $user->getMapperName(true)
+                'userId'         => $user->getId(),
+                'mapper'         => $user->getMapperName(true),
             ];
 
             $output->setSuccess(true);
@@ -118,6 +120,7 @@ class UserAuthentication
 
         if (isset($_SESSION['loggedIn'][$userModel])) {
             $_SESSION['loggedIn'][$userModel]['lastActivityAt'] = time();
+
             return true;
         } else {
             return false;
@@ -127,8 +130,9 @@ class UserAuthentication
     /**
      * @param array|null $whiteList
      *
-     * @return array|bool
      * @throws \Exception
+     *
+     * @return array|bool
      */
     public function getAllLoggedIn(array $whiteList = null)
     {
@@ -149,7 +153,7 @@ class UserAuthentication
 
             $output = new Output();
             if (class_exists($loggedIn['mapper'])) {
-                $output = (new $loggedIn['mapper'])->getOneById($loggedIn['userId']);
+                $output = (new $loggedIn['mapper']())->getOneById($loggedIn['userId']);
             }
 
             if (!$output instanceof Output || $output->getSuccess() !== true) {
@@ -184,7 +188,7 @@ class UserAuthentication
     }
 
     /**
-     * Return the current access role
+     * Return the current access role.
      *
      * @return bool|string
      */
@@ -208,8 +212,9 @@ class UserAuthentication
     }
 
     /**
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function getCurrentLoggedIn()
     {
@@ -247,12 +252,13 @@ class UserAuthentication
     {
         /**
          * model name is used to manage the case when an admin and a user logged in on the same browser
-         * otherwise if one of the user logged out, the other one will be logged out as well
+         * otherwise if one of the user logged out, the other one will be logged out as well.
          */
         $userModel = $user->getClassNameFromNamespace();
 
         if (isset($_SESSION['loggedIn'][$userModel])) {
             unset($_SESSION['loggedIn'][$userModel]);
+
             return true;
         } else {
             return false;
@@ -267,7 +273,7 @@ class UserAuthentication
         if ($this->removeLoggedInUserFromSession($user) === true) {
             $userModel = $user->getClassNameFromNamespace();
             $redirections = Registry::getConfigClass()->get('redirections');
-            header('Location: ' . $redirections[$userModel]['login']);
+            header('Location: '.$redirections[$userModel]['login']);
         }
 
         exit;
@@ -279,14 +285,15 @@ class UserAuthentication
      * @param      $password
      * @param      $passwordConfirmation
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function resetPassword(User $user, $token, $password, $passwordConfirmation)
     {
         $output = new Output();
         /**
-         * Start validating passwords - email & resetPasswordToken are already validated
+         * Start validating passwords - email & resetPasswordToken are already validated.
          */
         $requiredRule = new ValidatorRule('required');
         $passwordRule = new ValidatorRule('password', ['confirmation' => $passwordConfirmation]);
@@ -298,15 +305,17 @@ class UserAuthentication
         if ($validatorOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessages($validatorOutput->getMessages());
+
             return $output;
         }
-        /**
+        /*
          * Finish validating passwords
          */
 
         if ($this->isUserActive($user) !== true) {
             $output->setSuccess(false);
-            $output->setMessage("User is not active");
+            $output->setMessage('User is not active');
+
             return $output;
         }
 
@@ -320,34 +329,34 @@ class UserAuthentication
         } else {
             $tokenExpired = true;
         }
-        /**
+        /*
          * Finish verifying email & token combination
          */
 
         if ($tokenExpired === true) {
             $output->setSuccess(false);
             $output->setMessage('Token is expired');
+
             return $output;
         }
 
         /**
-         * Start resetting the password:
+         * Start resetting the password:.
          */
         // update user password with the new one
         $mapperName = $user->getMapperName(true);
         $output = (new $mapperName())->updateById($user->getId(), [
-            'email' => $user->getEmail(),
-            'password' => $password,
-            'passwordConfirmation' => $passwordConfirmation
+            'email'                => $user->getEmail(),
+            'password'             => $password,
+            'passwordConfirmation' => $passwordConfirmation,
         ]);
 
         if (!$output instanceof Output) {
             return false;
         }
         /**
-         * Finish resetting the password:
+         * Finish resetting the password:.
          */
-
         $finalOutput = new Output();
         if ($output->getSuccess() === true) {
             $finalOutput->setSuccess(true);
@@ -363,8 +372,9 @@ class UserAuthentication
     /**
      * @param User $user
      *
-     * @return bool|Output
      * @throws \Exception
+     *
+     * @return bool|Output
      */
     public function forgetPassword(User $user)
     {
@@ -373,6 +383,7 @@ class UserAuthentication
         if ($this->isUserActive($user) !== true) {
             $output->setSuccess(false);
             $output->setMessage('Could not find any active user with this email');
+
             return $output;
         }
 
@@ -381,9 +392,9 @@ class UserAuthentication
 
         // store token & token generation time
         $toBeUpdated = [
-            'email' => $user->getEmail(),
-            'token' => $token,
-            'tokenGeneratedAt' => time()
+            'email'            => $user->getEmail(),
+            'token'            => $token,
+            'tokenGeneratedAt' => time(),
         ];
 
         $mapperName = $user->getMapperName(true);
@@ -398,6 +409,7 @@ class UserAuthentication
         if ($mapperOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessage('Could not update the user details');
+
             return $output;
         }
 
@@ -411,8 +423,8 @@ class UserAuthentication
             return false;
         }
 
-        $resetPasswordLink = $baseURL . $redirections[$userModel]['resetPassword'] . '/email/'
-            . $user->getEmail() . '/token/' . $token;
+        $resetPasswordLink = $baseURL.$redirections[$userModel]['resetPassword'].'/email/'
+            .$user->getEmail().'/token/'.$token;
 
         $email = $user->getEmail();
         $mailer = new Mailer();
@@ -451,7 +463,7 @@ class UserAuthentication
     }
 
     /**
-     * Check if the user is active AND is NOT archived
+     * Check if the user is active AND is NOT archived.
      *
      * @param $user
      *

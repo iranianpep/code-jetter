@@ -2,14 +2,14 @@
 
     use CodeJetter\core\utility\HtmlUtility;
     use CodeJetter\core\utility\StringUtility;
+    use TableGenerator\Body;
     use TableGenerator\Cell;
+    use TableGenerator\Head;
     use TableGenerator\HeadCell;
     use TableGenerator\Row;
-    use TableGenerator\Head;
-    use TableGenerator\Body;
     use TableGenerator\Table;
 
-/** @var CodeJetter\core\FormHandler $formHandler */
+    /** @var CodeJetter\core\FormHandler $formHandler */
 /** @var CodeJetter\core\View $this */
 $data = $this->getCurrentComponentTemplate()->getData();
 $children = $data['children']['result'];
@@ -18,7 +18,7 @@ $searchQuery = $data['searchQuery'];
 $searchQueryKey = $data['searchQueryKey'];
 
 /**
- * replace the first element (#) with custom html
+ * replace the first element (#) with custom html.
  */
 $numberHeadCell = $data['listHeaders'][0];
 if ($numberHeadCell instanceof HeadCell) {
@@ -49,7 +49,7 @@ if (!empty($children)) {
     $counter = $this->getCurrentComponentTemplate()->getPager()->getCounterStartNumber();
     foreach ($children as $child) {
         /**
-         * @var CodeJetter\components\user\models\MemberUser $child
+         * @var CodeJetter\components\user\models\MemberUser
          */
         $childUsername = (new StringUtility())->prepareForView($child->getUsername());
         $childId = $child->getId();
@@ -74,7 +74,7 @@ if (!empty($children)) {
 
         $checkbox = $htmlUtility->generateCheckbox('selectedChildren[]', $childId);
 
-        $tmpRow = new Row([new Cell($checkbox . ' ' . $counter), new Cell($childUsername), new Cell($childName), new Cell($childEmail), new Cell($childPhone), new Cell($childStatus), new Cell($cell6Content, false)]);
+        $tmpRow = new Row([new Cell($checkbox.' '.$counter), new Cell($childUsername), new Cell($childName), new Cell($childEmail), new Cell($childPhone), new Cell($childStatus), new Cell($cell6Content, false)]);
         $tmpRow->addData('id', $childId);
         $body->addRow($tmpRow);
 

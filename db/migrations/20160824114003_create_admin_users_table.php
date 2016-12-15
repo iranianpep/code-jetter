@@ -26,13 +26,13 @@ class CreateAdminUsersTable extends AbstractMigration
         $this->execute('INSERT INTO `cj_admin_users` (`id`, `name`, `username`, `email`, `phone`, `password`, `status`, `token`, `tokenGeneratedAt`, `timeZone`, `createdAt`, `modifiedAt`, `live`, `archivedAt`) VALUES
 (1, \'admin\', \'admin\', \'iranianpep@gmail.com\', \'04123466\', \'$2y$10$xQtVTySowkdOB0marP/bkedgBKrkmd.RDwPzl.1NSbKJbr5quL4N2\', \'active\', \'8d9c024326502fd5528a37409dc58802983df249\', \'2016-08-18 10:25:10\', \'Australia/Melbourne\', \'2015-11-29 11:41:43\', \'2016-08-24 10:36:49\', \'1\', NULL);');
 
-        $this->execute("ALTER TABLE `cj_admin_users` ADD PRIMARY KEY (`id`);");
+        $this->execute('ALTER TABLE `cj_admin_users` ADD PRIMARY KEY (`id`);');
 
-        $this->execute("ALTER TABLE `cj_admin_users` MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT");
+        $this->execute('ALTER TABLE `cj_admin_users` MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT');
     }
 
     public function down()
     {
-        $this->execute("DROP TABLE `cj_admin_users`");
+        $this->execute('DROP TABLE `cj_admin_users`');
     }
 }

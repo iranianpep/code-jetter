@@ -2,6 +2,7 @@
 
 namespace CodeJetter\components\user\controllers;
 
+use CodeJetter\components\page\models\Page;
 use CodeJetter\components\user\mappers\GroupMemberUserXrefMapper;
 use CodeJetter\components\user\mappers\MemberGroupMapper;
 use CodeJetter\components\user\mappers\MemberUserMapper;
@@ -21,7 +22,6 @@ use CodeJetter\core\security\ValidatorRule;
 use CodeJetter\core\utility\DateTimeUtility;
 use CodeJetter\core\utility\MysqlUtility;
 use CodeJetter\core\View;
-use CodeJetter\components\page\models\Page;
 use TableGenerator\HeadCell;
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -29,13 +29,12 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 /**
- * Class MemberUserController
- * @package CodeJetter\components\user\controllers
+ * Class MemberUserController.
  */
 class MemberUserController extends BaseController
 {
     /**
-     * Generate register form
+     * Generate register form.
      *
      * @throws \Exception
      */
@@ -45,28 +44,27 @@ class MemberUserController extends BaseController
         $page->setTitle('Register');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $passwordRequirements = $language->get('passwordRequirements');
         $usernameRequirements = $language->get('usernameRequirements');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberRegister.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberRegister.php');
         $componentTemplate->setData([
-            'requiredFields' => $requiredFields,
+            'requiredFields'       => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
-            'usernameRequirements' => $usernameRequirements
+            'usernameRequirements' => $usernameRequirements,
         ]);
 
         (new View())->make(
             $page,
             [
-                'register' => $componentTemplate
+                'register' => $componentTemplate,
             ],
             null,
             new FormHandler('register')
@@ -74,7 +72,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Register a new user
+     * Register a new user.
      *
      * @throws \Exception
      */
@@ -96,7 +94,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Generate login form
+     * Generate login form.
      *
      * @throws \Exception
      */
@@ -106,25 +104,24 @@ class MemberUserController extends BaseController
         $page->setTitle('Login');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $requiredFields = Registry::getLanguageClass()->get('requiredFields');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'login.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'login.php');
         $componentTemplate->setData([
-            'requiredFields' => $requiredFields,
-            'url' => '/login',
-            'forgotPasswordUrl' => '/forgot-password'
+            'requiredFields'    => $requiredFields,
+            'url'               => '/login',
+            'forgotPasswordUrl' => '/forgot-password',
         ]);
 
         (new View())->make(
             $page,
             [
-                'loginMember' => $componentTemplate
+                'loginMember' => $componentTemplate,
             ],
             null,
             new FormHandler('Login')
@@ -132,7 +129,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Login
+     * Login.
      */
     public function login()
     {
@@ -163,7 +160,7 @@ class MemberUserController extends BaseController
         $pager = new Pager($this->getURLParameters(), $this->getBasePath(), $this->getRouteInfo()->getUrl());
 
         /**
-         * If the column in the database is not lowercase of the title, specify alias
+         * If the column in the database is not lowercase of the title, specify alias.
          */
         $numberCell = new HeadCell('#');
         $numberCell->setSortable(false);
@@ -180,7 +177,7 @@ class MemberUserController extends BaseController
             new HeadCell('Email'),
             new HeadCell('Phone'),
             new HeadCell('Status'),
-            $actionsCell
+            $actionsCell,
         ];
 
         // get order and search query from the query string
@@ -205,7 +202,7 @@ class MemberUserController extends BaseController
 
         $children = $output->getData();
 
-        /**
+        /*
          * If the current page is not page 1, and there is no data,
          * set pager to page 1 and get data again with start 0
          */
@@ -223,28 +220,28 @@ class MemberUserController extends BaseController
         $pager->setTotal($children['total']);
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $passwordRequirements = $language->get('passwordRequirements');
         $usernameRequirements = $language->get('usernameRequirements');
         /**
-         * bye to language
+         * bye to language.
          */
 
         // create component
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'membersList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'membersList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
-            'listHeaders' => $listHeaders,
-            'children' => $children,
-            'searchQueryKey' => $listConfig['query'],
-            'searchQuery' => $searchQuery,
-            'requiredFields' => $requiredFields,
+            'listHeaders'          => $listHeaders,
+            'children'             => $children,
+            'searchQueryKey'       => $listConfig['query'],
+            'searchQuery'          => $searchQuery,
+            'requiredFields'       => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
-            'usernameRequirements' => $usernameRequirements
+            'usernameRequirements' => $usernameRequirements,
         ]);
 
         // create the page for view
@@ -255,7 +252,7 @@ class MemberUserController extends BaseController
         (new View())->make(
             $page,
             [
-                'members' => $componentTemplate
+                'members' => $componentTemplate,
             ],
             null,
             new FormHandler('List Members')
@@ -263,7 +260,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Add a child
+     * Add a child.
      */
     public function addChild()
     {
@@ -277,7 +274,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Update a child's info
+     * Update a child's info.
      */
     public function updateChild()
     {
@@ -291,7 +288,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Display forgot password form
+     * Display forgot password form.
      *
      * @throws \Exception
      */
@@ -301,24 +298,23 @@ class MemberUserController extends BaseController
         $page->setTitle('Forgot your password');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $requiredFields = Registry::getLanguageClass()->get('requiredFields');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberForgotPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberForgotPassword.php');
         $componentTemplate->setData([
-            'formUrl' => '/forgot-password',
-            'requiredFields' => $requiredFields
+            'formUrl'        => '/forgot-password',
+            'requiredFields' => $requiredFields,
         ]);
 
         (new View())->make(
             $page,
             [
-                'forgotPassword' => $componentTemplate
+                'forgotPassword' => $componentTemplate,
             ],
             null,
             new FormHandler('forgotPasswordForm')
@@ -326,8 +322,9 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function forgotPassword()
     {
@@ -339,7 +336,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Display reset password form
+     * Display reset password form.
      *
      * @throws \Exception
      */
@@ -352,18 +349,18 @@ class MemberUserController extends BaseController
         $page->setTitle('Reset your password');
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberResetPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberResetPassword.php');
         $componentTemplate->setData([
             'tokenValid' => $output->getSuccess(),
-            'email' => $inputs['email'],
-            'token' => $inputs['token'],
-            'formUrl' => '/reset-password'
+            'email'      => $inputs['email'],
+            'token'      => $inputs['token'],
+            'formUrl'    => '/reset-password',
         ]);
 
         (new View())->make(
             $page,
             [
-                'passwordReset' => $componentTemplate
+                'passwordReset' => $componentTemplate,
             ],
             null,
             new FormHandler('Password Reset')
@@ -371,7 +368,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Reset a member password
+     * Reset a member password.
      */
     public function resetPassword()
     {
@@ -398,15 +395,15 @@ class MemberUserController extends BaseController
         }
 
         /**
-         * Start getting all the groups (not assigned ones)
+         * Start getting all the groups (not assigned ones).
          */
         // get all the available groups
         $criteria = [
             [
                 'column' => 'status',
-                'value' => 'active',
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => 'active',
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         $groups = (new MemberGroupMapper())->getAll($criteria, [], 'name ASC');
@@ -423,15 +420,14 @@ class MemberUserController extends BaseController
             }
         }
         /**
-         * Finish getting all the groups (not assigned ones)
+         * Finish getting all the groups (not assigned ones).
          */
-
         $output = (new MemberUserMapper())->getOneById($urlParameters['id']);
 
         $member = $output->getData();
 
         /**
-         * Start checking parent has got this child
+         * Start checking parent has got this child.
          */
         $parent = (new MemberUser())->getLoggedIn();
         if ($member instanceof MemberUser && $parent instanceof MemberUser) {
@@ -442,36 +438,34 @@ class MemberUserController extends BaseController
             $member = '';
         }
         /**
-         * Finish checking parent has got this child
+         * Finish checking parent has got this child.
          */
-
         $statuses = (new MemberUserMapper())->getEnumValues('status');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $passwordRequirements = $language->get('passwordRequirements');
         $usernameRequirements = $language->get('usernameRequirements');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberView.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberView.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 
         $componentTemplate->setData([
-            'member' => $member,
-            'statuses' => $statuses,
-            'groups' => $groupValues,
-            'updateFormUrl' => '/account/update-child',
-            'timeZoneList' => $timeZoneList,
-            'requiredFields' => $requiredFields,
+            'member'               => $member,
+            'statuses'             => $statuses,
+            'groups'               => $groupValues,
+            'updateFormUrl'        => '/account/update-child',
+            'timeZoneList'         => $timeZoneList,
+            'requiredFields'       => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
-            'usernameRequirements' => $usernameRequirements
+            'usernameRequirements' => $usernameRequirements,
         ]);
 
         // create the page for view
@@ -481,7 +475,7 @@ class MemberUserController extends BaseController
         (new View())->make(
             $page,
             [
-                'member' => $componentTemplate
+                'member' => $componentTemplate,
             ],
             null,
             new FormHandler('View Member')
@@ -504,14 +498,14 @@ class MemberUserController extends BaseController
         $output = (new MemberUserMapper())->safeDeleteOne([
             [
                 'column' => 'id',
-                'value' => $inputs['id'],
-                'type' => \PDO::PARAM_INT
+                'value'  => $inputs['id'],
+                'type'   => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'parentId',
-                'value' => $currentUser->getId(),
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $currentUser->getId(),
+                'type'   => \PDO::PARAM_INT,
+            ],
         ]);
 
         if ($output > 0) {
@@ -520,9 +514,9 @@ class MemberUserController extends BaseController
             (new GroupMemberUserXrefMapper())->safeDelete([
                 [
                     'column' => 'memberId',
-                    'value' => $inputs['id'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $inputs['id'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ]);
 
             $output = new Output();
@@ -541,7 +535,7 @@ class MemberUserController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         if (empty($inputs['callback'])) {
@@ -562,7 +556,7 @@ class MemberUserController extends BaseController
         $idInput = new Input('id', [$requiredRule, $idRule]);
 
         $definedInputs = [
-            $idInput
+            $idInput,
         ];
 
         foreach ($inputs['callback'] as $id) {
@@ -576,24 +570,23 @@ class MemberUserController extends BaseController
             }
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $currentUser = (new MemberUser())->getLoggedIn();
 
         $output = (new MemberUserMapper())->safeDelete(
             [
                 [
-                    'column' => 'id',
+                    'column'   => 'id',
                     'operator' => 'IN',
-                    'value' => $inputs['callback'],
-                    'type' => \PDO::PARAM_INT
+                    'value'    => $inputs['callback'],
+                    'type'     => \PDO::PARAM_INT,
                 ],
                 [
                     'column' => 'parentId',
-                    'value' => $currentUser->getId(),
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $currentUser->getId(),
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ],
             count($inputs['callback'])
         );
@@ -603,11 +596,11 @@ class MemberUserController extends BaseController
             // safe delete the group xrefs first, if there is any
             (new GroupMemberUserXrefMapper())->safeDelete([
                 [
-                    'column' => 'memberId',
+                    'column'   => 'memberId',
                     'operator' => 'IN',
-                    'value' => $inputs['callback'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'    => $inputs['callback'],
+                    'type'     => \PDO::PARAM_INT,
+                ],
             ]);
 
             $output = new Output();
@@ -626,28 +619,27 @@ class MemberUserController extends BaseController
         $currentUser = (new MemberUser())->getLoggedIn();
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $passwordRequirements = $language->get('passwordRequirements');
         $usernameRequirements = $language->get('usernameRequirements');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'profile.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'profile.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 
         $componentTemplate->setData([
-            'member' => $currentUser,
-            'updateFormUrl' => '/account/update-profile',
-            'timeZoneList' => $timeZoneList,
-            'requiredFields' => $requiredFields,
+            'member'               => $currentUser,
+            'updateFormUrl'        => '/account/update-profile',
+            'timeZoneList'         => $timeZoneList,
+            'requiredFields'       => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
-            'usernameRequirements' => $usernameRequirements
+            'usernameRequirements' => $usernameRequirements,
         ]);
 
         // create the page for view
@@ -657,7 +649,7 @@ class MemberUserController extends BaseController
         (new View())->make(
             $page,
             [
-                'member' => $componentTemplate
+                'member' => $componentTemplate,
             ],
             null,
             new FormHandler('Your Profile')
@@ -665,7 +657,7 @@ class MemberUserController extends BaseController
     }
 
     /**
-     * Update a profile (current member) info
+     * Update a profile (current member) info.
      */
     public function updateProfile()
     {

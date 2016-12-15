@@ -8,8 +8,7 @@ use CodeJetter\core\security\ValidatorRule;
 use PHPMailer;
 
 /**
- * Class Mailer
- * @package CodeJetter\core
+ * Class Mailer.
  */
 class Mailer
 {
@@ -58,9 +57,10 @@ class Mailer
      * @param $subject
      * @param $message
      *
-     * @return bool
      * @throws \CodeJetter\libs\PHPMailer\phpmailerException
      * @throws \Exception
+     *
+     * @return bool
      */
     public function send($to, $subject, $message)
     {
@@ -128,11 +128,12 @@ class Mailer
     {
         $emailInput = new Input('email', [
             new ValidatorRule('required'),
-            new ValidatorRule('email')
+            new ValidatorRule('email'),
         ]);
 
         $validator = new Validator([$emailInput], ['email' => $email]);
         $validatorOutput = $validator->validate();
+
         return $validatorOutput->getSuccess();
     }
 }

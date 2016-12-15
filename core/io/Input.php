@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 18/08/15
- * Time: 11:38 PM
+ * Time: 11:38 PM.
  */
 
 namespace CodeJetter\core\io;
@@ -11,8 +11,7 @@ namespace CodeJetter\core\io;
 use CodeJetter\core\security\ValidatorRule;
 
 /**
- * Class Input
- * @package CodeJetter\core\io
+ * Class Input.
  */
 class Input
 {
@@ -144,8 +143,10 @@ class Input
 
     /**
      * @param $key
-     * @return mixed
+     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getRule($key)
     {
@@ -160,7 +161,7 @@ class Input
 
     /**
      * Get the default value
-     * Default value is used in case the value is not set
+     * Default value is used in case the value is not set.
      *
      * @return mixed
      */
@@ -171,7 +172,7 @@ class Input
 
     /**
      * Set the default value
-     * Default value is used in case the value is not set
+     * Default value is used in case the value is not set.
      *
      * @param mixed $defaultValue
      */

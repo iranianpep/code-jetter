@@ -11,8 +11,7 @@ use CodeJetter\core\utility\MysqlUtility;
 use CodeJetter\core\utility\StringUtility;
 
 /**
- * Class BaseMapper
- * @package CodeJetter\core
+ * Class BaseMapper.
  */
 abstract class BaseMapper extends Base implements ICrud
 {
@@ -64,7 +63,7 @@ abstract class BaseMapper extends Base implements ICrud
 
     /**
      * Return table name WITHOUT suffix or prefix by model OR mapper class name
-     * For example, AdminUser table is admin_users
+     * For example, AdminUser table is admin_users.
      *
      * @param $className
      *
@@ -88,7 +87,7 @@ abstract class BaseMapper extends Base implements ICrud
 
     /**
      * Return class (model) name by table name
-     * For example, cj_jobs model is Job
+     * For example, cj_jobs model is Job.
      *
      * @param      $tableName
      * @param null $baseNamespace
@@ -115,14 +114,15 @@ abstract class BaseMapper extends Base implements ICrud
     }
 
     /**
-     * Generate a table alias by removing prefix and suffix
+     * Generate a table alias by removing prefix and suffix.
      *
      * @param null $tableName
      * @param null $tablePrefix
      * @param null $tableSuffix
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getTableAlias($tableName = null, $tablePrefix = null, $tableSuffix = null)
     {
@@ -131,18 +131,20 @@ abstract class BaseMapper extends Base implements ICrud
         }
 
         $tableName = $this->removeTablePrefixAndSuffix($tableName, $tablePrefix, $tableSuffix);
+
         return strtolower($tableName);
     }
 
     /**
-     * Remove table name prefix and suffix if they exist
+     * Remove table name prefix and suffix if they exist.
      *
      * @param null $tableName
      * @param null $tablePrefix
      * @param null $tableSuffix
      *
-     * @return bool|mixed|null|string
      * @throws \Exception
+     *
+     * @return bool|mixed|null|string
      */
     public function removeTablePrefixAndSuffix($tableName = null, $tablePrefix = null, $tableSuffix = null)
     {
@@ -187,19 +189,20 @@ abstract class BaseMapper extends Base implements ICrud
      * @param      $id
      * @param bool $excludeArchived
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function getOneById($id, $excludeArchived = true)
     {
         $output = new Output();
-        /**
+        /*
          * start validating
          */
         try {
             $rules = [
                 new ValidatorRule('required'),
-                new ValidatorRule('id')
+                new ValidatorRule('id'),
             ];
 
             $idInput = new Input('id', $rules);
@@ -209,26 +212,27 @@ abstract class BaseMapper extends Base implements ICrud
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * finish validating
+         * finish validating.
          */
-
         $criteria = [
             [
                 'column' => 'id',
-                'value' => $id,
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $id,
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         try {
             $output->setSuccess(true);
             $output->setData($this->getOne($criteria, [], $excludeArchived));
+
             return $output;
         } catch (\PDOException $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
@@ -245,8 +249,9 @@ abstract class BaseMapper extends Base implements ICrud
      * @param bool  $excludeArchived
      * @param int   $fetchStyle
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     public function getAll(
         array $criteria = [],
@@ -301,13 +306,13 @@ abstract class BaseMapper extends Base implements ICrud
 
         return [
             [
-                'column' => "{$columnPrefix}`archivedAt`",
-                'operator' => 'IS NULL'
+                'column'   => "{$columnPrefix}`archivedAt`",
+                'operator' => 'IS NULL',
             ],
             [
                 'column' => "{$columnPrefix}`live`",
-                'value' => '1'
-            ]
+                'value'  => '1',
+            ],
         ];
     }
 
@@ -316,9 +321,9 @@ abstract class BaseMapper extends Base implements ICrud
      * @param array $fromColumns
      * @param bool  $excludeArchived
      *
-     * @return mixed
-     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getOne(array $criteria = [], array $fromColumns = [], $excludeArchived = true)
     {
@@ -352,8 +357,9 @@ abstract class BaseMapper extends Base implements ICrud
      * @param array $fieldsValues
      * @param bool  $excludeArchived
      *
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function updateOne(array $criteria, array $fieldsValues, $excludeArchived = true)
     {
@@ -367,8 +373,9 @@ abstract class BaseMapper extends Base implements ICrud
      * @param int   $limit
      * @param bool  $excludeArchived
      *
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function update(
         array $criteria,
@@ -418,9 +425,9 @@ abstract class BaseMapper extends Base implements ICrud
     /**
      * @param array $fieldsValues
      *
-     * @return mixed
-     *
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function insertOne(array $fieldsValues)
     {
@@ -455,8 +462,9 @@ abstract class BaseMapper extends Base implements ICrud
     /**
      * @param array $fieldsValuesCollection
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function batchInsert(array $fieldsValuesCollection)
     {
@@ -491,8 +499,9 @@ abstract class BaseMapper extends Base implements ICrud
     /**
      * @param array $criteria
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function deleteOne(array $criteria = [])
     {
@@ -504,8 +513,9 @@ abstract class BaseMapper extends Base implements ICrud
      * @param int   $start
      * @param int   $limit
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function delete(array $criteria = [], $start = 0, $limit = 0)
     {
@@ -527,6 +537,7 @@ abstract class BaseMapper extends Base implements ICrud
             // bind values
             $st = (new QueryMaker())->bindValues($st, $criteria, $start, $limit);
             $st->execute();
+
             return $connection->commit();
         } catch (\PDOException $e) {
             $connection->rollBack();
@@ -538,29 +549,30 @@ abstract class BaseMapper extends Base implements ICrud
      * @param array $criteria
      * @param int   $limit
      *
-     * @return int
      * @throws \Exception
+     *
+     * @return int
      */
     public function safeDelete(array $criteria, $limit = 0)
     {
         $fieldsValues = [
             'archivedAt' => [
                 'column' => 'archivedAt',
-                'value' => 'NOW()',
-                'bind' => false
+                'value'  => 'NOW()',
+                'bind'   => false,
             ],
             'live' => [
                 'column' => 'live',
-                'value' => null,
-                'bind' => false
-            ]
+                'value'  => null,
+                'bind'   => false,
+            ],
         ];
 
         return $this->update($criteria, [], $fieldsValues, $limit, [], true, true);
     }
 
     /**
-     * Change the archived to 1 and keep the record
+     * Change the archived to 1 and keep the record.
      *
      * @param array $criteria
      *
@@ -573,30 +585,31 @@ abstract class BaseMapper extends Base implements ICrud
         $fieldsValues = [
             'archivedAt' => [
                 'column' => 'archivedAt',
-                'value' => 'NOW()',
-                'bind' => false
+                'value'  => 'NOW()',
+                'bind'   => false,
             ],
             'live' => [
                 'column' => 'live',
-                'value' => null,
-                'bind' => false
-            ]
+                'value'  => null,
+                'bind'   => false,
+            ],
         ];
 
         return $this->updateOne($criteria, $fieldsValues);
     }
 
     /**
-     * count total records in the table without considering any criteria
-     *
-     * @return int
+     * count total records in the table without considering any criteria.
      *
      * @throws \Exception
+     *
+     * @return int
      */
     public function countAll()
     {
         try {
             $connection = Registry::getMySQLDBClass()->getConnection($this->getDatabase());
+
             return (int) $connection->query("SELECT COUNT(*) FROM {$this->getTable()}")->fetchColumn();
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
@@ -606,9 +619,9 @@ abstract class BaseMapper extends Base implements ICrud
     /**
      * @param array $criteria
      *
-     * @return int
-     *
      * @throws \Exception
+     *
+     * @return int
      */
     public function countByCriteria(array $criteria, $excludeArchived = true)
     {
@@ -638,12 +651,13 @@ abstract class BaseMapper extends Base implements ICrud
 
     /**
      * Return enum values of a column
-     * This function is missing setLastQuery
+     * This function is missing setLastQuery.
      *
      * @param $column
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function getEnumValues($column)
     {
@@ -652,10 +666,11 @@ abstract class BaseMapper extends Base implements ICrud
 
     /**
      * Return columns of a table
-     * This function is missing setLastQuery
+     * This function is missing setLastQuery.
+     *
+     * @throws \Exception
      *
      * @return array|bool
-     * @throws \Exception
      */
     public function getTableColumns()
     {
@@ -663,8 +678,9 @@ abstract class BaseMapper extends Base implements ICrud
     }
 
     /**
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getTable()
     {
@@ -678,25 +694,27 @@ abstract class BaseMapper extends Base implements ICrud
 
         // append suffix if specified
         if (isset($defaultDbInfo['tableSuffix'])) {
-            $table = $table . $defaultDbInfo['tableSuffix'];
+            $table = $table.$defaultDbInfo['tableSuffix'];
         }
 
         // append prefix if specified
         if (isset($defaultDbInfo['tablePrefix'])) {
-            $table = $defaultDbInfo['tablePrefix'] . $table;
+            $table = $defaultDbInfo['tablePrefix'].$table;
         }
 
         return $table;
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getDefaultDbInfo()
     {
         $defaultDb = Registry::getConfigClass()->get('defaultDB');
         $databases = Registry::getConfigClass()->get('databases');
+
         return $databases[$defaultDb];
     }
 
@@ -734,7 +752,7 @@ abstract class BaseMapper extends Base implements ICrud
             if ($fullPath === true) {
                 // remove starting from mappers, replace the rest with models and model name
                 $pattern = "#mappers\\\\{$classNamePartsEnd}$#";
-                $this->setModelName(preg_replace($pattern, '', get_class($this)) . 'models\\' . $modelName);
+                $this->setModelName(preg_replace($pattern, '', get_class($this)).'models\\'.$modelName);
             } else {
                 $this->setModelName($modelName);
             }
@@ -793,18 +811,19 @@ abstract class BaseMapper extends Base implements ICrud
 
     /**
      * TODO enhance this function to be able to construct $tables array, if nothing is passed
-     * Map rows to the relevant object
+     * Map rows to the relevant object.
      *
      * @param array $tables Contains table alias / name as the key for each array element. Each element must have class
-     * @param array $rows Table rows
+     * @param array $rows   Table rows
+     *
+     * @throws \Exception
      *
      * @return array
-     * @throws \Exception
      */
     public function mapRowsToObjects(array $rows, array $tables = [])
     {
         /**
-         * Initialize $mappedObjects
+         * Initialize $mappedObjects.
          */
         $mappedObjects = [];
 
@@ -815,7 +834,7 @@ abstract class BaseMapper extends Base implements ICrud
                 }
 
                 /**
-                 * Initialize $mappedObject
+                 * Initialize $mappedObject.
                  */
                 $mappedObject = [];
 
@@ -828,7 +847,7 @@ abstract class BaseMapper extends Base implements ICrud
                         throw new \Exception('Class must be specified for a table to map a row to its object');
                     }
 
-                    $mappedObject[$tableAlias] = new $table['class'];
+                    $mappedObject[$tableAlias] = new $table['class']();
                 }
 
                 foreach ($row as $key => $value) {
@@ -836,7 +855,7 @@ abstract class BaseMapper extends Base implements ICrud
 
                     if (isset($keySegments[0]) && array_key_exists($keySegments[0], $mappedObject)) {
                         // call setProperty() on $mappedObjects[$keySegments[0]] object
-                        $mappedObject[$keySegments[0]]->{'set' . ucwords($keySegments[1])}($value);
+                        $mappedObject[$keySegments[0]]->{'set'.ucwords($keySegments[1])}($value);
                     }
                 }
 

@@ -2,14 +2,13 @@
 
 namespace CodeJetter\core\layout\blocks;
 
+use CodeJetter\components\page\models\Page;
 use CodeJetter\core\Registry;
 use CodeJetter\core\utility\StringUtility;
 use CodeJetter\core\View;
-use CodeJetter\components\page\models\Page;
 
 /**
- * Class BaseBlock
- * @package CodeJetter\core\layout\blocks
+ * Class BaseBlock.
  */
 abstract class BaseBlock
 {
@@ -39,8 +38,9 @@ abstract class BaseBlock
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getHtml()
     {
@@ -66,7 +66,7 @@ abstract class BaseBlock
     }
 
     /**
-     * print html
+     * print html.
      */
     public function printHtml()
     {
@@ -188,7 +188,6 @@ abstract class BaseBlock
                     // array is empty
                     $this->addStyleFile($filePath);
                 }
-
             }
         } else {
             // order number is not defined, add the file normally
@@ -222,6 +221,7 @@ abstract class BaseBlock
 
     /**
      * @param string $templateName
+     *
      * @return void
      */
     public function setTemplateName($templateName)
@@ -259,7 +259,7 @@ abstract class BaseBlock
             // if template name is not specified, consider 'default.php' as the template
             $templateName = isset($templateName) ? $templateName : 'default.php';
 
-            return dirname(__DIR__) . $DS . 'templates' . $DS . $blockName . $DS . $templateName;
+            return dirname(__DIR__).$DS.'templates'.$DS.$blockName.$DS.$templateName;
         } else {
             return $this->templatePath;
         }

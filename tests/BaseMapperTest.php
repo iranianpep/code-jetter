@@ -21,13 +21,13 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             [
-                'column' => '`archivedAt`',
-                'operator' => 'IS NULL'
+                'column'   => '`archivedAt`',
+                'operator' => 'IS NULL',
             ],
             [
                 'column' => '`live`',
-                'value' => '1'
-            ]
+                'value'  => '1',
+            ],
         ];
 
         $this->assertEquals($expected, $criteria);
@@ -36,13 +36,13 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $expected = [
             [
-                'column' => '`dummyTable`.`archivedAt`',
-                'operator' => 'IS NULL'
+                'column'   => '`dummyTable`.`archivedAt`',
+                'operator' => 'IS NULL',
             ],
             [
                 'column' => '`dummyTable`.`live`',
-                'value' => '1'
-            ]
+                'value'  => '1',
+            ],
         ];
 
         $this->assertEquals($expected, $criteria);
@@ -54,32 +54,32 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => 'job',
-                'output' => 'jobs'
+                'input'  => 'job',
+                'output' => 'jobs',
             ],
             [
-                'input' => 'AdminUser',
-                'output' => 'admin_users'
+                'input'  => 'AdminUser',
+                'output' => 'admin_users',
             ],
             [
-                'input' => 'GroupUserXref',
-                'output' => 'group_user_xrefs'
+                'input'  => 'GroupUserXref',
+                'output' => 'group_user_xrefs',
             ],
             [
-                'input' => null,
-                'output' => 'states'
+                'input'  => null,
+                'output' => 'states',
             ],
             [
-                'input' => '',
-                'output' => 'states'
+                'input'  => '',
+                'output' => 'states',
             ],
             [
-                'input' => ' ',
-                'output' => 'states'
+                'input'  => ' ',
+                'output' => 'states',
             ],
             [
-                'input' => 'StateMapper',
-                'output' => 'states'
+                'input'  => 'StateMapper',
+                'output' => 'states',
             ],
         ];
 
@@ -95,48 +95,48 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
         $inputOutputs = [
             [
                 'input' => [
-                    'name' => 'cj_jobs',
+                    'name'      => 'cj_jobs',
                     'namespace' => null,
-                    'prefix' => 'cj_',
-                    'suffix' => ''
+                    'prefix'    => 'cj_',
+                    'suffix'    => '',
                 ],
-                'output' => 'Job'
+                'output' => 'Job',
             ],
             [
                 'input' => [
-                    'name' => 'cj_group_member_user_xrefs',
+                    'name'      => 'cj_group_member_user_xrefs',
                     'namespace' => 'CodeJetter\components\user\models',
-                    'prefix' => 'cj_',
-                    'suffix' => ''
+                    'prefix'    => 'cj_',
+                    'suffix'    => '',
                 ],
-                'output' => 'CodeJetter\components\user\models\GroupMemberUserXref'
+                'output' => 'CodeJetter\components\user\models\GroupMemberUserXref',
             ],
             [
                 'input' => [
-                    'name' => '',
+                    'name'      => '',
                     'namespace' => null,
-                    'prefix' => 'cj_',
-                    'suffix' => ''
+                    'prefix'    => 'cj_',
+                    'suffix'    => '',
                 ],
-                'output' => 'State'
+                'output' => 'State',
             ],
             [
                 'input' => [
-                    'name' => null,
+                    'name'      => null,
                     'namespace' => null,
-                    'prefix' => 'cj_',
-                    'suffix' => ''
+                    'prefix'    => 'cj_',
+                    'suffix'    => '',
                 ],
-                'output' => 'State'
+                'output' => 'State',
             ],
             [
                 'input' => [
-                    'name' => null,
+                    'name'      => null,
                     'namespace' => null,
-                    'prefix' => null,
-                    'suffix' => null
+                    'prefix'    => null,
+                    'suffix'    => null,
                 ],
-                'output' => 'State'
+                'output' => 'State',
             ],
         ];
 
@@ -152,51 +152,51 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
         $inputOutputs = [
             [
                 'input' => [
-                    'name' => 'CJ_JOBS',
+                    'name'   => 'CJ_JOBS',
                     'prefix' => 'CJ_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'JOBS'
+                'output' => 'JOBS',
             ],
             [
                 'input' => [
-                    'name' => 'cj_jobs',
+                    'name'   => 'cj_jobs',
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'jobs'
+                'output' => 'jobs',
             ],
             [
                 'input' => [
-                    'name' => 'cj_group_member_user_xrefs',
+                    'name'   => 'cj_group_member_user_xrefs',
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'group_member_user_xrefs'
+                'output' => 'group_member_user_xrefs',
             ],
             [
                 'input' => [
-                    'name' => '',
+                    'name'   => '',
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'states'
+                'output' => 'states',
             ],
             [
                 'input' => [
-                    'name' => null,
+                    'name'   => null,
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'states'
+                'output' => 'states',
             ],
             [
                 'input' => [
-                    'name' => null,
+                    'name'   => null,
                     'prefix' => null,
-                    'suffix' => null
+                    'suffix' => null,
                 ],
-                'output' => 'states'
+                'output' => 'states',
             ],
         ];
 
@@ -212,51 +212,51 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
         $inputOutputs = [
             [
                 'input' => [
-                    'name' => 'CJ_JOBS',
+                    'name'   => 'CJ_JOBS',
                     'prefix' => 'CJ_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'jobs'
+                'output' => 'jobs',
             ],
             [
                 'input' => [
-                    'name' => 'cj_jobs',
+                    'name'   => 'cj_jobs',
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'jobs'
+                'output' => 'jobs',
             ],
             [
                 'input' => [
-                    'name' => 'cj_group_member_user_xrefs',
+                    'name'   => 'cj_group_member_user_xrefs',
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'group_member_user_xrefs'
+                'output' => 'group_member_user_xrefs',
             ],
             [
                 'input' => [
-                    'name' => '',
+                    'name'   => '',
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'states'
+                'output' => 'states',
             ],
             [
                 'input' => [
-                    'name' => null,
+                    'name'   => null,
                     'prefix' => 'cj_',
-                    'suffix' => ''
+                    'suffix' => '',
                 ],
-                'output' => 'states'
+                'output' => 'states',
             ],
             [
                 'input' => [
-                    'name' => null,
+                    'name'   => null,
                     'prefix' => null,
-                    'suffix' => null
+                    'suffix' => null,
                 ],
-                'output' => 'states'
+                'output' => 'states',
             ],
         ];
 
@@ -313,18 +313,18 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $dummyRows = [
             [
-                'member.id' => 1
+                'member.id' => 1,
             ],
             [
-                'member.id' => 2
-            ]
+                'member.id' => 2,
+            ],
         ];
 
         $tables = [
             'member' => [
-                'name' => 'cj_member_users',
-                'class' => $model
-            ]
+                'name'  => 'cj_member_users',
+                'class' => $model,
+            ],
         ];
 
         $objects = $mapper->mapRowsToObjects($dummyRows, $tables);
@@ -335,18 +335,18 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
 
         $dummyRows = [
             [
-                'member.id' => 1
+                'member.id' => 1,
             ],
             [
-                'member.id' => 2
-            ]
+                'member.id' => 2,
+            ],
         ];
 
         $tables = [
             'member' => [
-                'name' => 'cj_member_users',
-                'class' => $model
-            ]
+                'name'  => 'cj_member_users',
+                'class' => $model,
+            ],
         ];
 
         $objects = $mapper->mapRowsToObjects($dummyRows, $tables);
@@ -371,7 +371,7 @@ class BaseMapperTest extends \PHPUnit_Framework_TestCase
             'createdAt',
             'modifiedAt',
             'live',
-            'archivedAt'
+            'archivedAt',
         ];
 
         $this->assertEquals($expected, $stateMapper->getTableColumns());

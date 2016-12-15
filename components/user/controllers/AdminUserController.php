@@ -2,12 +2,13 @@
 
 namespace CodeJetter\components\user\controllers;
 
+use CodeJetter\components\page\models\Page;
 use CodeJetter\components\user\mappers\AdminUserMapper;
 use CodeJetter\components\user\mappers\GroupMemberUserXrefMapper;
 use CodeJetter\components\user\mappers\MemberGroupMapper;
 use CodeJetter\components\user\mappers\MemberUserMapper;
-use CodeJetter\components\user\models\MemberGroup;
 use CodeJetter\components\user\models\AdminUser;
+use CodeJetter\components\user\models\MemberGroup;
 use CodeJetter\core\BaseController;
 use CodeJetter\core\FormHandler;
 use CodeJetter\core\io\Input;
@@ -22,7 +23,6 @@ use CodeJetter\core\security\ValidatorRule;
 use CodeJetter\core\utility\DateTimeUtility;
 use CodeJetter\core\utility\MysqlUtility;
 use CodeJetter\core\View;
-use CodeJetter\components\page\models\Page;
 use TableGenerator\HeadCell;
 
 if (session_status() == PHP_SESSION_NONE) {
@@ -30,13 +30,12 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 /**
- * Class AdminUserController
- * @package CodeJetter\components\user\controllers
+ * Class AdminUserController.
  */
 class AdminUserController extends BaseController
 {
     /**
-     * Generate login form
+     * Generate login form.
      *
      * @throws \Exception
      */
@@ -46,25 +45,24 @@ class AdminUserController extends BaseController
         $page->setTitle('Login');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $requiredFields = Registry::getLanguageClass()->get('requiredFields');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'login.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'login.php');
         $componentTemplate->setData([
-            'requiredFields' => $requiredFields,
-            'url' => '/admin/login',
-            'forgotPasswordUrl' => '/admin/forgot-password'
+            'requiredFields'    => $requiredFields,
+            'url'               => '/admin/login',
+            'forgotPasswordUrl' => '/admin/forgot-password',
         ]);
 
         (new View())->make(
             $page,
             [
-                'loginMember' => $componentTemplate
+                'loginMember' => $componentTemplate,
             ],
             null,
             new FormHandler('Login')
@@ -72,7 +70,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * login
+     * login.
      */
     public function login()
     {
@@ -95,7 +93,7 @@ class AdminUserController extends BaseController
         $pager = new Pager($this->getURLParameters(), $this->getBasePath(), $this->getRouteInfo()->getUrl());
 
         /**
-         * If the column in the database is not lowercase of the title, specify alias
+         * If the column in the database is not lowercase of the title, specify alias.
          */
         $numberCell = new HeadCell('#');
         $numberCell->setSortable(false);
@@ -112,7 +110,7 @@ class AdminUserController extends BaseController
             new HeadCell('Email'),
             new HeadCell('Phone'),
             new HeadCell('Status'),
-            $actionsCell
+            $actionsCell,
         ];
 
         // get order and search query from the query string
@@ -131,7 +129,7 @@ class AdminUserController extends BaseController
             true
         );
 
-        /**
+        /*
          * If the current page is not page 1, and there is no data,
          * set pager to page 1 and get data again with start 0
          */
@@ -144,28 +142,28 @@ class AdminUserController extends BaseController
         $pager->setCurrentPageResultNo(count($members['result']));
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $passwordRequirements = $language->get('passwordRequirements');
         $usernameRequirements = $language->get('usernameRequirements');
         /**
-         * bye to language
+         * bye to language.
          */
 
         // create component
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'adminMembersList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'adminMembersList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
-            'listHeaders' => $listHeaders,
-            'members' => $members['result'],
-            'searchQueryKey' => $listConfig['query'],
-            'searchQuery' => $searchQuery,
-            'requiredFields' => $requiredFields,
+            'listHeaders'          => $listHeaders,
+            'members'              => $members['result'],
+            'searchQueryKey'       => $listConfig['query'],
+            'searchQuery'          => $searchQuery,
+            'requiredFields'       => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
-            'usernameRequirements' => $usernameRequirements
+            'usernameRequirements' => $usernameRequirements,
         ]);
 
         // create the page for view
@@ -177,7 +175,7 @@ class AdminUserController extends BaseController
         (new View())->make(
             $page,
             [
-                'members' => $componentTemplate
+                'members' => $componentTemplate,
             ],
             null,
             new FormHandler('List Members')
@@ -193,7 +191,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Add a new member
+     * Add a new member.
      */
     public function addMember()
     {
@@ -206,7 +204,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Safely delete a member
+     * Safely delete a member.
      *
      * @throws \Exception
      */
@@ -218,9 +216,9 @@ class AdminUserController extends BaseController
             $output = (new MemberUserMapper())->safeDeleteOne([
                 [
                     'column' => 'id',
-                    'value' => $inputs['id'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $inputs['id'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ]);
 
             if ($output > 0) {
@@ -229,9 +227,9 @@ class AdminUserController extends BaseController
                 (new GroupMemberUserXrefMapper())->safeDelete([
                     [
                         'column' => 'memberId',
-                        'value' => $inputs['id'],
-                        'type' => \PDO::PARAM_INT
-                    ]
+                        'value'  => $inputs['id'],
+                        'type'   => \PDO::PARAM_INT,
+                    ],
                 ]);
 
                 $output = new Output();
@@ -244,7 +242,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Safely batch delete members
+     * Safely batch delete members.
      *
      * @throws \Exception
      */
@@ -253,7 +251,7 @@ class AdminUserController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         if (empty($inputs['callback'])) {
@@ -274,7 +272,7 @@ class AdminUserController extends BaseController
         $idInput = new Input('id', [$requiredRule, $idRule]);
 
         $definedInputs = [
-            $idInput
+            $idInput,
         ];
 
         foreach ($inputs['callback'] as $id) {
@@ -288,17 +286,16 @@ class AdminUserController extends BaseController
             }
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $output = (new MemberUserMapper())->safeDelete(
             [
                 [
-                    'column' => 'id',
+                    'column'   => 'id',
                     'operator' => 'IN',
-                    'value' => $inputs['callback'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'    => $inputs['callback'],
+                    'type'     => \PDO::PARAM_INT,
+                ],
             ],
             count($inputs['callback'])
         );
@@ -308,11 +305,11 @@ class AdminUserController extends BaseController
             // safe delete the group xrefs first, if there is any
             (new GroupMemberUserXrefMapper())->safeDelete([
                 [
-                    'column' => 'memberId',
+                    'column'   => 'memberId',
                     'operator' => 'IN',
-                    'value' => $inputs['callback'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'    => $inputs['callback'],
+                    'type'     => \PDO::PARAM_INT,
+                ],
             ]);
 
             $output = new Output();
@@ -324,7 +321,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Delete a member
+     * Delete a member.
      *
      * @throws \Exception
      */
@@ -334,14 +331,14 @@ class AdminUserController extends BaseController
 
         if (!empty($inputs['id'])) {
             /**
-             * Do not need to delete xref, since foreign key is set to CASCADE on delete
+             * Do not need to delete xref, since foreign key is set to CASCADE on delete.
              */
             $output = (new MemberUserMapper())->deleteOne([
                 [
                     'column' => 'id',
-                    'value' => $inputs['id'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $inputs['id'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ]);
 
             if ($output === true) {
@@ -355,7 +352,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Batch delete members
+     * Batch delete members.
      *
      * @throws \Exception
      */
@@ -364,7 +361,7 @@ class AdminUserController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         if (empty($inputs['callback'])) {
@@ -385,7 +382,7 @@ class AdminUserController extends BaseController
         $idInput = new Input('id', [$requiredRule, $idRule]);
 
         $definedInputs = [
-            $idInput
+            $idInput,
         ];
 
         foreach ($inputs['callback'] as $id) {
@@ -399,19 +396,19 @@ class AdminUserController extends BaseController
             }
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
 
         /**
-         * Do not need to delete xref, since foreign key is set to CASCADE on delete
+         * Do not need to delete xref, since foreign key is set to CASCADE on delete.
          */
         $output = (new MemberUserMapper())->delete([
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => $inputs['callback'],
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'    => $inputs['callback'],
+                'type'     => \PDO::PARAM_INT,
+            ],
         ]);
 
         if ($output === true) {
@@ -424,7 +421,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Update a member info
+     * Update a member info.
      */
     public function updateMember()
     {
@@ -438,10 +435,11 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * View a member info
+     * View a member info.
+     *
+     * @throws \Exception
      *
      * @return bool
-     * @throws \Exception
      */
     public function viewMember()
     {
@@ -452,15 +450,15 @@ class AdminUserController extends BaseController
         }
 
         /**
-         * Start getting all the groups (not assigned ones)
+         * Start getting all the groups (not assigned ones).
          */
         // get all the available groups
         $criteria = [
             [
                 'column' => 'status',
-                'value' => 'active',
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => 'active',
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         $groups = (new MemberGroupMapper())->getAll($criteria, [], 'name ASC');
@@ -477,9 +475,8 @@ class AdminUserController extends BaseController
             }
         }
         /**
-         * Finish getting all the groups (not assigned ones)
+         * Finish getting all the groups (not assigned ones).
          */
-
         $output = (new MemberUserMapper())->getOneById($urlParameters['id']);
 
         $member = $output->getData();
@@ -487,30 +484,29 @@ class AdminUserController extends BaseController
         $statuses = (new MemberUserMapper())->getEnumValues('status');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $passwordRequirements = $language->get('passwordRequirements');
         $usernameRequirements = $language->get('usernameRequirements');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberView.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberView.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 
         $componentTemplate->setData([
-            'member' => $member,
-            'statuses' => $statuses,
-            'groups' => $groupValues,
-            'updateFormUrl' => '/admin/update-member',
-            'timeZoneList' => $timeZoneList,
-            'requiredFields' => $requiredFields,
+            'member'               => $member,
+            'statuses'             => $statuses,
+            'groups'               => $groupValues,
+            'updateFormUrl'        => '/admin/update-member',
+            'timeZoneList'         => $timeZoneList,
+            'requiredFields'       => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
-            'usernameRequirements' => $usernameRequirements
+            'usernameRequirements' => $usernameRequirements,
         ]);
 
         // create the page for view
@@ -520,7 +516,7 @@ class AdminUserController extends BaseController
         (new View(get_class($this)))->make(
             $page,
             [
-                'member' => $componentTemplate
+                'member' => $componentTemplate,
             ],
             null,
             new FormHandler('View Member')
@@ -528,8 +524,9 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function forgotPassword()
     {
@@ -541,7 +538,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Display forgot password form
+     * Display forgot password form.
      *
      * @throws \Exception
      */
@@ -551,24 +548,23 @@ class AdminUserController extends BaseController
         $page->setTitle('Forgot your password');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $requiredFields = Registry::getLanguageClass()->get('requiredFields');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberForgotPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberForgotPassword.php');
         $componentTemplate->setData([
-            'formUrl' => '/admin/forgot-password',
-            'requiredFields' => $requiredFields
+            'formUrl'        => '/admin/forgot-password',
+            'requiredFields' => $requiredFields,
         ]);
 
         (new View())->make(
             $page,
             [
-                'forgotPassword' => $componentTemplate
+                'forgotPassword' => $componentTemplate,
             ],
             null,
             new FormHandler('forgotPasswordForm')
@@ -576,7 +572,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Display reset password form
+     * Display reset password form.
      *
      * @throws \Exception
      */
@@ -589,18 +585,18 @@ class AdminUserController extends BaseController
         $page->setTitle('Reset your password');
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'memberResetPassword.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'memberResetPassword.php');
         $componentTemplate->setData([
             'tokenValid' => $output->getSuccess(),
-            'email' => $inputs['email'],
-            'token' => $inputs['token'],
-            'formUrl' => '/admin/reset-password'
+            'email'      => $inputs['email'],
+            'token'      => $inputs['token'],
+            'formUrl'    => '/admin/reset-password',
         ]);
 
         (new View())->make(
             $page,
             [
-                'passwordReset' => $componentTemplate
+                'passwordReset' => $componentTemplate,
             ],
             null,
             new FormHandler('Password Reset')
@@ -608,7 +604,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Reset a member's password
+     * Reset a member's password.
      */
     public function resetPassword()
     {
@@ -624,7 +620,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Display a profile (current user info) form
+     * Display a profile (current user info) form.
      *
      * @throws \Exception
      */
@@ -633,28 +629,27 @@ class AdminUserController extends BaseController
         $currentUser = (new AdminUser())->getLoggedIn();
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         $passwordRequirements = $language->get('passwordRequirements');
         $usernameRequirements = $language->get('usernameRequirements');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'profile.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'profile.php');
 
         $timeZoneList = (new DateTimeUtility())->getTimeZones();
 
         $componentTemplate->setData([
-            'member' => $currentUser,
-            'updateFormUrl' => '/admin/update-profile',
-            'timeZoneList' => $timeZoneList,
-            'requiredFields' => $requiredFields,
+            'member'               => $currentUser,
+            'updateFormUrl'        => '/admin/update-profile',
+            'timeZoneList'         => $timeZoneList,
+            'requiredFields'       => $requiredFields,
             'passwordRequirements' => $passwordRequirements,
-            'usernameRequirements' => $usernameRequirements
+            'usernameRequirements' => $usernameRequirements,
         ]);
 
         // create the page for view
@@ -664,7 +659,7 @@ class AdminUserController extends BaseController
         (new View())->make(
             $page,
             [
-                'member' => $componentTemplate
+                'member' => $componentTemplate,
             ],
             null,
             new FormHandler('Your Profile')
@@ -672,7 +667,7 @@ class AdminUserController extends BaseController
     }
 
     /**
-     * Update current user info
+     * Update current user info.
      */
     public function updateProfile()
     {

@@ -5,13 +5,12 @@ namespace CodeJetter\core\utility;
 use CodeJetter\core\io\DatabaseInput;
 
 /**
- * Class InputUtility
- * @package CodeJetter\core\utility
+ * Class InputUtility.
  */
 class InputUtility
 {
     /**
-     * Return fieldsValues by (external or user) inputs and our defined inputs
+     * Return fieldsValues by (external or user) inputs and our defined inputs.
      *
      * @param array $inputs
      * @param array $definedInputs
@@ -64,9 +63,9 @@ class InputUtility
 
                 $fieldsValues[$definedInput->getColumn()] = [
                     'column' => $definedInput->getColumn(),
-                    'value' => $value,
-                    'type' => $definedInput->getPDOType(),
-                    'bind' => $bind
+                    'value'  => $value,
+                    'type'   => $definedInput->getPDOType(),
+                    'bind'   => $bind,
                 ];
             }
         }

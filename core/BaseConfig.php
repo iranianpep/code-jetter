@@ -1,6 +1,5 @@
 <?php
 
-
 namespace CodeJetter\core;
 
 abstract class BaseConfig extends Base
@@ -12,21 +11,22 @@ abstract class BaseConfig extends Base
      * @param null $component
      * @param bool $checkInEnvironment
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function get($key, $component = null, $checkInEnvironment = true)
     {
         if ($component !== null) {
             $rootNamespace = $this->get('ROOT_NAMESPACE');
 
-            $componentConfigClassName = "{$rootNamespace}\\components\\" . strtolower($component)
-                . '\\' . ucfirst($component) . 'Config';
+            $componentConfigClassName = "{$rootNamespace}\\components\\".strtolower($component)
+                .'\\'.ucfirst($component).'Config';
 
             if (class_exists($componentConfigClassName)) {
                 $componentConfigClass = new $componentConfigClassName();
 
-                if ($componentConfigClass instanceof BaseConfig) {
+                if ($componentConfigClass instanceof self) {
                     $configs = $componentConfigClass->getConfigs();
                 } else {
                     throw new \Exception("Class: '{$componentConfigClassName}' must extend BaseConfig");

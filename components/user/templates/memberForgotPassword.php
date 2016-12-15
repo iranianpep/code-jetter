@@ -1,11 +1,10 @@
 <?php
 
     /** @var CodeJetter\core\View $this */
-
     $data = $this->getCurrentComponentTemplate()->getData();
     $url = $data['formUrl'];
 
-    /** @var CodeJetter\core\FormHandler $formHandler */
+    /* @var CodeJetter\core\FormHandler $formHandler */
 
     return "<div class='container-fluid'>
     <div class='row vertical-offset-4'>

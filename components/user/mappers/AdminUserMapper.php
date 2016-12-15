@@ -3,8 +3,7 @@
 namespace CodeJetter\components\user\mappers;
 
 /**
- * Class AdminUserMapper
- * @package CodeJetter\components\user\mappers
+ * Class AdminUserMapper.
  */
 class AdminUserMapper extends UserMapper
 {

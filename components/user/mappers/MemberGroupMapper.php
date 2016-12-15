@@ -11,21 +11,21 @@ use CodeJetter\core\utility\ArrayUtility;
 use CodeJetter\core\utility\InputUtility;
 
 /**
- * Class MemberGroupMapper
- * @package CodeJetter\components\user\mappers
+ * Class MemberGroupMapper.
  */
 class MemberGroupMapper extends GroupMapper
 {
     /**
      * @param array $inputs
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         $definedInputs = [];
@@ -39,29 +39,30 @@ class MemberGroupMapper extends GroupMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
 
         /**
-         * Start checking if the name exists
+         * Start checking if the name exists.
          */
         $found = $this->getOneByName($inputs['name'])->getData();
 
         if (!empty($found) && $found instanceof MemberGroup) {
             $output->setSuccess(false);
             $output->setMessage('Name already exists');
+
             return $output;
         }
         /**
-         * Finish checking if the name exists
+         * Finish checking if the name exists.
          */
-
         $additionalFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'add');
         $fieldsValues = $fieldsValues + $additionalFieldsValues;
 
@@ -82,8 +83,9 @@ class MemberGroupMapper extends GroupMapper
      * @param       $id
      * @param array $inputs
      *
-     * @return Output|int
      * @throws \Exception
+     *
+     * @return Output|int
      */
     public function updateById($id, array $inputs)
     {
@@ -95,15 +97,16 @@ class MemberGroupMapper extends GroupMapper
             $output = new Output();
             $output->setSuccess(false);
             $output->setMessages($validatorOutput->getMessages());
+
             return $output;
         }
 
         $criteria = [
             [
                 'column' => 'id',
-                'value' => $id,
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $id,
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         return $this->update($criteria, $inputs, [], 1);
@@ -114,8 +117,9 @@ class MemberGroupMapper extends GroupMapper
      * @param array $inputs
      * @param int   $limit
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function update(
         array $criteria,
@@ -127,7 +131,7 @@ class MemberGroupMapper extends GroupMapper
         $batchAction = false
     ) {
         /**
-         * start validating
+         * start validating.
          */
         $output = new Output();
 
@@ -150,11 +154,11 @@ class MemberGroupMapper extends GroupMapper
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
-        /**
+        /*
          * finish validating
          */
 
-        /**
+        /*
          * If name AND id are set start checking if the name exists
          */
         if (isset($inputs['name']) && isset($inputs['id'])) {
@@ -170,14 +174,14 @@ class MemberGroupMapper extends GroupMapper
                 if (!empty($found) && $found instanceof MemberGroup) {
                     $output->setSuccess(false);
                     $output->setMessage('Name already exists');
+
                     return $output;
                 }
             }
         }
         /**
-         * Finish checking if the name exists
+         * Finish checking if the name exists.
          */
-
         $additionalFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'update');
         $fieldsValues = $fieldsValues + $additionalFieldsValues;
 
@@ -210,8 +214,8 @@ class MemberGroupMapper extends GroupMapper
 
         if ($action === 'add' || $action === 'update') {
             $definedInputs = [
-                'name' => new DatabaseInput('name', [$requiredRule]),
-                'status' => new DatabaseInput('status', [$requiredRule])
+                'name'   => new DatabaseInput('name', [$requiredRule]),
+                'status' => new DatabaseInput('status', [$requiredRule]),
             ];
         }
 

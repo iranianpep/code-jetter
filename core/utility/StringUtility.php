@@ -3,31 +3,30 @@
 namespace CodeJetter\core\utility;
 
 /**
- * Class StringUtility
- * @package CodeJetter\core\utility
+ * Class StringUtility.
  */
 class StringUtility
 {
     public $plural = [
-        '/(quiz)$/i'               => "$1zes",
-        '/^(ox)$/i'                => "$1en",
-        '/([m|l])ouse$/i'          => "$1ice",
-        '/(matr|vert|ind)ix|ex$/i' => "$1ices",
-        '/(x|ch|ss|sh)$/i'         => "$1es",
-        '/([^aeiouy]|qu)y$/i'      => "$1ies",
-        '/(hive)$/i'               => "$1s",
-        '/(?:([^f])fe|([lr])f)$/i' => "$1$2ves",
-        '/(shea|lea|loa|thie)f$/i' => "$1ves",
-        '/sis$/i'                  => "ses",
-        '/([ti])um$/i'             => "$1a",
-        '/(tomat|potat|ech|her|vet)o$/i'=> "$1oes",
-        '/(bu)s$/i'                => "$1ses",
-        '/(alias)$/i'              => "$1es",
-        '/(octop)us$/i'            => "$1i",
-        '/(ax|test)is$/i'          => "$1es",
-        '/(us)$/i'                 => "$1es",
-        '/s$/i'                    => "s",
-        '/$/'                      => "s"
+        '/(quiz)$/i'                    => '$1zes',
+        '/^(ox)$/i'                     => '$1en',
+        '/([m|l])ouse$/i'               => '$1ice',
+        '/(matr|vert|ind)ix|ex$/i'      => '$1ices',
+        '/(x|ch|ss|sh)$/i'              => '$1es',
+        '/([^aeiouy]|qu)y$/i'           => '$1ies',
+        '/(hive)$/i'                    => '$1s',
+        '/(?:([^f])fe|([lr])f)$/i'      => '$1$2ves',
+        '/(shea|lea|loa|thie)f$/i'      => '$1ves',
+        '/sis$/i'                       => 'ses',
+        '/([ti])um$/i'                  => '$1a',
+        '/(tomat|potat|ech|her|vet)o$/i'=> '$1oes',
+        '/(bu)s$/i'                     => '$1ses',
+        '/(alias)$/i'                   => '$1es',
+        '/(octop)us$/i'                 => '$1i',
+        '/(ax|test)is$/i'               => '$1es',
+        '/(us)$/i'                      => '$1es',
+        '/s$/i'                         => 's',
+        '/$/'                           => 's',
     ];
 
     public $irregular = [
@@ -39,7 +38,7 @@ class StringUtility
         'man'    => 'men',
         'tooth'  => 'teeth',
         'person' => 'people',
-        'valve'  => 'valves'
+        'valve'  => 'valves',
     ];
 
     public $uncountable = [
@@ -51,42 +50,42 @@ class StringUtility
         'money',
         'rice',
         'information',
-        'equipment'
+        'equipment',
     ];
 
     public $singular = [
-        '/(quiz)zes$/i'             => "$1",
-        '/(matr)ices$/i'            => "$1ix",
-        '/(vert|ind)ices$/i'        => "$1ex",
-        '/^(ox)en$/i'               => "$1",
-        '/(alias)es$/i'             => "$1",
-        '/(octop|vir)i$/i'          => "$1us",
-        '/(cris|ax|test)es$/i'      => "$1is",
-        '/(shoe)s$/i'               => "$1",
-        '/(o)es$/i'                 => "$1",
-        '/(bus)es$/i'               => "$1",
-        '/([m|l])ice$/i'            => "$1ouse",
-        '/(x|ch|ss|sh)es$/i'        => "$1",
-        '/(m)ovies$/i'              => "$1ovie",
-        '/(s)eries$/i'              => "$1eries",
-        '/([^aeiouy]|qu)ies$/i'     => "$1y",
-        '/([lr])ves$/i'             => "$1f",
-        '/(tive)s$/i'               => "$1",
-        '/(hive)s$/i'               => "$1",
-        '/(li|wi|kni)ves$/i'        => "$1fe",
-        '/(shea|loa|lea|thie)ves$/i'=> "$1f",
-        '/(^analy)ses$/i'           => "$1sis",
-        '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i'  => "$1$2sis",
-        '/([ti])a$/i'               => "$1um",
-        '/(n)ews$/i'                => "$1ews",
-        '/(h|bl)ouses$/i'           => "$1ouse",
-        '/(corpse)s$/i'             => "$1",
-        '/(us)es$/i'                => "$1",
-        '/s$/i'                     => ""
+        '/(quiz)zes$/i'                                                     => '$1',
+        '/(matr)ices$/i'                                                    => '$1ix',
+        '/(vert|ind)ices$/i'                                                => '$1ex',
+        '/^(ox)en$/i'                                                       => '$1',
+        '/(alias)es$/i'                                                     => '$1',
+        '/(octop|vir)i$/i'                                                  => '$1us',
+        '/(cris|ax|test)es$/i'                                              => '$1is',
+        '/(shoe)s$/i'                                                       => '$1',
+        '/(o)es$/i'                                                         => '$1',
+        '/(bus)es$/i'                                                       => '$1',
+        '/([m|l])ice$/i'                                                    => '$1ouse',
+        '/(x|ch|ss|sh)es$/i'                                                => '$1',
+        '/(m)ovies$/i'                                                      => '$1ovie',
+        '/(s)eries$/i'                                                      => '$1eries',
+        '/([^aeiouy]|qu)ies$/i'                                             => '$1y',
+        '/([lr])ves$/i'                                                     => '$1f',
+        '/(tive)s$/i'                                                       => '$1',
+        '/(hive)s$/i'                                                       => '$1',
+        '/(li|wi|kni)ves$/i'                                                => '$1fe',
+        '/(shea|loa|lea|thie)ves$/i'                                        => '$1f',
+        '/(^analy)ses$/i'                                                   => '$1sis',
+        '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i'  => '$1$2sis',
+        '/([ti])a$/i'                                                       => '$1um',
+        '/(n)ews$/i'                                                        => '$1ews',
+        '/(h|bl)ouses$/i'                                                   => '$1ouse',
+        '/(corpse)s$/i'                                                     => '$1',
+        '/(us)es$/i'                                                        => '$1',
+        '/s$/i'                                                             => '',
     ];
 
     /**
-     * Replace the last occurrence of the search string with the replacement string
+     * Replace the last occurrence of the search string with the replacement string.
      *
      * @param $search
      * @param $replace
@@ -129,16 +128,18 @@ class StringUtility
     public function removeSuffix($string, $suffix)
     {
         $filtered = $this->stringLastReplace($suffix, '', $string);
+
         return $filtered !== false ? $filtered : $string;
     }
 
     /**
-     * Extract and return class name from a full namespace
+     * Extract and return class name from a full namespace.
      *
      * @param $namespace
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getClassNameFromNamespace($namespace)
     {
@@ -147,11 +148,12 @@ class StringUtility
         }
 
         $namespaceParts = explode('\\', $namespace);
+
         return end($namespaceParts);
     }
 
     /**
-     * Convert html special characters to html entities
+     * Convert html special characters to html entities.
      *
      * @param $string
      *
@@ -163,7 +165,7 @@ class StringUtility
     }
 
     /**
-     * Convert camel case to snake case e.g. AdminUser becomes Admin_User
+     * Convert camel case to snake case e.g. AdminUser becomes Admin_User.
      *
      * @param $string
      *
@@ -175,7 +177,7 @@ class StringUtility
     }
 
     /**
-     * Convert singular word to plural
+     * Convert singular word to plural.
      *
      * @param $string
      *
@@ -190,7 +192,7 @@ class StringUtility
 
         // check for irregular singular forms
         foreach ($this->irregular as $pattern => $result) {
-            $pattern = '/' . $pattern . '$/i';
+            $pattern = '/'.$pattern.'$/i';
 
             if (preg_match($pattern, $string)) {
                 return preg_replace($pattern, $result, $string);
@@ -208,7 +210,7 @@ class StringUtility
     }
 
     /**
-     * Convert plural word to singular
+     * Convert plural word to singular.
      *
      * @param $string
      *
@@ -223,7 +225,7 @@ class StringUtility
 
         // check for irregular plural forms
         foreach ($this->irregular as $result => $pattern) {
-            $pattern = '/' . $pattern . '$/i';
+            $pattern = '/'.$pattern.'$/i';
 
             if (preg_match($pattern, $string)) {
                 return preg_replace($pattern, $result, $string);
@@ -241,7 +243,7 @@ class StringUtility
     }
 
     /**
-     * Convert snake case to camel case e.g. admin_user becomes AdminUser
+     * Convert snake case to camel case e.g. admin_user becomes AdminUser.
      *
      * @param $string
      *
@@ -254,32 +256,34 @@ class StringUtility
 
     /**
      * Remove http and www from url
-     * www.example.com/test becomes example.com/test
+     * www.example.com/test becomes example.com/test.
      *
      * @param  $domain
+     *
      * @return mixed
      */
     public function removeURLProtocol($domain)
     {
         // If scheme not included, prepend it
         if (!preg_match('#^http(s)?://#', $domain)) {
-            $domain = 'http://' . $domain;
+            $domain = 'http://'.$domain;
         }
 
         $urlParts = parse_url($domain);
 
         $path = empty($urlParts['path']) ? '' : $urlParts['path'];
-        $query = empty($urlParts['query']) ? '' : '?' . $urlParts['query'];
+        $query = empty($urlParts['query']) ? '' : '?'.$urlParts['query'];
 
         // remove www
-        return preg_replace('/^www\./', '', $urlParts['host'] . $path . $query);
+        return preg_replace('/^www\./', '', $urlParts['host'].$path.$query);
     }
 
     /**
      * @param $json
      *
-     * @return array|mixed
      * @throws \Exception
+     *
+     * @return array|mixed
      */
     public function jsonToArray($json)
     {

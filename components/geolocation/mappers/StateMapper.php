@@ -33,17 +33,17 @@ class StateMapper extends BaseMapper
 
         $tables = [
             $stateTableAlias => [
-                'name' => $stateTable,
-                'class' => $this->getModelName()
+                'name'  => $stateTable,
+                'class' => $this->getModelName(),
             ],
             $cityTableAlias => [
-                'name' => $cityTable,
-                'class' => $this->getModelsNamespace('geolocation') . 'City',
-                'on' => [
+                'name'  => $cityTable,
+                'class' => $this->getModelsNamespace('geolocation').'City',
+                'on'    => [
                     "`{$stateTableAlias}`.`id`",
-                    "`{$cityTableAlias}`.`stateId`"
-                ]
-            ]
+                    "`{$cityTableAlias}`.`stateId`",
+                ],
+            ],
         ];
 
         // By default do not return archived records
@@ -69,7 +69,7 @@ class StateMapper extends BaseMapper
             $result = $st->fetchAll(\PDO::FETCH_ASSOC);
 
             /**
-             * Map rows to objects
+             * Map rows to objects.
              */
             $mappedObjects = $this->mapRowsToObjects($result, $tables);
 

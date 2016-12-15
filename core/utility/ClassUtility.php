@@ -3,8 +3,7 @@
 namespace CodeJetter\core\utility;
 
 /**
- * Class ClassUtility
- * @package CodeJetter\core\utility
+ * Class ClassUtility.
  */
 class ClassUtility
 {

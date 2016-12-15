@@ -1,10 +1,8 @@
 <?php
 
+namespace CodeJetter\tests;
 
-    namespace CodeJetter\tests;
-
-
-    use CodeJetter\components\user\models\AdminUser;
+use CodeJetter\components\user\models\AdminUser;
     use CodeJetter\components\user\services\UserAuthentication;
     use CodeJetter\core\App;
 
@@ -19,7 +17,7 @@
             $app->init('dev');
 
             /**
-             * Create a dummy user
+             * Create a dummy user.
              */
             $adminUser = new AdminUser();
             $adminUser->setId(1);
@@ -32,21 +30,21 @@
 
             $inputOutputs = [
                 [
-                    'input' => '324324342',
-                    'output' => false
+                    'input'  => '324324342',
+                    'output' => false,
                 ],
                 [
-                    'input' => ' 324324342',
-                    'output' => false
+                    'input'  => ' 324324342',
+                    'output' => false,
                 ],
                 [
-                    'input' => ' 324324342 ',
-                    'output' => false
+                    'input'  => ' 324324342 ',
+                    'output' => false,
                 ],
                 [
-                    'input' => '',
-                    'output' => false
-                ]
+                    'input'  => '',
+                    'output' => false,
+                ],
             ];
 
             foreach ($inputOutputs as $inputOutput) {
@@ -60,7 +58,7 @@
         {
             $userAuthentication = new UserAuthentication();
             /**
-             * Create a dummy user
+             * Create a dummy user.
              */
             $adminUser = new AdminUser();
             $adminUser->setId(1);
@@ -94,7 +92,7 @@
             $app->init('dev');
 
             /**
-             * Create a dummy user
+             * Create a dummy user.
              */
             $adminUser = new AdminUser();
             $adminUser->setId(1);

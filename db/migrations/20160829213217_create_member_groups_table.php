@@ -16,16 +16,16 @@ class CreateMemberGroupsTable extends AbstractMigration
   `archivedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 
-        $this->execute("ALTER TABLE `cj_member_groups`
+        $this->execute('ALTER TABLE `cj_member_groups`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `Unique Name` (`name`,`live`);");
+  ADD UNIQUE KEY `Unique Name` (`name`,`live`);');
 
-        $this->execute("ALTER TABLE `cj_member_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;");
+        $this->execute('ALTER TABLE `cj_member_groups`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;');
     }
 
     public function down()
     {
-        $this->execute("DROP TABLE `cj_member_groups`");
+        $this->execute('DROP TABLE `cj_member_groups`');
     }
 }

@@ -3,12 +3,10 @@
 namespace CodeJetter\components\user\mappers;
 
 /**
- * Class GroupMemberUserXrefMapper
- * @package CodeJetter\components\user\mappers
+ * Class GroupMemberUserXrefMapper.
  */
 class GroupMemberUserXrefMapper extends GroupUserXrefMapper
 {
-
     public function getDefinedInputs($action = null, array $includingInputs = [], array $excludingInputs = [])
     {
         // TODO: Implement getDefinedInputs() method.

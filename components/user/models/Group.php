@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 26/07/15
- * Time: 2:05 AM
+ * Time: 2:05 AM.
  */
 
 namespace CodeJetter\components\user\models;
@@ -11,8 +11,7 @@ namespace CodeJetter\components\user\models;
 use CodeJetter\core\BaseModel;
 
 /**
- * Class Group
- * @package CodeJetter\components\user\models
+ * Class Group.
  */
 abstract class Group extends BaseModel
 {

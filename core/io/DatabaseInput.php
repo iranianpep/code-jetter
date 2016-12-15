@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 18/08/15
- * Time: 11:38 PM
+ * Time: 11:38 PM.
  */
 
 namespace CodeJetter\core\io;
 
 /**
- * Class DatabaseInput
- * @package CodeJetter\core\io
+ * Class DatabaseInput.
  */
 class DatabaseInput extends Input
 {
@@ -20,7 +19,7 @@ class DatabaseInput extends Input
 
     /**
      * Return the associated column name with this input in database
-     * If column name is not set, consider the key as column name
+     * If column name is not set, consider the key as column name.
      *
      * @return string
      */
@@ -34,7 +33,7 @@ class DatabaseInput extends Input
     }
 
     /**
-     * Set the associated column name with this input in database
+     * Set the associated column name with this input in database.
      *
      * @param string $column
      */
@@ -44,7 +43,7 @@ class DatabaseInput extends Input
     }
 
     /**
-     * Get PDO type e.g. \PDO::PARAM_INT
+     * Get PDO type e.g. \PDO::PARAM_INT.
      *
      * @return int
      */
@@ -54,7 +53,7 @@ class DatabaseInput extends Input
     }
 
     /**
-     * Set PDO type e.g. \PDO::PARAM_INT
+     * Set PDO type e.g. \PDO::PARAM_INT.
      *
      * @param int $PDOType
      */

@@ -5,14 +5,13 @@ namespace CodeJetter\core\database;
 use CodeJetter\core\utility\MysqlUtility;
 
 /**
- * Class QueryMaker
- * @package CodeJetter\core\database
+ * Class QueryMaker.
  */
 class QueryMaker
 {
     private $tables;
     private $validComparisonOperators = ['LIKE', 'NOT LIKE', '=', '!=', '<>', '<', '<=', '>', '>=', '<=>', 'IS NOT',
-        'IS', 'IS NOT NULL', 'IS NULL', 'IN', 'NOT IN'];
+        'IS', 'IS NOT NULL', 'IS NULL', 'IN', 'NOT IN', ];
     private $validLogicalOperators = ['AND', 'OR', 'XOR', 'NOT'];
 
     /**
@@ -30,7 +29,7 @@ class QueryMaker
                 $this->addTable(
                     $tables,
                     [
-                        'name' => $tables
+                        'name' => $tables,
                     ]
                 );
             }
@@ -44,8 +43,9 @@ class QueryMaker
      * @param       $start
      * @param       $limit
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function selectQuery(array $criteria = [], $fromColumns = '*', $order = '', $start = 0, $limit = 0)
     {
@@ -79,8 +79,9 @@ class QueryMaker
      * @param       $start
      * @param       $limit
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function updateQuery(array $criteria, $fieldsValues, $start, $limit)
     {
@@ -118,14 +119,16 @@ class QueryMaker
         $query .= $this->where($criteria);
         $query .= $this->startLimit($start, $limit);
         $query .= ';';
+
         return $query;
     }
 
     /**
      * @param array $fieldsValues
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function insertQuery(array $fieldsValues)
     {
@@ -155,7 +158,7 @@ class QueryMaker
         }
 
         if (!empty($columns) && !empty($parameters)) {
-            $query .= ' (' . implode(',', $columns) . ') VALUES (' . implode(',', $parameters) . ');';
+            $query .= ' ('.implode(',', $columns).') VALUES ('.implode(',', $parameters).');';
         }
 
         return $query;
@@ -164,8 +167,9 @@ class QueryMaker
     /**
      * @param array $fieldsValuesCollection
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function batchInsertQuery(array $fieldsValuesCollection)
     {
@@ -201,7 +205,7 @@ class QueryMaker
         }
 
         if (!empty($columns) && !empty($parameters)) {
-            $query .= ' (' . implode(',', $columns) . ') VALUES ' . implode(',', $parametersArray) . ';';
+            $query .= ' ('.implode(',', $columns).') VALUES '.implode(',', $parametersArray).';';
         }
 
         return $query;
@@ -212,8 +216,9 @@ class QueryMaker
      * @param       $start
      * @param       $limit
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function deleteQuery(array $criteria, $start, $limit)
     {
@@ -221,28 +226,32 @@ class QueryMaker
         $query .= $this->where($criteria);
         $query .= $this->startLimit($start, $limit);
         $query .= ';';
+
         return $query;
     }
 
     /**
      * @param array $criteria
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function countQuery(array $criteria)
     {
         $query = $this->getSelectFromTables('COUNT(*)');
         $query .= $this->where($criteria);
         $query .= ';';
+
         return $query;
     }
 
     /**
      * @param array $criteria
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     private function where(array $criteria)
     {
@@ -257,7 +266,7 @@ class QueryMaker
                     $before = isset($aCriteria['nested']['before']) ? "{$aCriteria['nested']['before']} " : '';
                     $after = isset($aCriteria['nested']['after']) ? " {$aCriteria['nested']['after']}" : '';
 
-                    $placeholder = $before . '({' . $aCriteria['nested']['key'] . '})' . $after . ' ';
+                    $placeholder = $before.'({'.$aCriteria['nested']['key'].'})'.$after.' ';
                     $placeholderExists = strpos($where, $placeholder);
 
                     // if placeholder does not exist append it to where clause
@@ -306,7 +315,7 @@ class QueryMaker
                             $newParameters[] = ":{$placeholder}{$counter}{$key}";
                         }
 
-                        $toBeAppended .= '('. implode(',', $newParameters) .') ';
+                        $toBeAppended .= '('.implode(',', $newParameters).') ';
                     } else {
                         // value is not array
                         $placeholder = $this->preparePlaceholder($aCriteria['column']);
@@ -337,7 +346,7 @@ class QueryMaker
             if (!empty($nested)) {
                 foreach ($nested as $aNestedKey => $aNestedValue) {
                     // find and replace $aNestedKey placeholder in where clause with the nested query
-                    $where = str_replace('{' . $aNestedKey . '}', rtrim($aNestedValue), $where);
+                    $where = str_replace('{'.$aNestedKey.'}', rtrim($aNestedValue), $where);
                 }
             }
 
@@ -418,7 +427,7 @@ class QueryMaker
                 }
 
                 $placeholder = $this->preparePlaceholder($fieldValue['column']);
-                $st->bindValue(':' . $placeholder, $fieldValue['value'], $fieldValue['type']);
+                $st->bindValue(':'.$placeholder, $fieldValue['value'], $fieldValue['type']);
             }
         }
 
@@ -463,13 +472,13 @@ class QueryMaker
                         foreach ($aCriteria['value'] as $key => $value) {
                             // to override the automatic detection $aCriteria['type'] needs to be passed
                             $type = empty($aCriteria['type']) ? $this->detectParameterType($value) : $aCriteria['type'];
-                            $st->bindValue(':' . $placeholder . $counter . $key, $value, $type);
+                            $st->bindValue(':'.$placeholder.$counter.$key, $value, $type);
                         }
                     } else {
                         // value is not array
                         // to override the automatic detection $aCriteria['type'] needs to be passed
                         $type = empty($aCriteria['type']) ? $this->detectParameterType($aCriteria['value']) : $aCriteria['type'];
-                        $st->bindValue(':' . $placeholder . $counter, $aCriteria['value'], $type);
+                        $st->bindValue(':'.$placeholder.$counter, $aCriteria['value'], $type);
                     }
                 } else {
                     // set the type to string if it is empty
@@ -477,7 +486,7 @@ class QueryMaker
                         $aCriteria['type'] = \PDO::PARAM_STR;
                     }
 
-                    $st->bindValue(':' . $placeholder . $counter, $aCriteria['value'], $aCriteria['type']);
+                    $st->bindValue(':'.$placeholder.$counter, $aCriteria['value'], $aCriteria['type']);
                 }
             }
         }
@@ -524,7 +533,7 @@ class QueryMaker
                         }
 
                         $placeholder = $this->preparePlaceholder($fieldValue['column']);
-                        $st->bindValue(':' . $placeholder . $key, $fieldValue['value'], $fieldValue['type']);
+                        $st->bindValue(':'.$placeholder.$key, $fieldValue['value'], $fieldValue['type']);
                     }
                 }
             }
@@ -544,8 +553,9 @@ class QueryMaker
     /**
      * @param null $tableAlias
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getTable($tableAlias = null)
     {
@@ -580,8 +590,9 @@ class QueryMaker
     /**
      * @param null $fromColumns
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getSelectFromTables($fromColumns = null)
     {
@@ -603,12 +614,12 @@ class QueryMaker
                     throw new \Exception("join array must have 'on'");
                 }
 
-                $from .= ' ON ' . implode(' = ', $table['on']);
+                $from .= ' ON '.implode(' = ', $table['on']);
             }
 
             if ($fromColumns === null) {
                 $columns = (new MysqlUtility())->getTableColumns($table['name']);
-                
+
                 if (!empty($columns)) {
                     foreach ($columns as $column) {
                         $joinedSelect[] = "`{$tableAlias}`.`{$column}` AS `{$tableAlias}.{$column}`";
@@ -650,7 +661,7 @@ class QueryMaker
     }
 
     /**
-     * PDO placeholders can only be: [a-zA-Z0-9_]+
+     * PDO placeholders can only be: [a-zA-Z0-9_]+.
      *
      * @param $placeholder
      *
@@ -659,6 +670,7 @@ class QueryMaker
     private function preparePlaceholder($placeholder)
     {
         $placeholder = str_replace('`', '', $placeholder);
-        return preg_replace("/[^a-zA-Z0-9_]/", '_', $placeholder);
+
+        return preg_replace('/[^a-zA-Z0-9_]/', '_', $placeholder);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-    namespace CodeJetter\tests;
+namespace CodeJetter\tests;
 
 use CodeJetter\core\App;
 use CodeJetter\core\io\Input;
@@ -21,27 +21,27 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => ''
+                    'name'  => '',
                 ],
-                'output' => ['Email is required.', "'' is not a valid email."]
+                'output' => ['Email is required.', "'' is not a valid email."],
             ],
             [
                 'inputs' => [
-                    'email' => 'test@test.com'
+                    'email' => 'test@test.com',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'email' => ' test@test.com'
+                    'email' => ' test@test.com',
                 ],
-                'output' => ["' test@test.com' is not a valid email."]
+                'output' => ["' test@test.com' is not a valid email."],
             ],
             [
                 'inputs' => [
-                    'email' => 'test'
+                    'email' => 'test',
                 ],
-                'output' => ["'test' is not a valid email."]
+                'output' => ["'test' is not a valid email."],
             ],
         ];
 
@@ -57,7 +57,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         $validator = new Validator([$emailInput], [
             'email' => '',
-            'name' => ''
+            'name'  => '',
         ]);
 
         $nameInput = new Input('name', [$requiredRule]);
@@ -68,14 +68,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([
             'Email is required.',
             "'' is not a valid email.",
-            'Name is required.'
+            'Name is required.',
         ], $output->getMessages());
 
         $this->assertEquals(false, $validator->getSuccess());
 
         $this->assertEquals([
             $emailInput->getKey() => $emailInput,
-            $nameInput->getKey() => $nameInput
+            $nameInput->getKey()  => $nameInput,
         ], $validator->getDefinedInputs());
     }
 
@@ -91,57 +91,57 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'id' => ''
+                    'id' => '',
                 ],
-                'output' => ['Id is required.', "'' is not a valid Id."]
+                'output' => ['Id is required.', "'' is not a valid Id."],
             ],
             [
                 'inputs' => [
-                    'id' => '0'
+                    'id' => '0',
                 ],
-                'output' => ["'0' is not a valid Id."]
+                'output' => ["'0' is not a valid Id."],
             ],
             [
                 'inputs' => [
-                    'id' => 0
+                    'id' => 0,
                 ],
-                'output' => ["'0' is not a valid Id."]
+                'output' => ["'0' is not a valid Id."],
             ],
             [
                 'inputs' => [
-                    'id' => '12d'
+                    'id' => '12d',
                 ],
-                'output' => ["'12d' is not a valid Id."]
+                'output' => ["'12d' is not a valid Id."],
             ],
             [
                 'inputs' => [
-                    'id' => 'd12'
+                    'id' => 'd12',
                 ],
-                'output' => ["'d12' is not a valid Id."]
+                'output' => ["'d12' is not a valid Id."],
             ],
             [
                 'inputs' => [
-                    'id' => ' 12'
+                    'id' => ' 12',
                 ],
-                'output' => ["' 12' is not a valid Id."]
+                'output' => ["' 12' is not a valid Id."],
             ],
             [
                 'inputs' => [
-                    'id' => '1 2'
+                    'id' => '1 2',
                 ],
-                'output' => ["'1 2' is not a valid Id."]
+                'output' => ["'1 2' is not a valid Id."],
             ],
             [
                 'inputs' => [
-                    'id' => 1
+                    'id' => 1,
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'id' => '1'
+                    'id' => '1',
                 ],
-                'output' => []
+                'output' => [],
             ],
         ];
 
@@ -163,76 +163,76 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'url' => 'ddd'
+                    'url' => 'ddd',
                 ],
-                'output' => ["'ddd' is not a valid URL."]
+                'output' => ["'ddd' is not a valid URL."],
             ],
             [
                 'inputs' => [
-                    'url' => 'http://'
+                    'url' => 'http://',
                 ],
-                'output' => ["'http://' is not a valid URL."]
+                'output' => ["'http://' is not a valid URL."],
             ],
             [
                 'inputs' => [
-                    'url' => 'http://ajax'
+                    'url' => 'http://ajax',
                 ],
-                'output' => ["'http://ajax' is not a valid URL."]
+                'output' => ["'http://ajax' is not a valid URL."],
             ],
             [
                 'inputs' => [
-                    'url' => 'http://ajax.com'
+                    'url' => 'http://ajax.com',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'url' => 'http://www.ajax.com'
+                    'url' => 'http://www.ajax.com',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'url' => 'www.ajax.com'
+                    'url' => 'www.ajax.com',
                 ],
                 // http must be passed
-                'output' => ["'www.ajax.com' is not a valid URL."]
+                'output' => ["'www.ajax.com' is not a valid URL."],
             ],
             [
                 'inputs' => [
-                    'url' => 'http://www.ajax-test.com'
+                    'url' => 'http://www.ajax-test.com',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'url' => 'http://ajax-test.com'
+                    'url' => 'http://ajax-test.com',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'url' => 0
+                    'url' => 0,
                 ],
-                'output' => ["'0' is not a valid URL."]
+                'output' => ["'0' is not a valid URL."],
             ],
             [
                 'inputs' => [
-                    'url' => '0'
+                    'url' => '0',
                 ],
-                'output' => ["'0' is not a valid URL."]
+                'output' => ["'0' is not a valid URL."],
             ],
             [
                 'inputs' => [
-                    'url' => ' '
+                    'url' => ' ',
                 ],
-                'output' => ["' ' is not a valid URL."]
+                'output' => ["' ' is not a valid URL."],
             ],
             [
                 'inputs' => [
-                    'url' => ' http://www.ehsan.com'
+                    'url' => ' http://www.ehsan.com',
                 ],
-                'output' => ["' http://www.ehsan.com' is not a valid URL."]
+                'output' => ["' http://www.ehsan.com' is not a valid URL."],
             ],
         ];
 
@@ -257,58 +257,58 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => ''
+                    'name'  => '',
                 ],
-                'output' => ['Name is required.']
+                'output' => ['Name is required.'],
             ],
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => '0'
+                    'name'  => '0',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => 0
+                    'name'  => 0,
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => true
+                    'name'  => true,
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => false
+                    'name'  => false,
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => 'false'
+                    'name'  => 'false',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => 'true'
+                    'name'  => 'true',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
                     'email' => '',
-                    'name' => ' '
+                    'name'  => ' ',
                 ],
-                'output' => ['Name is required.']
+                'output' => ['Name is required.'],
             ],
         ];
 
@@ -333,63 +333,63 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'toCheckSizeInput' => 'test@test.com'
+                    'toCheckSizeInput' => 'test@test.com',
                 ],
-                'output' => ["ToCheckSizeInput must be 1 in size."]
+                'output' => ['ToCheckSizeInput must be 1 in size.'],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => 't'
+                    'toCheckSizeInput' => 't',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => 0
+                    'toCheckSizeInput' => 0,
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => 1
+                    'toCheckSizeInput' => 1,
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => ' '
+                    'toCheckSizeInput' => ' ',
                 ],
-                'output' => ['ToCheckSizeInput must be 1 in size.']
+                'output' => ['ToCheckSizeInput must be 1 in size.'],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => ''
+                    'toCheckSizeInput' => '',
                 ],
-                'output' => ['ToCheckSizeInput must be 1 in size.']
+                'output' => ['ToCheckSizeInput must be 1 in size.'],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => []
+                    'toCheckSizeInput' => [],
                 ],
-                'output' => ['ToCheckSizeInput must be 1 in size.']
+                'output' => ['ToCheckSizeInput must be 1 in size.'],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => [1]
+                    'toCheckSizeInput' => [1],
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => [0]
+                    'toCheckSizeInput' => [0],
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckSizeInput' => ['0']
+                    'toCheckSizeInput' => ['0'],
                 ],
-                'output' => []
+                'output' => [],
             ],
         ];
 
@@ -411,63 +411,63 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'username' => ''
+                    'username' => '',
                 ],
-                'output' => ["'' is not a valid username."]
+                'output' => ["'' is not a valid username."],
             ],
             [
                 'inputs' => [
-                    'username' => 'test'
+                    'username' => 'test',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'username' => 'te st'
+                    'username' => 'te st',
                 ],
-                'output' => ["'te st' is not a valid username."]
+                'output' => ["'te st' is not a valid username."],
             ],
             [
                 'inputs' => [
-                    'username' => 'tt'
+                    'username' => 'tt',
                 ],
-                'output' => ["'tt' is not a valid username."]
+                'output' => ["'tt' is not a valid username."],
             ],
             [
                 'inputs' => [
-                    'username' => '_tt'
+                    'username' => '_tt',
                 ],
-                'output' => ["'_tt' is not a valid username."]
+                'output' => ["'_tt' is not a valid username."],
             ],
             [
                 'inputs' => [
-                    'username' => 'tt_'
+                    'username' => 'tt_',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'username' => 'tt '
+                    'username' => 'tt ',
                 ],
-                'output' => ["'tt ' is not a valid username."]
+                'output' => ["'tt ' is not a valid username."],
             ],
             [
                 'inputs' => [
-                    'username' => '12345678912345678910'
+                    'username' => '12345678912345678910',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'username' => '12345678912345678910_'
+                    'username' => '12345678912345678910_',
                 ],
-                'output' => ["'12345678912345678910_' is not a valid username."]
+                'output' => ["'12345678912345678910_' is not a valid username."],
             ],
             [
                 'inputs' => [
-                    'username' => '12345678912345678910 '
+                    'username' => '12345678912345678910 ',
                 ],
-                'output' => ["'12345678912345678910 ' is not a valid username."]
+                'output' => ["'12345678912345678910 ' is not a valid username."],
             ],
         ];
 
@@ -489,99 +489,99 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'password' => ''
+                    'password' => '',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => 'test'
+                    'password' => 'test',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => 'test123E'
+                    'password' => 'test123E',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => 'tes t123E'
+                    'password' => 'tes t123E',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => ' tes t123E '
+                    'password' => ' tes t123E ',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => '! tes t123E '
+                    'password' => '! tes t123E ',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => '#! tes t123E '
+                    'password' => '#! tes t123E ',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => '#! tes t123e '
+                    'password' => '#! tes t123e ',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => '12345678912345678901'
+                    'password' => '12345678912345678901',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => '12345678912345678901E'
+                    'password' => '12345678912345678901E',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => '1234567891235678901E'
+                    'password' => '1234567891235678901E',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => '12345e6789235678901E'
+                    'password' => '12345e6789235678901E',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => ' 2345e6789235678901E'
+                    'password' => ' 2345e6789235678901E',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => ' 2345e678923#678901E'
+                    'password' => ' 2345e678923#678901E',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => ' e67%$#@*_-y3#601E'
+                    'password' => ' e67%$#@*_-y3#601E',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => " e6%$#@'*_-y3#601E"
+                    'password' => " e6%$#@'*_-y3#601E",
                 ],
-                'output' => []
+                'output' => [],
             ],
         ];
 
@@ -597,28 +597,28 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'password' => ''
+                    'password' => '',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => '1'
+                    'password' => '1',
                 ],
-                'output' => ["Password does not match password confirmation."]
+                'output' => ['Password does not match password confirmation.'],
             ],
             [
                 'inputs' => [
-                    'password' => '2345e6789235678901E'
+                    'password' => '2345e6789235678901E',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'password' => ' 2345e6789235678901E'
+                    'password' => ' 2345e6789235678901E',
                 ],
-                'output' => ["Password does not match password confirmation."]
-            ]
+                'output' => ['Password does not match password confirmation.'],
+            ],
         ];
 
         foreach ($inputsOutputs as $inputsOutput) {
@@ -633,30 +633,30 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'password' => '',
-                    'passwordConfirmation' => ''
+                    'password'             => '',
+                    'passwordConfirmation' => '',
                 ],
-                'output' => ["Password is not valid."]
+                'output' => ['Password is not valid.'],
             ],
             [
                 'inputs' => [
-                    'password' => '1'
+                    'password' => '1',
                 ],
-                'output' => ["Password does not match password confirmation."]
+                'output' => ['Password does not match password confirmation.'],
             ],
             [
                 'inputs' => [
-                    'password' => '2345e6789235678901E',
-                    'passwordConfirmation' => '1'
+                    'password'             => '2345e6789235678901E',
+                    'passwordConfirmation' => '1',
                 ],
-                'output' => ["Password does not match password confirmation."]
+                'output' => ['Password does not match password confirmation.'],
             ],
             [
                 'inputs' => [
-                    'password' => '2345e6789235678901E',
-                    'passwordConfirmation' => '2345e6789235678901E'
+                    'password'             => '2345e6789235678901E',
+                    'passwordConfirmation' => '2345e6789235678901E',
                 ],
-                'output' => []
+                'output' => [],
             ],
         ];
 
@@ -678,46 +678,46 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'toCheckInput' => '1'
+                    'toCheckInput' => '1',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => ''
+                    'toCheckInput' => '',
                 ],
-                'output' => ['ToCheckInput is not valid.']
+                'output' => ['ToCheckInput is not valid.'],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => [1, 2, 3]
+                    'toCheckInput' => [1, 2, 3],
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => [1, 2, 3, 4]
+                    'toCheckInput' => [1, 2, 3, 4],
                 ],
-                'output' => ['ToCheckInput is not valid.']
+                'output' => ['ToCheckInput is not valid.'],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => [1, 2]
+                    'toCheckInput' => [1, 2],
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '0'
+                    'toCheckInput' => '0',
                 ],
-                'output' => ['ToCheckInput is not valid.']
+                'output' => ['ToCheckInput is not valid.'],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '5'
+                    'toCheckInput' => '5',
                 ],
-                'output' => ['ToCheckInput is not valid.']
-            ]
+                'output' => ['ToCheckInput is not valid.'],
+            ],
         ];
 
         foreach ($inputsOutputs as $inputsOutput) {
@@ -738,44 +738,44 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'toCheckInput' => '1'
+                    'toCheckInput' => '1',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '65000.00'
+                    'toCheckInput' => '65000.00',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '123.23'
+                    'toCheckInput' => '123.23',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => 'eee'
+                    'toCheckInput' => 'eee',
                 ],
                 'output' => [
-                    "'eee' is not a valid number."
-                ]
+                    "'eee' is not a valid number.",
+                ],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '12.3e'
+                    'toCheckInput' => '12.3e',
                 ],
                 'output' => [
-                    "'12.3e' is not a valid number."
-                ]
+                    "'12.3e' is not a valid number.",
+                ],
             ],
             [
                 'inputs' => [
                     // e actually a number
-                    'toCheckInput' => '12.e343'
+                    'toCheckInput' => '12.e343',
                 ],
-                'output' => []
+                'output' => [],
             ],
         ];
 
@@ -797,79 +797,79 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'toCheckInput' => '1'
+                    'toCheckInput' => '1',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '1.0'
+                    'toCheckInput' => '1.0',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '1.00'
+                    'toCheckInput' => '1.00',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '11.00'
+                    'toCheckInput' => '11.00',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '111.00'
+                    'toCheckInput' => '111.00',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '111.56'
+                    'toCheckInput' => '111.56',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '1.0 '
+                    'toCheckInput' => '1.0 ',
                 ],
                 'output' => [
-                    "'1.0 ' is not a valid money value. It can have 2 decimal points at most."
-                ]
+                    "'1.0 ' is not a valid money value. It can have 2 decimal points at most.",
+                ],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => 'e'
+                    'toCheckInput' => 'e',
                 ],
                 'output' => [
-                    "'e' is not a valid money value. It can have 2 decimal points at most."
-                ]
+                    "'e' is not a valid money value. It can have 2 decimal points at most.",
+                ],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '   '
+                    'toCheckInput' => '   ',
                 ],
                 'output' => [
-                    "'   ' is not a valid money value. It can have 2 decimal points at most."
-                ]
+                    "'   ' is not a valid money value. It can have 2 decimal points at most.",
+                ],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '1.000'
+                    'toCheckInput' => '1.000',
                 ],
                 'output' => [
-                    "'1.000' is not a valid money value. It can have 2 decimal points at most."
-                ]
+                    "'1.000' is not a valid money value. It can have 2 decimal points at most.",
+                ],
             ],
             [
                 'inputs' => [
-                    'toCheckInput' => '12.e343'
+                    'toCheckInput' => '12.e343',
                 ],
                 'output' => [
-                    "'12.e343' is not a valid money value. It can have 2 decimal points at most."
-                ]
+                    "'12.e343' is not a valid money value. It can have 2 decimal points at most.",
+                ],
             ],
         ];
 
@@ -891,27 +891,27 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'toCheckInput' => '1'
+                    'toCheckInput' => '1',
                 ],
                 'output' => [
                     'Name is required.',
-                    'Email is required.'
-                ]
+                    'Email is required.',
+                ],
+            ],
+            [
+                'inputs' => [
+                    'name'  => 'ehsan',
+                    'email' => 'ehsan@ehsan.com',
+                ],
+                'output' => [],
             ],
             [
                 'inputs' => [
                     'name' => 'ehsan',
-                    'email' => 'ehsan@ehsan.com'
-                ],
-                'output' => []
-            ],
-            [
-                'inputs' => [
-                    'name' => 'ehsan'
                 ],
                 'output' => [
-                    'Email is required.'
-                ]
+                    'Email is required.',
+                ],
             ],
         ];
 
@@ -943,7 +943,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $emailInput = new Input('email', [$requiredRule]);
 
         $toBeCheckedInputs = [
-            'email' => ''
+            'email' => '',
         ];
 
         $validator = new Validator([$emailInput], $toBeCheckedInputs);
@@ -963,29 +963,29 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $inputsOutputs = [
             [
                 'inputs' => [
-                    'name' => 'ehsan',
-                    'email' => 'ehsan@ehsan.com'
+                    'name'  => 'ehsan',
+                    'email' => 'ehsan@ehsan.com',
                 ],
                 'output' => [
-                    'name' => 'ehsan',
-                    'email' => 'ehsan@ehsan.com'
-                ]
+                    'name'  => 'ehsan',
+                    'email' => 'ehsan@ehsan.com',
+                ],
             ],
             [
                 'inputs' => [
-                    'name' => 'ehsan',
-                    'token' => 'g87g87f8f8bbm'
+                    'name'  => 'ehsan',
+                    'token' => 'g87g87f8f8bbm',
                 ],
                 'output' => [
                     'name' => 'ehsan',
-                ]
+                ],
             ],
             [
                 'inputs' => [
                     'username' => 'ehsan',
-                    'token' => 'g87g87f8f8bbm'
+                    'token'    => 'g87g87f8f8bbm',
                 ],
-                'output' => []
+                'output' => [],
             ],
         ];
 
@@ -1004,4 +1004,3 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         }
     }
 }
- 

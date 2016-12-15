@@ -5,320 +5,320 @@ namespace CodeJetter;
 class RoutesTemplate
 {
     /**
-     * Only last variable in regex can be optional
+     * Only last variable in regex can be optional.
      *
      * @var array
      */
     public $routes = [
-        /**
+        /*
          * Simple
          */
         'simple' => [
             'GET' => [
                 '/' => [
-                    'component' => 'page',
-                    'controller' => 'Page'
+                    'component'  => 'page',
+                    'controller' => 'Page',
                 ],
                 '/contact' => [
-                    'component' => 'contact',
-                    'controller' => 'Contact'
+                    'component'  => 'contact',
+                    'controller' => 'Contact',
                 ],
                 '/register' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'registerForm',
-                    'accessRole' => 'guest'
+                    'action'     => 'registerForm',
+                    'accessRole' => 'guest',
                 ],
                 '/login' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'loginForm',
-                    'accessRole' => 'guest'
+                    'action'     => 'loginForm',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/login' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'loginForm',
-                    'accessRole' => 'guest'
+                    'action'     => 'loginForm',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/members' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'listMembers'
+                    'action'     => 'listMembers',
                 ],
                 '/admin/groups' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'listGroups'
+                    'action'     => 'listGroups',
                 ],
                 '/admin/contact/messages' => [
-                    'component' => 'contact',
+                    'component'  => 'contact',
                     'controller' => 'Contact',
-                    'action' => 'listMessages'
+                    'action'     => 'listMessages',
                 ],
                 '/admin/profile' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'profileForm'
+                    'action'     => 'profileForm',
                 ],
                 '/account/profile' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'profileForm'
+                    'action'     => 'profileForm',
                 ],
                 '/logout' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'logout'
+                    'action'     => 'logout',
                 ],
                 '/admin/logout' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'logout'
+                    'action'     => 'logout',
                 ],
                 '/account/members' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'listUsers'
+                    'action'     => 'listUsers',
                 ],
                 '/reset-password' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'resetPasswordForm',
-                    'accessRole' => 'guest'
+                    'action'     => 'resetPasswordForm',
+                    'accessRole' => 'guest',
                 ],
                 '/forgot-password' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'forgotPasswordForm',
-                    'accessRole' => 'guest'
+                    'action'     => 'forgotPasswordForm',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/forgot-password' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'forgotPasswordForm',
-                    'accessRole' => 'guest'
+                    'action'     => 'forgotPasswordForm',
+                    'accessRole' => 'guest',
                 ],
             ],
             'POST' => [
                 '/register' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'register',
-                    'accessRole' => 'guest'
+                    'action'     => 'register',
+                    'accessRole' => 'guest',
                 ],
                 '/contact/new' => [
-                    'component' => 'contact',
+                    'component'  => 'contact',
                     'controller' => 'Contact',
-                    'action' => 'newMessage'
+                    'action'     => 'newMessage',
                 ],
                 '/login' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'login',
-                    'accessRole' => 'guest'
+                    'action'     => 'login',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/login' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'login',
-                    'accessRole' => 'guest'
+                    'action'     => 'login',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/add-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'addMember'
+                    'action'     => 'addMember',
                 ],
                 '/admin/add-group-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'addGroup'
+                    'action'     => 'addGroup',
                 ],
                 '/admin/update-group-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'updateGroup'
+                    'action'     => 'updateGroup',
                 ],
                 '/admin/safe-delete-group-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'safeDeleteGroup'
+                    'action'     => 'safeDeleteGroup',
                 ],
                 '/admin/safe-batch-delete-group-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'safeBatchDeleteGroup'
+                    'action'     => 'safeBatchDeleteGroup',
                 ],
                 '/admin/delete-group-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'deleteGroup'
+                    'action'     => 'deleteGroup',
                 ],
                 '/admin/batch-delete-group-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'batchDeleteGroup'
+                    'action'     => 'batchDeleteGroup',
                 ],
                 '/admin/contact/safe-delete-message' => [
-                    'component' => 'contact',
+                    'component'  => 'contact',
                     'controller' => 'Contact',
-                    'action' => 'safeDeleteMessage'
+                    'action'     => 'safeDeleteMessage',
                 ],
                 '/admin/contact/safe-batch-delete-message' => [
-                    'component' => 'contact',
+                    'component'  => 'contact',
                     'controller' => 'Contact',
-                    'action' => 'safeBatchDeleteMessage'
+                    'action'     => 'safeBatchDeleteMessage',
                 ],
                 '/admin/contact/delete-message' => [
-                    'component' => 'contact',
+                    'component'  => 'contact',
                     'controller' => 'Contact',
-                    'action' => 'deleteMessage'
+                    'action'     => 'deleteMessage',
                 ],
                 '/admin/contact/batch-delete-message' => [
-                    'component' => 'contact',
+                    'component'  => 'contact',
                     'controller' => 'Contact',
-                    'action' => 'batchDeleteMessage'
+                    'action'     => 'batchDeleteMessage',
                 ],
                 '/account/notify' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'notify'
+                    'action'     => 'notify',
                 ],
                 '/account/delete-child' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'safeDeleteChild'
+                    'action'     => 'safeDeleteChild',
                 ],
                 '/account/batch-delete-child' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'safeBatchDeleteChild'
+                    'action'     => 'safeBatchDeleteChild',
                 ],
                 '/admin/delete-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'deleteMember'
+                    'action'     => 'deleteMember',
                 ],
                 '/admin/batch-delete-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'batchDeleteMember'
+                    'action'     => 'batchDeleteMember',
                 ],
                 '/admin/safe-delete-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'safeDeleteMember'
+                    'action'     => 'safeDeleteMember',
                 ],
                 '/admin/safe-batch-delete-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'safeBatchDeleteMember'
+                    'action'     => 'safeBatchDeleteMember',
                 ],
                 '/account/update-child' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'updateChild'
+                    'action'     => 'updateChild',
                 ],
                 '/admin/update-member' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'updateMember'
+                    'action'     => 'updateMember',
                 ],
                 '/account/add-child' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'addChild'
+                    'action'     => 'addChild',
                 ],
                 '/reset-password' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'resetPassword',
-                    'accessRole' => 'guest'
+                    'action'     => 'resetPassword',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/reset-password' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'resetPassword',
-                    'accessRole' => 'guest'
+                    'action'     => 'resetPassword',
+                    'accessRole' => 'guest',
                 ],
                 '/forgot-password' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'forgotPassword',
-                    'accessRole' => 'guest'
+                    'action'     => 'forgotPassword',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/forgot-password' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'forgotPassword',
-                    'accessRole' => 'guest'
+                    'action'     => 'forgotPassword',
+                    'accessRole' => 'guest',
                 ],
                 '/account/update-profile' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'updateProfile'
+                    'action'     => 'updateProfile',
                 ],
                 '/admin/update-profile' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'updateProfile'
-                ]
-            ]
+                    'action'     => 'updateProfile',
+                ],
+            ],
         ],
-        /**
+        /*
          * Regex
          */
         'regex' => [
             'GET' => [
                 '/account/members/page/{page:int}/limit/{limit:int:?}' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'listUsers',
-                    'base' => '/account/members'
+                    'action'     => 'listUsers',
+                    'base'       => '/account/members',
                 ],
                 '/admin/members/page/{page:int}/limit/{limit:int:?}' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'listMembers',
-                    'base' => '/admin/members'
+                    'action'     => 'listMembers',
+                    'base'       => '/admin/members',
                 ],
                 '/admin/groups/page/{page:int}/limit/{limit:int:?}' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberGroup',
-                    'action' => 'listGroups',
-                    'base' => '/admin/groups'
+                    'action'     => 'listGroups',
+                    'base'       => '/admin/groups',
                 ],
                 '/admin/contact/messages/page/{page:int}/limit/{limit:int:?}' => [
-                    'component' => 'contact',
+                    'component'  => 'contact',
                     'controller' => 'Contact',
-                    'action' => 'listMessages',
-                    'base' => '/admin/contact/messages'
+                    'action'     => 'listMessages',
+                    'base'       => '/admin/contact/messages',
                 ],
                 // TODO think about type of parameter: currently is any
                 '/reset-password/email/{email:any}/token/{token:any}' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'resetPasswordForm',
-                    'base' => '/reset-password',
-                    'accessRole' => 'guest'
+                    'action'     => 'resetPasswordForm',
+                    'base'       => '/reset-password',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/reset-password/email/{email:any}/token/{token:any}' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'resetPasswordForm',
-                    'base' => '/admin/reset-password',
-                    'accessRole' => 'guest'
+                    'action'     => 'resetPasswordForm',
+                    'base'       => '/admin/reset-password',
+                    'accessRole' => 'guest',
                 ],
                 '/admin/member/{id:int}' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'AdminUser',
-                    'action' => 'viewMember'
+                    'action'     => 'viewMember',
                 ],
                 '/account/member/{id:int}' => [
-                    'component' => 'user',
+                    'component'  => 'user',
                     'controller' => 'MemberUser',
-                    'action' => 'viewChild'
-                ]
+                    'action'     => 'viewChild',
+                ],
             ],
             'POST' => [
 //                '/reset-password/email/{email:any}/token/{token:any}' => [
@@ -328,7 +328,7 @@ class RoutesTemplate
 //                    'base' => '/reset-password',
 //                    'accessRole' => 'guest'
 //                ],
-            ]
-        ]
+            ],
+        ],
     ];
 }

@@ -15,7 +15,7 @@ class ContactMessageMapper extends BaseMapper
     public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         try {
@@ -27,17 +27,18 @@ class ContactMessageMapper extends BaseMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
 
         /**
-         * Start inserting
+         * Start inserting.
          */
         $fieldsValues = $this->getFieldsValues($inputs, [], 'add');
         $insertedId = $this->insertOne($fieldsValues);
@@ -49,7 +50,7 @@ class ContactMessageMapper extends BaseMapper
         } else {
             $output->setSuccess(false);
         }
-        /**
+        /*
          * Finish inserting
          */
 
@@ -65,9 +66,9 @@ class ContactMessageMapper extends BaseMapper
         $nameInput->setDefaultValue('');
 
         $definedInputs = [
-            'name' => $nameInput,
-            'email' => new DatabaseInput('email', [$requiredRule, $emailRule]),
-            'message' => new DatabaseInput('message', [$requiredRule])
+            'name'    => $nameInput,
+            'email'   => new DatabaseInput('email', [$requiredRule, $emailRule]),
+            'message' => new DatabaseInput('message', [$requiredRule]),
         ];
 
         // remove excluded ones

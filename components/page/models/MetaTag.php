@@ -5,8 +5,7 @@ namespace CodeJetter\components\page\models;
 use CodeJetter\core\BaseModel;
 
 /**
- * Class MetaTag
- * @package CodeJetter\components\page\models
+ * Class MetaTag.
  */
 class MetaTag extends BaseModel
 {

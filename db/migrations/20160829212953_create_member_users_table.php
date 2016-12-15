@@ -24,17 +24,17 @@ class CreateMemberUsersTable extends AbstractMigration
   `archivedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 
-        $this->execute("ALTER TABLE `cj_member_users`
+        $this->execute('ALTER TABLE `cj_member_users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `Unique Username` (`username`,`live`),
-  ADD UNIQUE KEY `Unique Email` (`email`,`live`);");
+  ADD UNIQUE KEY `Unique Email` (`email`,`live`);');
 
-        $this->execute("ALTER TABLE `cj_member_users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;");
+        $this->execute('ALTER TABLE `cj_member_users`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;');
     }
 
     public function down()
     {
-        $this->execute("DROP TABLE `cj_member_users`");
+        $this->execute('DROP TABLE `cj_member_users`');
     }
 }

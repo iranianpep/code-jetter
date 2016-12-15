@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 22/12/15
- * Time: 8:46 AM
+ * Time: 8:46 AM.
  */
 
 namespace CodeJetter\core\io;
@@ -11,10 +11,7 @@ namespace CodeJetter\core\io;
 use CodeJetter\core\Registry;
 
 /**
- * Class Response
- * @package CodeJetter\core\io
- *
- * A single output point for the app - here we can handle if the request is ajax, or not
+ * Class Response.
  */
 class Response
 {
@@ -130,7 +127,7 @@ class Response
     {
         if ((new Request())->isAJAX() === true) {
             $url = Registry::getConfigClass()->get('URL');
-            header('Access-Control-Allow-Origin: ' . $url);
+            header('Access-Control-Allow-Origin: '.$url);
             header('Access-Control-Allow-Methods: *');
             header('Content-Type: application/json');
         }
@@ -140,7 +137,7 @@ class Response
         }
 
         if ((new Request())->isAJAX() === false) {
-            $content .= microtime(true) - (new Request())->getStartTime() . ' Seconds';
+            $content .= microtime(true) - (new Request())->getStartTime().' Seconds';
         }
 
         echo $content;

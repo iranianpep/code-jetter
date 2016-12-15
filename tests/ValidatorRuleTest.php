@@ -38,4 +38,3 @@ class ValidatorRuleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['blah blah' => 2], $rule->getFunctionArguments());
     }
 }
- 

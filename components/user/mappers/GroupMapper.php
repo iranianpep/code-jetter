@@ -9,8 +9,7 @@ use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
 
 /**
- * Class GroupMapper
- * @package CodeJetter\components\user\mappers
+ * Class GroupMapper.
  */
 abstract class GroupMapper extends BaseMapper
 {
@@ -19,13 +18,14 @@ abstract class GroupMapper extends BaseMapper
      * @param null $status
      * @param bool $excludeArchived
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function getOneByName($name, $status = null, $excludeArchived = true)
     {
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         try {
@@ -38,26 +38,26 @@ abstract class GroupMapper extends BaseMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $criteria = [
             [
                 'column' => 'name',
-                'value' => $name
-            ]
+                'value'  => $name,
+            ],
         ];
 
         if ($status !== null && is_numeric($status)) {
             $criteria[] = [
                 'column' => 'status',
-                'value' => $status
+                'value'  => $status,
             ];
         }
 

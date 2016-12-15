@@ -5,8 +5,7 @@ namespace CodeJetter\core\utility;
 use DateTime;
 
 /**
- * Class DateTimeUtility
- * @package CodeJetter\core\utility
+ * Class DateTimeUtility.
  */
 class DateTimeUtility
 {
@@ -39,37 +38,41 @@ class DateTimeUtility
             $sign = '+';
         }
 
-        return $sign . str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' . str_pad($minutes, 2, '0');
+        return $sign.str_pad($hour, 2, '0', STR_PAD_LEFT).':'.str_pad($minutes, 2, '0');
     }
 
     /**
-     * Return date difference in full hours
+     * Return date difference in full hours.
      *
      * @param $startDate
      * @param $endDate
+     *
      * @return int
      */
     public function diffInFullHours($startDate, $endDate)
     {
         $diff = (new DateTime($startDate))->diff(new DateTime($endDate));
-        return ($diff->h + ($diff->days * 24));
+
+        return $diff->h + ($diff->days * 24);
     }
 
     /**
-     * Return date difference in full minutes
+     * Return date difference in full minutes.
      *
      * @param $startDate
      * @param $endDate
+     *
      * @return int
      */
     public function diffInFullMinutes($startDate, $endDate)
     {
         $diff = (new DateTime($startDate))->diff(new DateTime($endDate));
+
         return $this->diffInFullHours($startDate, $endDate) * 60 + $diff->i;
     }
 
     /**
-     * Return date difference in full days - If start date is earlier than end date it returns positive
+     * Return date difference in full days - If start date is earlier than end date it returns positive.
      *
      * @param $startDate
      * @param $endDate
@@ -79,6 +82,7 @@ class DateTimeUtility
     public function diffInFullDays($startDate, $endDate)
     {
         $diff = (new DateTime($startDate))->diff(new DateTime($endDate));
+
         return (int) $diff->format('%r%a');
     }
 }

@@ -8,8 +8,7 @@ use CodeJetter\core\layout\blocks\ComponentTemplate;
 use CodeJetter\core\View;
 
 /**
- * Class PageController
- * @package CodeJetter\components\page\controllers
+ * Class PageController.
  */
 class PageController extends BaseController
 {
@@ -22,12 +21,12 @@ class PageController extends BaseController
         //$page->setTitle('Welcome');
 
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'defaultIndex.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'defaultIndex.php');
 
         (new View())->make(
             $page,
             [
-                'index' => $componentTemplate
+                'index' => $componentTemplate,
             ]
         );
     }

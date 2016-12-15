@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 25/04/15
- * Time: 5:37 PM
+ * Time: 5:37 PM.
  */
 
 namespace CodeJetter\core;
@@ -11,15 +11,14 @@ namespace CodeJetter\core;
 use CodeJetter\core\database\MySQLDatabase;
 
 /**
- * Class Registry
- * @package CodeJetter\core
+ * Class Registry.
  */
 class Registry extends Singleton
 {
     private static $container;
 
     /**
-     * add class to container
+     * add class to container.
      *
      * @param      $object
      * @param null $key
@@ -28,7 +27,7 @@ class Registry extends Singleton
     {
         if ($key === null) {
             $classNameWithNamespace = get_class($object);
-            $key = substr($classNameWithNamespace, strrpos($classNameWithNamespace, '\\')+1);
+            $key = substr($classNameWithNamespace, strrpos($classNameWithNamespace, '\\') + 1);
         }
 
         static::$container[$key] = $object;
@@ -37,9 +36,9 @@ class Registry extends Singleton
     /**
      * @param $classKey
      *
-     * @return object
-     *
      * @throws \Exception
+     *
+     * @return object
      */
     public static function get($classKey)
     {
@@ -51,12 +50,13 @@ class Registry extends Singleton
     }
 
     /**
-     * remove a class by its key
+     * remove a class by its key.
      *
      * @param $classKey
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public static function remove($classKey)
     {
@@ -69,6 +69,7 @@ class Registry extends Singleton
 
         if (static::isInContainer($classKey)) {
             unset(static::$container[$classKey]);
+
             return true;
         } else {
             return false;
@@ -76,7 +77,7 @@ class Registry extends Singleton
     }
 
     /**
-     * check to see if the class is stored in registry container
+     * check to see if the class is stored in registry container.
      *
      * @param $classKey
      *
@@ -96,7 +97,7 @@ class Registry extends Singleton
     }
 
     /**
-     * return all the stored classes
+     * return all the stored classes.
      *
      * @return mixed
      */
@@ -106,7 +107,7 @@ class Registry extends Singleton
     }
 
     /**
-     * return a list of classes without their content
+     * return a list of classes without their content.
      *
      * @return array
      */
@@ -116,14 +117,16 @@ class Registry extends Singleton
         foreach (static::getClasses() as $classKey => $classValue) {
             $classesList[$classKey] = get_class($classValue);
         }
+
         return $classesList;
     }
 
     /**
-     * return config class for ease of use
+     * return config class for ease of use.
+     *
+     * @throws \Exception
      *
      * @return BaseConfig
-     * @throws \Exception
      */
     public static function getConfigClass()
     {
@@ -131,10 +134,11 @@ class Registry extends Singleton
     }
 
     /**
-     * return router class for ease of use
+     * return router class for ease of use.
+     *
+     * @throws \Exception
      *
      * @return Router
-     * @throws \Exception
      */
     public static function getRouterClass()
     {
@@ -142,10 +146,11 @@ class Registry extends Singleton
     }
 
     /**
-     * return mysql database class for ease of use
+     * return mysql database class for ease of use.
+     *
+     * @throws \Exception
      *
      * @return MySQLDatabase
-     * @throws \Exception
      */
     public static function getMySQLDBClass()
     {
@@ -153,10 +158,11 @@ class Registry extends Singleton
     }
 
     /**
-     * return language class for ease of use
+     * return language class for ease of use.
+     *
+     * @throws \Exception
      *
      * @return Language
-     * @throws \Exception
      */
     public static function getLanguageClass()
     {
@@ -164,7 +170,7 @@ class Registry extends Singleton
     }
 
     /**
-     * Reset Registry container only in dev mode
+     * Reset Registry container only in dev mode.
      *
      * @throws \Exception
      */
