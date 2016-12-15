@@ -7,5 +7,7 @@ engines:
   fixme:
       enabled: false
 exclude_paths:
+- "db/**/*"
+- "docs/**/*"
 - "libs/**/*"
 - "**/vendor/**/*"
