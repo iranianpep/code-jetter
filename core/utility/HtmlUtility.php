@@ -146,9 +146,11 @@ class HtmlUtility
             $title = $stringUtility->prepareForView($title);
 
             if (isset($configs['inline'])) {
-                $html .= "<label{$class}><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
+                $html .= "<label{$class}>
+<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
+                $html .= "<div{$class}><label>
+<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
@@ -208,9 +210,11 @@ class HtmlUtility
                 $disabled = ' disabled' : '';
 
             if (isset($configs['inline'])) {
-                $html .= "<label{$class}><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
+                $html .= "<label{$class}>
+<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
+                $html .= "<div{$class}><label>
+<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
@@ -323,7 +327,8 @@ class HtmlUtility
         $appendData = true,
         $populateForm = false
     ) {
-        return "<div class='modal fade' id='{$divId}' tabindex='-1' role='dialog' aria-labelledby='{$labelId}' data-titleprefix='{$modalTitlePrefix}'>
+        return "<div class='modal fade' id='{$divId}' tabindex='-1' role='dialog' aria-labelledby='{$labelId}'
+data-titleprefix='{$modalTitlePrefix}'>
   <div class='modal-dialog modal-sm' role='document'>
     <div class='modal-content'>
       <div class='modal-header'>
@@ -331,7 +336,8 @@ class HtmlUtility
         <span aria-hidden='true'>&times;</span></button>
         <h4 class='modal-title' id='{$labelId}'>Delete Group(s)</h4>
       </div>
-      <form class='{$formClass}' data-url='{$formAction}' data-submitter='{$submitter}' data-refresh='{$refresh}' data-append='{$appendData}' data-populate='{$populateForm}'>
+      <form class='{$formClass}' data-url='{$formAction}' data-submitter='{$submitter}' data-refresh='{$refresh}'
+      data-append='{$appendData}' data-populate='{$populateForm}'>
       <input type='hidden' class='additional-data'>
           <div class='modal-body'>
             <p>Are you sure?</p>
