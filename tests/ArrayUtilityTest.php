@@ -14,43 +14,43 @@ class ArrayUtilityTest extends \PHPUnit_Framework_TestCase
             [
                 'input' => [
                     '1' => [1, 2, 3],
-                    '2' => [2, 3, 4]
+                    '2' => [2, 3, 4],
                 ],
                 'output' => [
                     'toBeDeleted' => [1],
-                    'toBeAdded' => [2 => 4]
-                ]
+                    'toBeAdded'   => [2 => 4],
+                ],
             ],
             [
                 'input' => [
                     '1' => [],
-                    '2' => []
+                    '2' => [],
                 ],
                 'output' => [
                     'toBeDeleted' => [],
-                    'toBeAdded' => []
-                ]
+                    'toBeAdded'   => [],
+                ],
             ],
             [
                 'input' => [
                     '1' => [2],
-                    '2' => []
+                    '2' => [],
                 ],
                 'output' => [
                     'toBeDeleted' => [2],
-                    'toBeAdded' => []
-                ]
+                    'toBeAdded'   => [],
+                ],
             ],
             [
                 'input' => [
                     '1' => [],
-                    '2' => [1]
+                    '2' => [1],
                 ],
                 'output' => [
                     'toBeDeleted' => [],
-                    'toBeAdded' => [1]
-                ]
-            ]
+                    'toBeAdded'   => [1],
+                ],
+            ],
         ];
 
         foreach ($ios as $io) {
@@ -65,43 +65,43 @@ class ArrayUtilityTest extends \PHPUnit_Framework_TestCase
         $ios = [
             [
                 'input' => [
-                    'array' => [1, 2, 3],
+                    'array'     => [1, 2, 3],
                     'excluding' => [2, 3, 4],
-                    'filterBy' => 'value'
+                    'filterBy'  => 'value',
                 ],
-                'output' => [1]
+                'output' => [1],
             ],
             [
                 'input' => [
-                    'array' => [1, 2, 3],
+                    'array'     => [1, 2, 3],
                     'excluding' => [],
-                    'filterBy' => 'value'
+                    'filterBy'  => 'value',
                 ],
-                'output' => [1, 2, 3]
+                'output' => [1, 2, 3],
             ],
             [
                 'input' => [
-                    'array' => [1, 2, 3],
+                    'array'     => [1, 2, 3],
                     'excluding' => [1, 2, 3],
-                    'filterBy' => 'value'
+                    'filterBy'  => 'value',
                 ],
-                'output' => []
+                'output' => [],
             ],
             [
                 'input' => [
-                    'array' => [1, 2, 3],
+                    'array'     => [1, 2, 3],
                     'excluding' => [1, 2, 3],
-                    'filterBy' => 'key'
+                    'filterBy'  => 'key',
                 ],
-                'output' => [1]
+                'output' => [1],
             ],
             [
                 'input' => [
-                    'array' => [1 => 2, 2 => 3, 3 => 4],
+                    'array'     => [1 => 2, 2 => 3, 3 => 4],
                     'excluding' => [1, 2, 3],
-                    'filterBy' => 'key'
+                    'filterBy'  => 'key',
                 ],
-                'output' => []
+                'output' => [],
             ],
         ];
 

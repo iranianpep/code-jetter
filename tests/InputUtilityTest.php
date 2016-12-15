@@ -18,94 +18,94 @@ class InputUtilityTest extends \PHPUnit_Framework_TestCase
         $ios = [
             [
                 'i1' => [
-                    'name' => 'test',
-                    'email' => 'test@test.com',
-                    'message' => 'test message'
+                    'name'    => 'test',
+                    'email'   => 'test@test.com',
+                    'message' => 'test message',
                 ],
                 'i2' => [
                     new DatabaseInput('name'),
                     new DatabaseInput('email', [$requiredRule, $emailRule]),
-                    new DatabaseInput('message', [$requiredRule])
+                    new DatabaseInput('message', [$requiredRule]),
                 ],
                 'i3' => 'add',
-                'o' => [
+                'o'  => [
                     'name' => [
                         'column' => 'name',
-                        'value' => 'test',
-                        'type' => null,
-                        'bind' => null
+                        'value'  => 'test',
+                        'type'   => null,
+                        'bind'   => null,
                     ],
                     'email' => [
                         'column' => 'email',
-                        'value' => 'test@test.com',
-                        'type' => null,
-                        'bind' => null
+                        'value'  => 'test@test.com',
+                        'type'   => null,
+                        'bind'   => null,
                     ],
                     'message' => [
                         'column' => 'message',
-                        'value' => 'test message',
-                        'type' => null,
-                        'bind' => null
-                    ]
-                ]
+                        'value'  => 'test message',
+                        'type'   => null,
+                        'bind'   => null,
+                    ],
+                ],
             ],
             [
                 'i1' => [
-                    'email' => 'test@test.com',
-                    'message' => 'test message'
+                    'email'   => 'test@test.com',
+                    'message' => 'test message',
                 ],
                 'i2' => [
                     new DatabaseInput('name'),
                     new DatabaseInput('email', [$requiredRule, $emailRule]),
-                    new DatabaseInput('message', [$requiredRule])
+                    new DatabaseInput('message', [$requiredRule]),
                 ],
                 'i3' => 'update',
-                'o' => [
+                'o'  => [
                     'email' => [
                         'column' => 'email',
-                        'value' => 'test@test.com',
-                        'type' => null,
-                        'bind' => null
+                        'value'  => 'test@test.com',
+                        'type'   => null,
+                        'bind'   => null,
                     ],
                     'message' => [
                         'column' => 'message',
-                        'value' => 'test message',
-                        'type' => null,
-                        'bind' => null
-                    ]
-                ]
+                        'value'  => 'test message',
+                        'type'   => null,
+                        'bind'   => null,
+                    ],
+                ],
             ],
             [
                 'i1' => [
-                    'email' => 'test@test.com',
-                    'message' => 'test message'
+                    'email'   => 'test@test.com',
+                    'message' => 'test message',
                 ],
                 'i2' => [
                     new DatabaseInput('name'),
                     new DatabaseInput('email', [$requiredRule, $emailRule]),
-                    new DatabaseInput('message', [$requiredRule])
+                    new DatabaseInput('message', [$requiredRule]),
                 ],
                 'i3' => 'add',
-                'o' => [
+                'o'  => [
                     'name' => [
                         'column' => 'name',
-                        'value' => '',
-                        'type' => null,
-                        'bind' => null
+                        'value'  => '',
+                        'type'   => null,
+                        'bind'   => null,
                     ],
                     'email' => [
                         'column' => 'email',
-                        'value' => 'test@test.com',
-                        'type' => null,
-                        'bind' => null
+                        'value'  => 'test@test.com',
+                        'type'   => null,
+                        'bind'   => null,
                     ],
                     'message' => [
                         'column' => 'message',
-                        'value' => 'test message',
-                        'type' => null,
-                        'bind' => null
-                    ]
-                ]
+                        'value'  => 'test message',
+                        'type'   => null,
+                        'bind'   => null,
+                    ],
+                ],
             ],
         ];
 

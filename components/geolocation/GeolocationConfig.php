@@ -8,6 +8,6 @@ class GeolocationConfig extends BaseConfig
 {
     protected static $configs = [
         'defaultCountryCode' => 'AU',
-        'defaultCity' => 'Melbourne'
+        'defaultCity'        => 'Melbourne',
     ];
 }

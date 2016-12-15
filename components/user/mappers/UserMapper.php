@@ -15,8 +15,7 @@ use CodeJetter\core\utility\DateTimeUtility;
 use CodeJetter\core\utility\InputUtility;
 
 /**
- * Class UserMapper
- * @package CodeJetter\components\user\mappers
+ * Class UserMapper.
  */
 abstract class UserMapper extends BaseMapper
 {
@@ -25,13 +24,14 @@ abstract class UserMapper extends BaseMapper
      * @param null $parentId
      * @param null $status
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function getOneByEmail($email, $parentId = null, $status = null)
     {
         /**
-         * start validating
+         * start validating.
          */
         $output = new Output();
         try {
@@ -45,27 +45,27 @@ abstract class UserMapper extends BaseMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * finish validating
+         * finish validating.
          */
-
         $criteria = [
             [
                 'column' => 'email',
-                'value' => $email
-            ]
+                'value'  => $email,
+            ],
         ];
 
         if ($parentId !== null && is_numeric($parentId)) {
             $parentCriteria = [
                 'column' => 'parentId',
-                'value' => (int) $parentId,
-                'type' => \PDO::PARAM_INT
+                'value'  => (int) $parentId,
+                'type'   => \PDO::PARAM_INT,
             ];
 
             array_push($criteria, $parentCriteria);
@@ -74,7 +74,7 @@ abstract class UserMapper extends BaseMapper
         if ($status !== null && is_numeric($status)) {
             $statusCriteria = [
                 'column' => 'status',
-                'value' => $status
+                'value'  => $status,
             ];
 
             array_push($criteria, $statusCriteria);
@@ -100,13 +100,14 @@ abstract class UserMapper extends BaseMapper
      * @param null $status
      * @param bool $excludeArchived
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function getOneByUsername($username, $status = null, $excludeArchived = true)
     {
         /**
-         * start validating
+         * start validating.
          */
         $output = new Output();
         try {
@@ -119,26 +120,26 @@ abstract class UserMapper extends BaseMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * finish validating
+         * finish validating.
          */
-
         $criteria = [
             [
                 'column' => 'username',
-                'value' => $username
-            ]
+                'value'  => $username,
+            ],
         ];
 
         if ($status !== null && is_numeric($status)) {
             $criteria[] = [
                 'column' => 'status',
-                'value' => $status
+                'value'  => $status,
             ];
         }
 
@@ -165,8 +166,9 @@ abstract class UserMapper extends BaseMapper
      * @param array $additionalDefinedInputs
      * @param bool  $excludeArchived
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function update(
         array $criteria,
@@ -178,7 +180,7 @@ abstract class UserMapper extends BaseMapper
         $batchAction = false
     ) {
         /**
-         * start validating
+         * start validating.
          */
         $definedInputs = [];
         $output = new Output();
@@ -211,7 +213,7 @@ abstract class UserMapper extends BaseMapper
 
             /**
              * Merge the default defined inputs with the additional one
-             * This allows us to use update function for different user types
+             * This allows us to use update function for different user types.
              */
             $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
 
@@ -224,16 +226,17 @@ abstract class UserMapper extends BaseMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
-        /**
+        /*
          * finish validating
          */
 
-        /**
+        /*
          * Start checking if the user exists
          */
         if (isset($inputs['id'])) {
@@ -243,11 +246,11 @@ abstract class UserMapper extends BaseMapper
                 return false;
             }
         }
-        /**
+        /*
          * Finish checking if the user exists
          */
 
-        /**
+        /*
          * Start checking if the username exists
          */
         if (!empty($inputs['username'])) {
@@ -258,15 +261,16 @@ abstract class UserMapper extends BaseMapper
                 if (!empty($found) && $found instanceof User) {
                     $output->setSuccess(false);
                     $output->setMessage('Username already exists');
+
                     return $output;
                 }
             }
         }
-        /**
+        /*
          * Finish checking if the username exists
          */
 
-        /**
+        /*
          * Start checking if the email exists
          */
         if (!empty($inputs['email'])) {
@@ -277,14 +281,14 @@ abstract class UserMapper extends BaseMapper
                 if (!empty($found) && $found instanceof User) {
                     $output->setSuccess(false);
                     $output->setMessage('Email already exists');
+
                     return $output;
                 }
             }
         }
         /**
-         * Finish checking if the email exists
+         * Finish checking if the email exists.
          */
-
         $commonFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'update');
 
         $fieldsValues = array_merge($commonFieldsValues, $fieldsValues);
@@ -308,17 +312,18 @@ abstract class UserMapper extends BaseMapper
      * @param       $id
      * @param array $inputs
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function updateById($id, array $inputs)
     {
         $criteria = [
             [
                 'column' => 'id',
-                'value' => $id,
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $id,
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         $inputs['id'] = $id;
@@ -329,18 +334,20 @@ abstract class UserMapper extends BaseMapper
     /**
      * Contains all the common functions and checks for adding a user
      * Any specific function or check happens in the children 'add' functions
-     * And this function is called after the specific ones
+     * And this function is called after the specific ones.
+     *
      * @param array $inputs
      * @param array $fieldsValues
      * @param array $additionalDefinedInputs
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
         /**
-         * Start validating common inputs
+         * Start validating common inputs.
          */
         $definedInputs = [];
         $output = new Output();
@@ -357,7 +364,7 @@ abstract class UserMapper extends BaseMapper
 
             /**
              * Merge the default defined inputs with the additional one
-             * This allows us to use add function for different user types
+             * This allows us to use add function for different user types.
              */
             $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
 
@@ -371,30 +378,32 @@ abstract class UserMapper extends BaseMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * Finish validating common inputs
+         * Finish validating common inputs.
          */
 
         /**
-         * Start checking if the email exists
+         * Start checking if the email exists.
          */
         $found = $this->getOneByEmail($inputs['email'])->getData();
 
         if (!empty($found) && $found instanceof User) {
             $output->setSuccess(false);
             $output->setMessage('Email already exists');
+
             return $output;
         }
-        /**
+        /*
          * Finish checking if the email exists
          */
 
-        /**
+        /*
          * Start checking if the username exists
          */
         if (isset($inputs['username'])) {
@@ -403,15 +412,16 @@ abstract class UserMapper extends BaseMapper
             if (!empty($found) && $found instanceof User) {
                 $output->setSuccess(false);
                 $output->setMessage('Username already exists');
+
                 return $output;
             }
         }
         /**
-         * Finish checking if the username exists
+         * Finish checking if the username exists.
          */
 
         /**
-         * Start inserting
+         * Start inserting.
          */
         $commonFieldsValues = $this->getFieldsValues($inputs, $definedInputs, 'add');
 
@@ -432,7 +442,7 @@ abstract class UserMapper extends BaseMapper
         } else {
             $output->setSuccess(false);
         }
-        /**
+        /*
          * Finish inserting
          */
 
@@ -454,9 +464,9 @@ abstract class UserMapper extends BaseMapper
             $emailInput = new DatabaseInput('email', [$emailRule, $requiredRule]);
 
             $definedInputs = [
-                'name' => $nameInput,
+                'name'  => $nameInput,
                 'phone' => $phoneInput,
-                'email' => $emailInput
+                'email' => $emailInput,
             ];
 
             if ($action !== 'add' || in_array('id', $includingInputs)) {
@@ -468,7 +478,7 @@ abstract class UserMapper extends BaseMapper
                 $whitelistRule = new ValidatorRule(
                     'whitelist',
                     [
-                        'whitelist' => (new DateTimeUtility())->getTimeZones()
+                        'whitelist' => (new DateTimeUtility())->getTimeZones(),
                     ]
                 );
 
@@ -508,8 +518,8 @@ abstract class UserMapper extends BaseMapper
         if (isset($inputs['token'])) {
             $fieldsValues['tokenGeneratedAt'] = [
                 'column' => 'tokenGeneratedAt',
-                'value' => 'NOW()',
-                'bind' => false
+                'value'  => 'NOW()',
+                'bind'   => false,
             ];
         }
 

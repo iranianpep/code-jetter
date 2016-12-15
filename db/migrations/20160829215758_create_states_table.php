@@ -27,20 +27,20 @@ class CreateStatesTable extends AbstractMigration
 (7, 'Tasmania', 'Tas', 'AU', '2016-07-18 12:09:16', NULL, '1', NULL),
 (8, 'Northern Territory', 'NT', 'AU', '2016-07-18 12:09:16', NULL, '1', NULL);");
 
-        $this->execute("ALTER TABLE `cj_states`
+        $this->execute('ALTER TABLE `cj_states`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unique_countrycode_state_name` (`name`,`countryCode`),
-  ADD KEY `countryCode` (`countryCode`);");
+  ADD KEY `countryCode` (`countryCode`);');
 
-        $this->execute("ALTER TABLE `cj_states`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;");
+        $this->execute('ALTER TABLE `cj_states`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;');
 
-        $this->execute("ALTER TABLE `cj_states`
-  ADD CONSTRAINT `states_country_code_fk` FOREIGN KEY (`countryCode`) REFERENCES `cj_countries` (`code`) ON DELETE CASCADE ON UPDATE CASCADE;");
+        $this->execute('ALTER TABLE `cj_states`
+  ADD CONSTRAINT `states_country_code_fk` FOREIGN KEY (`countryCode`) REFERENCES `cj_countries` (`code`) ON DELETE CASCADE ON UPDATE CASCADE;');
     }
 
     public function down()
     {
-        $this->execute("DROP TABLE `cj_states`");
+        $this->execute('DROP TABLE `cj_states`');
     }
 }

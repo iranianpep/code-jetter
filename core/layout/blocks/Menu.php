@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 24/04/15
- * Time: 7:26 PM
+ * Time: 7:26 PM.
  */
 
 namespace CodeJetter\core\layout\blocks;
@@ -15,8 +15,7 @@ use CodeJetter\core\RouteInfo;
 use CodeJetter\core\utility\StringUtility;
 
 /**
- * Class Menu
- * @package CodeJetter\core\layout\blocks
+ * Class Menu.
  */
 class Menu extends BaseBlock
 {
@@ -24,6 +23,7 @@ class Menu extends BaseBlock
 
     /**
      * This is used for different type of users e.g. member, admin, ...
+     *
      * @return Menu
      */
     public function getPersonalizedMenu()
@@ -35,9 +35,9 @@ class Menu extends BaseBlock
         }
 
         /**
-         * If there is any access role for the route, it's already checked in route() that the right user is logged in
+         * If there is any access role for the route, it's already checked in route() that the right user is logged in.
          */
-        $personalizedMenu = new Menu($this->getView());
+        $personalizedMenu = new self($this->getView());
 
         $personalizedMenus = Registry::getConfigClass()->get('personalizedMenus', 'user');
         if (array_key_exists($routeInfo->getAccessRole(), $personalizedMenus)) {

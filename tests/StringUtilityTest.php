@@ -12,25 +12,25 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => 'CodeJetter\test\UtilityTest',
-                'output' => 'UtilityTest'
+                'input'  => 'CodeJetter\test\UtilityTest',
+                'output' => 'UtilityTest',
             ],
             [
-                'input' => 'CodeJetter\core\App',
-                'output' => 'App'
+                'input'  => 'CodeJetter\core\App',
+                'output' => 'App',
             ],
             [
-                'input' => 'CodeJetter\core\database\BaseDatabase',
-                'output' => 'BaseDatabase'
+                'input'  => 'CodeJetter\core\database\BaseDatabase',
+                'output' => 'BaseDatabase',
             ],
             [
-                'input' => 'CodeJetter\core\database\\',
-                'output' => ''
+                'input'  => 'CodeJetter\core\database\\',
+                'output' => '',
             ],
             [
-                'input' => '',
-                'output' => ''
-            ]
+                'input'  => '',
+                'output' => '',
+            ],
         ];
 
         // this is for empty input
@@ -47,40 +47,40 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => 'AdminUser',
-                'search' => 'User',
+                'input'   => 'AdminUser',
+                'search'  => 'User',
                 'replace' => '',
-                'output' => 'Admin'
+                'output'  => 'Admin',
             ],
             [
-                'input' => 'AdminUser',
-                'search' => 'user',
+                'input'   => 'AdminUser',
+                'search'  => 'user',
                 'replace' => '',
-                'output' => false
+                'output'  => false,
             ],
             [
-                'input' => 'AdminUserUser',
-                'search' => 'User',
+                'input'   => 'AdminUserUser',
+                'search'  => 'User',
                 'replace' => '',
-                'output' => 'AdminUser'
+                'output'  => 'AdminUser',
             ],
             [
-                'input' => 'AdminUserLast',
-                'search' => 'User',
+                'input'   => 'AdminUserLast',
+                'search'  => 'User',
                 'replace' => '',
-                'output' => 'AdminLast'
+                'output'  => 'AdminLast',
             ],
             [
-                'input' => 'AdminUserLastUser',
-                'search' => 'User',
+                'input'   => 'AdminUserLastUser',
+                'search'  => 'User',
                 'replace' => '',
-                'output' => 'AdminUserLast'
+                'output'  => 'AdminUserLast',
             ],
             [
-                'input' => 'AdminUserLastUser',
-                'search' => 'User',
+                'input'   => 'AdminUserLastUser',
+                'search'  => 'User',
                 'replace' => 'User',
-                'output' => 'AdminUserLastUser'
+                'output'  => 'AdminUserLastUser',
             ],
         ];
 
@@ -95,21 +95,21 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => 'AdminUser',
-                'output' => 'Admin_User'
+                'input'  => 'AdminUser',
+                'output' => 'Admin_User',
             ],
             [
-                'input' => 'GroupUserXref',
-                'output' => 'Group_User_Xref'
+                'input'  => 'GroupUserXref',
+                'output' => 'Group_User_Xref',
             ],
             [
-                'input' => 'GroupMemberUserXref',
-                'output' => 'Group_Member_User_Xref'
+                'input'  => 'GroupMemberUserXref',
+                'output' => 'Group_Member_User_Xref',
             ],
             [
-                'input' => 'HttpRequests',
-                'output' => 'Http_Requests'
-            ]
+                'input'  => 'HttpRequests',
+                'output' => 'Http_Requests',
+            ],
         ];
 
         foreach ($inputOutputs as $inputOutput) {
@@ -123,28 +123,28 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => 'www.example.com',
-                'output' => 'example.com'
+                'input'  => 'www.example.com',
+                'output' => 'example.com',
             ],
             [
-                'input' => 'http://example.com',
-                'output' => 'example.com'
+                'input'  => 'http://example.com',
+                'output' => 'example.com',
             ],
             [
-                'input' => 'http://www.example.com',
-                'output' => 'example.com'
+                'input'  => 'http://www.example.com',
+                'output' => 'example.com',
             ],
             [
-                'input' => 'http://www.example.com/test',
-                'output' => 'example.com/test'
+                'input'  => 'http://www.example.com/test',
+                'output' => 'example.com/test',
             ],
             [
-                'input' => 'http://test.example.com/test?id=1',
-                'output' => 'test.example.com/test?id=1'
+                'input'  => 'http://test.example.com/test?id=1',
+                'output' => 'test.example.com/test?id=1',
             ],
             [
-                'input' => 'http://test.example.com?id=1',
-                'output' => 'test.example.com?id=1'
+                'input'  => 'http://test.example.com?id=1',
+                'output' => 'test.example.com?id=1',
             ],
         ];
 
@@ -159,46 +159,46 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => '',
-                'output' => []
+                'input'  => '',
+                'output' => [],
             ],
             [
-                'input' => '0',
-                'output' => []
+                'input'  => '0',
+                'output' => [],
             ],
             [
-                'input' => 0,
-                'output' => []
+                'input'  => 0,
+                'output' => [],
             ],
             [
-                'input' => '{"foo-bar": 12345}',
+                'input'  => '{"foo-bar": 12345}',
                 'output' => [
-                    'foo-bar' => 12345
-                ]
+                    'foo-bar' => 12345,
+                ],
             ],
             [
                 // this is an invalid json
-                'input' => '{bar:"baz"}',
-                'output' => []
+                'input'  => '{bar:"baz"}',
+                'output' => [],
             ],
             [
                 // this is an invalid json
-                'input' => "{'bar':'baz'}",
-                'output' => []
+                'input'  => "{'bar':'baz'}",
+                'output' => [],
             ],
             [
-                'input' => '{"foo-bar": 12345,}',
-                'output' => []
+                'input'  => '{"foo-bar": 12345,}',
+                'output' => [],
             ],
             [
-                'input' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
+                'input'  => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
                 'output' => [
-                    "a" => 1,
-                    "b" => 2,
-                    "c" => 3,
-                    "d" => 4,
-                    "e" => 5
-                ]
+                    'a' => 1,
+                    'b' => 2,
+                    'c' => 3,
+                    'd' => 4,
+                    'e' => 5,
+                ],
             ],
         ];
 
@@ -217,16 +217,16 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => 'admin_user',
-                'output' => 'AdminUser'
+                'input'  => 'admin_user',
+                'output' => 'AdminUser',
             ],
             [
-                'input' => 'member_group',
-                'output' => 'MemberGroup'
+                'input'  => 'member_group',
+                'output' => 'MemberGroup',
             ],
             [
-                'input' => 'group_member_user_xrefs',
-                'output' => 'GroupMemberUserXrefs'
+                'input'  => 'group_member_user_xrefs',
+                'output' => 'GroupMemberUserXrefs',
             ],
         ];
 
@@ -241,112 +241,112 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
 
         $inputOutputs = [
             [
-                'input' => 'user',
-                'output' => 'users'
+                'input'  => 'user',
+                'output' => 'users',
             ],
             [
-                'input' => 'party',
-                'output' => 'parties'
+                'input'  => 'party',
+                'output' => 'parties',
             ],
             [
-                'input' => 'bottle',
-                'output' => 'bottles'
+                'input'  => 'bottle',
+                'output' => 'bottles',
             ],
             [
-                'input' => 'box',
-                'output' => 'boxes'
+                'input'  => 'box',
+                'output' => 'boxes',
             ],
             [
-                'input' => 'watch',
-                'output' => 'watches'
+                'input'  => 'watch',
+                'output' => 'watches',
             ],
             [
-                'input' => 'moss',
-                'output' => 'mosses'
+                'input'  => 'moss',
+                'output' => 'mosses',
             ],
             [
-                'input' => 'bus',
-                'output' => 'buses'
+                'input'  => 'bus',
+                'output' => 'buses',
             ],
             [
-                'input' => 'wolf',
-                'output' => 'wolves'
+                'input'  => 'wolf',
+                'output' => 'wolves',
             ],
             [
-                'input' => 'wife',
-                'output' => 'wives'
+                'input'  => 'wife',
+                'output' => 'wives',
             ],
             [
-                'input' => 'leaf',
-                'output' => 'leaves'
+                'input'  => 'leaf',
+                'output' => 'leaves',
             ],
             [
-                'input' => 'life',
-                'output' => 'lives'
+                'input'  => 'life',
+                'output' => 'lives',
             ],
             [
-                'input' => 'child',
-                'output' => 'children'
+                'input'  => 'child',
+                'output' => 'children',
             ],
             [
-                'input' => 'woman',
-                'output' => 'women'
+                'input'  => 'woman',
+                'output' => 'women',
             ],
             [
-                'input' => 'man',
-                'output' => 'men'
+                'input'  => 'man',
+                'output' => 'men',
             ],
             [
-                'input' => 'mouse',
-                'output' => 'mice'
+                'input'  => 'mouse',
+                'output' => 'mice',
             ],
             [
-                'input' => 'goose',
-                'output' => 'geese'
+                'input'  => 'goose',
+                'output' => 'geese',
             ],
             [
-                'input' => 'baby',
-                'output' => 'babies'
+                'input'  => 'baby',
+                'output' => 'babies',
             ],
             [
-                'input' => 'toy',
-                'output' => 'toys'
+                'input'  => 'toy',
+                'output' => 'toys',
             ],
             [
-                'input' => 'kidney',
-                'output' => 'kidneys'
+                'input'  => 'kidney',
+                'output' => 'kidneys',
             ],
             [
-                'input' => 'potato',
-                'output' => 'potatoes'
+                'input'  => 'potato',
+                'output' => 'potatoes',
             ],
             [
-                'input' => 'memo',
-                'output' => 'memos'
+                'input'  => 'memo',
+                'output' => 'memos',
             ],
             [
-                'input' => 'stereo',
-                'output' => 'stereos'
+                'input'  => 'stereo',
+                'output' => 'stereos',
             ],
             [
-                'input' => 'sheep',
-                'output' => 'sheep'
+                'input'  => 'sheep',
+                'output' => 'sheep',
             ],
             [
-                'input' => 'deer',
-                'output' => 'deer'
+                'input'  => 'deer',
+                'output' => 'deer',
             ],
             [
-                'input' => 'series',
-                'output' => 'series'
+                'input'  => 'series',
+                'output' => 'series',
             ],
             [
-                'input' => 'species',
-                'output' => 'species'
+                'input'  => 'species',
+                'output' => 'species',
             ],
             [
-                'input' => 'business',
-                'output' => 'businesses'
+                'input'  => 'business',
+                'output' => 'businesses',
             ],
         ];
 
@@ -362,111 +362,111 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
         $inputOutputs = [
             [
                 'output' => 'user',
-                'input' => 'users'
+                'input'  => 'users',
             ],
             [
                 'output' => 'party',
-                'input' => 'parties'
+                'input'  => 'parties',
             ],
             [
                 'output' => 'bottle',
-                'input' => 'bottles'
+                'input'  => 'bottles',
             ],
             [
                 'output' => 'box',
-                'input' => 'boxes'
+                'input'  => 'boxes',
             ],
             [
                 'output' => 'watch',
-                'input' => 'watches'
+                'input'  => 'watches',
             ],
             [
                 'output' => 'moss',
-                'input' => 'mosses'
+                'input'  => 'mosses',
             ],
             [
                 'output' => 'bus',
-                'input' => 'buses'
+                'input'  => 'buses',
             ],
             [
                 'output' => 'wolf',
-                'input' => 'wolves'
+                'input'  => 'wolves',
             ],
             [
                 'output' => 'wife',
-                'input' => 'wives'
+                'input'  => 'wives',
             ],
             [
                 'output' => 'leaf',
-                'input' => 'leaves'
+                'input'  => 'leaves',
             ],
             [
                 'output' => 'life',
-                'input' => 'lives'
+                'input'  => 'lives',
             ],
             [
                 'output' => 'child',
-                'input' => 'children'
+                'input'  => 'children',
             ],
             [
                 'output' => 'woman',
-                'input' => 'women'
+                'input'  => 'women',
             ],
             [
                 'output' => 'man',
-                'input' => 'men'
+                'input'  => 'men',
             ],
             [
                 'output' => 'mouse',
-                'input' => 'mice'
+                'input'  => 'mice',
             ],
             [
                 'output' => 'goose',
-                'input' => 'geese'
+                'input'  => 'geese',
             ],
             [
                 'output' => 'baby',
-                'input' => 'babies'
+                'input'  => 'babies',
             ],
             [
                 'output' => 'toy',
-                'input' => 'toys'
+                'input'  => 'toys',
             ],
             [
                 'output' => 'kidney',
-                'input' => 'kidneys'
+                'input'  => 'kidneys',
             ],
             [
                 'output' => 'potato',
-                'input' => 'potatoes'
+                'input'  => 'potatoes',
             ],
             [
                 'output' => 'memo',
-                'input' => 'memos'
+                'input'  => 'memos',
             ],
             [
                 'output' => 'stereo',
-                'input' => 'stereos'
+                'input'  => 'stereos',
             ],
             [
                 'output' => 'sheep',
-                'input' => 'sheep'
+                'input'  => 'sheep',
             ],
             [
                 'output' => 'deer',
-                'input' => 'deer'
+                'input'  => 'deer',
             ],
             [
                 'output' => 'series',
-                'input' => 'series'
+                'input'  => 'series',
             ],
             [
                 'output' => 'species',
-                'input' => 'species'
+                'input'  => 'species',
             ],
             [
                 'output' => 'business',
-                'input' => 'businesses'
+                'input'  => 'businesses',
             ],
         ];
 
@@ -482,38 +482,38 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
         $inputOutputs = [
             [
                 'output' => 'jobs',
-                'input' => [
-                    'text' => 'cj_jobs',
-                    'prefix' => 'cj_'
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs',
+                    'prefix' => 'cj_',
+                ],
             ],
             [
                 'output' => 'cj_jobs',
-                'input' => [
-                    'text' => 'cj_jobs',
-                    'prefix' => ''
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs',
+                    'prefix' => '',
+                ],
             ],
             [
                 'output' => '',
-                'input' => [
-                    'text' => 'cj_jobs',
-                    'prefix' => 'cj_jobs'
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs',
+                    'prefix' => 'cj_jobs',
+                ],
             ],
             [
                 'output' => 'cj_jobs',
-                'input' => [
-                    'text' => 'cj_jobs',
-                    'prefix' => 'cj_jobsv'
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs',
+                    'prefix' => 'cj_jobsv',
+                ],
             ],
             [
                 'output' => 'string_bla_bla_bla',
-                'input' => [
-                    'text' => 'bla_string_bla_bla_bla',
-                    'prefix' => 'bla_'
-                ]
+                'input'  => [
+                    'text'   => 'bla_string_bla_bla_bla',
+                    'prefix' => 'bla_',
+                ],
             ],
         ];
 
@@ -529,31 +529,31 @@ class StringUtilityTest extends \PHPUnit_Framework_TestCase
         $inputOutputs = [
             [
                 'output' => 'cj_jobs',
-                'input' => [
-                    'text' => 'cj_jobs_xyz',
-                    'suffix' => '_xyz'
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs_xyz',
+                    'suffix' => '_xyz',
+                ],
             ],
             [
                 'output' => 'c',
-                'input' => [
-                    'text' => 'cj_jobs_xyz',
-                    'suffix' => 'j_jobs_xyz'
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs_xyz',
+                    'suffix' => 'j_jobs_xyz',
+                ],
             ],
             [
                 'output' => '',
-                'input' => [
-                    'text' => 'cj_jobs_xyz',
-                    'suffix' => 'cj_jobs_xyz'
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs_xyz',
+                    'suffix' => 'cj_jobs_xyz',
+                ],
             ],
             [
                 'output' => 'cj_jobs_xyz',
-                'input' => [
-                    'text' => 'cj_jobs_xyz',
-                    'suffix' => 'bcj_jobs_xyz'
-                ]
+                'input'  => [
+                    'text'   => 'cj_jobs_xyz',
+                    'suffix' => 'bcj_jobs_xyz',
+                ],
             ],
         ];
 

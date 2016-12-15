@@ -1,16 +1,15 @@
 <?php
-    /**
-     * Created by PhpStorm.
-     * User: ehsanabbasi
-     * Date: 26/04/15
-     * Time: 6:56 PM
-     */
+/**
+ * Created by PhpStorm.
+ * User: ehsanabbasi
+ * Date: 26/04/15
+ * Time: 6:56 PM.
+ */
 
 namespace CodeJetter\core;
 
 /**
- * Class BaseController
- * @package CodeJetter\core
+ * Class BaseController.
  */
 abstract class BaseController extends Base
 {
@@ -18,7 +17,7 @@ abstract class BaseController extends Base
 
     /**
      * @param RouteInfo $routeInfo
-     * @param array $HTTPInputs
+     * @param array     $HTTPInputs
      */
     public function __construct(RouteInfo $routeInfo, array $HTTPInputs)
     {
@@ -49,6 +48,7 @@ abstract class BaseController extends Base
     {
         $routeInfo = $this->getRouteInfo();
         $parameters = $routeInfo->getParameters();
+
         return (!empty($parameters)) ? $parameters : false;
     }
 
@@ -59,6 +59,7 @@ abstract class BaseController extends Base
     {
         $routeInfo = $this->getRouteInfo();
         $base = $routeInfo->getBaseUrl();
+
         return (!empty($base)) ? $base : false;
     }
 
@@ -69,7 +70,7 @@ abstract class BaseController extends Base
     {
         $component = $this->getRouteInfo()->getComponent();
 
-        return 'components' . DIRECTORY_SEPARATOR . strtolower($component) . DIRECTORY_SEPARATOR . 'templates' .
+        return 'components'.DIRECTORY_SEPARATOR.strtolower($component).DIRECTORY_SEPARATOR.'templates'.
         DIRECTORY_SEPARATOR;
     }
 }

@@ -3,19 +3,19 @@
 namespace CodeJetter\core\utility;
 
 /**
- * Class FileUtility
- * @package CodeJetter\core\utility
+ * Class FileUtility.
  */
 class FileUtility
 {
     /**
-     * Validate and convert a (JSON) file content to a PHP array
+     * Validate and convert a (JSON) file content to a PHP array.
      *
      * @param      $filePath
      * @param bool $checkFileType
      *
-     * @return array|mixed
      * @throws \Exception
+     *
+     * @return array|mixed
      */
     public function jsonFileToArray($filePath, $checkFileType = false)
     {

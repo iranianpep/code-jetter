@@ -1,24 +1,24 @@
 <?php
 
     /**
-     * @var CodeJetter\core\layout\blocks\Master $this
+     * @var CodeJetter\core\layout\blocks\Master
      */
     $config = $this->getConfig();
 
     /**
-     * Header
+     * Header.
      */
     // TODO: for the time being use bootstrap.css, since it's changed, use min later
     $header = $this->getHeader();
-    $header->addStyleFile($config->get('URL') . '/styles/bootstrap.css');
-    $header->addStyleFile($config->get('URL') . '/styles/style.css');
-    $header->addStyleFile($config->get('URL') . '/styles/font-awesome.min.css');
-    $header->addStyleFile($config->get('URL') . '/styles/toastr.min.css');
-    $header->addStyleFile($config->get('URL') . '/styles/zettaMenu.css');
+    $header->addStyleFile($config->get('URL').'/styles/bootstrap.css');
+    $header->addStyleFile($config->get('URL').'/styles/style.css');
+    $header->addStyleFile($config->get('URL').'/styles/font-awesome.min.css');
+    $header->addStyleFile($config->get('URL').'/styles/toastr.min.css');
+    $header->addStyleFile($config->get('URL').'/styles/zettaMenu.css');
     $headerHtml = $header->getHtml();
 
     /**
-     * Menu
+     * Menu.
      */
     $menu = $this->getView()->getMenu();
     $menuHtml = $menu->getHtml();
@@ -47,26 +47,26 @@
 
     $components = '';
 foreach ($this->getComponentTemplates() as $componentTemplate) {
-    /**
+    /*
      * @var CodeJetter\core\layout\blocks\ComponentTemplate $componentTemplate
      */
     $components .= $componentTemplate->getHtml();
 }
 
 /**
- * Footer
+ * Footer.
  */
 $footer = $this->getFooter();
-$footer->addScriptFile($this->getConfig()->get('URL') . '/scripts/jquery-1.11.3.min.js', 0);
-$footer->addScriptFile($this->getConfig()->get('URL') . '/scripts/bootstrap.min.js', 1);
-$footer->addScriptFile($this->getConfig()->get('URL') . '/scripts/script.js', 2);
-$footer->addScriptFile($this->getConfig()->get('URL') . '/scripts/toastr.min.js', 3);
+$footer->addScriptFile($this->getConfig()->get('URL').'/scripts/jquery-1.11.3.min.js', 0);
+$footer->addScriptFile($this->getConfig()->get('URL').'/scripts/bootstrap.min.js', 1);
+$footer->addScriptFile($this->getConfig()->get('URL').'/scripts/script.js', 2);
+$footer->addScriptFile($this->getConfig()->get('URL').'/scripts/toastr.min.js', 3);
 /**
- * Set the global Javascript configuration
+ * Set the global Javascript configuration.
  */
 $script = $this->getGlobalJSConfiguration();
 
-/**
+/*
  * Get javascript that calls checkSessionTimeout registered users
  */
 $script .= $this->getSessionTimeoutChecker();
@@ -75,7 +75,7 @@ $footer->addScript($script);
 $footerHtml = $footer->getHtml();
 
 /**
- * Debug
+ * Debug.
  */
 $debug = '';
 if ($config->get('debugTemplates') === true) {
@@ -84,14 +84,14 @@ if ($config->get('debugTemplates') === true) {
 
     if (!empty($templates)) {
         foreach ($templates as $template) {
-            $debug .= $template . '<br>';
+            $debug .= $template.'<br>';
         }
     }
 
     $debug .= '</pre>';
 }
 
-    /**
+    /*
      * Return the html
      */
     return "<!DOCTYPE html>

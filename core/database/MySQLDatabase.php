@@ -5,8 +5,7 @@ namespace CodeJetter\core\database;
 use CodeJetter\core\utility\DateTimeUtility;
 
 /**
- * Class MySQLDatabase
- * @package CodeJetter\core\database
+ * Class MySQLDatabase.
  */
 class MySQLDatabase extends BaseDatabase
 {
@@ -45,7 +44,7 @@ class MySQLDatabase extends BaseDatabase
     }
 
     /**
-     * Set time zone in database
+     * Set time zone in database.
      *
      * @param $timeZone
      */
@@ -53,7 +52,7 @@ class MySQLDatabase extends BaseDatabase
     {
         /**
          * For the time being setTimeZone is only called in App which does the validation
-         * however, validation needs to be happened here since this can be independently
+         * however, validation needs to be happened here since this can be independently.
          */
         $timeZones = (new DateTimeUtility())->getTimeZones();
 

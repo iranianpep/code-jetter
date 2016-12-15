@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 24/04/15
- * Time: 7:23 PM
+ * Time: 7:23 PM.
  */
 
 namespace CodeJetter\components\user\models;
@@ -22,8 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 /**
- * Class User
- * @package CodeJetter\components\user\models
+ * Class User.
  */
 abstract class User extends BaseModel
 {
@@ -38,7 +37,7 @@ abstract class User extends BaseModel
     protected $timeZone;
 
     /**
-     * Start setting & getting
+     * Start setting & getting.
      */
 
     /**
@@ -186,7 +185,7 @@ abstract class User extends BaseModel
     }
 
     /**
-     * Finish setting & getting
+     * Finish setting & getting.
      */
 
     /**
@@ -205,8 +204,9 @@ abstract class User extends BaseModel
      * @param $value String
      * @param $password String
      *
-     * @return bool|Output
      * @throws \Exception
+     *
+     * @return bool|Output
      */
     public function login($key, $value, $password)
     {
@@ -234,6 +234,7 @@ abstract class User extends BaseModel
         if ($output->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessage('Please try again');
+
             return $output;
         }
 
@@ -241,9 +242,10 @@ abstract class User extends BaseModel
 
         $output = new Output();
 
-        if (empty($foundUser) || !$foundUser instanceof User) {
+        if (empty($foundUser) || !$foundUser instanceof self) {
             $output->setSuccess(false);
             $output->setMessage('Please try again');
+
             return $output;
         }
 
@@ -251,8 +253,9 @@ abstract class User extends BaseModel
     }
 
     /**
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function logout()
     {
@@ -262,13 +265,14 @@ abstract class User extends BaseModel
     /**
      * @param $email
      *
-     * @return bool|Output
      * @throws \Exception
+     *
+     * @return bool|Output
      */
     public function forgotPassword($email)
     {
         /**
-         * Start validating email
+         * Start validating email.
          */
         $requiredRule = new ValidatorRule('required');
         $emailRule = new ValidatorRule('email');
@@ -280,10 +284,11 @@ abstract class User extends BaseModel
         if ($validatorOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessages($validatorOutput->getMessages());
+
             return $output;
         }
         /**
-         * Finish validating email & token
+         * Finish validating email & token.
          */
 
         // verify user: check to see if the email exists in db and is active and parent id is 0
@@ -298,15 +303,17 @@ abstract class User extends BaseModel
         if ($mapperOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessage('Could not find any active user with this email');
+
             return $output;
         }
 
         // get user
         $user = $mapperOutput->getData();
 
-        if (!$user instanceof User) {
+        if (!$user instanceof self) {
             $output->setSuccess(false);
             $output->setMessage('Could not find any active user with this email');
+
             return $output;
         }
 
@@ -319,13 +326,14 @@ abstract class User extends BaseModel
      * @param $password
      * @param $passwordConfirmation
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function resetPassword($email, $resetPasswordToken, $password, $passwordConfirmation)
     {
         /**
-         * Start validating email & token
+         * Start validating email & token.
          */
         $requiredRule = new ValidatorRule('required');
         $emailRule = new ValidatorRule('email');
@@ -338,14 +346,15 @@ abstract class User extends BaseModel
         if ($validatorOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessages($validatorOutput->getMessages());
+
             return $output;
         }
         /**
-         * Finish validating email & token
+         * Finish validating email & token.
          */
 
         /**
-         * Start verifying email & token combination
+         * Start verifying email & token combination.
          */
         $mapperName = $this->getMapperName();
         $mapperOutput = (new $mapperName())->getOneByEmail($email, null, 'active');
@@ -357,14 +366,16 @@ abstract class User extends BaseModel
         if ($mapperOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessage('Email does not exist');
+
             return $output;
         }
 
         $user = $mapperOutput->getData();
 
-        if (!$user instanceof User) {
+        if (!$user instanceof self) {
             $output->setSuccess(false);
             $output->setMessage('Could not find any user with this email');
+
             return $output;
         }
 
@@ -375,15 +386,16 @@ abstract class User extends BaseModel
      * @param $email
      * @param $token
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function checkTokenIsValidByEmail($email, $token)
     {
         $output = new Output();
 
         /**
-         * Start validating email & token
+         * Start validating email & token.
          */
         $requiredRule = new ValidatorRule('required');
         $emailRule = new ValidatorRule('email');
@@ -393,7 +405,7 @@ abstract class User extends BaseModel
 
         $validatorOutput = (new Validator([
             $emailInput,
-            $tokenInput
+            $tokenInput,
         ], ['email' => $email, 'token' => $token]))->validate();
 
         if (!$validatorOutput instanceof Output) {
@@ -403,14 +415,15 @@ abstract class User extends BaseModel
         if ($validatorOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessages($validatorOutput->getMessages());
+
             return $output;
         }
         /**
-         * Finish validating email & token
+         * Finish validating email & token.
          */
 
         /**
-         * Start verifying email & token combination
+         * Start verifying email & token combination.
          */
         $mapperName = $this->getMapperName();
         $mapperOutput = (new $mapperName())->getOneByEmail($email, null, 'active');
@@ -422,14 +435,16 @@ abstract class User extends BaseModel
         if ($mapperOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessage('Email does not exist');
+
             return $output;
         }
 
         $user = $mapperOutput->getData();
 
-        if (!$user instanceof User) {
+        if (!$user instanceof self) {
             $output->setSuccess(false);
             $output->setMessage('Could not find any user with this email');
+
             return $output;
         }
 
@@ -443,7 +458,7 @@ abstract class User extends BaseModel
         } else {
             $tokenExpired = true;
         }
-        /**
+        /*
          * Finish verifying email & token combination
          */
 

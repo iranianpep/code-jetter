@@ -10,21 +10,20 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 /**
- * Class App
- * @package CodeJetter\core
+ * Class App.
  */
 class App extends Singleton
 {
     /**
-     * App class config
+     * App class config.
      *
      * This cannot be moved to Config class since it includes Config as well
      */
     private static $singletons = [
-        'Config' => 'CodeJetter\Config',
-        'Router' => 'CodeJetter\core\Router',
-        'MySQL' => 'CodeJetter\core\database\MySQLDatabase',
-        'Language' => 'CodeJetter\core\Language'
+        'Config'   => 'CodeJetter\Config',
+        'Router'   => 'CodeJetter\core\Router',
+        'MySQL'    => 'CodeJetter\core\database\MySQLDatabase',
+        'Language' => 'CodeJetter\core\Language',
     ];
 
     private $environment;
@@ -35,7 +34,7 @@ class App extends Singleton
 
     /**
      * If any arguments need to be passed to App once it is instantiated, can be here,
-     * otherwise it can be in construct
+     * otherwise it can be in construct.
      *
      * Also this avoids infinite loop
      *
@@ -52,7 +51,7 @@ class App extends Singleton
 
             // store singleton classes
             foreach (static::$singletons as $singletonKey => $singleton) {
-                Registry::add(new $singleton, $singletonKey);
+                Registry::add(new $singleton(), $singletonKey);
             }
 
             // get & set default time zone
@@ -68,7 +67,7 @@ class App extends Singleton
     }
 
     /**
-     * set environment
+     * set environment.
      *
      * @param $environment
      */
@@ -78,8 +77,9 @@ class App extends Singleton
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     public function getEnvironment()
     {
@@ -119,7 +119,7 @@ class App extends Singleton
     }
 
     /**
-     * Set anti CSRF attack token
+     * Set anti CSRF attack token.
      *
      * This is private to restrict being set from outside of this class
      */
@@ -133,7 +133,7 @@ class App extends Singleton
     }
 
     /**
-     * Set time zone in PHP and database
+     * Set time zone in PHP and database.
      *
      * @param $timeZone
      */
@@ -145,7 +145,7 @@ class App extends Singleton
             // set PHP timezone
             date_default_timezone_set($timeZone);
 
-            /**
+            /*
              * set database timezone
              * This only works for the default database
              */
@@ -156,7 +156,7 @@ class App extends Singleton
     }
 
     /**
-     * Check the framework requirements to run
+     * Check the framework requirements to run.
      *
      * @throws \Exception
      */

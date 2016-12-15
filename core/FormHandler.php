@@ -10,8 +10,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 /**
- * Class FormHandler
- * @package CodeJetter\core
+ * Class FormHandler.
  */
 class FormHandler
 {
@@ -28,20 +27,21 @@ class FormHandler
     /**
      * @param null $hashAlgorithm
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function setAntiCSRF($hashAlgorithm = null)
     {
         /**
-         * start getting a new token
+         * start getting a new token.
          */
         $security = new Security();
 
         if ($hashAlgorithm !== null) {
             $security->setHashAlgorithm($hashAlgorithm);
         }
-        /**
+        /*
          * finish getting a new token
          */
 
@@ -53,19 +53,21 @@ class FormHandler
 
         // set into the session
         $token = $security->generateToken();
+
         return $_SESSION['forms'][$this->getFormName()][$token] = $token;
     }
 
     /**
      * @param null   $hashAlgorithm
-     * Does not use for the global one currently
+     *                              Does not use for the global one currently
      * @param null   $name
      * @param null   $id
      * @param string $mode
-     * Values are global, perForm
+     *                              Values are global, perForm
+     *
+     * @throws \Exception
      *
      * @return string
-     * @throws \Exception
      */
     public function generateAntiCSRFHtml($hashAlgorithm = null, $name = null, $id = null, $mode = 'global')
     {
@@ -100,8 +102,9 @@ class FormHandler
      * @param      $token
      * @param bool $resetAfterChecking
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function checkAntiCSRF($token, $resetAfterChecking = false)
     {

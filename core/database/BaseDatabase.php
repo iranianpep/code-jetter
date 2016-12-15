@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 10/06/15
- * Time: 11:35 PM
+ * Time: 11:35 PM.
  */
 
 namespace CodeJetter\core\database;
@@ -11,8 +11,7 @@ namespace CodeJetter\core\database;
 use CodeJetter\core\Registry;
 
 /**
- * Class BaseDatabase
- * @package CodeJetter\core\database
+ * Class BaseDatabase.
  */
 abstract class BaseDatabase
 {
@@ -55,7 +54,7 @@ abstract class BaseDatabase
     abstract public function setTimeZone($timeZone);
 
     /**
-     * set database - This is referring to database reference in config
+     * set database - This is referring to database reference in config.
      *
      * @param string $database
      *
@@ -99,8 +98,9 @@ abstract class BaseDatabase
     /**
      * @param null $database
      *
-     * @return \PDO
      * @throws \Exception
+     *
+     * @return \PDO
      */
     public function getConnection($database = null)
     {
@@ -211,4 +211,3 @@ abstract class BaseDatabase
         $this->dbInfo = $dbInfo;
     }
 }
-

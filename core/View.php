@@ -5,17 +5,16 @@ namespace CodeJetter\core;
 use CodeJetter\components\page\models\Page;
 use CodeJetter\Config;
 use CodeJetter\core\io\Response;
-use CodeJetter\core\layout\blocks\Master;
+use CodeJetter\core\layout\blocks\ComponentTemplate;
 use CodeJetter\core\layout\blocks\Footer;
 use CodeJetter\core\layout\blocks\Header;
+use CodeJetter\core\layout\blocks\Master;
 use CodeJetter\core\layout\blocks\Menu;
-use CodeJetter\core\layout\blocks\ComponentTemplate;
 use CodeJetter\core\utility\ClassUtility;
 use CodeJetter\core\utility\StringUtility;
 
 /**
- * Class View
- * @package CodeJetter\core
+ * Class View.
  */
 class View extends Base
 {
@@ -49,7 +48,7 @@ class View extends Base
 
         $this->setCreatedByClass($createdByClass);
 
-        /**
+        /*
          * every main block should be instantiated here
          * it also should know about View, so pass $this
          */
@@ -79,9 +78,9 @@ class View extends Base
         $this->setPage($page);
 
         /**
-         * get blocks html - will be used in master
+         * get blocks html - will be used in master.
          *
-         * @var ComponentTemplate $templateValue
+         * @var ComponentTemplate
          */
         foreach ($templates as $templateKey => $templateValue) {
             $templatePath = $templateValue->getTemplatePath();
@@ -102,11 +101,11 @@ class View extends Base
                 $this->getCurrentComponentTemplate()->getPager()->setView($this);
             }
 
-            $currentTemplatePath = $this->getConfig()->get('URI') . $templateValue->getTemplatePath();
+            $currentTemplatePath = $this->getConfig()->get('URI').$templateValue->getTemplatePath();
 
             if (file_exists($currentTemplatePath)) {
                 /**
-                 * Even though file existence is checked, still use include instead of require
+                 * Even though file existence is checked, still use include instead of require.
                  */
                 $currentTemplateHtml = include $currentTemplatePath;
 
@@ -115,7 +114,7 @@ class View extends Base
                 $this->getCurrentComponentTemplate()->setHtml("Could not find: '{$currentTemplatePath}'");
             }
 
-            /** @var string $html - defined in templates */
+            /* @var string $html - defined in templates */
             $this->addComponentTemplate($templateKey, $templateValue);
         }
 
@@ -263,8 +262,9 @@ class View extends Base
     /**
      * @param bool $fullNamespace
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getCreatedByClass($fullNamespace = true)
     {

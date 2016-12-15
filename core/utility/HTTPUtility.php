@@ -3,22 +3,22 @@
 namespace CodeJetter\core\utility;
 
 /**
- * Class HTTPUtility
- *
- * @package CodeJetter\core\utility
+ * Class HTTPUtility.
  */
 class HTTPUtility
 {
     /**
      * Check to see if the url exists
-     * Example: checkURL('www.YOUR_DOMAIN.com', array('timeout' => 5))
+     * Example: checkURL('www.YOUR_DOMAIN.com', array('timeout' => 5)).
      *
      * @param  $url
-     * @param  array        $options
+     * @param array $options
+     *
      * @throws \Exception
+     *
      * @return array|bool
      */
-    public static function checkURL($url, array $options = array())
+    public static function checkURL($url, array $options = [])
     {
         if (empty($url)) {
             throw new \Exception('URL is empty');

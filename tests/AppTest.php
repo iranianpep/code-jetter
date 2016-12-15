@@ -27,10 +27,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
     {
         $app = App::getInstance();
         $singletons = [
-            'Config' => 'CodeJetter\Config',
-            'Router' => 'CodeJetter\core\Router',
-            'MySQL' => 'CodeJetter\core\database\MySQLDatabase',
-            'Language' => 'CodeJetter\core\Language'
+            'Config'   => 'CodeJetter\Config',
+            'Router'   => 'CodeJetter\core\Router',
+            'MySQL'    => 'CodeJetter\core\database\MySQLDatabase',
+            'Language' => 'CodeJetter\core\Language',
         ];
 
         $this->assertEquals($singletons, $app->getSingletons());

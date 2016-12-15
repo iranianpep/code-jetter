@@ -4,10 +4,10 @@
     use CodeJetter\core\utility\HtmlUtility;
     use CodeJetter\core\utility\StringUtility;
 
-    /** @var CodeJetter\core\FormHandler $formHandler */
-/** @var CodeJetter\core\View $this */
-$this->getFooter()->addScriptFile($this->getConfig()->get('URL') . '/scripts/chosen.jquery.min.js');
-$this->getHeader()->addStyleFile($this->getConfig()->get('URL') . '/styles/bootstrap-chosen.min.css');
+    /* @var CodeJetter\core\FormHandler $formHandler */
+/* @var CodeJetter\core\View $this */
+$this->getFooter()->addScriptFile($this->getConfig()->get('URL').'/scripts/chosen.jquery.min.js');
+$this->getHeader()->addStyleFile($this->getConfig()->get('URL').'/styles/bootstrap-chosen.min.css');
 $data = $this->getCurrentComponentTemplate()->getData();
 $member = $data['member'];
 $updateFormUrl = $data['updateFormUrl'];
@@ -17,10 +17,10 @@ if (!$member instanceof User) {
 }
 
     /**
-     * Timezone
+     * Timezone.
      */
     $timeZoneDropdown = (new HtmlUtility())->generateDropDownList($data['timeZoneList'], 'timeZone', $member->getTimeZone(), [
-        'class' => 'form-control'
+        'class' => 'form-control',
     ]);
 
     $stringUtility = new StringUtility();

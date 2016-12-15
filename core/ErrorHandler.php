@@ -11,7 +11,7 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
 /**
- * Class ErrorHandler
+ * Class ErrorHandler.
  *
  * A class to handle errors, exceptions and also to log errors, notices, etc.
  *
@@ -62,8 +62,10 @@ class ErrorHandler
      * @param Logger $logger
      * @param $handlerKey
      * @param array $handlerConfig
-     * @return Logger
+     *
      * @throws \Exception
+     *
+     * @return Logger
      */
     private function pushMonologHandler(Logger $logger, $handlerKey, $handlerConfig = [])
     {
@@ -99,6 +101,7 @@ class ErrorHandler
                 // Status 'new' means that the error has not been addressed yet
                 $logger->pushProcessor(function ($record) {
                     $record['status'] = 'new';
+
                     return $record;
                 });
 
@@ -107,7 +110,7 @@ class ErrorHandler
                 $activeHandlers[] = new ChromePHPHandler();
                 break;
             case 'file':
-                $path = Registry::getConfigClass()->get('URI') . $handlerConfig['path'];
+                $path = Registry::getConfigClass()->get('URI').$handlerConfig['path'];
 
                 if (empty($path)) {
                     throw new \Exception('File path is empty');
@@ -139,7 +142,7 @@ class ErrorHandler
         // init the logger
         $logger = new Logger($channelName);
 
-        /**
+        /*
          * Start pushing handlers
          */
         if (empty($configs['monolog']['handlers'])) {
@@ -151,7 +154,7 @@ class ErrorHandler
                 $logger = $this->pushMonologHandler($logger, $handlerKey, $handlerConfig);
             }
         }
-        /**
+        /*
          * Finish pushing handlers
          */
 
@@ -191,7 +194,7 @@ class ErrorHandler
     }
 
     /**
-     * This is used to handle fatal errors since set_error_handler cannot do that
+     * This is used to handle fatal errors since set_error_handler cannot do that.
      */
     private function registerShutdownFunction()
     {
@@ -203,8 +206,8 @@ class ErrorHandler
                     $this->logError($error['message'], [
                         'module' => $this->extractComponentName($error['file']),
                         'number' => $error['type'],
-                        'line' => $error['line'],
-                        'file' => $error['file']
+                        'line'   => $error['line'],
+                        'file'   => $error['file'],
                     ]);
                 }
             }
@@ -217,9 +220,9 @@ class ErrorHandler
             if ($this->canLog($errorMessage, $errorFile) === true) {
                 $this->logError($errorMessage, [
                     'component' => $this->extractComponentName($errorFile),
-                    'number' => $errorNo,
-                    'line' => $errorLine,
-                    'file' => $errorFile
+                    'number'    => $errorNo,
+                    'line'      => $errorLine,
+                    'file'      => $errorFile,
                 ]);
             }
 
@@ -261,9 +264,9 @@ class ErrorHandler
             if ($this->canLog($exception->getMessage(), $exception->getFile()) === true) {
                 $this->logError($exception->getMessage(), [
                     'component' => $this->extractComponentName($exception->getFile()),
-                    'number' => $exception->getCode(),
-                    'line' => $exception->getLine(),
-                    'file' => $exception->getFile()
+                    'number'    => $exception->getCode(),
+                    'line'      => $exception->getLine(),
+                    'file'      => $exception->getFile(),
                 ]);
             }
         });
@@ -271,6 +274,7 @@ class ErrorHandler
 
     /**
      * @param $errorFile
+     *
      * @return string
      */
     private function extractComponentName($errorFile)
@@ -292,7 +296,7 @@ class ErrorHandler
             return false;
         }
 
-        /**
+        /*
          * Start checking against strings
          */
         if (!empty($configs['blacklist']['strings'])) {
@@ -302,11 +306,11 @@ class ErrorHandler
                 }
             }
         }
-        /**
+        /*
          * Finish checking against strings
          */
 
-        /**
+        /*
          * Start checking against regular expressions
          */
         if (!empty($configs['blacklist']['regex'])) {
@@ -317,9 +321,8 @@ class ErrorHandler
             }
         }
         /**
-         * Finish checking against regular expressions
+         * Finish checking against regular expressions.
          */
-
         $component = $this->extractComponentName($errorFile);
         if (!empty($component) && in_array($component, $configs['blacklist']['components'])) {
             return true;
@@ -332,6 +335,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logDebug($message, array $context = [])
@@ -342,6 +346,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logInfo($message, array $context = [])
@@ -352,6 +357,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logNotice($message, array $context = [])
@@ -362,6 +368,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logWarning($message, array $context = [])
@@ -372,6 +379,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logError($message, array $context = [])
@@ -382,6 +390,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logCritical($message, array $context = [])
@@ -392,6 +401,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logAlert($message, array $context = [])
@@ -402,6 +412,7 @@ class ErrorHandler
     /**
      * @param $message
      * @param array $context
+     *
      * @throws \Exception
      */
     public function logEmergency($message, array $context = [])
@@ -413,8 +424,10 @@ class ErrorHandler
      * @param $level
      * @param $message
      * @param array $context
-     * @return bool
+     *
      * @throws \Exception
+     *
+     * @return bool
      */
     private function logMessage($level, $message, $context = [])
     {

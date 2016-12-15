@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 12/12/15
- * Time: 7:39 AM
+ * Time: 7:39 AM.
  */
 
 namespace CodeJetter\core\utility;
@@ -15,8 +15,7 @@ use TableGenerator\HeadCell;
 use TableGenerator\Row;
 
 /**
- * Class HtmlUtility
- * @package CodeJetter\core\utility
+ * Class HtmlUtility.
  */
 class HtmlUtility
 {
@@ -29,10 +28,10 @@ class HtmlUtility
 
     /**
      * @param $options
-     * @param null $name
-     * @param null $selected
+     * @param null  $name
+     * @param null  $selected
      * @param array $configs
-     * Currently configs are: titleMapper, ucfirstTitle, multiple, class, id
+     *                        Currently configs are: titleMapper, ucfirstTitle, multiple, class, id
      *
      * if titleMapper is not array and set to 'key', each item key in the array is considered as title
      *
@@ -44,6 +43,7 @@ class HtmlUtility
      * 'class' => 'dropdown',
      * 'id' => 'statuses'
      * ]);
+     *
      * @return string
      */
     public function generateDropDownList($options, $name = null, $selected = null, array $configs = [])
@@ -101,18 +101,13 @@ class HtmlUtility
 
     /**
      * @param $options
-     * @param null $name
-     * @param null $checked
+     * @param null  $name
+     * @param null  $checked
      * @param array $configs
-     * Currently configs are: titleMapper, ucfirstTitle, class, disabled, inline
-     * Example:
-     * $options = ['f', 'm', 'n'];
-    $generator = new HtmlUtility();
-    $html = $generator->generateRadioButtons($options, 'gender', 'm',
-    ['ucfirstTitle' => true, 'class' => 'radio-inline',
-    'titleMapper' => ['f' => 'Female'],
-    'disabled' => ['f']
-    ]);
+     *                       Currently configs are: titleMapper, ucfirstTitle, class, disabled, inline
+     *                       Example:
+     *                       $options = ['f', 'm', 'n'];
+     ]);
      * @return string
      */
     public function generateRadioButtons($options, $name = null, $checked = null, array $configs = [])
@@ -162,18 +157,13 @@ class HtmlUtility
 
     /**
      * @param $options
-     * @param null $name
-     * @param null $checked
+     * @param null  $name
+     * @param null  $checked
      * @param array $configs
-     * Currently configs are: titleMapper, ucfirstTitle, class, disabled, inline
-     * Example:
-     * $options = ['f', 'm', 'n'];
-    $generator = new HtmlUtility();
-    $html = $generator->generateCheckboxes($options, 'gender', 'm',
-     ['ucfirstTitle' => true, 'class' => 'checkbox-inline',
-    'titleMapper' => ['f' => 'Female'],
-    'disabled' => ['f']
-    ]);
+     *                       Currently configs are: titleMapper, ucfirstTitle, class, disabled, inline
+     *                       Example:
+     *                       $options = ['f', 'm', 'n'];
+     ]);
      * @return string
      */
     public function generateCheckboxes($options, $name = null, $checked = null, array $configs = [])
@@ -244,7 +234,7 @@ class HtmlUtility
     }
 
     /**
-     * Generate html for search field on top of the list
+     * Generate html for search field on top of the list.
      *
      * @param $searchQuery
      * @param $searchQueryKey
@@ -270,19 +260,20 @@ class HtmlUtility
     }
 
     /**
-     * Given an array of headers generate the Row objects
+     * Given an array of headers generate the Row objects.
      *
      * @param array $headers
      *
-     * @return Row
      * @throws \Exception
+     *
+     * @return Row
      */
     public function generateHeadRowByListHeaders(array $headers)
     {
         $headRow = new Row();
 
         /**
-         * Set list sorting parameters
+         * Set list sorting parameters.
          */
         $listConfig = Registry::getConfigClass()->get('list');
 
@@ -316,8 +307,9 @@ class HtmlUtility
      * @param string      $submitter
      * @param bool        $refresh
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function generateConfirmationModal(
         $divId,

@@ -1,13 +1,13 @@
 <?php
 
-    use \CodeJetter\core\utility\HtmlUtility;
     use \CodeJetter\components\user\models\User;
+    use \CodeJetter\core\utility\HtmlUtility;
     use CodeJetter\core\utility\StringUtility;
 
-    /** @var CodeJetter\core\FormHandler $formHandler */
-/** @var CodeJetter\core\View $this */
-$this->getFooter()->addScriptFile($this->getConfig()->get('URL') . '/scripts/chosen.jquery.min.js');
-$this->getHeader()->addStyleFile($this->getConfig()->get('URL') . '/styles/bootstrap-chosen.min.css');
+    /* @var CodeJetter\core\FormHandler $formHandler */
+/* @var CodeJetter\core\View $this */
+$this->getFooter()->addScriptFile($this->getConfig()->get('URL').'/scripts/chosen.jquery.min.js');
+$this->getHeader()->addStyleFile($this->getConfig()->get('URL').'/styles/bootstrap-chosen.min.css');
 $data = $this->getCurrentComponentTemplate()->getData();
 $member = $data['member'];
 $updateFormUrl = $data['updateFormUrl'];
@@ -34,10 +34,10 @@ if (isset($data['groups']) && method_exists($member, 'getGroupIds')) {
         'groups[]',
         $member->getGroupIds(),
         [
-            'class' => 'form-control chosen-select',
-            'id' => 'groups',
+            'class'       => 'form-control chosen-select',
+            'id'          => 'groups',
             'titleMapper' => 'key',
-            'multiple' => true,
+            'multiple'    => true,
         ]
     );
 }
@@ -59,8 +59,8 @@ if (isset($data['statuses'])) {
         $selectedStatus,
         [
             'ucfirstTitle' => true,
-            'class' => 'form-control',
-            'id' => 'status'
+            'class'        => 'form-control',
+            'id'           => 'status',
         ]
     );
 
@@ -73,10 +73,10 @@ if (isset($data['statuses'])) {
 }
 
     /**
-     * Timezone
+     * Timezone.
      */
     $timeZoneDropdown = (new HtmlUtility())->generateDropDownList($data['timeZoneList'], 'timeZone', $member->getTimeZone(), [
-        'class' => 'form-control'
+        'class' => 'form-control',
     ]);
 
 return "<div class='container-fluid'>

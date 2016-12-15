@@ -1,7 +1,6 @@
 <?php
 
 /** @var CodeJetter\core\layout\blocks\Menu $this */
-
 $personalizedMenu = $this->getPersonalizedMenu();
 
 if ($personalizedMenu instanceof \CodeJetter\core\layout\blocks\Menu) {
@@ -9,7 +8,7 @@ if ($personalizedMenu instanceof \CodeJetter\core\layout\blocks\Menu) {
 }
 
 if (!empty($personalizedMenuHtml)) {
-            $personalizedSection = "<li class='zm-content zm-right-item zm-right-align'>
+    $personalizedSection = "<li class='zm-content zm-right-item zm-right-align'>
     <a><i class='fa fa-user'></i> My Account <i class='zm-caret fa fa-angle-down'></i></a>
     <ul class='w-200'>
         <!-- personalized menu -->

@@ -2,11 +2,11 @@
 
     use CodeJetter\core\utility\HtmlUtility;
     use CodeJetter\core\utility\StringUtility;
+    use TableGenerator\Body;
     use TableGenerator\Cell;
+    use TableGenerator\Head;
     use TableGenerator\HeadCell;
     use TableGenerator\Row;
-    use TableGenerator\Head;
-    use TableGenerator\Body;
     use TableGenerator\Table;
 
     /** @var CodeJetter\core\FormHandler $formHandler */
@@ -18,7 +18,7 @@
     $searchQueryKey = $data['searchQueryKey'];
 
     /**
-     * replace the first element (#) with custom html
+     * replace the first element (#) with custom html.
      */
     $numberHeadCell = $data['listHeaders'][0];
     if ($numberHeadCell instanceof HeadCell) {
@@ -53,7 +53,7 @@
         $counter = $this->getCurrentComponentTemplate()->getPager()->getCounterStartNumber();
         foreach ($members as $member) {
             /**
-             * @var CodeJetter\components\user\models\MemberUser $member
+             * @var CodeJetter\components\user\models\MemberUser
              */
             $stringUtility = new StringUtility();
             $memberUsername = $stringUtility->prepareForView($member->getUsername());
@@ -86,7 +86,7 @@
 
             $checkbox = $htmlUtility->generateCheckbox('selectedMembers[]', $memberId);
 
-            $tmpRow = new Row([new Cell($checkbox . ' ' . $counter), new Cell($memberUsername), new Cell($memberName), new Cell($memberEmail), new Cell($memberPhone), new Cell($memberStatus), new Cell($cell6Content, false)]);
+            $tmpRow = new Row([new Cell($checkbox.' '.$counter), new Cell($memberUsername), new Cell($memberName), new Cell($memberEmail), new Cell($memberPhone), new Cell($memberStatus), new Cell($cell6Content, false)]);
             $tmpRow->addData('id', $memberId);
             $body->addRow($tmpRow);
 

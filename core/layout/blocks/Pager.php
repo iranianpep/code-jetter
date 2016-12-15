@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 24/04/15
- * Time: 7:26 PM
+ * Time: 7:26 PM.
  */
 
 namespace CodeJetter\core\layout\blocks;
@@ -12,8 +12,7 @@ use CodeJetter\core\io\Request;
 use CodeJetter\core\Registry;
 
 /**
- * Class Pager
- * @package CodeJetter\core\layout\blocks
+ * Class Pager.
  */
 class Pager extends BaseBlock
 {
@@ -27,7 +26,7 @@ class Pager extends BaseBlock
     private $path;
 
     /**
-     * @param array $parameters
+     * @param array  $parameters
      * @param string $basePath
      * @param string $path
      *
@@ -49,7 +48,7 @@ class Pager extends BaseBlock
     }
 
     /**
-     * calculate start based on the limit and current page number
+     * calculate start based on the limit and current page number.
      *
      * @return int
      */
@@ -59,7 +58,7 @@ class Pager extends BaseBlock
     }
 
     /**
-     * calculate the total number of pages based on total records and the limit
+     * calculate the total number of pages based on total records and the limit.
      *
      * @return int
      */
@@ -223,8 +222,9 @@ class Pager extends BaseBlock
     }
 
     /**
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     public function getPagerLimits()
     {
@@ -246,7 +246,7 @@ class Pager extends BaseBlock
     }
 
     /**
-     * Calculate and return the start of the counter in a page. This is useful for lists
+     * Calculate and return the start of the counter in a page. This is useful for lists.
      *
      * @return int
      */

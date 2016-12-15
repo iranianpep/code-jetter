@@ -6,8 +6,7 @@ use CodeJetter\components\user\models\User;
 use CodeJetter\core\Registry;
 
 /**
- * Class Master
- * @package CodeJetter\core\layout\blocks
+ * Class Master.
  */
 class Master extends BaseBlock
 {
@@ -34,6 +33,7 @@ class Master extends BaseBlock
     {
         $configuration = Registry::getConfigClass()->get('globalJSConfiguration');
         $configuration = json_encode($configuration);
+
         return "<script type='text/javascript'>var globalConfig = {$configuration}</script>";
     }
 

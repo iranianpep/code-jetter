@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 26/07/15
- * Time: 2:05 AM
+ * Time: 2:05 AM.
  */
 
 namespace CodeJetter\components\user\models;
 
 /**
- * Class GroupMemberUserXref
- * @package CodeJetter\components\user\models
+ * Class GroupMemberUserXref.
  */
 class GroupMemberUserXref extends GroupUserXref
 {
@@ -37,6 +36,4 @@ class GroupMemberUserXref extends GroupUserXref
 
         $this->memberId = (int) $memberId;
     }
-
-
 }

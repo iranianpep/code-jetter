@@ -12,7 +12,7 @@
     $queryString = $this->getQueryString();
 
     /**
-     * Start generating pages html
+     * Start generating pages html.
      */
     $pagesHtml = '<ul class="pagination">';
 for ($i = 1; $i <= $totalPagesNo; $i++) {
@@ -23,11 +23,11 @@ for ($i = 1; $i <= $totalPagesNo; $i++) {
 
     $pagesHtml .= '</ul>';
     /**
-     * Finish generating pages html
+     * Finish generating pages html.
      */
 
     /**
-     * Start generating per page html
+     * Start generating per page html.
      */
     $perPageHtml = "<select id='per-page' class='form-control' onchange=\"redirectToPage('{$path}', {$currentPage}, this.value, '{$queryString}');\">";
 
@@ -38,11 +38,11 @@ foreach ($pagerLimits as $pagerLimit) {
 
     $perPageHtml .= '</select>';
     /**
-     * Finish generating per page html
+     * Finish generating per page html.
      */
 
     /**
-     * Final html
+     * Final html.
      */
     $html = "<div class='row'>
 <div class='col-md-10'>

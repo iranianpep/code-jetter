@@ -1,22 +1,23 @@
 <?php
 
-    namespace CodeJetter\tests;
+namespace CodeJetter\tests;
 
-    use CodeJetter\Config;
+use CodeJetter\Config;
 
     // this is to fix Cannot send session cookie - headers already sent
     @session_start();
 
-class ConfigTest extends \PHPUnit_Framework_TestCase {
+class ConfigTest extends \PHPUnit_Framework_TestCase
+{
     public function testSetGet()
     {
         $config = new Config();
 
         $inputOutputs = [
             [
-                'config' => 'ROOT_NAMESPACE',
-                'newValue' => 'CodeJetter'
-            ]
+                'config'   => 'ROOT_NAMESPACE',
+                'newValue' => 'CodeJetter',
+            ],
         ];
 
         // this is for empty input
@@ -30,4 +31,3 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
         }
     }
 }
- 

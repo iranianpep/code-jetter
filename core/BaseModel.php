@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 30/04/15
- * Time: 10:02 PM
+ * Time: 10:02 PM.
  */
 
 namespace CodeJetter\core;
@@ -11,8 +11,7 @@ namespace CodeJetter\core;
 use CodeJetter\core\utility\StringUtility;
 
 /**
- * Class BaseModel
- * @package CodeJetter\core
+ * Class BaseModel.
  */
 abstract class BaseModel extends Base
 {
@@ -73,12 +72,10 @@ abstract class BaseModel extends Base
         } else {
             throw new \Exception("Live can be only 1 or null. '{$live}' is passed instead");
         }
-
-
     }
 
     /**
-     * @return int|NULL
+     * @return int|null
      */
     public function getArchivedAt()
     {
@@ -86,7 +83,7 @@ abstract class BaseModel extends Base
     }
 
     /**
-     * @param int|NULL $archivedAt
+     * @param int|null $archivedAt
      */
     public function setArchivedAt($archivedAt)
     {
@@ -138,13 +135,13 @@ abstract class BaseModel extends Base
             $classNamePartsEnd = end($classNameParts);
 
             // append Mapper to model name
-            $mapperName = $classNamePartsEnd . 'Mapper';
+            $mapperName = $classNamePartsEnd.'Mapper';
 
             if ($fullPath === true) {
                 // full path
                 // remove starting from models, replace the rest with mappers and mapper name
                 $pattern = "#models\\\\{$classNamePartsEnd}$#";
-                $this->setMapperName(preg_replace($pattern, '', get_class($this)) . 'mappers\\' . $mapperName);
+                $this->setMapperName(preg_replace($pattern, '', get_class($this)).'mappers\\'.$mapperName);
             } else {
                 $this->setMapperName($mapperName);
             }
@@ -170,9 +167,11 @@ abstract class BaseModel extends Base
     }
 
     /**
-     * Extract class name from the namespace
-     * @return string
+     * Extract class name from the namespace.
+     *
      * @throws \Exception
+     *
+     * @return string
      */
     public function getClassNameFromNamespace()
     {

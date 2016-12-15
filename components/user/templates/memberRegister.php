@@ -3,7 +3,6 @@
     /** @var CodeJetter\core\View $this */
 
     /** @var CodeJetter\core\FormHandler $formHandler */
-
     $data = $this->getCurrentComponentTemplate()->getData();
 
     return "<div class='container-fluid'>

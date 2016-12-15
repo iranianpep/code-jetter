@@ -6,8 +6,7 @@ use CodeJetter\core\BaseModel;
 use CodeJetter\core\Registry;
 
 /**
- * Class Page
- * @package CodeJetter\components\page\models
+ * Class Page.
  */
 class Page extends BaseModel
 {
@@ -141,7 +140,7 @@ class Page extends BaseModel
     {
         /**
          * by default based on the access role, specify the robots meta tag
-         * this can be overwrite if a robots meta tag is added later
+         * this can be overwrite if a robots meta tag is added later.
          */
         $accessRole = $this->getAccessRole();
 

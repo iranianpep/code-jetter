@@ -14,7 +14,7 @@ if (\CodeJetter\core\Registry::getConfigClass()->get('debug') === true) {
 //        'name' => 'ehsanNew'
 //    ]);
 
-    /**
+    /*
      * how to use validator
      */
 //    $dummyInput = [

@@ -3,14 +3,13 @@
  * Created by PhpStorm.
  * User: ehsanabbasi
  * Date: 18/08/15
- * Time: 11:33 PM
+ * Time: 11:33 PM.
  */
 
 namespace CodeJetter\core\security;
 
 /**
- * Class ValidatorRule
- * @package CodeJetter\core\security
+ * Class ValidatorRule.
  */
 class ValidatorRule
 {

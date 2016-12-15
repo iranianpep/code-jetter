@@ -5,8 +5,7 @@ namespace CodeJetter\core\layout\blocks;
 use CodeJetter\core\FormHandler;
 
 /**
- * Class ComponentTemplate
- * @package CodeJetter\core\layout\blocks
+ * Class ComponentTemplate.
  */
 class ComponentTemplate extends BaseBlock
 {

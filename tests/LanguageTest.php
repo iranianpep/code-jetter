@@ -2,8 +2,8 @@
 
 namespace CodeJetter\tests;
 
-use CodeJetter\core\App;
 use CodeJetter\Config;
+use CodeJetter\core\App;
 use CodeJetter\core\Language;
 
 // this is to fix Cannot send session cookie - headers already sent
@@ -22,7 +22,7 @@ class LanguageTest extends \PHPUnit_Framework_TestCase
         $config = new Config();
         $uri = $config->get('URI');
 
-        $this->assertEquals($uri . 'core/language/en.json', $language->getFileFullPath());
+        $this->assertEquals($uri.'core/language/en.json', $language->getFileFullPath());
     }
 
     public function testGet()

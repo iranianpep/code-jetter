@@ -9,21 +9,21 @@ use CodeJetter\core\security\Validator;
 use CodeJetter\core\security\ValidatorRule;
 
 /**
- * Class GroupUserXrefMapper
- * @package CodeJetter\components\user\mappers
+ * Class GroupUserXrefMapper.
  */
 abstract class GroupUserXrefMapper extends BaseXrefMapper
 {
     /**
      * @param array $inputs
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         try {
@@ -43,26 +43,26 @@ abstract class GroupUserXrefMapper extends BaseXrefMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $fieldsValues = [
             [
                 'column' => 'groupId',
-                'value' => $inputs['groupId'],
-                'type' => \PDO::PARAM_INT
+                'value'  => $inputs['groupId'],
+                'type'   => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'memberId',
-                'value' => $inputs['memberId'],
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $inputs['memberId'],
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         $insertedId = $this->insertOne($fieldsValues);
@@ -91,14 +91,14 @@ abstract class GroupUserXrefMapper extends BaseXrefMapper
             $fieldsValuesCollection[] = [
                 [
                     'column' => 'groupId',
-                    'value' => $input['groupId'],
-                    'type' => \PDO::PARAM_INT
+                    'value'  => $input['groupId'],
+                    'type'   => \PDO::PARAM_INT,
                 ],
                 [
                     'column' => 'memberId',
-                    'value' => $input['memberId'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $input['memberId'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ];
         }
 

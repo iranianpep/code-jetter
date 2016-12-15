@@ -20,8 +20,7 @@ use CodeJetter\core\View;
 use TableGenerator\HeadCell;
 
 /**
- * Class ContactController
- * @package CodeJetter\components\contact\controllers
+ * Class ContactController.
  */
 class ContactController extends BaseController
 {
@@ -34,24 +33,23 @@ class ContactController extends BaseController
         $page->setTitle('Contact');
 
         /**
-         * hi to language
+         * hi to language.
          */
         $language = Registry::getLanguageClass();
         $requiredFields = $language->get('requiredFields');
         /**
-         * bye to language
+         * bye to language.
          */
-
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'contactForm.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'contactForm.php');
         $componentTemplate->setData([
-            'requiredFields' => $requiredFields
+            'requiredFields' => $requiredFields,
         ]);
 
         (new View())->make(
             $page,
             [
-                'contact' => $componentTemplate
+                'contact' => $componentTemplate,
             ],
             null,
             new FormHandler('Contact')
@@ -69,11 +67,11 @@ class ContactController extends BaseController
 
         if ($output->getSuccess() === true) {
             /**
-             * hi to language
+             * hi to language.
              */
             $language = Registry::getLanguageClass();
             $successfulSubmission = $language->get('successfulContactMessageSubmission');
-            /**
+            /*
              * bye to language
              */
 
@@ -108,7 +106,7 @@ class ContactController extends BaseController
             new HeadCell('Name'),
             new HeadCell('Email'),
             new HeadCell('Message'),
-            $actionsCell
+            $actionsCell,
         ];
 
         // get order and search query from the query string
@@ -127,7 +125,7 @@ class ContactController extends BaseController
             true
         );
 
-        /**
+        /*
          * If the current page is not page 1, and there is no data,
          * set pager to page 1 and get data again with start 0
          */
@@ -140,13 +138,13 @@ class ContactController extends BaseController
 
         // create component template
         $componentTemplate = new ComponentTemplate();
-        $componentTemplate->setTemplatePath($this->getTemplatesPath() . 'contactMessageList.php');
+        $componentTemplate->setTemplatePath($this->getTemplatesPath().'contactMessageList.php');
         $componentTemplate->setPager($pager);
         $componentTemplate->setData([
-            'listHeaders' => $listHeaders,
-            'messages' => $output['result'],
+            'listHeaders'    => $listHeaders,
+            'messages'       => $output['result'],
             'searchQueryKey' => $listConfig['query'],
-            'searchQuery' => $searchQuery
+            'searchQuery'    => $searchQuery,
         ]);
 
         // create the page for view
@@ -156,7 +154,7 @@ class ContactController extends BaseController
         (new View())->make(
             $page,
             [
-                'messages' => $componentTemplate
+                'messages' => $componentTemplate,
             ],
             null,
             new FormHandler('List Messages')
@@ -164,7 +162,7 @@ class ContactController extends BaseController
     }
 
     /**
-     * Safely delete a message
+     * Safely delete a message.
      *
      * @throws \Exception
      */
@@ -176,9 +174,9 @@ class ContactController extends BaseController
             $output = (new ContactMessageMapper())->safeDeleteOne([
                 [
                     'column' => 'id',
-                    'value' => $inputs['id'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $inputs['id'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ]);
 
             if ($output > 0) {
@@ -192,7 +190,7 @@ class ContactController extends BaseController
     }
 
     /**
-     * Safely batch delete messages
+     * Safely batch delete messages.
      *
      * @throws \Exception
      */
@@ -201,7 +199,7 @@ class ContactController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         if (empty($inputs['callback'])) {
@@ -222,7 +220,7 @@ class ContactController extends BaseController
         $idInput = new Input('id', [$requiredRule, $idRule]);
 
         $definedInputs = [
-            $idInput
+            $idInput,
         ];
 
         foreach ($inputs['callback'] as $id) {
@@ -236,16 +234,15 @@ class ContactController extends BaseController
             }
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $output = (new ContactMessageMapper())->safeDelete([
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => $inputs['callback'],
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'    => $inputs['callback'],
+                'type'     => \PDO::PARAM_INT,
+            ],
         ]);
 
         if ($output > 0) {
@@ -258,7 +255,7 @@ class ContactController extends BaseController
     }
 
     /**
-     * Delete a message
+     * Delete a message.
      *
      * @throws \Exception
      */
@@ -268,14 +265,14 @@ class ContactController extends BaseController
 
         if (!empty($inputs['id'])) {
             /**
-             * Do not need to delete xref, since foreign key is set to CASCADE on delete
+             * Do not need to delete xref, since foreign key is set to CASCADE on delete.
              */
             $output = (new ContactMessageMapper())->deleteOne([
                 [
                     'column' => 'id',
-                    'value' => $inputs['id'],
-                    'type' => \PDO::PARAM_INT
-                ]
+                    'value'  => $inputs['id'],
+                    'type'   => \PDO::PARAM_INT,
+                ],
             ]);
 
             if ($output == 'true') {
@@ -289,7 +286,7 @@ class ContactController extends BaseController
     }
 
     /**
-     * Batch delete messages
+     * Batch delete messages.
      *
      * @throws \Exception
      */
@@ -298,7 +295,7 @@ class ContactController extends BaseController
         $inputs = (new Request('POST'))->getInputs();
 
         /**
-         * Start validating
+         * Start validating.
          */
         $output = new Output();
         if (empty($inputs['callback'])) {
@@ -319,7 +316,7 @@ class ContactController extends BaseController
         $idInput = new Input('id', [$requiredRule, $idRule]);
 
         $definedInputs = [
-            $idInput
+            $idInput,
         ];
 
         foreach ($inputs['callback'] as $id) {
@@ -333,16 +330,15 @@ class ContactController extends BaseController
             }
         }
         /**
-         * Finish validating
+         * Finish validating.
          */
-
         $output = (new ContactMessageMapper())->delete([
             [
-                'column' => 'id',
+                'column'   => 'id',
                 'operator' => 'IN',
-                'value' => $inputs['callback'],
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'    => $inputs['callback'],
+                'type'     => \PDO::PARAM_INT,
+            ],
         ]);
 
         if ($output == 'true') {

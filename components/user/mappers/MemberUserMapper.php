@@ -12,8 +12,7 @@ use CodeJetter\core\security\ValidatorRule;
 use CodeJetter\core\utility\ArrayUtility;
 
 /**
- * Class MemberUserMapper
- * @package CodeJetter\components\user\mappers
+ * Class MemberUserMapper.
  */
 class MemberUserMapper extends UserMapper
 {
@@ -23,12 +22,13 @@ class MemberUserMapper extends UserMapper
      * @param null $status
      * @param bool $excludeArchived
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function getOneByEmail($email, $parentId = null, $status = null, $excludeArchived = true)
     {
-        /**
+        /*
          * start validating
          */
         try {
@@ -37,7 +37,7 @@ class MemberUserMapper extends UserMapper
             $emailRule = new ValidatorRule('email');
             $rules = [
                 $requiredRule,
-                $emailRule
+                $emailRule,
             ];
 
             $emailInput = new Input('email', $rules);
@@ -47,27 +47,27 @@ class MemberUserMapper extends UserMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * finish validating
+         * finish validating.
          */
-
         $criteria = [
             [
                 'column' => 'email',
-                'value' => $email
-            ]
+                'value'  => $email,
+            ],
         ];
 
         if ($parentId !== null && is_numeric($parentId)) {
             $parentCriteria = [
                 'column' => 'parentId',
-                'value' => (int) $parentId,
-                'type' => \PDO::PARAM_INT
+                'value'  => (int) $parentId,
+                'type'   => \PDO::PARAM_INT,
             ];
 
             array_push($criteria, $parentCriteria);
@@ -76,7 +76,7 @@ class MemberUserMapper extends UserMapper
         if ($status !== null && is_numeric($status)) {
             $statusCriteria = [
                 'column' => 'status',
-                'value' => $status,
+                'value'  => $status,
 
             ];
 
@@ -106,8 +106,9 @@ class MemberUserMapper extends UserMapper
      * @param bool            $returnTotalNo
      * @param MemberUser|null $userMember
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function getChildren(
         array $criteria = [],
@@ -119,12 +120,12 @@ class MemberUserMapper extends UserMapper
     ) {
         // if user member is null, get it from the session
         if ($userMember === null) {
-            $userMember =  (new MemberUser())->getLoggedIn();
+            $userMember = (new MemberUser())->getLoggedIn();
         }
 
         $output = new Output();
 
-        /**
+        /*
          * start validating
          */
         try {
@@ -132,7 +133,7 @@ class MemberUserMapper extends UserMapper
             $idRule = new ValidatorRule('id');
             $rules = [
                 $requiredRule,
-                $idRule
+                $idRule,
             ];
 
             $idInput = new Input('id', $rules);
@@ -142,19 +143,20 @@ class MemberUserMapper extends UserMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
-        /**
+        /*
          * finish validating
          */
 
         $criteria[] = [
             'column' => 'parentId',
-            'value' => $userMember->getId(),
-            'type' => \PDO::PARAM_INT
+            'value'  => $userMember->getId(),
+            'type'   => \PDO::PARAM_INT,
         ];
 
         try {
@@ -180,17 +182,18 @@ class MemberUserMapper extends UserMapper
      * @param bool            $safeDelete
      * @param MemberUser|null $userMember
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function deleteChildById($childId, $safeDelete = true, MemberUser $userMember = null)
     {
         if ($userMember === null) {
-            $userMember =  (new MemberUser())->getLoggedIn();
+            $userMember = (new MemberUser())->getLoggedIn();
         }
 
         /**
-         * start validating
+         * start validating.
          */
         $output = new Output();
         try {
@@ -198,7 +201,7 @@ class MemberUserMapper extends UserMapper
             $idRule = new ValidatorRule('id');
             $rules = [
                 $requiredRule,
-                $idRule
+                $idRule,
             ];
 
             $parentIdInput = new Input('parentId', $rules);
@@ -208,7 +211,7 @@ class MemberUserMapper extends UserMapper
                 [$parentIdInput, $childIdInput],
                 [
                     'parentId' => $userMember->getId(),
-                    'childId'  => $childId
+                    'childId'  => $childId,
                 ]
             );
 
@@ -217,36 +220,37 @@ class MemberUserMapper extends UserMapper
             if ($validatorOutput->getSuccess() !== true) {
                 $output->setSuccess(false);
                 $output->setMessages($validatorOutput->getMessages());
+
                 return $output;
             }
         } catch (\Exception $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
         /**
-         * finish validating
+         * finish validating.
          */
-
         $criteria = [
             [
                 'column' => 'parentId',
-                'value' => $userMember->getId(),
-                'type' => \PDO::PARAM_INT
+                'value'  => $userMember->getId(),
+                'type'   => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'id',
-                'value' => $childId,
-                'type' => \PDO::PARAM_INT
+                'value'  => $childId,
+                'type'   => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'status',
-                'value' => 'active',
+                'value'  => 'active',
 
-            ]
+            ],
         ];
 
         try {
             $output->setSuccess(true);
             $this->safeDeleteOne($criteria);
+
             return $output;
         } catch (\PDOException $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
@@ -269,14 +273,14 @@ class MemberUserMapper extends UserMapper
         $criteria = [
             [
                 'column' => 'parentId',
-                'value' => $userMember->getId(),
-                'type' => \PDO::PARAM_INT
+                'value'  => $userMember->getId(),
+                'type'   => \PDO::PARAM_INT,
             ],
             [
                 'column' => 'id',
-                'value' => $childId,
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $childId,
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         return $this->update($criteria, $inputs, [], 1);
@@ -285,8 +289,9 @@ class MemberUserMapper extends UserMapper
     /**
      * @param array $inputs
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
     {
@@ -299,9 +304,9 @@ class MemberUserMapper extends UserMapper
         $fieldsValues = [
             'parentId' => [
                 'column' => 'parentId',
-                'value' => $inputs['parentId'],
-                'type' => \PDO::PARAM_INT
-            ]
+                'value'  => $inputs['parentId'],
+                'type'   => \PDO::PARAM_INT,
+            ],
         ];
 
         return parent::add($inputs, $fieldsValues, $definedInputs);
@@ -312,8 +317,9 @@ class MemberUserMapper extends UserMapper
      * @param array $inputs
      * @param int   $limit
      *
-     * @return Output
      * @throws \Exception
+     *
+     * @return Output
      */
     public function update(
         array $criteria,
@@ -340,6 +346,7 @@ class MemberUserMapper extends UserMapper
                 if ((int) $inputs['parentId'] === (int) $inputs['id']) {
                     $output->setSuccess(false);
                     $output->setMessage("Parent id must be different from the current user id: '{$inputs['id']}'");
+
                     return $output;
                 }
 
@@ -349,6 +356,7 @@ class MemberUserMapper extends UserMapper
                 if (empty($getOneOutput->getData())) {
                     $output->setSuccess(false);
                     $output->setMessage("Parent (member) with id: '{$inputs['parentId']}' does not exist");
+
                     return $output;
                 }
             }
@@ -360,6 +368,7 @@ class MemberUserMapper extends UserMapper
         if ($updateOutput->getSuccess() !== true) {
             $output->setSuccess(false);
             $output->setMessages($updateOutput->getMessages());
+
             return $output;
         }
 
@@ -379,16 +388,16 @@ class MemberUserMapper extends UserMapper
                 $oldGroupMemberXrefs = [];
                 foreach ($assignedGroupIds as $key => $assignedGroupId) {
                     $oldGroupMemberXrefs[$key] = [
-                        'groupId' => $assignedGroupId,
-                        'memberId' => $inputs['id']
+                        'groupId'  => $assignedGroupId,
+                        'memberId' => $inputs['id'],
                     ];
                 }
 
                 $newGroupMemberXrefs = [];
                 foreach ($inputs['groups'] as $group) {
                     $newGroupMemberXrefs[] = [
-                        'groupId' => $group,
-                        'memberId' => $inputs['id']
+                        'groupId'  => $group,
+                        'memberId' => $inputs['id'],
                     ];
                 }
 
@@ -429,8 +438,8 @@ class MemberUserMapper extends UserMapper
         if (isset($definedInputs['parentId'])) {
             $fieldsValues['parentId'] = [
                 'column' => 'parentId',
-                'value' => $inputs['parentId'],
-                'type' => \PDO::PARAM_INT
+                'value'  => $inputs['parentId'],
+                'type'   => \PDO::PARAM_INT,
             ];
         }
 

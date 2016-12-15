@@ -5,8 +5,7 @@ namespace CodeJetter\core\io;
 use CodeJetter\core\utility\StringUtility;
 
 /**
- * Class Output
- * @package CodeJetter\core\io
+ * Class Output.
  */
 class Output
 {
@@ -92,7 +91,7 @@ class Output
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function getSuccess()
     {
@@ -100,7 +99,7 @@ class Output
     }
 
     /**
-     * @param boolean $success
+     * @param bool $success
      *
      * @throws \Exception
      */
@@ -114,7 +113,7 @@ class Output
     }
 
     /**
-     * convert object to array
+     * convert object to array.
      *
      * @return array
      */

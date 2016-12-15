@@ -8,10 +8,10 @@ class UserConfig extends BaseConfig
 {
     // All configs
     protected static $configs = [
-        'testUser' => 'testUser',
+        'testUser'          => 'testUser',
         'personalizedMenus' => [
             'member' => 'memberPersonalizedMenu.php',
-            'admin' => 'adminPersonalizedMenu.php'
-        ]
+            'admin'  => 'adminPersonalizedMenu.php',
+        ],
     ];
 }

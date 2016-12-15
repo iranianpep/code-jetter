@@ -3,10 +3,8 @@
 namespace CodeJetter\components\user\models;
 
 /**
- * Class AdminUser
- * @package CodeJetter\components\user\models
+ * Class AdminUser.
  */
 class AdminUser extends User
 {
-
 }

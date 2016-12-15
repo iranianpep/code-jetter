@@ -3,8 +3,7 @@
 namespace CodeJetter\core;
 
 /**
- * Class Singleton
- * @package CodeJetter\core
+ * Class Singleton.
  */
 abstract class Singleton
 {
@@ -37,7 +36,7 @@ abstract class Singleton
         $class = get_called_class();
 
         if (!isset(self::$instances[$class])) {
-            self::$instances[$class] = new static;
+            self::$instances[$class] = new static();
         }
 
         return self::$instances[$class];

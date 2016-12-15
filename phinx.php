@@ -11,19 +11,19 @@
     $tablePrefix = isset($databaseInfo['tablePrefix']) ? $databaseInfo['tablePrefix'] : '';
     $tableSuffix = isset($databaseInfo['tableSuffix']) ? $databaseInfo['tableSuffix'] : '';
 
-    return array(
+    return [
         'paths' => [
             // TODO move the path to config
             'migrations' => 'db/migrations',
-            'seeds' => 'db/seeds'
+            'seeds'      => 'db/seeds',
         ],
         'environments' => [
             'default_database' => 'development',
-            'development' => [
-                'name' => $databaseName,
-                'connection' => $connection,
+            'development'      => [
+                'name'         => $databaseName,
+                'connection'   => $connection,
                 'table_prefix' => $tablePrefix,
-                'table_suffix' => $tableSuffix
-            ]
-        ]
-    );
+                'table_suffix' => $tableSuffix,
+            ],
+        ],
+    ];

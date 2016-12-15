@@ -12,10 +12,9 @@
 
     // This is used to handle Linux which is case sensitive
     spl_autoload_register(function ($className) {
-
         $className = str_replace('\\', '/', $className);
 
-        $file = dirname(__DIR__) . DIRECTORY_SEPARATOR . $className . '.php';
+        $file = dirname(__DIR__).DIRECTORY_SEPARATOR.$className.'.php';
 
         // leave the file_exists commented in production, for debugging add the file_exists check
         //if (file_exists($file)) {

@@ -1,7 +1,8 @@
 <?php
-    namespace CodeJetter\tests;
 
-    use CodeJetter\components\user\models\MemberUser;
+namespace CodeJetter\tests;
+
+use CodeJetter\components\user\models\MemberUser;
     use CodeJetter\core\App;
 
     // this is to fix Cannot send session cookie - headers already sent

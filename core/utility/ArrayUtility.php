@@ -3,14 +3,13 @@
 namespace CodeJetter\core\utility;
 
 /**
- * Class ArrayUtility
- * @package CodeJetter\core\utility
+ * Class ArrayUtility.
  */
 class ArrayUtility
 {
     /**
      * Return the difference between two arrays
-     * This is mainly designed for update functionality where we need to compare the old relations with the new ones
+     * This is mainly designed for update functionality where we need to compare the old relations with the new ones.
      *
      * @param array $oldArray
      * @param array $newArray
@@ -43,11 +42,11 @@ class ArrayUtility
 
     /**
      * Filter an array based on $excludingElements
-     * Filter can be happened by array keys or values in $excludingElements
+     * Filter can be happened by array keys or values in $excludingElements.
      *
      * @param array  $array
      * @param array  $excludingElements
-     * @param string $filterBy Can be 'key' or 'value'
+     * @param string $filterBy          Can be 'key' or 'value'
      *
      * @return array
      */
