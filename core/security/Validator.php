@@ -116,7 +116,9 @@ class Validator
                 $rules = $definedInput->getRules();
 
                 // check if $toBeCheckedInputs contains the defined rule
-                if (isset($toBeCheckedInputs[$definedInputKey]) || array_key_exists($definedInputKey, $toBeCheckedInputs)) {
+                if (isset($toBeCheckedInputs[$definedInputKey])
+                    || array_key_exists($definedInputKey, $toBeCheckedInputs)
+                ) {
                     if (!empty($rules)) {
                         // validate based on rules for this input
                         foreach ($rules as $rule) {
@@ -598,7 +600,9 @@ class Validator
             $output->setSuccess(true);
         } else {
             $output->setSuccess(false);
-            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid money value. It can have 2 decimal points at most.");
+            $output->setMessage(
+                "'{$args['toBeCheckedInput']}' is not a valid money value. It can have 2 decimal points at most."
+            );
         }
 
         return $output;
@@ -707,7 +711,8 @@ class Validator
             $minRange = 1;
         }
 
-        if (filter_var($args['toBeCheckedInput'], FILTER_VALIDATE_INT, ['options' => ['min_range' => $minRange]]) === false) {
+        if (filter_var($args['toBeCheckedInput'], FILTER_VALIDATE_INT, ['options' => ['min_range' => $minRange]])
+            === false) {
             $output->setSuccess(false);
             $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid Id.");
         } else {
@@ -803,7 +808,8 @@ class Validator
 
         if (isset($args['confirmationKey'])) {
             $inputs = $this->getToCheckInputs();
-            if (!isset($inputs[$args['confirmationKey']]) || $args['toBeCheckedInput'] !== $inputs[$args['confirmationKey']]) {
+            if (!isset($inputs[$args['confirmationKey']])
+                || $args['toBeCheckedInput'] !== $inputs[$args['confirmationKey']]) {
                 $output->setSuccess(false);
                 $output->setMessage('Password does not match password confirmation.');
                 return $output;
