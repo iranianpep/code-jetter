@@ -1,0 +1,11 @@
+engines:
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+      standard: "PSR2"
+  fixme:
+      enabled: false
+exclude_paths:
+- "libs/**/*"
+- "**/vendor/**/*"
