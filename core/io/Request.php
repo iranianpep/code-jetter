@@ -236,15 +236,15 @@ class Request
      */
     public function getURLPath()
     {
-        $URI = $this->getRequestURI();
+        $uri = $this->getRequestURI();
 
         $removeURLTrailingSlash = Registry::getConfigClass()->get('removeURLTrailingSlash');
 
         if ($removeURLTrailingSlash === true) {
-            $URI = rtrim($URI, '/');
+            $uri = rtrim($uri, '/');
         }
 
-        return parse_url($URI, PHP_URL_PATH);
+        return parse_url($uri, PHP_URL_PATH);
     }
 
     /**
@@ -256,9 +256,9 @@ class Request
 
         if (isset($requestedWith) && !empty($requestedWith) && strtolower($requestedWith) == 'xmlhttprequest') {
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -308,9 +308,9 @@ class Request
         if ($key === null) {
             // return all
             return $output;
-        } else {
-            return (isset($output[$key])) ? $output[$key] : '';
         }
+
+        return (isset($output[$key])) ? $output[$key] : '';
     }
 
     /**
