@@ -6,8 +6,6 @@ engines:
       standard: "PSR2"
   fixme:
       enabled: false
-exclude_paths:
-- "db/**/*"
-- "docs/**/*"
-- "libs/**/*"
-- "**/vendor/**/*"
+ratings:
+   paths:
+   - "core/**/*"
