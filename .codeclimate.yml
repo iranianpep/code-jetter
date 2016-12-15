@@ -11,5 +11,5 @@ ratings:
    - "core/**/*"
    - "**.php"
 exclude_paths:
-- test/**/*
-- vendor/**/*
+- "test/**/*"
+- "vendor/**/*"
