@@ -4,6 +4,12 @@ engines:
     config:
       file_extensions: "php"
       standard: "PSR2"
+  phpmd:
+      enabled: true
 ratings:
    paths:
    - "core/**/*"
+   - "**.php"
+exclude_paths:
+- test/**/*
+- vendor/**/*
