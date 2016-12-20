@@ -12,7 +12,7 @@ before_script:
   - composer install --dev
 
 script: phpunit --bootstrap vendor/autoload.php --configuration vendor/phpunit/phpunit/phpunit.xml tests
-script: phpunit --coverage-clover build/logs/clover.xml --configuration vendor/phpunit/phpunit/phpunit.xml --bootstrap vendor/autoload.php src/tests
+script: phpunit --coverage-clover build/logs/clover.xml --configuration vendor/phpunit/phpunit/phpunit.xml --bootstrap vendor/autoload.php tests
 
 after_script:
   - vendor/bin/test-reporter
