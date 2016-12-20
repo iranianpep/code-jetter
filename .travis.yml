@@ -15,8 +15,3 @@ addons:
 before_script:
   - composer self-update
   - composer install --dev
-
-script: phpunit --bootstrap autoloader.php --configuration vendor/phpunit/phpunit/phpunit.xml tests
-
-after_script:
-  - vendor/bin/test-reporter
