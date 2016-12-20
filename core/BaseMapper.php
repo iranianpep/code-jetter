@@ -741,23 +741,25 @@ abstract class BaseMapper extends Base implements ICrud
      */
     public function getModelName($fullPath = true)
     {
-        if (empty($this->modelName)) {
-            // get last part of the namespace which is mapper class name
-            $classNameParts = explode('\\', get_class($this));
-            $classNamePartsEnd = end($classNameParts);
-
-            // remove 'Mapper' from the end of mapper class name
-            $modelName = preg_replace('#Mapper$#', '', $classNamePartsEnd);
-
-            if ($fullPath === true) {
-                // remove starting from mappers, replace the rest with models and model name
-                $pattern = "#mappers\\\\{$classNamePartsEnd}$#";
-                $this->setModelName(preg_replace($pattern, '', get_class($this)).'models\\'.$modelName);
-            } else {
-                $this->setModelName($modelName);
-            }
+        if (!empty($this->modelName)) {
+            return $this->modelName;
         }
 
+        // get last part of the namespace which is mapper class name
+        $classNameParts = explode('\\', get_class($this));
+        $classNamePartsEnd = end($classNameParts);
+
+        // remove 'Mapper' from the end of mapper class name
+        $modelName = preg_replace('#Mapper$#', '', $classNamePartsEnd);
+
+        if ($fullPath === true) {
+            // remove starting from mappers, replace the rest with models and model name
+            $pattern = "#mappers\\\\{$classNamePartsEnd}$#";
+            $this->setModelName(preg_replace($pattern, '', get_class($this)).'models\\'.$modelName);
+            return $this->modelName;
+        }
+
+        $this->setModelName($modelName);
         return $this->modelName;
     }
 
