@@ -4,9 +4,9 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Error extends \Exception
-    {
-    }
+class Mandrill_Error extends \Exception
+{
+}
 class Mandrill_HttpError extends Mandrill_Error
 {
 }

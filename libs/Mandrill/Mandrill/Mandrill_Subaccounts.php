@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Subaccounts
+class Mandrill_Subaccounts
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * Get the list of subaccounts defined for the account, optionally filtered by a prefix.
@@ -199,4 +199,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('subaccounts/resume', $_params);
     }
-    }
+}

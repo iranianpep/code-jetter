@@ -3,9 +3,9 @@
 namespace CodeJetter\tests;
 
 use CodeJetter\components\user\models\MemberUser;
-    use CodeJetter\core\App;
+use CodeJetter\core\App;
 
-    // this is to fix Cannot send session cookie - headers already sent
+// this is to fix Cannot send session cookie - headers already sent
     @session_start();
 
 class BaseModelTest extends \PHPUnit_Framework_TestCase

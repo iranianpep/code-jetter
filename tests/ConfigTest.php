@@ -4,7 +4,7 @@ namespace CodeJetter\tests;
 
 use CodeJetter\Config;
 
-    // this is to fix Cannot send session cookie - headers already sent
+// this is to fix Cannot send session cookie - headers already sent
     @session_start();
 
 class ConfigTest extends \PHPUnit_Framework_TestCase

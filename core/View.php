@@ -77,7 +77,7 @@ class View extends Base
 
         $this->setPage($page);
 
-        /**
+        /*
          * get blocks html - will be used in master.
          *
          * @var ComponentTemplate

@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Users
+class Mandrill_Users
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * Return the information about the API-connected user.
@@ -144,4 +144,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('users/senders', $_params);
     }
-    }
+}
