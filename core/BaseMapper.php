@@ -756,10 +756,12 @@ abstract class BaseMapper extends Base implements ICrud
             // remove starting from mappers, replace the rest with models and model name
             $pattern = "#mappers\\\\{$classNamePartsEnd}$#";
             $this->setModelName(preg_replace($pattern, '', get_class($this)).'models\\'.$modelName);
+
             return $this->modelName;
         }
 
         $this->setModelName($modelName);
+
         return $this->modelName;
     }
 
