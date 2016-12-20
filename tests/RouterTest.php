@@ -289,10 +289,10 @@ class RouterTest extends \PHPUnit_Framework_TestCase
             ],
         ];
 
-        $getAccessRoleFunction = self::getMethod('getAccessRole');
+        $getAccessRole = self::getMethod('getAccessRole');
 
         foreach ($inputOutputs as $inputOutput) {
-            $result = $getAccessRoleFunction->invokeArgs($router, [$inputOutput['url'], $inputOutput['roles']]);
+            $result = $getAccessRole->invokeArgs($router, [$inputOutput['url'], $inputOutput['roles']]);
             $this->assertEquals($inputOutput['output'], $result);
         }
     }

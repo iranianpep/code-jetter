@@ -15,11 +15,11 @@ class InputUtility
      * @param array $inputs
      * @param array $definedInputs
      * @param       $case
-     * @param array $tableColumnsWhitelist
+     * @param array $columnsWhitelist
      *
      * @return array
      */
-    public function getFieldsValues(array $inputs, array $definedInputs, $case, array $tableColumnsWhitelist = [])
+    public function getFieldsValues(array $inputs, array $definedInputs, $case, array $columnsWhitelist = [])
     {
         $fieldsValues = [];
         if (!empty($definedInputs)) {
@@ -28,9 +28,9 @@ class InputUtility
                     continue;
                 }
 
-                // If $tableColumnsWhitelist is set, ignore those defined inputs that are not in the whitelist
-                if (!empty($tableColumnsWhitelist) && is_array($tableColumnsWhitelist)) {
-                    if (!in_array($definedInput->getColumn(), $tableColumnsWhitelist)) {
+                // If $columnsWhitelist is set, ignore those defined inputs that are not in the whitelist
+                if (!empty($columnsWhitelist) && is_array($columnsWhitelist)) {
+                    if (!in_array($definedInput->getColumn(), $columnsWhitelist)) {
                         continue;
                     }
                 }

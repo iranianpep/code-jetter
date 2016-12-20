@@ -77,26 +77,26 @@ class Security
 
     /**
      * @param      $plainPassword
-     * @param null $passwordAlgorithmConstant
+     * @param null $passwordAlgorithm
      *
      * @throws \Exception
      *
      * @return bool|string
      */
-    public function hashPassword($plainPassword, $passwordAlgorithmConstant = null)
+    public function hashPassword($plainPassword, $passwordAlgorithm = null)
     {
-        if ($passwordAlgorithmConstant === null) {
-            $passwordAlgorithmConstant = PASSWORD_DEFAULT;
+        if ($passwordAlgorithm === null) {
+            $passwordAlgorithm = PASSWORD_DEFAULT;
         } else {
             // if the algorithm is provided check it against whitelist
             $whitelist = [PASSWORD_DEFAULT, PASSWORD_BCRYPT];
 
-            if (!in_array($passwordAlgorithmConstant, $whitelist)) {
-                throw new \Exception("Password algorithm constant: {$passwordAlgorithmConstant} is not valid");
+            if (!in_array($passwordAlgorithm, $whitelist)) {
+                throw new \Exception("Password algorithm constant: {$passwordAlgorithm} is not valid");
             }
         }
 
-        return password_hash($plainPassword, $passwordAlgorithmConstant);
+        return password_hash($plainPassword, $passwordAlgorithm);
     }
 
     /**

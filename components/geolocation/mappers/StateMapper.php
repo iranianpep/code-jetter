@@ -57,16 +57,16 @@ class StateMapper extends BaseMapper
 
         try {
             $connection = Registry::getMySQLDBClass()->getConnection($this->getDatabase());
-            $st = $connection->prepare($query);
+            $statement = $connection->prepare($query);
 
             // set last query
-            $this->setLastQuery($st->queryString);
+            $this->setLastQuery($statement->queryString);
 
             // bind values
-            $st = $queryMaker->bindValues($st, $criteria, $start, $limit);
-            $st->execute();
+            $statement = $queryMaker->bindValues($statement, $criteria, $start, $limit);
+            $statement->execute();
 
-            $result = $st->fetchAll(\PDO::FETCH_ASSOC);
+            $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
 
             /**
              * Map rows to objects.
@@ -76,16 +76,16 @@ class StateMapper extends BaseMapper
             if ($returnTotalNo == true) {
                 $query = $queryMaker->countQuery($criteria);
 
-                $st = $connection->prepare($query);
+                $statement = $connection->prepare($query);
 
                 // set last query
-                $this->setLastQuery($st->queryString);
+                $this->setLastQuery($statement->queryString);
 
                 // bind values
-                $st = $queryMaker->bindValues($st, $criteria);
-                $st->execute();
+                $statement = $queryMaker->bindValues($statement, $criteria);
+                $statement->execute();
 
-                $total = (int) $st->fetchColumn();
+                $total = (int) $statement->fetchColumn();
 
                 return ['result' => $mappedObjects, 'total' => $total];
             } else {

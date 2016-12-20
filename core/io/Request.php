@@ -238,9 +238,7 @@ class Request
     {
         $uri = $this->getRequestURI();
 
-        $removeURLTrailingSlash = Registry::getConfigClass()->get('removeURLTrailingSlash');
-
-        if ($removeURLTrailingSlash === true) {
+        if (Registry::getConfigClass()->get('removeURLTrailingSlash') === true) {
             $uri = rtrim($uri, '/');
         }
 
