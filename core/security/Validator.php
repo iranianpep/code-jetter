@@ -568,11 +568,11 @@ class Validator
         $output = new Output();
         if (filter_var($args['toBeCheckedInput'], FILTER_VALIDATE_EMAIL)) {
             $output->setSuccess(true);
-        } else {
-            $output->setSuccess(false);
-            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid email.");
+            return $output;
         }
 
+        $output->setSuccess(false);
+        $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid email.");
         return $output;
     }
 
@@ -588,11 +588,11 @@ class Validator
         $output = new Output();
         if (is_numeric($args['toBeCheckedInput'])) {
             $output->setSuccess(true);
-        } else {
-            $output->setSuccess(false);
-            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid number.");
+            return $output;
         }
 
+        $output->setSuccess(false);
+        $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid number.");
         return $output;
     }
 
@@ -608,13 +608,13 @@ class Validator
         $output = new Output();
         if (preg_match("/^-?[0-9]+(?:\.[0-9]{1,2})?$/", $args['toBeCheckedInput'])) {
             $output->setSuccess(true);
-        } else {
-            $output->setSuccess(false);
-            $output->setMessage(
-                "'{$args['toBeCheckedInput']}' is not a valid money value. It can have 2 decimal points at most."
-            );
+            return $output;
         }
 
+        $output->setSuccess(false);
+        $output->setMessage(
+            "'{$args['toBeCheckedInput']}' is not a valid money value. It can have 2 decimal points at most."
+        );
         return $output;
     }
 
@@ -641,11 +641,11 @@ class Validator
 
         if ($result === true) {
             $output->setSuccess(true);
-        } else {
-            $output->setSuccess(false);
-            $output->setMessage("{$args['inputTitle']} must be {$args['size']} in size.");
+            return $output;
         }
 
+        $output->setSuccess(false);
+        $output->setMessage("{$args['inputTitle']} must be {$args['size']} in size.");
         return $output;
     }
 
@@ -669,10 +669,10 @@ class Validator
             && $toBeChecked !== false) {
             $output->setSuccess(false);
             $output->setMessage("{$args['inputTitle']} is required.");
-        } else {
-            $output->setSuccess(true);
+            return $output;
         }
 
+        $output->setSuccess(true);
         return $output;
     }
 
@@ -689,11 +689,11 @@ class Validator
         //if (filter_var($args['toBeCheckedInput'], FILTER_VALIDATE_URL)) {
         if (preg_match($this->getRegexByRule($args['key']), $args['toBeCheckedInput'])) {
             $output->setSuccess(true);
-        } else {
-            $output->setSuccess(false);
-            $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid URL.");
+            return $output;
         }
 
+        $output->setSuccess(false);
+        $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid URL.");
         return $output;
     }
 
@@ -730,10 +730,10 @@ class Validator
             === false) {
             $output->setSuccess(false);
             $output->setMessage("'{$args['toBeCheckedInput']}' is not a valid Id.");
-        } else {
-            $output->setSuccess(true);
+            return $output;
         }
 
+        $output->setSuccess(true);
         return $output;
     }
 
@@ -842,11 +842,11 @@ class Validator
         if (preg_match($this->getRegexByRule($args['key']), $args['toBeCheckedInput'])) {
             // valid
             $output->setSuccess(true);
-        } else {
-            $output->setSuccess(false);
-            $output->setMessage('Password is not valid.');
+            return $output;
         }
 
+        $output->setSuccess(false);
+        $output->setMessage('Password is not valid.');
         return $output;
     }
 
@@ -885,11 +885,11 @@ class Validator
 
         if ($flag === true) {
             $output->setSuccess(true);
-        } else {
-            $output->setSuccess(false);
-            $output->setMessage("{$args['inputTitle']} is not valid.");
+            return $output;
         }
 
+        $output->setSuccess(false);
+        $output->setMessage("{$args['inputTitle']} is not valid.");
         return $output;
     }
 }
