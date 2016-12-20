@@ -833,36 +833,51 @@ abstract class BaseMapper extends Base implements ICrud
                     continue;
                 }
 
-                /**
-                 * Initialize $mappedObject.
-                 */
-                $mappedObject = [];
-
-                if (empty($tables)) {
-                    // TODO can be used to generate $tables using the current mapper table
-                }
-
-                foreach ($tables as $tableAlias => $table) {
-                    if (empty($table['class'])) {
-                        throw new \Exception('Class must be specified for a table to map a row to its object');
-                    }
-
-                    $mappedObject[$tableAlias] = new $table['class']();
-                }
-
-                foreach ($row as $key => $value) {
-                    $keySegments = explode('.', $key);
-
-                    if (isset($keySegments[0]) && array_key_exists($keySegments[0], $mappedObject)) {
-                        // call setProperty() on $mappedObjects[$keySegments[0]] object
-                        $mappedObject[$keySegments[0]]->{'set'.ucwords($keySegments[1])}($value);
-                    }
-                }
-
-                $mappedObjects[] = $mappedObject;
+                $mappedObjects[] = $this->mapRowToObject($row, $tables);
             }
         }
 
         return $mappedObjects;
+    }
+
+    /**
+     * Map row to the relevant object.
+     *
+     * @param array $tables Contains table alias / name as the key for each array element. Each element must have class
+     * @param array $row   Table row
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    private function mapRowToObject(array $row, array $tables = [])
+    {
+        /**
+         * Initialize $mappedObject.
+         */
+        $mappedObject = [];
+
+        if (empty($tables)) {
+            // TODO can be used to generate $tables using the current mapper table
+        }
+
+        foreach ($tables as $tableAlias => $table) {
+            if (empty($table['class'])) {
+                throw new \Exception('Class must be specified for a table to map a row to its object');
+            }
+
+            $mappedObject[$tableAlias] = new $table['class']();
+        }
+
+        foreach ($row as $key => $value) {
+            $keySegments = explode('.', $key);
+
+            if (isset($keySegments[0]) && array_key_exists($keySegments[0], $mappedObject)) {
+                // call setProperty() on $mappedObjects[$keySegments[0]] object
+                $mappedObject[$keySegments[0]]->{'set'.ucwords($keySegments[1])}($value);
+            }
+        }
+
+        return $mappedObject;
     }
 }
