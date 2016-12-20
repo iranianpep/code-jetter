@@ -18,9 +18,9 @@ class Language
     {
         $config = Registry::getConfigClass();
         $language = $config->get('defaultLanguage');
-        $ds = $config->get('DS');
+        $directorySeparator = $config->get('DS');
 
-        $this->fileDir = $config->get('URI').'core'.$ds.'language'.$ds;
+        $this->fileDir = $config->get('URI').'core'.$directorySeparator.'language'.$directorySeparator;
 
         $this->setCurrentLanguage($language);
     }
