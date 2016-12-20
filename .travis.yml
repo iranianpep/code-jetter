@@ -3,9 +3,6 @@ language: php
 php:
   - '5.6'
 
-install:
-  - git clone --depth=50 --branch=master https://github.com/iranianpep/code-jetter.git iranianpep/CodeJetter
-
 addons:
     code_climate:
         repo_token: f9907ab925d51b1c809430c75426630f19a664c7a9fe33e2014587bf43dca5fd
