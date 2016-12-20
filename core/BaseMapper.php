@@ -273,28 +273,28 @@ abstract class BaseMapper extends Base implements ICrud
 
         try {
             $connection = Registry::getMySQLDBClass()->getConnection($this->getDatabase());
-            $st = $connection->prepare($query);
+            $statement = $connection->prepare($query);
 
             // set last query
-            $this->setLastQuery($st->queryString);
+            $this->setLastQuery($statement->queryString);
 
             // bind values
-            $st = (new QueryMaker())->bindValues($st, $criteria, $start, $limit);
-            $st->execute();
+            $statement = (new QueryMaker())->bindValues($statement, $criteria, $start, $limit);
+            $statement->execute();
 
             if ($fetchStyle === \PDO::FETCH_CLASS) {
-                $result = $st->fetchAll(\PDO::FETCH_CLASS, $this->getModelName());
+                $result = $statement->fetchAll(\PDO::FETCH_CLASS, $this->getModelName());
             } else {
-                $result = $st->fetchAll($fetchStyle);
+                $result = $statement->fetchAll($fetchStyle);
             }
 
             if ($returnTotalNo == true) {
                 $total = $this->countByCriteria($criteria);
                 //$total = $connection->query("SELECT COUNT(*) FROM {$this->getTable()}")->fetchColumn();
                 return ['result' => $result, 'total' => $total];
-            } else {
-                return $result;
             }
+
+            return $result;
         } catch (\PDOException $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
@@ -337,16 +337,16 @@ abstract class BaseMapper extends Base implements ICrud
 
         try {
             $connection = Registry::getMySQLDBClass()->getConnection($this->getDatabase());
-            $st = $connection->prepare($query);
+            $statement = $connection->prepare($query);
 
             // set last query
-            $this->setLastQuery($st->queryString);
+            $this->setLastQuery($statement->queryString);
 
             // bind values
-            $st = (new QueryMaker())->bindValues($st, $criteria, 0, 1);
-            $st->execute();
+            $statement = (new QueryMaker())->bindValues($statement, $criteria, 0, 1);
+            $statement->execute();
 
-            return $st->fetchObject($this->getModelName());
+            return $statement->fetchObject($this->getModelName());
         } catch (\PDOException $e) {
             (new \CodeJetter\core\ErrorHandler())->logError($e);
         }
@@ -405,17 +405,17 @@ abstract class BaseMapper extends Base implements ICrud
             }
 
             $connection->beginTransaction();
-            $st = $connection->prepare($query);
+            $statement = $connection->prepare($query);
 
             // set last query
-            $this->setLastQuery($st->queryString);
+            $this->setLastQuery($statement->queryString);
 
             // bind values
-            $st = (new QueryMaker())->bindValues($st, $criteria, 0, $limit, $fieldsValues);
-            $st->execute();
+            $statement = (new QueryMaker())->bindValues($statement, $criteria, 0, $limit, $fieldsValues);
+            $statement->execute();
             $connection->commit();
 
-            return $st->rowCount();
+            return $statement->rowCount();
         } catch (\PDOException $e) {
             $connection->rollBack();
             (new \CodeJetter\core\ErrorHandler())->logError($e);
@@ -441,14 +441,14 @@ abstract class BaseMapper extends Base implements ICrud
             }
 
             $connection->beginTransaction();
-            $st = $connection->prepare($query);
+            $statement = $connection->prepare($query);
 
             // set last query
-            $this->setLastQuery($st->queryString);
+            $this->setLastQuery($statement->queryString);
 
             // bind values
-            $st = (new QueryMaker())->bindValues($st, [], 0, 0, $fieldsValues);
-            $st->execute();
+            $statement = (new QueryMaker())->bindValues($statement, [], 0, 0, $fieldsValues);
+            $statement->execute();
             $lastInsertedId = $connection->lastInsertId();
             $connection->commit();
 
@@ -478,14 +478,14 @@ abstract class BaseMapper extends Base implements ICrud
             }
 
             $connection->beginTransaction();
-            $st = $connection->prepare($query);
+            $statement = $connection->prepare($query);
 
             // set last query
-            $this->setLastQuery($st->queryString);
+            $this->setLastQuery($statement->queryString);
 
             // bind values
-            $st = (new QueryMaker())->batchBindValues($st, [], 0, 0, $fieldsValuesCollection);
-            $st->execute();
+            $statement = (new QueryMaker())->batchBindValues($statement, [], 0, 0, $fieldsValuesCollection);
+            $statement->execute();
             $lastInsertedId = $connection->lastInsertId();
             $connection->commit();
 
