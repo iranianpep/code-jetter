@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Webhooks
+class Mandrill_Webhooks
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * Get the list of all webhooks defined on the account.
@@ -141,4 +141,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('webhooks/delete', $_params);
     }
-    }
+}

@@ -3,10 +3,10 @@
 namespace CodeJetter\tests;
 
 use CodeJetter\core\App;
-    use CodeJetter\core\Router;
-    use ReflectionClass;
+use CodeJetter\core\Router;
+use ReflectionClass;
 
-    // this is to fix Cannot send session cookie - headers already sent
+// this is to fix Cannot send session cookie - headers already sent
     @session_start();
 
 class RouterTest extends \PHPUnit_Framework_TestCase

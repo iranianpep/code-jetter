@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Urls
+class Mandrill_Urls
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * Get the 100 most clicked URLs.
@@ -130,4 +130,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('urls/check-tracking-domain', $_params);
     }
-    }
+}
