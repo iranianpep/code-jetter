@@ -396,7 +396,7 @@ class QueryMaker
     }
 
     /**
-     * @param \PDOStatement $st
+     * @param \PDOStatement $statement
      * @param array         $criteria
      * @param int           $start
      * @param int           $limit
@@ -404,10 +404,10 @@ class QueryMaker
      *
      * @return \PDOStatement
      */
-    public function bindValues(\PDOStatement $st, array $criteria, $start = 0, $limit = 0, array $fieldsValues = [])
+    public function bindValues(\PDOStatement $statement, array $criteria, $start = 0, $limit = 0, array $fieldsValues = [])
     {
         // bind criteria values
-        $this->bindCriteria($st, $criteria);
+        $this->bindCriteria($statement, $criteria);
 
         // bind field values
         if (!empty($fieldsValues)) {
@@ -427,28 +427,28 @@ class QueryMaker
                 }
 
                 $placeholder = $this->preparePlaceholder($fieldValue['column']);
-                $st->bindValue(':'.$placeholder, $fieldValue['value'], $fieldValue['type']);
+                $statement->bindValue(':'.$placeholder, $fieldValue['value'], $fieldValue['type']);
             }
         }
 
         // bind start and limit if they are specified
         if (!empty($start) && !empty($limit)) {
-            $st->bindValue(':start', (int) $start, \PDO::PARAM_INT);
-            $st->bindValue(':limit', (int) $limit, \PDO::PARAM_INT);
+            $statement->bindValue(':start', (int) $start, \PDO::PARAM_INT);
+            $statement->bindValue(':limit', (int) $limit, \PDO::PARAM_INT);
         } elseif (!empty($limit)) {
-            $st->bindValue(':limit', $limit, \PDO::PARAM_INT);
+            $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
         }
 
-        return $st;
+        return $statement;
     }
 
     /**
-     * @param \PDOStatement $st
+     * @param \PDOStatement $statement
      * @param array         $criteria
      *
      * @return \PDOStatement
      */
-    private function bindCriteria(\PDOStatement $st, array $criteria)
+    private function bindCriteria(\PDOStatement $statement, array $criteria)
     {
         // bind criteria values
         if (!empty($criteria)) {
@@ -472,13 +472,13 @@ class QueryMaker
                         foreach ($aCriteria['value'] as $key => $value) {
                             // to override the automatic detection $aCriteria['type'] needs to be passed
                             $type = empty($aCriteria['type']) ? $this->detectParameterType($value) : $aCriteria['type'];
-                            $st->bindValue(':'.$placeholder.$counter.$key, $value, $type);
+                            $statement->bindValue(':'.$placeholder.$counter.$key, $value, $type);
                         }
                     } else {
                         // value is not array
                         // to override the automatic detection $aCriteria['type'] needs to be passed
                         $type = empty($aCriteria['type']) ? $this->detectParameterType($aCriteria['value']) : $aCriteria['type'];
-                        $st->bindValue(':'.$placeholder.$counter, $aCriteria['value'], $type);
+                        $statement->bindValue(':'.$placeholder.$counter, $aCriteria['value'], $type);
                     }
                 } else {
                     // set the type to string if it is empty
@@ -486,16 +486,16 @@ class QueryMaker
                         $aCriteria['type'] = \PDO::PARAM_STR;
                     }
 
-                    $st->bindValue(':'.$placeholder.$counter, $aCriteria['value'], $aCriteria['type']);
+                    $statement->bindValue(':'.$placeholder.$counter, $aCriteria['value'], $aCriteria['type']);
                 }
             }
         }
 
-        return $st;
+        return $statement;
     }
 
     /**
-     * @param \PDOStatement $st
+     * @param \PDOStatement $statement
      * @param array         $criteria
      * @param int           $start
      * @param int           $limit
@@ -504,7 +504,7 @@ class QueryMaker
      * @return \PDOStatement
      */
     public function batchBindValues(
-        \PDOStatement $st,
+        \PDOStatement $statement,
         array $criteria,
         $start = 0,
         $limit = 0,
@@ -512,7 +512,7 @@ class QueryMaker
     ) {
         if (!empty($fieldsValuesCollection)) {
             // bind criteria values
-            $this->bindCriteria($st, $criteria);
+            $this->bindCriteria($statement, $criteria);
 
             foreach ($fieldsValuesCollection as $key => $fieldsValues) {
                 // bind field values
@@ -533,20 +533,20 @@ class QueryMaker
                         }
 
                         $placeholder = $this->preparePlaceholder($fieldValue['column']);
-                        $st->bindValue(':'.$placeholder.$key, $fieldValue['value'], $fieldValue['type']);
+                        $statement->bindValue(':'.$placeholder.$key, $fieldValue['value'], $fieldValue['type']);
                     }
                 }
             }
 
             // bind start and limit if they are specified
             if (!empty($start) && !empty($limit)) {
-                $st->bindValue(':start', (int) $start, \PDO::PARAM_INT);
-                $st->bindValue(':limit', (int) $limit, \PDO::PARAM_INT);
+                $statement->bindValue(':start', (int) $start, \PDO::PARAM_INT);
+                $statement->bindValue(':limit', (int) $limit, \PDO::PARAM_INT);
             } elseif (!empty($limit)) {
-                $st->bindValue(':limit', $limit, \PDO::PARAM_INT);
+                $statement->bindValue(':limit', $limit, \PDO::PARAM_INT);
             }
 
-            return $st;
+            return $statement;
         }
     }
 

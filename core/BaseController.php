@@ -13,32 +13,32 @@ namespace CodeJetter\core;
  */
 abstract class BaseController extends Base
 {
-    private $HTTPInputs;
+    private $httpInputs;
 
     /**
      * @param RouteInfo $routeInfo
-     * @param array     $HTTPInputs
+     * @param array     $httpInputs
      */
-    public function __construct(RouteInfo $routeInfo, array $HTTPInputs)
+    public function __construct(RouteInfo $routeInfo, array $httpInputs)
     {
         $this->setRouteInfo($routeInfo);
-        $this->setHTTPInputs($HTTPInputs);
+        $this->setHttpInputs($httpInputs);
     }
 
     /**
-     * @return array $HTTPInputs
+     * @return array $httpInputs
      */
-    public function getHTTPInputs()
+    public function getHttpInputs()
     {
-        return $this->HTTPInputs;
+        return $this->httpInputs;
     }
 
     /**
-     * @param array $HTTPInputs
+     * @param array $httpInputs
      */
-    public function setHTTPInputs($HTTPInputs)
+    public function setHttpInputs($httpInputs)
     {
-        $this->HTTPInputs = $HTTPInputs;
+        $this->httpInputs = $httpInputs;
     }
 
     /**

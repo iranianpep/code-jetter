@@ -120,33 +120,33 @@ class Router
     /**
      * Return route info and parameters by URL path and request method.
      *
-     * @param $URLPath
+     * @param $urlPath
      * @param $requestMethod
      *
      * @return RouteInfo
      */
-    public function getRouteInfo($URLPath, $requestMethod)
+    public function getRouteInfo($urlPath, $requestMethod)
     {
         if (empty($requestMethod)) {
             return false;
         }
 
-        if (empty($URLPath) || trim($URLPath) === '' || $URLPath === '/index.php') {
-            $URLPath = '/';
+        if (empty($urlPath) || trim($urlPath) === '' || $urlPath === '/index.php') {
+            $urlPath = '/';
         }
 
         $routes = $this->getRoutes();
         if (isset($routes['simple'][$requestMethod]) &&
-            isset($routes['simple'][$requestMethod][$URLPath])) {
+            isset($routes['simple'][$requestMethod][$urlPath])) {
             // get route info straightway
-            $url = $URLPath;
-            $result = ['info' => $routes['simple'][$requestMethod][$URLPath]];
+            $url = $urlPath;
+            $result = ['info' => $routes['simple'][$requestMethod][$urlPath]];
         } else {
             // look for regex
             if (!empty($routes['regex'][$requestMethod])) {
                 foreach ($routes['regex'][$requestMethod] as $routePattern => $routeInfo) {
                     // find the match and return parameters if there is any
-                    $found = $this->regexMatch($routePattern, $URLPath);
+                    $found = $this->regexMatch($routePattern, $urlPath);
 
                     if (!empty($found)) {
                         $url = $routePattern;
@@ -170,7 +170,7 @@ class Router
         $action = isset($result['info']['action']) ? $result['info']['action']
             : Registry::getConfigClass()->get('defaultAction');
         $accessRole = !empty($result['info']['accessRole']) ? $result['info']['accessRole']
-            : $this->getAccessRole($URLPath);
+            : $this->getAccessRole($urlPath);
 
         $routeInfoObject = new RouteInfo(
             $routeType,
@@ -182,7 +182,7 @@ class Router
             $accessRole,
             $baseUrl,
             $parameters,
-            $URLPath
+            $urlPath
         );
 
         if (isset($result['info']['checkAntiCSRFToken'])) {
@@ -216,11 +216,11 @@ class Router
         $request = new Request();
         $requestMethod = $request->getRequestMethod();
         $HTTPInputs = $request->getInputs();
-        $URLPath = $request->getURLPath();
+        $urlPath = $request->getURLPath();
         //$isAJAXRequest = $request->isAJAX();
 
         // get route info (component, controller, action, ..) by path and request method
-        $routeInfo = $this->getRouteInfo($URLPath, $requestMethod);
+        $routeInfo = $this->getRouteInfo($urlPath, $requestMethod);
 
         // TODO move this somewhere, maybe Response
         /*
@@ -328,14 +328,14 @@ class Router
      *
      * This is used in getRouteInfo and should NOT be public
      *
-     * @param       $URLPath
+     * @param       $urlPath
      * @param array $roles
      *
      * @throws \Exception
      *
      * @return int|mixed|string
      */
-    private function getAccessRole($URLPath, $roles = [])
+    private function getAccessRole($urlPath, $roles = [])
     {
         if (empty($roles)) {
             $roles = Registry::getConfigClass()->get('roles');
@@ -359,8 +359,8 @@ class Router
 
         if (!empty($baseURLs)) {
             // sort base urls from long to short
-            uasort($baseURLs, function ($a, $b) {
-                return strlen($b) - strlen($a);
+            uasort($baseURLs, function ($url1, $url2) {
+                return strlen($url2) - strlen($url1);
             });
         }
 
@@ -369,7 +369,7 @@ class Router
             foreach ($baseURLs as $role => $baseURL) {
                 // do the regex - if found it break it, otherwise return the default access role
 
-                if (preg_match("#^{$baseURL}#", $URLPath) === 1) {
+                if (preg_match("#^{$baseURL}#", $urlPath) === 1) {
                     $foundRole = $role;
                     break;
                 }
