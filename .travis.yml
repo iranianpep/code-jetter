@@ -1,0 +1,18 @@
+language: php
+
+php:
+  - '5.6'
+
+addons:
+    code_climate:
+        repo_token: f9907ab925d51b1c809430c75426630f19a664c7a9fe33e2014587bf43dca5fd
+
+before_script:
+  - composer self-update
+  - composer install --dev
+
+script: phpunit --bootstrap vendor/autoload.php --configuration vendor/phpunit/phpunit/phpunit.xml tests
+script: phpunit --coverage-clover build/logs/clover.xml --configuration vendor/phpunit/phpunit/phpunit.xml --bootstrap vendor/autoload.php src/tests
+
+after_script:
+  - vendor/bin/test-reporter
