@@ -11,8 +11,8 @@ before_script:
   - composer self-update
   - composer install --dev
 
-script: phpunit --bootstrap autoload.php --configuration vendor/phpunit/phpunit/phpunit.xml tests
-script: phpunit --coverage-clover build/logs/clover.xml --configuration vendor/phpunit/phpunit/phpunit.xml --bootstrap autoload.php tests
+script: phpunit --bootstrap autoloader.php --configuration vendor/phpunit/phpunit/phpunit.xml tests
+script: phpunit --coverage-clover build/logs/clover.xml --configuration vendor/phpunit/phpunit/phpunit.xml --bootstrap autoloader.php tests
 
 after_script:
   - vendor/bin/test-reporter
