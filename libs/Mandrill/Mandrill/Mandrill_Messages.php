@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Messages
+class Mandrill_Messages
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * Send a new transactional message through Mandrill.
@@ -454,4 +454,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('messages/reschedule', $_params);
     }
-    }
+}

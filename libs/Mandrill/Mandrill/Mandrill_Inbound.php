@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Inbound
+class Mandrill_Inbound
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * List the domains that have been configured for inbound delivery.
@@ -173,4 +173,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('inbound/send-raw', $_params);
     }
-    }
+}

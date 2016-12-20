@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Templates
+class Mandrill_Templates
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * Add a new template.
@@ -267,4 +267,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('templates/render', $_params);
     }
-    }
+}

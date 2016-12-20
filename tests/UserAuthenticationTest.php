@@ -3,10 +3,10 @@
 namespace CodeJetter\tests;
 
 use CodeJetter\components\user\models\AdminUser;
-    use CodeJetter\components\user\services\UserAuthentication;
-    use CodeJetter\core\App;
+use CodeJetter\components\user\services\UserAuthentication;
+use CodeJetter\core\App;
 
-    // this is to fix Cannot send session cookie - headers already sent
+// this is to fix Cannot send session cookie - headers already sent
     @session_start();
 
     class UserAuthenticationTest extends \PHPUnit_Framework_TestCase

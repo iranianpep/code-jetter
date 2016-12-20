@@ -4,12 +4,12 @@ namespace CodeJetter\libs\Mandrill\Mandrill;
 
 use CodeJetter\libs\Mandrill\Mandrill;
 
-    class Mandrill_Metadata
+class Mandrill_Metadata
+{
+    public function __construct(Mandrill $master)
     {
-        public function __construct(Mandrill $master)
-        {
-            $this->master = $master;
-        }
+        $this->master = $master;
+    }
 
     /**
      * Get the list of custom metadata fields indexed for the account.
@@ -79,4 +79,4 @@ use CodeJetter\libs\Mandrill\Mandrill;
 
         return $this->master->call('metadata/delete', $_params);
     }
-    }
+}
