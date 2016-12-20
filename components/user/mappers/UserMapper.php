@@ -163,7 +163,7 @@ abstract class UserMapper extends BaseMapper
      * @param array $inputs
      * @param array $fieldsValues
      * @param int   $limit
-     * @param array $additionalDefinedInputs
+     * @param array $extraDefinedInputs
      * @param bool  $excludeArchived
      *
      * @throws \Exception
@@ -175,7 +175,7 @@ abstract class UserMapper extends BaseMapper
         array $inputs,
         array $fieldsValues,
         $limit = 0,
-        $additionalDefinedInputs = [],
+        $extraDefinedInputs = [],
         $excludeArchived = true,
         $batchAction = false
     ) {
@@ -215,7 +215,7 @@ abstract class UserMapper extends BaseMapper
              * Merge the default defined inputs with the additional one
              * This allows us to use update function for different user types.
              */
-            $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
+            $definedInputs = array_merge($definedInputs, $extraDefinedInputs);
 
             $validator = new Validator($definedInputs, $inputs);
             $validatorOutput = $validator->validate();
@@ -338,13 +338,13 @@ abstract class UserMapper extends BaseMapper
      *
      * @param array $inputs
      * @param array $fieldsValues
-     * @param array $additionalDefinedInputs
+     * @param array $extraDefinedInputs
      *
      * @throws \Exception
      *
      * @return Output
      */
-    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
+    public function add(array $inputs, array $fieldsValues = [], $extraDefinedInputs = [])
     {
         /**
          * Start validating common inputs.
@@ -366,7 +366,7 @@ abstract class UserMapper extends BaseMapper
              * Merge the default defined inputs with the additional one
              * This allows us to use add function for different user types.
              */
-            $definedInputs = array_merge($definedInputs, $additionalDefinedInputs);
+            $definedInputs = array_merge($definedInputs, $extraDefinedInputs);
 
             if (!isset($inputs['status'])) {
                 $inputs['status'] = 'active';

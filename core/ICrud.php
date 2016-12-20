@@ -13,7 +13,7 @@ namespace CodeJetter\core;
  */
 interface ICrud
 {
-    public function add(array $inputs, array $fieldsValues, $additionalDefinedInputs = []);
+    public function add(array $inputs, array $fieldsValues, $extraDefinedInputs = []);
 
     public function getAll(array $criteria = [], array $fromColumns = [], $order = null, $start = 0, $limit = 0);
 
@@ -22,7 +22,7 @@ interface ICrud
         array $inputs,
         array $fieldsValues,
         $limit = 0,
-        $additionalDefinedInputs = [],
+        $extraDefinedInputs = [],
         $excludeArchived = true,
         $batchAction = false
     );

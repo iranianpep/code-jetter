@@ -22,7 +22,7 @@ class MemberGroupMapper extends GroupMapper
      *
      * @return Output
      */
-    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
+    public function add(array $inputs, array $fieldsValues = [], $extraDefinedInputs = [])
     {
         /**
          * Start validating.
@@ -126,7 +126,7 @@ class MemberGroupMapper extends GroupMapper
         array $inputs,
         array $fieldsValues,
         $limit = 0,
-        $additionalDefinedInputs = [],
+        $extraDefinedInputs = [],
         $excludeArchived = true,
         $batchAction = false
     ) {
@@ -139,7 +139,7 @@ class MemberGroupMapper extends GroupMapper
         try {
             $action = $batchAction === true ? 'batchUpdate' : 'update';
             $definedInputs = $this->getDefinedInputs($action, ['id']);
-            $definedInputs = $definedInputs + $additionalDefinedInputs;
+            $definedInputs = $definedInputs + $extraDefinedInputs;
 
             $validator = new Validator($definedInputs, $inputs);
 

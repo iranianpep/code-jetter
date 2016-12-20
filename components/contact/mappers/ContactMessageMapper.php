@@ -12,7 +12,7 @@ use CodeJetter\core\utility\InputUtility;
 
 class ContactMessageMapper extends BaseMapper
 {
-    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
+    public function add(array $inputs, array $fieldsValues = [], $extraDefinedInputs = [])
     {
         /**
          * Start validating.

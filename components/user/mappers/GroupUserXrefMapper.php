@@ -20,7 +20,7 @@ abstract class GroupUserXrefMapper extends BaseXrefMapper
      *
      * @return Output
      */
-    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
+    public function add(array $inputs, array $fieldsValues = [], $extraDefinedInputs = [])
     {
         /**
          * Start validating.

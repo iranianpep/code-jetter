@@ -10,9 +10,9 @@ class AdminUserMapper extends UserMapper
     /**
      * @param array $inputs
      * @param array $fieldsValues
-     * @param array $additionalDefinedInputs
+     * @param array $extraDefinedInputs
      */
-    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
+    public function add(array $inputs, array $fieldsValues = [], $extraDefinedInputs = [])
     {
         // TODO: Implement add() method.
     }

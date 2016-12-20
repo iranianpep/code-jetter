@@ -293,7 +293,7 @@ class MemberUserMapper extends UserMapper
      *
      * @return Output
      */
-    public function add(array $inputs, array $fieldsValues = [], $additionalDefinedInputs = [])
+    public function add(array $inputs, array $fieldsValues = [], $extraDefinedInputs = [])
     {
         $requiredRule = new ValidatorRule('required');
         $idRule = new ValidatorRule('id', ['includingZero' => true]);
@@ -326,7 +326,7 @@ class MemberUserMapper extends UserMapper
         array $inputs,
         array $fieldsValues,
         $limit = 0,
-        $additionalDefinedInputs = [],
+        $extraDefinedInputs = [],
         $excludeArchived = true,
         $batchAction = false
     ) {

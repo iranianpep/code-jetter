@@ -382,7 +382,7 @@ abstract class BaseMapper extends Base implements ICrud
         array $inputs,
         array $fieldsValues,
         $limit = 0,
-        $additionalDefinedInputs = [],
+        $extraDefinedInputs = [],
         $excludeArchived = true,
         $batchAction = false
     ) {
