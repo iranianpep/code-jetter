@@ -846,7 +846,7 @@ abstract class BaseMapper extends Base implements ICrud
      * Map row to the relevant object.
      *
      * @param array $tables Contains table alias / name as the key for each array element. Each element must have class
-     * @param array $row   Table row
+     * @param array $row    Table row
      *
      * @throws \Exception
      *
