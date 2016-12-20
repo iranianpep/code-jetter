@@ -9,8 +9,10 @@ engines:
 ratings:
    paths:
    - "core/**/*"
+   - "components/**/*"
    - "**.php"
 exclude_paths:
 - "libs/**/*"
 - "test/**/*"
 - "vendor/**/*"
+- "db/**/*"

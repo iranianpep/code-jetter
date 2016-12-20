@@ -1,4 +1,7 @@
 # <img src='http://codejetter.com/images/logo.png' width='260' alt='code jetter logo'>
+[![Code Climate](https://codeclimate.com/github/iranianpep/code-jetter/badges/gpa.svg)](https://codeclimate.com/github/iranianpep/code-jetter)
+[![StyleCI](https://styleci.io/repos/58861311/shield?branch=master)](https://styleci.io/repos/58861311)
+
 Code Jetter is a PHP MVC Framework which is handcrafted with love! Some of the features that make a developer life easier are:
 
 - Advanced routing system:

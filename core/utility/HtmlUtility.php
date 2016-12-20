@@ -146,11 +146,9 @@ class HtmlUtility
             $title = $stringUtility->prepareForView($title);
 
             if (isset($configs['inline'])) {
-                $html .= "<label{$class}>
-<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
+                $html .= "<label{$class}><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div{$class}><label>
-<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
+                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
@@ -210,11 +208,9 @@ class HtmlUtility
                 $disabled = ' disabled' : '';
 
             if (isset($configs['inline'])) {
-                $html .= "<label{$class}>
-<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
+                $html .= "<label{$class}><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label>";
             } else {
-                $html .= "<div{$class}><label>
-<input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
+                $html .= "<div{$class}><label><input type='{$type}'{$name} value='{$value}'{$checkedOption}{$disabled}> {$title}</label></div>";
             }
         }
 
